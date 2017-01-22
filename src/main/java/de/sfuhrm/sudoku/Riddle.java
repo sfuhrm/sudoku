@@ -25,7 +25,7 @@ package de.sfuhrm.sudoku;
  * may be written to or not.
  * @author Stephan Fuhrmann
  */
-public class Riddle extends GameMatrix implements Cloneable {
+public class Riddle extends CachedGameMatrix implements Cloneable {
 
     /**
      * Whether the cell is writable. Pre-defined cells are only readable, use
