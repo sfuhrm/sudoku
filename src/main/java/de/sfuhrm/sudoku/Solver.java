@@ -77,9 +77,9 @@ public class Solver {
 
         boolean hasMin = false;
         int result = 0;
-        int minI = 0;
-        int minJ = 0;
-        int minV = 0;
+        int minColumn = 0;
+        int minRow = 0;
+        int minFreeMask = 0;
         int minBits = 0;
         // find the cell with the smallest number of free bits
         // TODO this look is the hot spot. Could do something with a list
@@ -102,9 +102,9 @@ public class Solver {
                 int bits = Integer.bitCount(free);
 
                 if ((!hasMin) || bits < minBits) {
-                    minV = free;
-                    minI = i;
-                    minJ = j;
+                    minFreeMask = free;
+                    minColumn = i;
+                    minRow = j;
                     minBits = bits;
                     hasMin = true;
                 }
@@ -116,16 +116,16 @@ public class Solver {
 
             // now try each number
             for (int bit = 0; bit < minBits; bit++) {
-                int idx = Creator.getSetBitOffset(minV, bit);
-                if (idx < 0) {
-                    throw new IllegalStateException("minV=" + minV + ", i=" + bit + ", idx=" + idx);
+                int index = Creator.getSetBitOffset(minFreeMask, bit);
+                if (index < 0) {
+                    throw new IllegalStateException("minV=" + minFreeMask + ", i=" + bit + ", idx=" + index);
                 }
 
-                riddle.set(minJ, minI, (byte) idx);
+                riddle.set(minRow, minColumn, (byte) index);
                 int resultCount = backtrack(freeCells - 1);
                 result += resultCount;
             }
-            riddle.set(minJ, minI, Riddle.UNSET);
+            riddle.set(minRow, minColumn, Riddle.UNSET);
         } else {
             // freeCells != 0 and !hasMin -> dead end
             result = 0;
