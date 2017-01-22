@@ -14,7 +14,7 @@ public class Riddle extends GameMatrix implements Cloneable {
     /**
      * A mask that has bits 1 to 9 set (decimal 1022).
      */
-    private final static int MASK_FOR_NINE_BITS
+    final static int MASK_FOR_NINE_BITS
             = 1 << 1
             | 1 << 2
             | 1 << 3
