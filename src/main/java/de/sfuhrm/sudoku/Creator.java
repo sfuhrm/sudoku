@@ -255,8 +255,10 @@ public class Creator {
             String s = f.toString();
             System.out.println(s);
             System.out.println();
+/*            
             f = Creator.createRiddle(f);
             s = f.toString();
+*/
             System.out.println(s);
             System.out.println("Set:" + f.getSetCount());
 
