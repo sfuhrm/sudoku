@@ -345,9 +345,14 @@ public class GameMatrix implements Cloneable {
      * Checks if the effect of one set operation is valid. This is much quicker
      * than {@link #isValid()}.
      *
+     * @param row the row of the cell to test validity for.
+     * @param column the column of the cell to test validity for.
+     * @param value the value to simulate setting for.
+     * @return {@code true} if the given cell can be set to  {@code value} without
+     * violating the game rules.
      */
-    public final boolean canSet(int row, int col, byte value) {
-        int free = getFreeMask(row, col);
+    public final boolean canSet(int row, int column, byte value) {
+        int free = getFreeMask(row, column);
         return (free & (1<<value)) != 0;
     }
     
