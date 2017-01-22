@@ -30,6 +30,18 @@ public class GameMatrixTest {
     }
     
     @Test
+    public void testGetSetCount() {
+        GameMatrix matrix = new GameMatrix();
+        assertEquals(0, matrix.getSetCount());
+        matrix.set(0, 0, (byte)1);
+        assertEquals(1, matrix.getSetCount());
+        matrix.set(0, 0, (byte)2);
+        assertEquals(1, matrix.getSetCount());
+        matrix.set(0, 1, (byte)2);
+        assertEquals(2, matrix.getSetCount());
+    }
+    
+    @Test
     public void testSet() {
         GameMatrix matrix = new GameMatrix();
         byte value = matrix.get(0, 0);
