@@ -9,8 +9,10 @@ import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.Ignore;
 
+/**
+ * @author Stephan Fuhrmann
+ */
 public class GameMatrixTest {
 
     @Test

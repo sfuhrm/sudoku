@@ -11,6 +11,7 @@ import java.util.stream.IntStream;
 
 /**
  * Utility class.
+ * @author Stephan Fuhrmann
  */
 public class Utility {
 

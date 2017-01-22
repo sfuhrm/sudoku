@@ -8,6 +8,7 @@ import java.util.function.Function;
 
 /**
  * Creates a fully filled sudoku.
+ * @author Stephan Fuhrmann
  */
 public class Creator {
 

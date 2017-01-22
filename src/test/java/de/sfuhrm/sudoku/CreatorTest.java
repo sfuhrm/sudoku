@@ -6,18 +6,14 @@
 package de.sfuhrm.sudoku;
 
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Ignore;
 
 /**
- *
- * @author fury
+ * @author Stephan Fuhrmann
  */
 public class CreatorTest {
     @Test

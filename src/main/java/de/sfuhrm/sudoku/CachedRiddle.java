@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 /**
  * A version with caching of free candidates for performance purposes.
+ * @author Stephan Fuhrmann
  */
 public class CachedRiddle extends Riddle implements Cloneable {
 

@@ -4,7 +4,8 @@ import static de.sfuhrm.sudoku.Riddle.roundToBlock;
 import java.util.Arrays;
 
 /**
- * The quadratix matrix.
+ * The quadratic matrix.
+ * @author Stephan Fuhrmann
  */
 public class GameMatrix implements Cloneable {
     

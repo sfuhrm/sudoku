@@ -7,7 +7,7 @@ package de.sfuhrm.sudoku;
 
 /**
  *
- * @author fury
+ * @author Stephan Fuhrmann
  */
 public class GameLogic {
 

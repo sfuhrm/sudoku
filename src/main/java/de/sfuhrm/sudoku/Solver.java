@@ -12,8 +12,7 @@ import java.util.Vector;
 /**
  * Solves a partially filled Sudoku. Can find multiple solutions if they are
  * there.
- *
- * @author fury
+ * @author Stephan Fuhrmann
  */
 public class Solver {
 
