@@ -36,7 +36,7 @@ public class Creator {
     private static int solverCalls;
 
     Creator() {
-        riddle = new CachedRiddle();
+        riddle = new CachedGameMatrix();
         random = new Random();
         
         resultConsumer = t -> {
@@ -221,7 +221,7 @@ public class Creator {
                 return false;
             }
             
-            // no number is free?
+            // number is free?
             if ((riddle.getRowFreeMask(row) & (1<<number)) == 0) {
                 continue;
             }
