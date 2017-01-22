@@ -44,7 +44,7 @@ public class GameMatrix implements Cloneable {
     public final void setAll(byte initializationData[][]) {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                set(j, i, initializationData[j][i]);
+                set(i, j, initializationData[j][i]);
             }
         }
     }
