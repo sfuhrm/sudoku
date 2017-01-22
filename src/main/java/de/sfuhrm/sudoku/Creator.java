@@ -80,7 +80,6 @@ public class Creator {
             boolean ok = c.backtrack(9*9 - c.riddle.getSetCount(), 0);
             if (ok)
                 break;
-            iterations++;
             System.out.println(c.riddle);
         }
         
