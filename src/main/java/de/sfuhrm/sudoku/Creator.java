@@ -148,11 +148,10 @@ public class Creator {
      *
      * @param in a fully set up (solved) and valid sudoku.
      * @return a maximally cleared sudoku.
-     */
-    public static Riddle createRiddle(Riddle in) {
+    public static Riddle createRiddle(GameMatrix in) {
         Random random = new Random();
 
-        Riddle cur = (Riddle) in.clone();
+        GameMatrix cur = (GameMatrix) in.clone();
 
         int multi = 0;
         // this could be improved:
@@ -194,6 +193,7 @@ public class Creator {
 
         return cur;
     }
+     */
     
     private void fillBlock(int column, int row) {
         byte[] numbers = createNumbersToDistribute(random, 1);
