@@ -75,7 +75,7 @@ public class Solver {
         // sorted by free bit count, but this requires nasty structures.
         for (int i = 0; i < Riddle.SIZE && (hasMin == false || minBits != 1); i++) {
             for (int j = 0; j < Riddle.SIZE && (hasMin == false || minBits != 1); j++) {
-                if (field.get(i, j) != Riddle.UNSET) {
+                if (field.get(j, i) != Riddle.UNSET) {
                     continue;
                 }
 
@@ -110,11 +110,11 @@ public class Solver {
                     throw new IllegalStateException("minV=" + minV + ", i=" + bit + ", idx=" + idx);
                 }
 
-                field.set(minI, minJ, (byte) idx);
+                field.set(minJ, minI, (byte) idx);
                 int resultCount = backtrack(freeCells - 1);
                 result += resultCount;
             }
-            field.set(minI, minJ, Riddle.UNSET);
+            field.set(minJ, minI, Riddle.UNSET);
         } else {
             // freeCells != 0 and !hasMin -> dead end
             result = 0;

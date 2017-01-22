@@ -102,7 +102,7 @@ public class GameMatrixTest {
         
         for (int i=0; i < GameMatrix.SIZE; i++) {
            for (int j=0; j < GameMatrix.SIZE; j++) {
-                assertEquals(i, matrix.get(j, i));
+                assertEquals(i, matrix.get(i, j));
            }
         }
     }

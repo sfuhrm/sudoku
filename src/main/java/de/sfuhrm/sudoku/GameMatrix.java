@@ -44,7 +44,7 @@ public class GameMatrix implements Cloneable {
     public final void setAll(byte initializationData[][]) {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                set(i, j, initializationData[j][i]);
+                set(j, i, initializationData[j][i]);
             }
         }
     }
@@ -133,7 +133,7 @@ public class GameMatrix implements Cloneable {
     public void clear() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                set(i, j, UNSET);
+                set(j, i, UNSET);
             }
         }
     }
@@ -141,7 +141,7 @@ public class GameMatrix implements Cloneable {
     /**
      * Get the value of a field.
      */
-    public final byte get(int column, int row) {
+    public final byte get(int row, int column) {
         return data[row][column];
     }
 
@@ -151,7 +151,7 @@ public class GameMatrix implements Cloneable {
      * @param row the row of the field.
      * @param value the value of the field.
      */
-    public void set(final int column, final int row, final byte value) {
+    public void set(final int row, final int column, final byte value) {
         data[row][column] = value;
     }
     
@@ -202,9 +202,9 @@ public class GameMatrix implements Cloneable {
 
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                byte v = get(i,j);
+                byte v = get(j, i);
                 if (v != UNSET) {
-                    sb.append(Integer.toString(get(j, i)));
+                    sb.append(Integer.toString(get(i, j)));
                 } else {
                     sb.append('_');
                 }

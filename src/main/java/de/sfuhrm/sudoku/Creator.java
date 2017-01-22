@@ -117,7 +117,7 @@ public class Creator {
      * @param row the row in the riddle.
      */
     private static boolean canClear(Riddle riddle, int column, int row) {
-        if (riddle.get(column, row) == Riddle.UNSET) {
+        if (riddle.get(row, column) == Riddle.UNSET) {
             return false;
         }
 
@@ -129,8 +129,8 @@ public class Creator {
             return true;
         }
 
-        int old = riddle.get(column, row);
-        riddle.set(column, row, Riddle.UNSET);
+        int old = riddle.get(row, column);
+        riddle.set(row, column, Riddle.UNSET);
 
         solverCalls++;
         Solver s = new Solver(riddle);
@@ -138,7 +138,7 @@ public class Creator {
         boolean result = (results.size() == 1);
 
         // rollback
-        riddle.set(column, row, (byte) old);
+        riddle.set(row, column, (byte) old);
         return result;
     }
 
@@ -161,12 +161,12 @@ public class Creator {
             int i = random.nextInt(Riddle.SIZE);
             int j = random.nextInt(Riddle.SIZE);
 
-            if (cur.get(i, j) == Riddle.UNSET) {
+            if (cur.get(j, i) == Riddle.UNSET) {
                 continue;
             }
 
             if (canClear(cur, i, j)) {
-                cur.set(i, j, Riddle.UNSET);
+                cur.set(j, i, Riddle.UNSET);
             } else {
                 multi++;
             }
@@ -174,12 +174,12 @@ public class Creator {
 
         for (int i = 0; i < Riddle.SIZE; i++) {
             for (int j = 0; j < Riddle.SIZE; j++) {
-                if (cur.get(i, j) == Riddle.UNSET) {
+                if (cur.get(j, i) == Riddle.UNSET) {
                     continue;
                 }
 
                 if (canClear(cur, i, j)) {
-                    cur.set(i, j, Riddle.UNSET);
+                    cur.set(j, i, Riddle.UNSET);
                 }
             }
         }
@@ -187,7 +187,7 @@ public class Creator {
         // set the preset fields non-writable
         for (int i = 0; i < Riddle.SIZE; i++) {
             for (int j = 0; j < Riddle.SIZE; j++) {
-                cur.setWritable(i, j, cur.get(i, j) == Riddle.UNSET);
+                cur.setWritable(i, j, cur.get(j, i) == Riddle.UNSET);
             }
         }
 
@@ -199,7 +199,7 @@ public class Creator {
         int k = 0;
         for (int i = 0; i < Riddle.BLOCK_SIZE; i++) {
             for (int j = 0; j < Riddle.BLOCK_SIZE; j++) {
-                riddle.set(column + i, row + j, numbers[k++]);
+                riddle.set(row + j, column + i, numbers[k++]);
             }
         }
     }
@@ -229,18 +229,18 @@ public class Creator {
             }
             for (int column=0; column < GameMatrix.SIZE; column++) {
                 // cell is not empty?
-                if (riddle.get(column, row) != Riddle.UNSET) {
+                if (riddle.get(row, column) != Riddle.UNSET) {
                     continue;
                 }
 
                 if (riddle.canSet(column, row, number)) {
-                    riddle.set(column, row, number);
+                    riddle.set(row, column, number);
                     boolean ok;
                     ok = backtrack(numbersToDistributeArray, i+1, nineArray, timeLimit);
                     if (ok) {
                         return true;
                     }
-                    riddle.set(column, row, Riddle.UNSET);
+                    riddle.set(row, column, Riddle.UNSET);
                 }
             }
         }

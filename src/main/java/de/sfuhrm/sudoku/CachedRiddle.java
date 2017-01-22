@@ -52,8 +52,8 @@ public class CachedRiddle extends Riddle implements Cloneable {
     }
 
     @Override
-    public void set(int column, int row, byte value) {
-        byte oldValue = super.get(column, row);
+    public void set(int row, int column, byte value) {
+        byte oldValue = super.get(row, column);
         
         if (oldValue != UNSET) {
             int bitMask = 1 << oldValue;
