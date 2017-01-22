@@ -506,4 +506,35 @@ public class GameMatrixTest {
         mask = matrix.getFreeMask(3,6);
         assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
      }
+    
+    @Test
+    public void testCanSet() {
+        byte data[][] =
+        GameMatrix.parse(
+            //   x
+                "100000000",
+                "020100000",
+                "000320100",
+                "010000456",
+            //           y
+                "000010000",
+                "000000010",
+                "001000000",
+                "000001000",
+                "000000001"
+                );
+        
+        GameMatrix matrix = new GameMatrix();
+        matrix.setAll(data);
+
+        // the "x" cell marked above
+        assertEquals(true,  matrix.canSet(0, 0, (byte)0)); // always works
+        assertEquals(false, matrix.canSet(0, 0, (byte)2)); // in block
+        assertEquals(true,  matrix.canSet(0, 0, (byte)3)); // not in block
+        
+        // the "y" cell marked above
+        assertEquals(true,  matrix.canSet(4, 8, (byte)0)); // always works
+        assertEquals(true,  matrix.canSet(4, 8, (byte)2)); // in block
+        assertEquals(true,  matrix.canSet(4, 8, (byte)3)); // not in block
+     }
 }
