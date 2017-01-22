@@ -42,6 +42,33 @@ public class GameMatrixTest {
     }
     
     @Test
+    public void testGetArray() {
+        byte data[][] = 
+        GameMatrix.parse(
+            //   x
+                "100000000",
+                "020100000",
+                "000320100",
+                "010000456",
+            //           y
+                "000010000",
+                "000000010",
+                "001000000",
+                "000001000",
+                "000000001"
+                );
+        GameMatrix first = new GameMatrix();
+        first.setAll(data);
+        
+        byte a[][] = first.getArray();
+        byte b[][] = first.getArray();
+        
+        assertNotSame(a, b);
+        assertTrue(Arrays.deepEquals(data, a));
+        assertTrue(Arrays.deepEquals(data, b));
+    }
+    
+    @Test
     public void testSet() {
         GameMatrix matrix = new GameMatrix();
         byte value = matrix.get(0, 0);

@@ -16,7 +16,7 @@ public class Creator {
      * The result consumer. Consumes a valid sudoku
      * and returns wheter to abort (true) or continue (false).
      */
-    private Function<GameMatrix, Boolean> resultConsumer;
+    private final Function<GameMatrix, Boolean> resultConsumer;
 
     /**
      * Current work in progress.
@@ -32,8 +32,6 @@ public class Creator {
      * The random number generator.
      */
     private final Random random;
-
-    private static int solverCalls;
 
     Creator() {
         riddle = new CachedGameMatrix();
@@ -130,7 +128,6 @@ public class Creator {
         int old = riddle.get(row, column);
         riddle.set(row, column, Riddle.UNSET);
 
-        solverCalls++;
         Solver s = new Solver(riddle);
         List<Riddle> results = s.solve();
         boolean result = (results.size() == 1);
@@ -145,10 +142,12 @@ public class Creator {
      *
      * @param in a fully set up (solved) and valid sudoku.
      * @return a maximally cleared sudoku.
+     */
     public static Riddle createRiddle(GameMatrix in) {
         Random random = new Random();
 
-        GameMatrix cur = (GameMatrix) in.clone();
+        Riddle cur = new Riddle();
+        cur.setAll(in.getArray());
 
         int multi = 0;
         // this could be improved:
@@ -190,9 +189,8 @@ public class Creator {
 
         return cur;
     }
-     */
     
-    private void fillBlock(int column, int row) {
+    private void fillBlock(int row, int column) {
         byte[] numbers = createNumbersToDistribute(random, 1);
         int k = 0;
         for (int i = 0; i < Riddle.BLOCK_SIZE; i++) {
@@ -251,27 +249,5 @@ public class Creator {
         }
 
         return false;
-    }
-
-    public static void main(String args[]) {
-        long start = System.currentTimeMillis();
-        int n = 1;
-        for (int i = 0; i < n; i++) {
-
-            GameMatrix f = Creator.createFull();
-            String s = f.toString();
-            System.out.println(s);
-            System.out.println();
-/*            
-            f = Creator.createRiddle(f);
-            s = f.toString();
-*/
-            System.out.println(s);
-            System.out.println("Set:" + f.getSetCount());
-
-        }
-
-        System.out.println("Milli time: " + (System.currentTimeMillis() - start) + "ms");
-        System.out.println("Solver calls: " + solverCalls + " " + (solverCalls / n) + " per S");
     }
 }

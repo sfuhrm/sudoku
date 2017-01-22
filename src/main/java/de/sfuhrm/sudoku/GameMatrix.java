@@ -179,6 +179,15 @@ public class GameMatrix implements Cloneable {
         }
         return count;
     }
+    
+    /** Gets a copy of the underlying array. 
+     * @return the data array containing numbers between 0 and 9.
+     * The first index is the row index, the second index is the column
+     * index.
+     */
+    public byte[][] getArray() {
+        return cloneArray(data);
+    }
 
     static int[][] cloneArray(int array[][]) {
         int result[][] = new int[SIZE][SIZE];
