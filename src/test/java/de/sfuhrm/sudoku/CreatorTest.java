@@ -66,10 +66,19 @@ public class CreatorTest {
     
     
     @Test
-    @Ignore
     public void testCreateFull() {
         GameMatrix r = Creator.createFull();
         assertEquals(9*9, r.getSetCount());
+        assertEquals(true, r.isValid());
+    }
+    
+    @Test
+    public void testCreateFullWithMultipleInvocations() {
+        for (int i=0; i < 1000; i++) {
+            GameMatrix r = Creator.createFull();
+            assertEquals(9*9, r.getSetCount());
+            assertEquals(true, r.isValid());
+        }
     }
 
     @Test
