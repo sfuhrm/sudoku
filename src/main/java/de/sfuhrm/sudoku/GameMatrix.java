@@ -306,7 +306,7 @@ public class GameMatrix implements Cloneable {
 
         for (int i = 0; i < BLOCK_SIZE && result; i++) {
             for (int j = 0; j < BLOCK_SIZE && result; j++) {
-                block(roundToBlock(i), roundToBlock(j), tmpData);
+                block(i, j, tmpData);
                 result &= findDuplicateBits(tmpData) == 0;
             }
         }
