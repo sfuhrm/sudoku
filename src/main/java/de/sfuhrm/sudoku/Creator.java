@@ -33,7 +33,7 @@ public class Creator {
      */
     private final Random random;
 
-    Creator() {
+    private Creator() {
         riddle = new CachedGameMatrix();
         random = new Random();
         
@@ -80,10 +80,9 @@ public class Creator {
             boolean ok = c.backtrack(9*9 - c.riddle.getSetCount(), 0);
             if (ok)
                 break;
-            System.out.println(c.riddle);
         }
         
-        return c.riddle;
+        return c.winner;
     }
 
     /* Create a random array with numbers to distribute. */
