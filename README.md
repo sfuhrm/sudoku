@@ -1,6 +1,7 @@
 # Sudoku Java Library ![Travis CI Status](https://travis-ci.org/sfuhrm/sudoku.svg?branch=master) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.sfuhrm/sudoku/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.sfuhrm/sudoku)
 
 A Java implementation of a very fast algorithm for creating [Sudoku](https://en.wikipedia.org/wiki/Sudoku) riddles.
+Has also the functionality to solve Sudoku riddles.
 
 ## Building it
 
