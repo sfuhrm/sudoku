@@ -27,13 +27,11 @@ public class GameMatrix implements Cloneable {
      * The game field. The first dimension is the row, the second the column.
      * The value 0 means unallocated. The values 1-9 mean the corresponding cell
      * value.
-     *
      */
     private byte data[][];
 
     /**
      * The value that is assigned to unset fields.
-     *
      */
     public final static byte UNSET = 0;
 
@@ -49,13 +47,16 @@ public class GameMatrix implements Cloneable {
     protected final static int BLOCK_SIZE = 3;
 
     /**
-     * Creates an empty full-writable riddle.
+     * Creates an empty riddle.
+     * @see #setAll(byte[][]) 
      */
     public GameMatrix() {
         data = new byte[SIZE][SIZE];
     }
 
     /** Sets all cells to the given values.
+     * @param initializationData initialization data with the first dimension
+     * being the rows and the second dimension being the columns.
      */
     public final void setAll(byte initializationData[][]) {
         for (int i = 0; i < SIZE; i++) {
@@ -144,6 +145,9 @@ public class GameMatrix implements Cloneable {
 
     /**
      * Get the value of a field.
+     * @param row the row of the cell to get the value for.
+     * @param column the column of the cell to get the value for.
+     * @return the cell value ranging from 0 to 9.
      */
     public final byte get(int row, int column) {
         return data[row][column];
