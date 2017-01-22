@@ -18,6 +18,50 @@ In the following list I want to give an overview of the features:
 * Very fast algorithm that is using backtracking, but terminates in some fractions of a second. For fully filled boards this is 0.3s on current hardware.
 * Using Java 8.
 
+## Usage
+
+The usage for fully set Sudoku boards (no empty fields) is as following:
+
+---------------------------------------
+        GameMatrix matrix = Creator.createFull();        
+---------------------------------------
+
+You can create a solvable riddle (with empty fields) using
+
+---------------------------------------
+        GameMatrix matrix = Creator.createFull();        
+        Riddle riddle = Creator.createRiddle(matrix);
+---------------------------------------
+
+And last but not least you can solve a riddle using
+
+---------------------------------------
+        Riddle riddle = new Riddle();
+        riddle.setAll(GameMatrix.parse("000000000", ...));
+        
+        Solver solver = new Solver(riddle);
+        List<Riddle> solutions = solver.solve();
+---------------------------------------
+
+For valid riddles you'll find in magazines there is only one solution in the list.
+
+## Including it into your projects
+
+Please note that the current version is experimental. It creates and solves riddles. The API will change.
+The library could run into a runtime exception.
+
+There are unit tests for many things, but the code is still young.
+
+The recommended way of including the library into your project is using maven:
+
+---------------------------------------
+    <dependency>
+        <groupId>de.sfuhrm</groupId>
+        <artifactId>sudoku</artifactId>
+        <version>0.1.0</version>
+    </dependency>
+---------------------------------------
+
 ## Algorithm
 
 The algorithm first fills three blocks with numbers in random order to reduce the amount of backtracking.
@@ -33,23 +77,6 @@ tree to the maximum and get the fastest results.
 
 At the time of writing it seems that it's enough to reduce each backtracking recursion to one field.
 I didn't prove this. Many test iterations show that it works.
-
-## Including it into your projects
-
-Please note that the current version is experimental. It creates riddles, but the API will change.
-The library could run into a runtime exception.
-
-There are unit tests for many things, but the code is still young.
-
-The recommended way of including the library into your project is using maven:
-
----------------------------------------
-    <dependency>
-        <groupId>de.sfuhrm</groupId>
-        <artifactId>sudoku</artifactId>
-        <version>0.1.0</version>
-    </dependency>
----------------------------------------
 
 ## Author
 
