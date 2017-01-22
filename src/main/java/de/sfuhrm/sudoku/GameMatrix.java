@@ -29,7 +29,7 @@ public class GameMatrix implements Cloneable {
      * value.
      *
      */
-    private byte data[][];
+    private final byte data[][];
 
     /**
      * The value that is assigned to unset fields.
