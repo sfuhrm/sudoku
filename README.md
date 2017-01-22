@@ -14,6 +14,7 @@ Use the following command line:
 In the following list I want to give an overview of the features:
 
 * Pure Java implementation without any runtime dependencies.
+* Very fast algorithm that is using backtracking, but terminates in some fractions of a second.
 * Using Java 8.
 
 ## Algorithm
