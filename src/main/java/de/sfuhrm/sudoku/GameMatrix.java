@@ -167,6 +167,8 @@ public class GameMatrix implements Cloneable {
     
     /**
      * Get the number of set cells.
+     * @return the number of fields with a number in. Can be in the range
+     * between 0 and 81.
      */
     public int getSetCount() {
         int count = 0;
@@ -322,6 +324,10 @@ public class GameMatrix implements Cloneable {
     }
     
     /** Gets the free mask for the given column. 
+     * @param column the column to get the free mask for.
+     * @return bit mask with the bit 1 telling whether the number 1 is free,
+     * the bit 2 telling whether the number 2 is free, and so on. The bit 0
+     * is not used.
      */
     int getColumnFreeMask(int column) {
         byte tmpData[] = new byte[9];
@@ -330,6 +336,11 @@ public class GameMatrix implements Cloneable {
     }
     
     /** Gets the free mask for the given block. 
+     * @param row the row of the block start to get the free mask for.
+     * @param column the column of the block start to get the free mask for.
+     * @return bit mask with the bit 1 telling whether the number 1 is free,
+     * the bit 2 telling whether the number 2 is free, and so on. The bit 0
+     * is not used.
      */
     int getBlockFreeMask(int row, int column) {
         byte tmpData[] = new byte[9];
@@ -338,6 +349,11 @@ public class GameMatrix implements Cloneable {
     }
     
     /** Gets the free mask for the given cell.
+     * @param row the row of the cell to get the free mask for.
+     * @param column the column of the to get the free mask for.
+     * @return bit mask with the bit 1 telling whether the number 1 is free,
+     * the bit 2 telling whether the number 2 is free, and so on. The bit 0
+     * is not used.
      */
     int getFreeMask(int row, int column) {
         int free = MASK_FOR_NINE_BITS;
