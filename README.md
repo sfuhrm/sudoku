@@ -9,6 +9,13 @@ Use the following command line:
 
     $ mvn clean package
     
+## Features
+
+In the following list I want to give an overview of the features:
+
+* Pure Java implementation without any runtime dependencies.
+* Using Java 8.
+
 ## Algorithm
 
 The algorithm first fills three blocks with numbers in random order to reduce the amount of backtracking.
