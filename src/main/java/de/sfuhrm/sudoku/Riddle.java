@@ -27,6 +27,13 @@ public class Riddle extends GameMatrix implements Cloneable {
     }
 
     /**
+     * Get whether a certain field is writable.
+     */
+    public final boolean getWritable(final int row, final int col) {
+        return writeable[row][col];
+    }
+    
+    /**
      * Set a certain field writable.
      */
     public final void setWritable(final int row, final int col, final boolean set) {

@@ -81,6 +81,22 @@ public class CreatorTest {
             assertEquals(true, r.isValid());
         }
     }
+    
+    public void testCreateRiddle() {
+        GameMatrix matrix = Creator.createFull();        
+        Riddle riddle = Creator.createRiddle(matrix);
+        for (int i=0; i < GameMatrix.SIZE; i++) {
+            for (int j=0; j < GameMatrix.SIZE; j++) {
+                if (riddle.get(i, j) != GameMatrix.UNSET) {
+                    // all fields that are set are needed to be the same
+                    assertEquals(matrix.get(i, j), riddle.get(i, j));
+                    assertEquals(false, riddle.getWritable(i, j));
+                } else {
+                    assertEquals(true, riddle.getWritable(i, j));
+                }
+            }
+        }
+    }
 
     @Test
     public void testCreateNumbersToDistributeWithOnce() {
