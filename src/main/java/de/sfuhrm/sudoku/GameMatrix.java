@@ -81,18 +81,6 @@ public class GameMatrix implements Cloneable {
         }
     }
     
-    /** Gets a stream of all cells. 
-     * @param target a 81-element array to receive the block data.
-     */
-    protected void allCells(final byte[] target) {
-        int k = 0;
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                target[k++] = data[i][j];
-            }
-        }
-    }
-    
     /**
      * Parses a string based field descriptor.
      *
