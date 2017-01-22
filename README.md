@@ -15,7 +15,7 @@ Use the following command line:
 In the following list I want to give an overview of the features:
 
 * Pure Java implementation without any runtime dependencies.
-* Very fast algorithm that is using backtracking, but terminates in some fractions of a second. For fully filled boards this is 0.3s on current hardware.
+* Very fast algorithm that is using backtracking, but terminates in some fractions of a second. For fully filled boards this is usually less than 1ms on current hardware. For partly-filled riddles this is usually less than 20ms.
 * Using Java 8.
 
 ## Usage
