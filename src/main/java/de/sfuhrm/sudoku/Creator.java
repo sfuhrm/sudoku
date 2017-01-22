@@ -69,7 +69,6 @@ public class Creator {
      */
     public static GameMatrix createFull() {
         Creator c = new Creator();
-        int iterations = 0;
         while (true) {
             // the number to distribute
             
