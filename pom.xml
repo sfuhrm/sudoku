@@ -32,8 +32,8 @@
         </developer>
     </developers>        
     <packaging>pom</packaging>
-  <modules>
-    <module>sudoku</module>
-    <module>sudoku-client</module>
-  </modules>
-  </project>
+    <modules>
+        <module>sudoku</module>
+        <module>sudoku-client</module>
+    </modules>
+</project>
