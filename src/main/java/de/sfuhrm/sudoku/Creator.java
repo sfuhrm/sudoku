@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Function;
 
 /**
  * Creates a fully filled sudoku.
@@ -11,14 +12,20 @@ import java.util.Random;
 public class Creator {
 
     /**
-     * The result found.
+     * The result consumer. Consumes a valid sudoku
+     * and returns wheter to abort (true) or continue (false).
      */
-    private Riddle winner;
+    private Function<Riddle, Boolean> resultConsumer;
 
     /**
      * Current work in progress.
      */
     private final Riddle riddle;
+    
+    /**
+     * Possibly found Sudoku.
+     */
+    private Riddle winner;
 
     /**
      * The random number generator.
@@ -30,6 +37,11 @@ public class Creator {
     Creator() {
         riddle = new CachedRiddle();
         random = new Random();
+        
+        resultConsumer = t -> {
+            winner = t;
+            return true;
+        };
     }
 
     /**
@@ -197,7 +209,7 @@ public class Creator {
             riddle.clear();
         }
         if (i == numbersToDistributeArray.length) {
-            return true;
+            return resultConsumer.apply(riddle);
         }
         
         // current number to distribute
