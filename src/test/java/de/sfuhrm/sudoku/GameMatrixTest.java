@@ -357,7 +357,6 @@ public class GameMatrixTest {
         GameMatrix matrix = new GameMatrix();
         matrix.setAll(data);
         assertEquals(false, matrix.isValid());
-        
      }
     
     @Test
@@ -378,7 +377,6 @@ public class GameMatrixTest {
         GameMatrix matrix = new GameMatrix();
         matrix.setAll(data);
         assertEquals(true, matrix.isValid());
-        
      }
     
     @Test
@@ -399,6 +397,5 @@ public class GameMatrixTest {
         GameMatrix matrix = new GameMatrix();
         matrix.setAll(data);
         assertEquals(true, matrix.isValid());
-        
      }
 }
