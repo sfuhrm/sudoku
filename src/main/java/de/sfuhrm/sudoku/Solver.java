@@ -36,7 +36,7 @@ public class Solver {
     private final Riddle field;
     
     /** The possible solutions for this riddle. */
-    private List<Riddle> possibleSolutions;
+    private final List<Riddle> possibleSolutions;
 
     /** The maximum number of solutions to search. */
     public final static int LIMIT = 20;
