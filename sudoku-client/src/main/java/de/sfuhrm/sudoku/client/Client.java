@@ -66,7 +66,7 @@ public class Client {
                     GameMatrix matrix = Creator.createFull();
                     Riddle riddle = Creator.createRiddle(matrix);
                     if (!quiet) System.out.println(riddle);
-                    break;                    
+                    break;
                 }
                 case Both: {
                     GameMatrix matrix = Creator.createFull();
