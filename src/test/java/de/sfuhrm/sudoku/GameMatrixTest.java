@@ -537,4 +537,17 @@ public class GameMatrixTest {
         assertEquals(true,  matrix.canSet(4, 8, (byte)2)); // in block
         assertEquals(true,  matrix.canSet(4, 8, (byte)3)); // not in block
      }
+    
+    @Test
+    public void testRoundToBlock() {
+        assertEquals(0, GameMatrix.roundToBlock(0));
+        assertEquals(0, GameMatrix.roundToBlock(1));
+        assertEquals(0, GameMatrix.roundToBlock(2));
+        assertEquals(3, GameMatrix.roundToBlock(3));
+        assertEquals(3, GameMatrix.roundToBlock(4));
+        assertEquals(3, GameMatrix.roundToBlock(5));
+        assertEquals(6, GameMatrix.roundToBlock(6));
+        assertEquals(6, GameMatrix.roundToBlock(7));
+        assertEquals(6, GameMatrix.roundToBlock(8));
+    }
 }
