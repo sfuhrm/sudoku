@@ -33,7 +33,7 @@ public class Solver {
     /**
      * Current working copy.
      */
-    private final Riddle field;
+    private final Riddle riddle;
     
     /** The possible solutions for this riddle. */
     private final List<Riddle> possibleSolutions;
@@ -42,7 +42,7 @@ public class Solver {
     public final static int LIMIT = 20;
 
     public Solver(Riddle f) {
-        field = (Riddle) f.clone();
+        riddle = (Riddle) f.clone();
         possibleSolutions = new ArrayList<>();
     }
 
@@ -52,7 +52,7 @@ public class Solver {
      */
     public List<Riddle> solve() {
         possibleSolutions.clear();
-        int freeCells = GameMatrix.SIZE * GameMatrix.SIZE - field.getSetCount();
+        int freeCells = GameMatrix.SIZE * GameMatrix.SIZE - riddle.getSetCount();
 
         backtrack(freeCells);
 
@@ -69,7 +69,7 @@ public class Solver {
         // just one result, we have no more to choose
         if (freeCells == 0) {
             if (possibleSolutions.size() < LIMIT) {
-                possibleSolutions.add((Riddle) field.clone());
+                possibleSolutions.add((Riddle) riddle.clone());
             }
 
             return 1;
@@ -86,11 +86,11 @@ public class Solver {
         // sorted by free bit count, but this requires nasty structures.
         for (int i = 0; i < Riddle.SIZE && (hasMin == false || minBits != 1); i++) {
             for (int j = 0; j < Riddle.SIZE && (hasMin == false || minBits != 1); j++) {
-                if (field.get(j, i) != Riddle.UNSET) {
+                if (riddle.get(j, i) != Riddle.UNSET) {
                     continue;
                 }
 
-                int free = field.getFreeMask(j, i);
+                int free = riddle.getFreeMask(j, i);
                 if (free == 0) {
                     // the field is empty, but there are no values we could
                     // insert.
@@ -121,11 +121,11 @@ public class Solver {
                     throw new IllegalStateException("minV=" + minV + ", i=" + bit + ", idx=" + idx);
                 }
 
-                field.set(minJ, minI, (byte) idx);
+                riddle.set(minJ, minI, (byte) idx);
                 int resultCount = backtrack(freeCells - 1);
                 result += resultCount;
             }
-            field.set(minJ, minI, Riddle.UNSET);
+            riddle.set(minJ, minI, Riddle.UNSET);
         } else {
             // freeCells != 0 and !hasMin -> dead end
             result = 0;
