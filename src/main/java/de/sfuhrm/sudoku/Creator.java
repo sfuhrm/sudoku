@@ -16,17 +16,17 @@ public class Creator {
      * The result consumer. Consumes a valid sudoku
      * and returns wheter to abort (true) or continue (false).
      */
-    private Function<Riddle, Boolean> resultConsumer;
+    private Function<GameMatrix, Boolean> resultConsumer;
 
     /**
      * Current work in progress.
      */
-    private final Riddle riddle;
+    private final GameMatrix riddle;
     
     /**
      * Possibly found Sudoku.
      */
-    private Riddle winner;
+    private GameMatrix winner;
 
     /**
      * The random number generator.
@@ -69,7 +69,7 @@ public class Creator {
      * Creates a valid fully setup sudoku.
      * @return a fully filled sudoku board.
      */
-    public static Riddle createFull() {
+    public static GameMatrix createFull() {
         Creator c = new Creator();
         int iterations = 0;
         while (true) {
@@ -251,7 +251,7 @@ public class Creator {
         int n = 1;
         for (int i = 0; i < n; i++) {
 
-            Riddle f = Creator.createFull();
+            GameMatrix f = Creator.createFull();
             String s = f.toString();
             System.out.println(s);
             System.out.println();
