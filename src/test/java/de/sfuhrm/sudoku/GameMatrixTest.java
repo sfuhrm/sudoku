@@ -452,4 +452,31 @@ public class GameMatrixTest {
         mask = matrix.getColumnFreeMask(3);
         assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<3))), mask);
      }
+    
+    @Test
+    public void testGetBlockFreeMask() {
+        byte data[][] =
+        GameMatrix.parse(
+                "100000000",
+                "020100000",
+                "000320100",
+                "010000456",
+                "000010000",
+                "000000010",
+                "001000000",
+                "000001000",
+                "000000001"
+                );
+        
+        GameMatrix matrix = new GameMatrix();
+        matrix.setAll(data);
+        int mask = matrix.getBlockFreeMask(0,0);
+        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
+        mask = matrix.getBlockFreeMask(0,3);
+        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2) | (1<<3))), mask);
+        mask = matrix.getBlockFreeMask(0,6);
+        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1))), mask);
+        mask = matrix.getBlockFreeMask(3,6);
+        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
+     }
 }
