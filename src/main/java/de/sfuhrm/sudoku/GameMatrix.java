@@ -287,21 +287,21 @@ public class GameMatrix implements Cloneable {
     public final boolean isValid(int row, int column) {
         boolean result = true;
         
-        byte data[] = new byte[9];
+        byte tmpData[] = new byte[9];
 
         if (result) {
-            row(row, data);
-            result &= findDuplicateBits(data) == 0;
+            row(row, tmpData);
+            result &= findDuplicateBits(tmpData) == 0;
         }
 
         if (result) {
-            column(column, data);
-            result &= findDuplicateBits(data) == 0;
+            column(column, tmpData);
+            result &= findDuplicateBits(tmpData) == 0;
         }
 
         if (result) {
-            block(roundToBlock(row), roundToBlock(column), data);
-            result &= findDuplicateBits(data) == 0;
+            block(roundToBlock(row), roundToBlock(column), tmpData);
+            result &= findDuplicateBits(tmpData) == 0;
         }
         return result;
     }
@@ -312,22 +312,22 @@ public class GameMatrix implements Cloneable {
     public final boolean isValid() {
         boolean result = true;
 
-        byte data[] = new byte[9];
+        byte tmpData[] = new byte[9];
         
         for (int i = 0; i < SIZE && result; i++) {
-            row(i, data);
-            result &= findDuplicateBits(data) == 0;
+            row(i, tmpData);
+            result &= findDuplicateBits(tmpData) == 0;
         }
 
         for (int i = 0; i < SIZE && result; i++) {
-            column(i, data);
-            result &= findDuplicateBits(data) == 0;
+            column(i, tmpData);
+            result &= findDuplicateBits(tmpData) == 0;
         }
 
         for (int i = 0; i < BLOCK_SIZE && result; i++) {
             for (int j = 0; j < BLOCK_SIZE && result; j++) {
-                block(roundToBlock(i), roundToBlock(j), data);
-                result &= findDuplicateBits(data) == 0;
+                block(roundToBlock(i), roundToBlock(j), tmpData);
+                result &= findDuplicateBits(tmpData) == 0;
             }
         }
 
@@ -336,25 +336,25 @@ public class GameMatrix implements Cloneable {
     
     /** Gets the free mask for the given row. */
     int getRowFreeMask(int row) {
-        byte data[] = new byte[9];
-        row(row, data);
-        return (~getNumberMask(data)) & MASK_FOR_NINE_BITS;
+        byte tmpData[] = new byte[9];
+        row(row, tmpData);
+        return (~getNumberMask(tmpData)) & MASK_FOR_NINE_BITS;
     }
     
     /** Gets the free mask for the given column. 
      */
     int getColumnFreeMask(int column) {
-        byte data[] = new byte[9];
-        column(column, data);
-        return (~getNumberMask(data)) & MASK_FOR_NINE_BITS;
+        byte tmpData[] = new byte[9];
+        column(column, tmpData);
+        return (~getNumberMask(tmpData)) & MASK_FOR_NINE_BITS;
     }
     
     /** Gets the free mask for the given block. 
      */
     int getBlockFreeMask(int row, int column) {
-        byte data[] = new byte[9];
-        block(row, column, data);
-        return (~getNumberMask(data)) & MASK_FOR_NINE_BITS;
+        byte tmpData[] = new byte[9];
+        block(row, column, tmpData);
+        return (~getNumberMask(tmpData)) & MASK_FOR_NINE_BITS;
     }
     
     public int getFreeMask(int row, int column) {
