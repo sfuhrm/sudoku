@@ -281,6 +281,7 @@ public class GameMatrix implements Cloneable {
 
     /**
      * Checks if the whole play field is valid.
+     * @return {@code true} if the filled rows, columns and blocks contain no duplicate numbers.
      */
     public final boolean isValid() {
         boolean result = true;
