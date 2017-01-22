@@ -83,7 +83,7 @@ public class Creator {
             byte[] numbersToDistributeArray = createNumbersToDistribute(c.random, 9-3);        
        
             long limit = System.currentTimeMillis() + 1000;
-            boolean ok = c.backtrack(numbersToDistributeArray, 0, new byte[9], Long.MAX_VALUE);
+            boolean ok = c.backtrack(numbersToDistributeArray, 0, Long.MAX_VALUE);
             if (ok)
                 break;
             iterations++;
@@ -205,7 +205,7 @@ public class Creator {
         }
     }
     
-    private boolean backtrack(byte[] numbersToDistributeArray, int i, byte nineArray[], long timeLimit) {
+    private boolean backtrack(byte[] numbersToDistributeArray, int i, long timeLimit) {
         if (i == numbersToDistributeArray.length) {
             return resultConsumer.apply(riddle);
         }
@@ -234,7 +234,7 @@ public class Creator {
                 if (riddle.canSet(row, column, number)) {
                     riddle.set(row, column, number);
                     boolean ok;
-                    ok = backtrack(numbersToDistributeArray, i+1, nineArray, timeLimit);
+                    ok = backtrack(numbersToDistributeArray, i+1, timeLimit);
                     if (ok) {
                         return true;
                     }
