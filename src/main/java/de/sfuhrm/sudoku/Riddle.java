@@ -2,6 +2,8 @@ package de.sfuhrm.sudoku;
 
 /**
  * The Sudoku game field.
+ * This is a game matrix that has the information whether fields
+ * may be written to or not.
  */
 public class Riddle extends GameMatrix implements Cloneable {
 
