@@ -89,8 +89,10 @@ public class GameMatrix implements Cloneable {
      * @param column start column of the block (0..6).
      * @param target a 9-element array to receive the block data.
      */
-    protected void block(final int row, final int column, final byte[] target) {
+    protected void block(int row, int column, final byte[] target) {
         int k = 0; // target index
+        row = roundToBlock(row);
+        column = roundToBlock(column);
         for (int i = 0; i < BLOCK_SIZE; i++) {
             for (int j = 0; j < BLOCK_SIZE; j++) {
                 target[k++] = data[row+i][column+j];
@@ -356,6 +358,9 @@ public class GameMatrix implements Cloneable {
      * violating the game rules.
      */
     public final boolean canSet(int row, int column, byte value) {
+        if (value == 0) {
+            return true;
+        }
         int free = getFreeMask(row, column);
         return (free & (1<<value)) != 0;
     }
