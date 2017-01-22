@@ -80,4 +80,41 @@ public class GameMatrixTest {
         assertEquals(8, data[8][1]);
     }
     
+    @Test
+    public void testSetAll() {
+        byte data[][] =
+        GameMatrix.parse(
+                "000000000",
+                "111111111",
+                "222222222",
+                "333333333",
+                "444444444",
+                "555555555",
+                "666666666",
+                "777777777",
+                "888888888"
+                );
+        
+        GameMatrix matrix = new GameMatrix();
+        matrix.setAll(data);
+        
+        assertEquals(0, matrix.get(0, 0));
+        assertEquals(0, matrix.get(0, 1));
+        assertEquals(1, matrix.get(1, 1));
+        assertEquals(1, matrix.get(1, 1));
+        assertEquals(2, matrix.get(2, 1));
+        assertEquals(2, matrix.get(2, 1));
+        assertEquals(3, matrix.get(3, 1));
+        assertEquals(3, matrix.get(3, 1));
+        assertEquals(4, matrix.get(4, 1));
+        assertEquals(4, matrix.get(4, 1));
+        assertEquals(5, matrix.get(5, 1));
+        assertEquals(5, matrix.get(5, 1));
+        assertEquals(6, matrix.get(6, 1));
+        assertEquals(6, matrix.get(6, 1));
+        assertEquals(7, matrix.get(7, 1));
+        assertEquals(7, matrix.get(7, 1));
+        assertEquals(8, matrix.get(8, 1));
+        assertEquals(8, matrix.get(8, 1));
+    }
 }
