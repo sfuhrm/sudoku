@@ -37,7 +37,8 @@ public class Client {
     private int count = 1;
     enum Op {
         Full,
-        Riddle
+        Riddle,
+        Both
     }
     
     @Option(name = "-e", aliases = {"-exec"}, usage = "The operation to perform")
@@ -66,6 +67,13 @@ public class Client {
                     Riddle riddle = Creator.createRiddle(matrix);
                     if (!quiet) System.out.println(riddle);
                     break;                    
+                }
+                case Both: {
+                    GameMatrix matrix = Creator.createFull();
+                    Riddle riddle = Creator.createRiddle(matrix);
+                    if (!quiet) System.out.println(riddle);
+                    if (!quiet) System.out.println(matrix);
+                    break;
                 }
             }
         }
