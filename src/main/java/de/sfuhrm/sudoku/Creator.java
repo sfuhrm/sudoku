@@ -205,9 +205,6 @@ public class Creator {
     }
     
     private boolean backtrack(byte[] numbersToDistributeArray, int i, byte nineArray[], long timeLimit) {
-        if (i == 0) {
-            riddle.clear();
-        }
         if (i == numbersToDistributeArray.length) {
             return resultConsumer.apply(riddle);
         }
