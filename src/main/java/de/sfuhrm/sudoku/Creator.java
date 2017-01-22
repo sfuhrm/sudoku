@@ -160,16 +160,23 @@ public class Creator {
         for (int row=0; row < GameMatrix.SIZE; row++) {
             riddle.row(row, nineArray);
             int mask = Riddle.getNumberMask(nineArray);
+            // number is already set?
             if ((mask & 1<<number) != 0) {
                 continue;
             }
+            // no number is free?
+            if (mask == Riddle.MASK_FOR_NINE_BITS) {
+                continue;                
+            }
             for (int column=0; column < GameMatrix.SIZE; column++) {
+                // cell is not empty?
                 if (riddle.get(column, row) != Riddle.UNSET) {
                     continue;
                 }
                 
                 riddle.column(column, nineArray);
                 mask = Riddle.getNumberMask(nineArray);
+                // number is already set in column?
                 if ((mask & 1<<number) != 0) {
                     continue;
                 }
