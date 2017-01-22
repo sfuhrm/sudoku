@@ -255,7 +255,7 @@ public class GameMatrix implements Cloneable {
      * @param data the cell data from 0-9.
      * @return a mask with bits 1-9 set if the numbers 1-9 occur multiple times.
      */
-    private static int findDuplicateBits(final byte data[]) {
+    static int findDuplicateBits(final byte data[]) {
         int currentMask = 0;
         int duplicates = 0;
         for (int i = 0; i < data.length; i++) {
