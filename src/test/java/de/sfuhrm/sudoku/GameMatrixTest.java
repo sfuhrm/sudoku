@@ -338,4 +338,67 @@ public class GameMatrixTest {
         mask = GameMatrix.getNumberMask(array);
         assertEquals(16+32, mask);
     }
+    
+    @Test
+    public void testIsValidWithInvalid() {
+        byte data[][] =
+        GameMatrix.parse(
+                "000000000",
+                "111111111",
+                "222222222",
+                "333333333",
+                "444444444",
+                "555555555",
+                "666666666",
+                "777777777",
+                "888888888"
+                );
+        
+        GameMatrix matrix = new GameMatrix();
+        matrix.setAll(data);
+        assertEquals(false, matrix.isValid());
+        
+     }
+    
+    @Test
+    public void testIsValidWithEmptyValid() {
+        byte data[][] =
+        GameMatrix.parse(
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000"
+                );
+        
+        GameMatrix matrix = new GameMatrix();
+        matrix.setAll(data);
+        assertEquals(true, matrix.isValid());
+        
+     }
+    
+    @Test
+    public void testIsValidWithPartlyFullValid() {
+        byte data[][] =
+        GameMatrix.parse(
+                "100000000",
+                "000100000",
+                "000000100",
+                "010000000",
+                "000010000",
+                "000000010",
+                "001000000",
+                "000001000",
+                "000000001"
+                );
+        
+        GameMatrix matrix = new GameMatrix();
+        matrix.setAll(data);
+        assertEquals(true, matrix.isValid());
+        
+     }
 }
