@@ -104,7 +104,7 @@ public class GameMatrix implements Cloneable {
      * @return the parsed array.
      * @throws IllegalArgumentException if one of the rows has a wrong size.
      */
-    public final static byte[][] parse(String rows[]) {
+    public final static byte[][] parse(String... rows) {
         if (rows.length != SIZE) {
             throw new IllegalArgumentException("Array must have " + SIZE + " elements");
         }
