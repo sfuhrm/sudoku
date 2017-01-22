@@ -96,7 +96,7 @@ public class Creator {
             c.fillBlock(3, 3);
             c.fillBlock(6, 6);
                    
-            boolean ok = c.backtrack(9*9 - c.riddle.getSetCount(), 0);
+            boolean ok = c.backtrack(9*9 - c.riddle.getSetCount());
             if (ok)
                 break;
         }
@@ -216,7 +216,11 @@ public class Creator {
         }
     }
     
-    private boolean backtrack(int numbersToDistribute, int i) {
+    /** 
+     * Do the backtracking job.
+     * @param numbersToDistribute the count of fields left to fill.
+     */
+    private boolean backtrack(int numbersToDistribute) {
         if (numbersToDistribute == 0) {
             if (! riddle.isValid()) {
                 throw new IllegalStateException();
@@ -257,7 +261,7 @@ public class Creator {
                 throw new IllegalStateException();
             }
             riddle.set(minimumRow, minimumColumn, (byte) (number));
-            boolean ok = backtrack(numbersToDistribute - 1, i + 1);
+            boolean ok = backtrack(numbersToDistribute - 1);
             if (ok) {
                 return true;
             }
