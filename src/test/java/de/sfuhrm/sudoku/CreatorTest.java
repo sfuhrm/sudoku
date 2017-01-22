@@ -74,7 +74,7 @@ public class CreatorTest {
     
     @Test
     public void testCreateFullWithMultipleInvocations() {
-        for (int i=0; i < 1000; i++) {
+        for (int i=0; i < 100000; i++) {
             GameMatrix r = Creator.createFull();
             assertEquals(9*9, r.getSetCount());
             assertEquals(true, r.isValid());
@@ -82,7 +82,6 @@ public class CreatorTest {
     }
 
     @Test
-    @Ignore
     public void testCreateNumbersToDistributeWithOnce() {
         byte v[] = Creator.createNumbersToDistribute(new Random(), 1);
         List<Integer> intList = Utility.toIntList(v);
@@ -92,7 +91,6 @@ public class CreatorTest {
     }
     
     @Test
-    @Ignore
     public void testCreateNumbersToDistributeWithTwice() {
         byte v[] = Creator.createNumbersToDistribute(new Random(), 2);
         List<Integer> intList = Utility.toIntList(v);
