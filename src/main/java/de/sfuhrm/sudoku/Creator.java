@@ -59,11 +59,9 @@ public class Creator {
     public static Riddle createFull() {
         Creator c = new Creator();
         // the number to distribute
-        for (byte number=1; number <= 9; number++) {
-            boolean ok = c.backtrack(number, 0, new byte[9]);
-            if (!ok)
-                throw new IllegalStateException();
-        }
+        boolean ok = c.backtrack((byte)1, 0, new byte[9]);
+        if (!ok)
+            throw new IllegalStateException();
         return c.riddle;
     }
 
@@ -153,7 +151,7 @@ public class Creator {
     }
         
     private boolean backtrack(byte number, int i, byte nineArray[]) {
-        if (i == 9) {
+        if (i == 0 && number > 9) {
             return true;
         }
 
@@ -189,7 +187,12 @@ public class Creator {
                 
                 if (riddle.canSet(column, row, number)) {
                     riddle.set(column, row, number);
-                    boolean ok = backtrack(number, i + 1, nineArray);
+                    boolean ok;
+                    if (i >= 8) {
+                        ok = backtrack((byte)(number+1), 0, nineArray);
+                    } else {
+                        ok = backtrack(number, i+1, nineArray);
+                    }
                     if (ok) {
                         return true;
                     }
