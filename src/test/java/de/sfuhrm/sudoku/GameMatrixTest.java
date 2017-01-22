@@ -316,4 +316,26 @@ public class GameMatrixTest {
         mask = GameMatrix.findDuplicateBits(array);
         assertEquals(0, mask);
     }
+    
+    @Test
+    public void testGetNumberMask() {
+        int mask;
+        byte array[];
+        
+        array = new byte[] {1,2,3,4,5};
+        mask = GameMatrix.getNumberMask(array);
+        assertEquals(2+4+8+16+32, mask);
+        
+        array = new byte[] {1,1,3,4,5};
+        mask = GameMatrix.getNumberMask(array);
+        assertEquals(2+8+16+32, mask);
+        
+        array = new byte[] {1,1,1,4,5};
+        mask = GameMatrix.getNumberMask(array);
+        assertEquals(2+16+32, mask);
+        
+        array = new byte[] {0,0,0,4,5};
+        mask = GameMatrix.getNumberMask(array);
+        assertEquals(16+32, mask);
+    }
 }
