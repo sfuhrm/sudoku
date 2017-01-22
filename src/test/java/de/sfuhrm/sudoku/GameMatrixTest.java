@@ -134,5 +134,34 @@ public class GameMatrixTest {
                 assertEquals(Arrays.asList(i,i,i,i,i,i,i,i,i), vals);
            }
         }
-     }    
+     }
+    
+    @Test
+    public void testColumn() {
+        byte data[][] =
+        GameMatrix.parse(
+                "000000000",
+                "111111111",
+                "222222222",
+                "333333333",
+                "444444444",
+                "555555555",
+                "666666666",
+                "777777777",
+                "888888888"
+                );
+        
+        GameMatrix matrix = new GameMatrix();
+        matrix.setAll(data);
+        
+        byte[] target = new byte[9];
+        
+        for (int i=0; i < GameMatrix.SIZE; i++) {
+           for (int j=0; j < GameMatrix.SIZE; j++) {
+                matrix.column(i, target);
+                List<Integer> vals = Utility.toIntList(target);
+                assertEquals(Arrays.asList(0,1,2,3,4,5,6,7,8), vals);
+           }
+        }
+     }
 }
