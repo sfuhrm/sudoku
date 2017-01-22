@@ -68,7 +68,7 @@ public class CreatorTest {
     @Test
     @Ignore
     public void testCreateFull() {
-        Riddle r = Creator.createFull();
+        GameMatrix r = Creator.createFull();
         assertEquals(9*9, r.getSetCount());
     }
 
