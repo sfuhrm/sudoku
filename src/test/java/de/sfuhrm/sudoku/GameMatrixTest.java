@@ -261,4 +261,37 @@ public class GameMatrixTest {
                 "_________\n"
                 , out);
      }
+    
+    @Test
+    public void testClone() {
+        byte data[][] =
+        GameMatrix.parse(
+                "000000000",
+                "111111111",
+                "222222222",
+                "333333333",
+                "444444444",
+                "555555555",
+                "666666666",
+                "777777777",
+                "888888888"
+                );
+        
+        GameMatrix matrix = new GameMatrix();
+        matrix.setAll(data);
+        GameMatrix clone = (GameMatrix) matrix.clone();
+        
+        String out = clone.toString();
+        assertEquals("_________\n"+
+                "111111111\n"+
+                "222222222\n"+
+                "333333333\n"+
+                "444444444\n"+
+                "555555555\n"+
+                "666666666\n"+
+                "777777777\n"+
+                "888888888\n"
+                , out);
+     }
+
 }
