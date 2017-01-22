@@ -330,7 +330,9 @@ public class GameMatrix implements Cloneable {
         return (~getNumberMask(tmpData)) & MASK_FOR_NINE_BITS;
     }
     
-    public int getFreeMask(int row, int column) {
+    /** Gets the free mask for the given cell.
+     */
+    int getFreeMask(int row, int column) {
         int free = MASK_FOR_NINE_BITS;
         free &= getRowFreeMask(row);
         free &= getColumnFreeMask(column);
