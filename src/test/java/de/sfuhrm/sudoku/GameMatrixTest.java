@@ -230,4 +230,35 @@ public class GameMatrixTest {
                 "888888888\n"
                 , out);
      }
+
+    @Test
+    public void testClear() {
+        byte data[][] =
+        GameMatrix.parse(
+                "000000000",
+                "111111111",
+                "222222222",
+                "333333333",
+                "444444444",
+                "555555555",
+                "666666666",
+                "777777777",
+                "888888888"
+                );
+        
+        GameMatrix matrix = new GameMatrix();
+        matrix.setAll(data);
+        matrix.clear();
+        String out = matrix.toString();
+        assertEquals("_________\n"+
+                "_________\n"+
+                "_________\n"+
+                "_________\n"+
+                "_________\n"+
+                "_________\n"+
+                "_________\n"+
+                "_________\n"+
+                "_________\n"
+                , out);
+     }
 }
