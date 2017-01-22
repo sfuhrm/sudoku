@@ -37,22 +37,6 @@ public class Riddle extends GameMatrix implements Cloneable {
         }
     }
 
-    /**
-     * Creates a pre-filled full-writable riddle.
-     *
-     * @param initializationData a 9x9 array containing the values to init the
-     * riddle with.
-     */
-    public Riddle(byte initializationData[][]) {
-        super(initializationData);
-        writeable = new boolean[SIZE][SIZE];
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                setWritable(j, i, true);
-            }
-        }
-    }
-    
     /** Finds the duplicate bits. 
      * @param data the cell data from 0-9.
      * @return a mask with bits 1-9 set if the numbers 1-9 occur multiple times.
@@ -78,18 +62,6 @@ public class Riddle extends GameMatrix implements Cloneable {
             currentMask |= 1 << data[i];
         }
         return currentMask & (~1);
-    }
-    
-    /** Finds the used numbers. 
-     * @param data the cell data from 0-9.
-     * @return a mask with bits 1-9 set if the numbers 1-9 occur.
-     */
-    private static int getSetCount(final byte data[]) {
-        int count = 0;
-        for (int i = 0; i < data.length; i++) {
-            count += data[i] == 0 ? 1 : 0;
-        }
-        return count;
     }
     
     /**
@@ -155,16 +127,35 @@ public class Riddle extends GameMatrix implements Cloneable {
         writeable[row][col] = set;
     }
     
-    public int getFreeMask(int column, int row) {
+    /** Gets the free mask for the given row. */
+    int getRowFreeMask(int row) {
         byte data[] = new byte[9];
-        int used = 0;
         row(row, data);
-        used |= getNumberMask(data);
+        return (~getNumberMask(data)) & MASK_FOR_NINE_BITS;
+    }
+    
+    /** Gets the free mask for the given column. 
+     */
+    int getColumnFreeMask(int column) {
+        byte data[] = new byte[9];
         column(column, data);
-        used |= getNumberMask(data);
-        block(roundToBlock(row), roundToBlock(column), data);
-        used |= getNumberMask(data);
-        return (~used) & MASK_FOR_NINE_BITS;
+        return (~getNumberMask(data)) & MASK_FOR_NINE_BITS;
+    }
+    
+    /** Gets the free mask for the given block. 
+     */
+    int getBlockFreeMask(int row, int column) {
+        byte data[] = new byte[9];
+        block(row, column, data);
+        return (~getNumberMask(data)) & MASK_FOR_NINE_BITS;
+    }
+    
+    public int getFreeMask(int column, int row) {
+        int free = MASK_FOR_NINE_BITS;
+        free &= getRowFreeMask(row);
+        free &= getColumnFreeMask(column);
+        free &= getBlockFreeMask(row, column);
+        return free;
     }
 
     /**
@@ -177,25 +168,8 @@ public class Riddle extends GameMatrix implements Cloneable {
         return (free & (1<<value)) != 0;
     }
     
-    private static int roundToBlock(int in) {
+    static int roundToBlock(int in) {
         return in - in % BLOCK_SIZE;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                if (isSet(i, j)) {
-                    sb.append(Integer.toString(get(i, j)));
-                } else {
-                    sb.append('_');
-                }
-            }
-            sb.append('\n');
-        }
-        return sb.toString();
     }
 
     @Override

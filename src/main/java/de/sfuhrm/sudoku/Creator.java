@@ -28,7 +28,7 @@ public class Creator {
     private static int solverCalls;
 
     Creator() {
-        riddle = new Riddle();
+        riddle = new CachedRiddle();
         random = new Random();
     }
 
@@ -58,11 +58,43 @@ public class Creator {
      */
     public static Riddle createFull() {
         Creator c = new Creator();
-        // the number to distribute
-        boolean ok = c.backtrack((byte)1, 0, new byte[9]);
-        if (!ok)
-            throw new IllegalStateException();
+        int iterations = 0;
+        while (true) {
+            // the number to distribute
+            
+            c.riddle.clear();
+            c.fillBlock(0, 0);
+            c.fillBlock(3, 3);
+            c.fillBlock(6, 6);
+            
+            byte[] numbersToDistributeArray = createNumbersToDistribute(c.random, 9-3);        
+       
+            long limit = System.currentTimeMillis() + 1000;
+            boolean ok = c.backtrack(numbersToDistributeArray, 0, new byte[9], Long.MAX_VALUE);
+            if (ok)
+                break;
+            iterations++;
+            System.out.println(c.riddle);
+        }
+        
         return c.riddle;
+    }
+
+    /* Create a random array with numbers to distribute. */
+    static byte[] createNumbersToDistribute(Random r, int multiplicity) {
+        List<Integer> numbersToDistribute= new ArrayList<>(9*multiplicity);
+        for (int number = 1; number <= 9; number++) {
+            for (int j=0; j < multiplicity; j++) {
+                numbersToDistribute.add(number);
+            }
+        }
+        Collections.shuffle(numbersToDistribute, r);
+        byte[] numbersToDistributeArray = new byte[numbersToDistribute.size()];
+        int k = 0;
+        for (Integer number : numbersToDistribute) {
+            numbersToDistributeArray[k++] = number.byteValue();
+        }
+        return numbersToDistributeArray;
     }
 
     /** Checks whether on the given riddle the given cell can
@@ -73,7 +105,7 @@ public class Creator {
      * @param row the row in the riddle.
      */
     private static boolean canClear(Riddle riddle, int column, int row) {
-        if (!riddle.isSet(column, row)) {
+        if (riddle.get(column, row) == Riddle.UNSET) {
             return false;
         }
 
@@ -117,7 +149,7 @@ public class Creator {
             int i = random.nextInt(Riddle.SIZE);
             int j = random.nextInt(Riddle.SIZE);
 
-            if (!cur.isSet(i, j)) {
+            if (cur.get(i, j) == Riddle.UNSET) {
                 continue;
             }
 
@@ -130,7 +162,7 @@ public class Creator {
 
         for (int i = 0; i < Riddle.SIZE; i++) {
             for (int j = 0; j < Riddle.SIZE; j++) {
-                if (!cur.isSet(i, j)) {
+                if (cur.get(i, j) == Riddle.UNSET) {
                     continue;
                 }
 
@@ -143,52 +175,56 @@ public class Creator {
         // set the preset fields non-writable
         for (int i = 0; i < Riddle.SIZE; i++) {
             for (int j = 0; j < Riddle.SIZE; j++) {
-                cur.setWritable(i, j, !cur.isSet(i, j));
+                cur.setWritable(i, j, cur.get(i, j) == Riddle.UNSET);
             }
         }
 
         return cur;
     }
-        
-    private boolean backtrack(byte number, int i, byte nineArray[]) {
-        if (i == 0 && number > 9) {
+    
+    private void fillBlock(int column, int row) {
+        byte[] numbers = createNumbersToDistribute(random, 1);
+        int k = 0;
+        for (int i = 0; i < Riddle.BLOCK_SIZE; i++) {
+            for (int j = 0; j < Riddle.BLOCK_SIZE; j++) {
+                riddle.set(column + i, row + j, numbers[k++]);
+            }
+        }
+    }
+    
+    private boolean backtrack(byte[] numbersToDistributeArray, int i, byte nineArray[], long timeLimit) {
+        if (i == 0) {
+            riddle.clear();
+        }
+        if (i == numbersToDistributeArray.length) {
             return true;
         }
+        
+        // current number to distribute
+        byte number = numbersToDistributeArray[i];
 
         // determine rows + cols that are possible candidates
         // (reduce random trying)
         for (int row=0; row < GameMatrix.SIZE; row++) {
-            riddle.row(row, nineArray);
-            int mask = Riddle.getNumberMask(nineArray);
-            // number is already set?
-            if ((mask & 1<<number) != 0) {
-                continue;
+            
+            if (System.currentTimeMillis() > timeLimit) {
+                return false;
             }
+            
             // no number is free?
-            if (mask == Riddle.MASK_FOR_NINE_BITS) {
-                continue;                
+            if ((riddle.getRowFreeMask(row) & (1<<number)) == 0) {
+                continue;
             }
             for (int column=0; column < GameMatrix.SIZE; column++) {
                 // cell is not empty?
                 if (riddle.get(column, row) != Riddle.UNSET) {
                     continue;
                 }
-                
-                riddle.column(column, nineArray);
-                mask = Riddle.getNumberMask(nineArray);
-                // number is already set in column?
-                if ((mask & 1<<number) != 0) {
-                    continue;
-                }
 
                 if (riddle.canSet(column, row, number)) {
                     riddle.set(column, row, number);
                     boolean ok;
-                    if (i >= 8) {
-                        ok = backtrack((byte)(number+1), 0, nineArray);
-                    } else {
-                        ok = backtrack(number, i+1, nineArray);
-                    }
+                    ok = backtrack(numbersToDistributeArray, i+1, nineArray, timeLimit);
                     if (ok) {
                         return true;
                     }

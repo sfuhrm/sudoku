@@ -41,14 +41,9 @@ public class GameMatrix implements Cloneable {
         data = new byte[SIZE][SIZE];
     }
 
-    /**
-     * Creates a pre-filled full-writable riddle.
-     *
-     * @param initializationData a 9x9 array containing the values to init the
-     * riddle with.
+    /** Sets all cells to the given values.
      */
-    public GameMatrix(byte initializationData[][]) {
-        this();
+    public final void setAll(byte initializationData[][]) {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 set(j, i, initializationData[j][i]);
@@ -147,15 +142,6 @@ public class GameMatrix implements Cloneable {
         }
     }
 
-    /** Checks wheter the given cell is set. 
-     * @param column the column.
-     * @param row the row.
-     * @return {@code true} if the cell is set.
-     */
-    public boolean isSet(int column, int row) {
-        return data[row][column] != UNSET;
-    }
-
     /**
      * Get the value of a field.
      */
@@ -169,7 +155,7 @@ public class GameMatrix implements Cloneable {
      * @param row the row of the field.
      * @param value the value of the field.
      */
-    public final void set(final int column, final int row, final byte value) {
+    public void set(final int column, final int row, final byte value) {
         data[row][column] = value;
     }
     
@@ -186,6 +172,13 @@ public class GameMatrix implements Cloneable {
         return count;
     }
 
+    static int[][] cloneArray(int array[][]) {
+        int result[][] = new int[SIZE][SIZE];
+        for (int i=0; i < array.length; i++) {
+            System.arraycopy(array[i], 0, result[i], 0, array[i].length);
+        }
+        return result;
+    }
     
     static byte[][] cloneArray(byte array[][]) {
         byte result[][] = new byte[SIZE][SIZE];
@@ -213,7 +206,8 @@ public class GameMatrix implements Cloneable {
 
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                if (isSet(i, j)) {
+                byte v = get(i,j);
+                if (v != UNSET) {
                     sb.append(Integer.toString(get(i, j)));
                 } else {
                     sb.append('_');

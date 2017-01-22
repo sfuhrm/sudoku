@@ -75,7 +75,7 @@ public class Solver {
         // sorted by free bit count, but this requires nasty structures.
         for (int i = 0; i < Riddle.SIZE && (hasMin == false || minBits != 1); i++) {
             for (int j = 0; j < Riddle.SIZE && (hasMin == false || minBits != 1); j++) {
-                if (field.isSet(i, j)) {
+                if (field.get(i, j) != Riddle.UNSET) {
                     continue;
                 }
 
@@ -144,7 +144,8 @@ public class Solver {
             }
         }
 
-        Riddle f = new Riddle(data);
+        Riddle f = new Riddle();
+        f.setAll(data);
         System.out.println(f);
 
         Solver s = new Solver(f);

@@ -5,8 +5,16 @@
  */
 package de.sfuhrm.sudoku;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 
 /**
  *
@@ -63,8 +71,34 @@ public class CreatorTest {
     
     
     @Test
+    @Ignore
     public void testCreateFull() {
         Riddle r = Creator.createFull();
         assertEquals(9*9, r.getSetCount());
+    }
+    
+    @Test
+    @Ignore
+    public void testCreateNumbersToDistributeWithOnce() {
+        byte v[] = Creator.createNumbersToDistribute(new Random(), 1);
+        int iv[] = new int[v.length];
+        for (int i=0; i < v.length; i++) {
+            iv[i] = v[i];
+        }
+        
+        List<Integer> intList = IntStream.of(iv).mapToObj(b -> b).sorted().collect(Collectors.toList());
+        
+        assertEquals(9, intList.size());
+        assertEquals(Arrays.asList(1,2,3,4,5,6,7,8,9), intList);
+    }
+    
+    @Test
+    @Ignore
+    public void testCreateNumbersToDistributeWithTwice() {
+        byte v[] = Creator.createNumbersToDistribute(new Random(), 2);
+        List<Integer> intList = Arrays.asList(v).sort(Comparator.naturalOrder());
+        
+        assertEquals(2*9, intList.size());
+        assertEquals(Arrays.asList(1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9), intList);
     }
 }
