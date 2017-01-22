@@ -73,7 +73,7 @@ public class CachedGameMatrix extends GameMatrix implements Cloneable {
             columnFree[column] &= bitMask;
             blockFree[row/3][column/3] &= bitMask;
         }        
-        super.set(column, row, value); 
+        super.set(row, column, value); 
     }
 
     @Override
