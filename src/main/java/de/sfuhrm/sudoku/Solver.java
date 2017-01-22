@@ -79,7 +79,7 @@ public class Solver {
                     continue;
                 }
 
-                int free = field.getFreeMask(i, j);
+                int free = field.getFreeMask(j, i);
                 if (free == 0) {
                     // the field is empty, but there are no values we could
                     // insert.

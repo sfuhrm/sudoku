@@ -32,7 +32,7 @@ public class Riddle extends GameMatrix implements Cloneable {
         writeable = new boolean[SIZE][SIZE];
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                setWritable(j, i, true);
+                setWritable(i, j, true);
             }
         }
     }
@@ -70,7 +70,7 @@ public class Riddle extends GameMatrix implements Cloneable {
      * {@link #isValid()}.
      *
      */
-    public final boolean isValid(int column, int row) {
+    public final boolean isValid(int row, int column) {
         boolean result = true;
         
         byte data[] = new byte[9];
@@ -123,7 +123,7 @@ public class Riddle extends GameMatrix implements Cloneable {
     /**
      * Set a certain field writable.
      */
-    public final void setWritable(final int col, final int row, final boolean set) {
+    public final void setWritable(final int row, final int col, final boolean set) {
         writeable[row][col] = set;
     }
     
@@ -150,7 +150,7 @@ public class Riddle extends GameMatrix implements Cloneable {
         return (~getNumberMask(data)) & MASK_FOR_NINE_BITS;
     }
     
-    public int getFreeMask(int column, int row) {
+    public int getFreeMask(int row, int column) {
         int free = MASK_FOR_NINE_BITS;
         free &= getRowFreeMask(row);
         free &= getColumnFreeMask(column);
@@ -163,8 +163,8 @@ public class Riddle extends GameMatrix implements Cloneable {
      * than {@link #isValid()}.
      *
      */
-    public final boolean canSet(int col, int row, byte value) {
-        int free = getFreeMask(col, row);
+    public final boolean canSet(int row, int col, byte value) {
+        int free = getFreeMask(row, col);
         return (free & (1<<value)) != 0;
     }
     

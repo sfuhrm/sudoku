@@ -122,7 +122,7 @@ public class Creator {
         }
 
         // if there's only one free val, it's unique
-        int freeMask = riddle.getFreeMask(column, row);
+        int freeMask = riddle.getFreeMask(row, column);
         int freeVals = Integer.bitCount(freeMask);
 
         if (freeVals == 0) {
@@ -187,7 +187,7 @@ public class Creator {
         // set the preset fields non-writable
         for (int i = 0; i < Riddle.SIZE; i++) {
             for (int j = 0; j < Riddle.SIZE; j++) {
-                cur.setWritable(i, j, cur.get(j, i) == Riddle.UNSET);
+                cur.setWritable(j, i, cur.get(j, i) == Riddle.UNSET);
             }
         }
 
@@ -233,7 +233,7 @@ public class Creator {
                     continue;
                 }
 
-                if (riddle.canSet(column, row, number)) {
+                if (riddle.canSet(row, column, number)) {
                     riddle.set(row, column, number);
                     boolean ok;
                     ok = backtrack(numbersToDistributeArray, i+1, nineArray, timeLimit);

@@ -47,7 +47,7 @@ public class CachedRiddle extends Riddle implements Cloneable {
     }
     
     @Override
-    public int getFreeMask(int column, int row) {
+    public int getFreeMask(int row, int column) {
         return rowFree[row] & columnFree[column] & blockFree[row/3][column/3];
     }
 
