@@ -76,24 +76,11 @@ public class CreatorTest {
         assertEquals(9*9, r.getSetCount());
     }
 
-    private static int[] toIntArray(byte[] array) {
-        int iv[] = new int[array.length];
-        for (int i=0; i < array.length; i++) {
-            iv[i] = array[i];
-        }        
-        return iv;
-    }
-
-    private static List<Integer> toIntList(byte[] array) {
-        int iv[] = toIntArray(array);
-        return IntStream.of(iv).mapToObj(b -> b).sorted().collect(Collectors.toList());
-    }
-
     @Test
     @Ignore
     public void testCreateNumbersToDistributeWithOnce() {
         byte v[] = Creator.createNumbersToDistribute(new Random(), 1);
-        List<Integer> intList = toIntList(v);
+        List<Integer> intList = Utility.toIntList(v);
         
         assertEquals(9, intList.size());
         assertEquals(Arrays.asList(1,2,3,4,5,6,7,8,9), intList);
@@ -103,7 +90,7 @@ public class CreatorTest {
     @Ignore
     public void testCreateNumbersToDistributeWithTwice() {
         byte v[] = Creator.createNumbersToDistribute(new Random(), 2);
-        List<Integer> intList = toIntList(v);
+        List<Integer> intList = Utility.toIntList(v);
         
         assertEquals(2*9, intList.size());
         assertEquals(Arrays.asList(1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9), intList);
