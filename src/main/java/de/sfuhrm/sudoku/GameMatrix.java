@@ -179,10 +179,6 @@ public class GameMatrix implements Cloneable {
         }
         return result;
     }
-    
-    public byte[][] getArray() {
-        return cloneArray(data);
-    }
 
     @Override
     public String toString() {
