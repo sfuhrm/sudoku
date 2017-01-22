@@ -278,34 +278,6 @@ public class GameMatrix implements Cloneable {
         }
         return currentMask & (~1);
     }
-    
-    /**
-     * Checks if the effect of one element is valid. This can be used to check
-     * validity after setting one field. This is much quicker than
-     * {@link #isValid()}.
-     *
-     */
-    public final boolean isValid(int row, int column) {
-        boolean result = true;
-        
-        byte tmpData[] = new byte[9];
-
-        if (result) {
-            row(row, tmpData);
-            result &= findDuplicateBits(tmpData) == 0;
-        }
-
-        if (result) {
-            column(column, tmpData);
-            result &= findDuplicateBits(tmpData) == 0;
-        }
-
-        if (result) {
-            block(roundToBlock(row), roundToBlock(column), tmpData);
-            result &= findDuplicateBits(tmpData) == 0;
-        }
-        return result;
-    }
 
     /**
      * Checks if the whole play field is valid.
