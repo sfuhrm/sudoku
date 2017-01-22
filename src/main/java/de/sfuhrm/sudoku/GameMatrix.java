@@ -316,7 +316,12 @@ public class GameMatrix implements Cloneable {
         return result;
     }
     
-    /** Gets the free mask for the given row. */
+    /** Gets the free mask for the given row. 
+     * @param row the row to get the free mask for.
+     * @return bit mask with the bit 1 telling whether the number 1 is free,
+     * the bit 2 telling whether the number 2 is free, and so on. The bit 0
+     * is not used.     
+     */
     int getRowFreeMask(int row) {
         byte tmpData[] = new byte[9];
         row(row, tmpData);
