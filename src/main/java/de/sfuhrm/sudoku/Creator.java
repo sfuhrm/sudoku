@@ -79,11 +79,8 @@ public class Creator {
             c.fillBlock(0, 0);
             c.fillBlock(3, 3);
             c.fillBlock(6, 6);
-            
-            byte[] numbersToDistributeArray = createNumbersToDistribute(c.random, 9-3);        
-       
-            long limit = System.currentTimeMillis() + 1000;
-            boolean ok = c.backtrack(numbersToDistributeArray, 0, Long.MAX_VALUE);
+                   
+            boolean ok = c.backtrack(9*9 - c.riddle.getSetCount(), 0);
             if (ok)
                 break;
             iterations++;
@@ -205,42 +202,52 @@ public class Creator {
         }
     }
     
-    private boolean backtrack(byte[] numbersToDistributeArray, int i, long timeLimit) {
-        if (i == numbersToDistributeArray.length) {
+    private boolean backtrack(int numbersToDistribute, int i) {
+        if (numbersToDistribute == 0) {
+            if (! riddle.isValid()) {
+                throw new IllegalStateException();
+            }
             return resultConsumer.apply(riddle);
         }
         
         // current number to distribute
-        byte number = numbersToDistributeArray[i];
-
+        int minimumColumn = -1;
+        int minimumRow = -1;
+        int minimumBits = -1;
+        
         // determine rows + cols that are possible candidates
         // (reduce random trying)
         for (int row=0; row < GameMatrix.SIZE; row++) {
-            
-            if (System.currentTimeMillis() > timeLimit) {
-                return false;
-            }
-            
-            // number is free?
-            if ((riddle.getRowFreeMask(row) & (1<<number)) == 0) {
-                continue;
-            }
             for (int column=0; column < GameMatrix.SIZE; column++) {
-                // cell is not empty?
-                if (riddle.get(row, column) != Riddle.UNSET) {
+                if (riddle.get(row, column) != GameMatrix.UNSET)
                     continue;
-                }
-
-                if (riddle.canSet(row, column, number)) {
-                    riddle.set(row, column, number);
-                    boolean ok;
-                    ok = backtrack(numbersToDistributeArray, i+1, timeLimit);
-                    if (ok) {
-                        return true;
-                    }
-                    riddle.set(row, column, Riddle.UNSET);
+                int free = riddle.getFreeMask(row, column);
+                int bits = Integer.bitCount(free);
+                
+                if (bits != 0 && (minimumBits == -1 || bits < minimumBits)) {
+                    minimumColumn = column;
+                    minimumRow = row;
+                    minimumBits = bits;
                 }
             }
+        }
+        
+        if (minimumColumn == -1 || minimumRow == -1) {
+            return false;
+        }
+        
+        for (int bit = 0; bit < minimumBits; bit++) {
+            int free = riddle.getFreeMask(minimumRow, minimumColumn);
+            int number = getSetBitOffset(free, bit);
+            if (number <= 0) {
+                throw new IllegalStateException();
+            }
+            riddle.set(minimumRow, minimumColumn, (byte) (number));
+            boolean ok = backtrack(numbersToDistribute - 1, i + 1);
+            if (ok) {
+                return true;
+            }
+            riddle.set(minimumRow, minimumColumn, GameMatrix.UNSET);
         }
 
         return false;
