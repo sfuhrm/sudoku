@@ -197,4 +197,35 @@ public class GameMatrixTest {
         vals = Utility.toIntList(target);
         assertEquals(Arrays.asList(6,6,6,7,7,7,8,8,8), vals);
      }
+    
+    @Test
+    public void testToString() {
+        byte data[][] =
+        GameMatrix.parse(
+                "000000000",
+                "111111111",
+                "222222222",
+                "333333333",
+                "444444444",
+                "555555555",
+                "666666666",
+                "777777777",
+                "888888888"
+                );
+        
+        GameMatrix matrix = new GameMatrix();
+        matrix.setAll(data);
+        
+        String out = matrix.toString();
+        assertEquals("_________\n"+
+                "111111111\n"+
+                "222222222\n"+
+                "333333333\n"+
+                "444444444\n"+
+                "555555555\n"+
+                "666666666\n"+
+                "777777777\n"+
+                "888888888\n"
+                , out);
+     }
 }

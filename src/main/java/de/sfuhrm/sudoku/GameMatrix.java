@@ -186,7 +186,7 @@ public class GameMatrix implements Cloneable {
 
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                byte v = get(j, i);
+                byte v = get(i, j);
                 if (v != UNSET) {
                     sb.append(Integer.toString(get(i, j)));
                 } else {
