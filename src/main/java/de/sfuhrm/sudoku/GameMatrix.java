@@ -1,8 +1,6 @@
 package de.sfuhrm.sudoku;
 
 import java.util.Arrays;
-import java.util.function.IntConsumer;
-import java.util.stream.IntStream;
 
 /**
  * The quadratix matrix.
@@ -206,7 +204,7 @@ public class GameMatrix implements Cloneable {
             for (int j = 0; j < SIZE; j++) {
                 byte v = get(i,j);
                 if (v != UNSET) {
-                    sb.append(Integer.toString(get(i, j)));
+                    sb.append(Integer.toString(get(j, i)));
                 } else {
                     sb.append('_');
                 }
