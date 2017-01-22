@@ -82,6 +82,7 @@ public class CreatorTest {
         }
     }
     
+    @Test
     public void testCreateRiddle() {
         GameMatrix matrix = Creator.createFull();        
         Riddle riddle = Creator.createRiddle(matrix);
