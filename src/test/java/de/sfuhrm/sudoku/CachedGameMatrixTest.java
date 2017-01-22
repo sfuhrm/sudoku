@@ -19,12 +19,11 @@ Boston, MA  02110-1301, USA.
 */
 package de.sfuhrm.sudoku;
 
-import java.util.Arrays;
-import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
+ * Test for {@link CachedGameMatrix}.
  * @author Stephan Fuhrmann
  */
 public class CachedGameMatrixTest {

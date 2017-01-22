@@ -27,6 +27,7 @@ import static org.junit.Assert.*;
 import org.junit.Ignore;
 
 /**
+ * Test for {@link Creator}.
  * @author Stephan Fuhrmann
  */
 public class CreatorTest {

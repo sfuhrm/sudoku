@@ -25,7 +25,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Test class.
+ * Test for {@link Solver}.
  * @author Stephan Fuhrmann
  */
 public class SolverTest {
