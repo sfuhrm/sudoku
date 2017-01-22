@@ -155,36 +155,25 @@ public class Creator {
             return true;
         }
 
-        List<Integer> rows = new ArrayList<>();
-        List<Integer> cols = new ArrayList<>();
-        
         // determine rows + cols that are possible candidates
         // (reduce random trying)
-        for (int k=0; k < GameMatrix.SIZE; k++) {
-            riddle.row(k, nineArray);
+        for (int row=0; row < GameMatrix.SIZE; row++) {
+            riddle.row(row, nineArray);
             int mask = Riddle.getNumberMask(nineArray);
-            if ((mask & 1<<number) == 0) {
-                rows.add(k);
+            if ((mask & 1<<number) != 0) {
+                continue;
             }
-            riddle.column(k, nineArray);
-            mask = Riddle.getNumberMask(nineArray);
-            if ((mask & 1<<number) == 0) {
-                cols.add(k);
-            }
-        }
-
-        if (cols.isEmpty() || rows.isEmpty()) {
-            return false;
-        }
-        
-        Collections.shuffle(cols, random);
-        Collections.shuffle(rows, random);
-        for (int row : rows) {
-            for (int column : cols) {
+            for (int column=0; column < GameMatrix.SIZE; column++) {
                 if (riddle.get(column, row) != Riddle.UNSET) {
                     continue;
                 }
                 
+                riddle.column(column, nineArray);
+                mask = Riddle.getNumberMask(nineArray);
+                if ((mask & 1<<number) != 0) {
+                    continue;
+                }
+
                 if (riddle.canSet(column, row, number)) {
                     riddle.set(column, row, number);
                     boolean ok;
@@ -200,6 +189,7 @@ public class Creator {
                 }
             }
         }
+
         return false;
     }
 
