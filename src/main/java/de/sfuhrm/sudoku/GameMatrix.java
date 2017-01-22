@@ -56,9 +56,7 @@ public class GameMatrix implements Cloneable {
      * @param target a 9-element array to receive the row data.
      */
     protected void row(final int index, final byte[] target) {
-        for (int i=0; i < SIZE; i++) {
-            target[i] = data[index][i];
-        }
+        System.arraycopy(data[index], 0, target, 0, SIZE);
     }
     
     /** Gets a stream of the given column. 
