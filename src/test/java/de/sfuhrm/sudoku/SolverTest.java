@@ -50,8 +50,8 @@ public class SolverTest {
         GameMatrix matrix = Creator.createFull();
         Random random = new Random();
         
-        int row = random.nextInt(10);
-        int column = random.nextInt(10);
+        int row = random.nextInt(9);
+        int column = random.nextInt(9);
         
         Riddle riddle = new Riddle();
         riddle.setAll(matrix.getArray());
