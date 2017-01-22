@@ -265,7 +265,7 @@ public class GameMatrix implements Cloneable {
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (!(obj instanceof GameMatrix)) {
             return false;
         }
         final GameMatrix other = (GameMatrix) obj;
