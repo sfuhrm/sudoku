@@ -47,16 +47,22 @@ public class Riddle extends CachedGameMatrix implements Cloneable {
 
     /**
      * Get whether a certain field is writable.
+     * @param row the row of the cell to get the writability for.
+     * @param column the column of the cell to get the writability for.
+     * @return {@code true} if the cell is writable.
      */
-    public final boolean getWritable(final int row, final int col) {
-        return writeable[row][col];
+    public final boolean getWritable(final int row, final int column) {
+        return writeable[row][column];
     }
     
     /**
      * Set a certain field writable.
+     * @param row the row of the cell to set the writability for.
+     * @param column the column of the cell to set the writability for.
+     * @param set the value to set for the cell, {@code true} means writable.
      */
-    public final void setWritable(final int row, final int col, final boolean set) {
-        writeable[row][col] = set;
+    public final void setWritable(final int row, final int column, final boolean set) {
+        writeable[row][column] = set;
     }
     
     @Override

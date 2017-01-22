@@ -41,8 +41,10 @@ public class Solver {
     /** The maximum number of solutions to search. */
     public final static int LIMIT = 20;
 
-    public Solver(Riddle f) {
-        riddle = (Riddle) f.clone();
+    /** Creates a solver for the given riddle.
+     */
+    public Solver(Riddle solveMe) {
+        riddle = (Riddle) solveMe.clone();
         possibleSolutions = new ArrayList<>();
     }
 
