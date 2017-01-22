@@ -25,7 +25,7 @@ import java.util.Arrays;
  * A version with caching of free candidates for performance purposes.
  * @author Stephan Fuhrmann
  */
-public class CachedGameMatrix extends GameMatrix implements Cloneable {
+class CachedGameMatrix extends GameMatrix implements Cloneable {
 
     /** Buffered free masks per row. */
     private int rowFree[];
@@ -39,7 +39,7 @@ public class CachedGameMatrix extends GameMatrix implements Cloneable {
     /**
      * Creates an empty full-writable riddle.
      */
-    public CachedGameMatrix() {
+    CachedGameMatrix() {
         blockFree = new int[3][3];
         rowFree = new int[SIZE];
         columnFree = new int[SIZE];
