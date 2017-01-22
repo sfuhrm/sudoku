@@ -294,4 +294,26 @@ public class GameMatrixTest {
                 , out);
      }
 
+    
+    @Test
+    public void testFindDuplicateBits() {
+        int mask;
+        byte array[];
+        
+        array = new byte[] {1,2,3,4,5};
+        mask = GameMatrix.findDuplicateBits(array);
+        assertEquals(0, mask);
+        
+        array = new byte[] {1,1,3,4,5};
+        mask = GameMatrix.findDuplicateBits(array);
+        assertEquals(2, mask);
+        
+        array = new byte[] {1,1,1,4,5};
+        mask = GameMatrix.findDuplicateBits(array);
+        assertEquals(2, mask);
+        
+        array = new byte[] {0,0,0,4,5};
+        mask = GameMatrix.findDuplicateBits(array);
+        assertEquals(0, mask);
+    }
 }
