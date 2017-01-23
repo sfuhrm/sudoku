@@ -45,6 +45,8 @@ And last but not least you can solve a riddle using
 
 For valid riddles you'll find in magazines there is only one solution in the list.
 
+There is also a [CLI client](sudoku-client) that demonstrates the usage of the library.
+
 ## Including it in your projects
 
 Please note that the current version is experimental. It creates and solves riddles. The API will change.
