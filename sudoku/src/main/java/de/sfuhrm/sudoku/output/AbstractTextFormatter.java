@@ -20,26 +20,29 @@ Boston, MA  02110-1301, USA.
 package de.sfuhrm.sudoku.output;
 
 /**
- * Solves a partially filled Sudoku. Can find multiple solutions if they are
- * there.
+ * Basic functionality for most text formatters.
  * @author Stephan Fuhrmann
  */
 abstract class AbstractTextFormatter implements GameMatrixFormatter {
     private String unknownCellContentCharacter = ".";
     private String lineSeparator = "\n";
 
+    /** Gets the String to use for unknown/unset cells. */
     public String getUnknownCellContentCharacter() {
         return unknownCellContentCharacter;
     }
 
+    /** Sets the String to use for unknown/unset cells. */
     public void setUnknownCellContentCharacter(String unknownCellContentCharacter) {
         this.unknownCellContentCharacter = unknownCellContentCharacter;
     }
 
+    /** Gets the line separator String to use. */
     public String getLineSeparator() {
         return lineSeparator;
     }
 
+    /** Sets the line separator String to use. */
     public void setLineSeparator(String lineSeparator) {
         this.lineSeparator = lineSeparator;
     }
