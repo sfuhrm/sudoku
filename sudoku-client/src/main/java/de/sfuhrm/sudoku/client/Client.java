@@ -95,28 +95,35 @@ public class Client {
         
         if (op == Op.Solve) {
             solve();
-            return;
-        }
-        
-        for (int i = 0; i < count; i++) {
-            switch (op) {
-                case Full: {
-                    GameMatrix matrix = Creator.createFull();
-                    if (!quiet) System.out.println(matrix);
-                    break;
-                }
-                case Riddle: {
-                    GameMatrix matrix = Creator.createFull();
-                    Riddle riddle = Creator.createRiddle(matrix);
-                    if (!quiet) System.out.println(riddle);
-                    break;
-                }
-                case Both: {
-                    GameMatrix matrix = Creator.createFull();
-                    Riddle riddle = Creator.createRiddle(matrix);
-                    if (!quiet) System.out.println(riddle);
-                    if (!quiet) System.out.println(matrix);
-                    break;
+        } else {
+            for (int i = 0; i < count; i++) {
+                switch (op) {
+                    case Full: {
+                        GameMatrix matrix = Creator.createFull();
+                        if (!quiet) {
+                            System.out.println(matrix);
+                        }
+                        break;
+                    }
+                    case Riddle: {
+                        GameMatrix matrix = Creator.createFull();
+                        Riddle riddle = Creator.createRiddle(matrix);
+                        if (!quiet) {
+                            System.out.println(riddle);
+                        }
+                        break;
+                    }
+                    case Both: {
+                        GameMatrix matrix = Creator.createFull();
+                        Riddle riddle = Creator.createRiddle(matrix);
+                        if (!quiet) {
+                            System.out.println(riddle);
+                        }
+                        if (!quiet) {
+                            System.out.println(matrix);
+                        }
+                        break;
+                    }
                 }
             }
         }
