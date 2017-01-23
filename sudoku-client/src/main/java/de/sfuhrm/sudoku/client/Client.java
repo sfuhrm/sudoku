@@ -23,12 +23,17 @@ import de.sfuhrm.sudoku.Creator;
 import de.sfuhrm.sudoku.GameMatrix;
 import de.sfuhrm.sudoku.Riddle;
 import de.sfuhrm.sudoku.Solver;
+import de.sfuhrm.sudoku.output.GameMatrixFormatter;
+import de.sfuhrm.sudoku.output.MarkdownTableFormatter;
+import de.sfuhrm.sudoku.output.PlainTextFormatter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
@@ -47,7 +52,28 @@ public class Client {
         Riddle,
         Both,
         Solve
-    }
+    };
+    
+    enum Formatter {
+        PlainText(PlainTextFormatter.class),
+        MarkDownTable(MarkdownTableFormatter.class);
+
+        private final Class<? extends GameMatrixFormatter> clazz;
+        private Formatter(Class<? extends GameMatrixFormatter> inClazz) {
+            this.clazz = inClazz;
+        }
+        
+        public GameMatrixFormatter newInstance() {
+            try {
+                return clazz.newInstance();
+            } catch (IllegalAccessException | InstantiationException ex) {
+                throw new IllegalStateException(ex);
+            }
+        }
+    };
+    
+    @Option(name = "-f", aliases = {"-format"}, usage = "The output format to use")
+    private Formatter format = Formatter.PlainText;
     
     @Option(name = "-e", aliases = {"-exec"}, usage = "The operation to perform")
     private Op op = Op.Full;
@@ -64,8 +90,7 @@ public class Client {
     @Option(name = "-h", aliases = {"-help"}, usage = "Show this command line help")
     private boolean help;
     
-    private void solve() throws FileNotFoundException, IOException {
-        Scanner scanner = null;
+    private void solve(GameMatrixFormatter formatter) throws FileNotFoundException, IOException {
         if (op == Op.Solve && input == null) {
             throw new IllegalArgumentException("Expecting input file for Solve");
         }
@@ -85,23 +110,24 @@ public class Client {
         List<Riddle> sollutions = solver.solve();
         if (!quiet) {
             for (Riddle r : sollutions) {
-                System.out.println(r);
+                System.out.println(formatter.format(r));
             }
         }
     }
     
     private void run() throws IOException {
+        GameMatrixFormatter formatter = format.newInstance();
         long start = System.currentTimeMillis();
         
         if (op == Op.Solve) {
-            solve();
+            solve(formatter);
         } else {
             for (int i = 0; i < count; i++) {
                 switch (op) {
                     case Full: {
                         GameMatrix matrix = Creator.createFull();
                         if (!quiet) {
-                            System.out.println(matrix);
+                            System.out.println(formatter.format(matrix));
                         }
                         break;
                     }
@@ -109,7 +135,7 @@ public class Client {
                         GameMatrix matrix = Creator.createFull();
                         Riddle riddle = Creator.createRiddle(matrix);
                         if (!quiet) {
-                            System.out.println(riddle);
+                            System.out.println(formatter.format(riddle));
                         }
                         break;
                     }
@@ -117,10 +143,10 @@ public class Client {
                         GameMatrix matrix = Creator.createFull();
                         Riddle riddle = Creator.createRiddle(matrix);
                         if (!quiet) {
-                            System.out.println(riddle);
+                            System.out.println(formatter.format(riddle));
                         }
                         if (!quiet) {
-                            System.out.println(matrix);
+                            System.out.println(formatter.format(matrix));
                         }
                         break;
                     }
