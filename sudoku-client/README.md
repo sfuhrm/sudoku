@@ -15,6 +15,8 @@ The command line options for the client are as follows:
 
      -e (-exec) [Full | Riddle | Both |     : The operation to perform (default:
      Solve]                                   Full)
+     -f (-format) [PlainText |              : The output format to use (default:
+     MarkDownTable]                           MarkDownTable)
      -h (-help)                             : Show this command line help (default:
                                               true)
      -i (-input) PATH                       : Input file to read for solving
@@ -24,39 +26,39 @@ The command line options for the client are as follows:
      -t (-time)                             : Show timing information (default:
                                               false)
 
+
 One example session is given here which creates 3 full boards:
 
-    java -jar target/sudoku-client-*-SNAPSHOT-jar-with-dependencies.jar  -e Full -n 3
-    465287391
-    932514687
-    871396524
-    549872136
-    186435972
-    327961845
-    794158263
-    653729418
-    218643759
-    
-    426857319
-    397214568
-    158396427
-    739682145
-    682145973
-    514739286
-    273961854
-    941578632
-    865423791
-    
-    891453627
-    762189345
-    534276891
-    126395784
-    457812936
-    983764512
-    645928173
-    219637458
-    378541269
+    java -jar target/sudoku-client-0.1.3-SNAPSHOT-jar-with-dependencies.jar -e Full  -f MarkDownTable -n 3
+    |3|9|6|1|7|2|5|8|4|
+    |1|2|5|4|6|8|3|9|7|
+    |8|7|4|3|5|9|1|6|2|
+    |4|8|7|6|9|3|2|5|1|
+    |6|3|2|5|4|1|8|7|9|
+    |5|1|9|8|2|7|6|4|3|
+    |2|4|1|7|8|6|9|3|5|
+    |9|5|8|2|3|4|7|1|6|
+    |7|6|3|9|1|5|4|2|8|
 
+    |3|8|4|2|7|5|6|9|1|
+    |9|5|1|4|3|6|2|7|8|
+    |2|7|6|8|9|1|5|3|4|
+    |4|2|9|1|6|3|7|8|5|
+    |5|6|8|7|2|9|1|4|3|
+    |1|3|7|5|8|4|9|6|2|
+    |7|4|2|6|5|8|3|1|9|
+    |8|9|5|3|1|7|4|2|6|
+    |6|1|3|9|4|2|8|5|7|
+    
+    |7|5|1|4|3|8|2|9|6|
+    |6|8|4|9|1|2|3|5|7|
+    |2|9|3|7|5|6|1|8|4|
+    |9|2|5|8|4|7|6|1|3|
+    |1|4|8|6|2|3|9|7|5|
+    |3|6|7|1|9|5|4|2|8|
+    |5|7|2|3|6|1|8|4|9|
+    |4|1|6|5|8|9|7|3|2|
+    |8|3|9|2|7|4|5|6|1|
 
 ## Author
 
