@@ -22,7 +22,6 @@ package de.sfuhrm.sudoku.client;
 import de.sfuhrm.sudoku.Creator;
 import de.sfuhrm.sudoku.GameMatrix;
 import de.sfuhrm.sudoku.Riddle;
-import java.io.File;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
