@@ -26,11 +26,39 @@ The usage for fully set Sudoku boards (no empty fields) is as following:
         GameMatrix matrix = Creator.createFull();        
 ---------------------------------------
 
+A full Sudoku will look like this example:
+
+---------------------------------------
+|8|7|9|4|2|5|6|1|3|
+|5|4|6|3|8|1|2|7|9|
+|3|2|1|7|9|6|4|5|8|
+|4|1|2|5|3|7|8|9|6|
+|6|8|3|2|1|9|5|4|7|
+|7|9|5|8|6|4|3|2|1|
+|1|6|8|9|5|2|7|3|4|
+|9|5|4|6|7|3|1|8|2|
+|2|3|7|1|4|8|9|6|5|
+---------------------------------------
+
 You can create a solvable riddle (with empty fields) using
 
 ---------------------------------------
         GameMatrix matrix = Creator.createFull();        
         Riddle riddle = Creator.createRiddle(matrix);
+---------------------------------------
+
+which will look like this
+
+---------------------------------------
+|5|.|.|.|.|6|3|4|.|
+|4|.|.|.|8|.|.|1|.|
+|6|.|.|3|9|.|.|.|2|
+|.|.|.|.|7|.|.|.|9|
+|.|.|.|.|.|8|7|.|3|
+|.|.|9|.|.|.|.|2|.|
+|.|.|.|.|.|.|.|.|.|
+|.|6|7|.|.|.|.|.|8|
+|.|.|.|2|.|1|.|.|4|
 ---------------------------------------
 
 And last but not least you can solve a riddle using
