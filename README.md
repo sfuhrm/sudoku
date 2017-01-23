@@ -14,8 +14,8 @@ Use the following command line:
 
 In the following list I want to give an overview of the features:
 
-* Pure Java implementation without any runtime dependencies.
 * Very fast algorithm that is using backtracking, but terminates in some fractions of a second. For fully filled boards this is usually less than 1ms on current hardware. For partly-filled riddles this is usually less than 20ms.
+* Pure Java implementation without any runtime dependencies.
 * Using Java 8.
 
 ## Usage
@@ -45,7 +45,7 @@ And last but not least you can solve a riddle using
 
 For valid riddles you'll find in magazines there is only one solution in the list.
 
-## Including it into your projects
+## Including it in your projects
 
 Please note that the current version is experimental. It creates and solves riddles. The API will change.
 The library could run into a runtime exception.
@@ -64,14 +64,18 @@ The recommended way of including the library into your project is using maven:
 
 ## Algorithm
 
+The design idea is to use the narrowest bottleneck of the Sudoku board to prune the backtracking
+tree to the maximum and get the fastest results.
+
+### Initialization
+
 The algorithm first fills three blocks with numbers in random order to reduce the amount of backtracking.
 After that, backtracking for the remaining fields starts.
 
-The field with the lest number of possible number candidates is filled. All candidates are tried until
-the first candidate leads to a valid backtracking tree path. Backtracking occurs in this loop.
+### Backtracking
 
-The design idea is to use the narrowest bottleneck of the Sudoku board to prune the backtracking
-tree to the maximum and get the fastest results.
+The field with the lest number of possible number candidates on the board is searched. 
+All candidates are tried until the first candidate leads to a valid backtracking tree path. Backtracking occurs in this loop.
 
 ### Warning
 
