@@ -22,6 +22,14 @@ package de.sfuhrm.sudoku.client;
 import de.sfuhrm.sudoku.Creator;
 import de.sfuhrm.sudoku.GameMatrix;
 import de.sfuhrm.sudoku.Riddle;
+import de.sfuhrm.sudoku.Solver;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
@@ -37,7 +45,8 @@ public class Client {
     enum Op {
         Full,
         Riddle,
-        Both
+        Both,
+        Solve
     }
     
     @Option(name = "-e", aliases = {"-exec"}, usage = "The operation to perform")
@@ -49,11 +58,46 @@ public class Client {
     @Option(name = "-q", aliases = {"-quiet"}, usage = "No output")
     private boolean quiet;
     
+    @Option(name = "-i", aliases = {"-input"}, usage = "Input file to read for solving")
+    private Path input;
+    
     @Option(name = "-h", aliases = {"-help"}, usage = "Show this command line help")
     private boolean help;
     
-    private void run() {
+    private void solve() throws FileNotFoundException, IOException {
+        Scanner scanner = null;
+        if (op == Op.Solve && input == null) {
+            throw new IllegalArgumentException("Expecting input file for Solve");
+        }
+
+        List<String> lines = Files.readAllLines(input);
+        lines.stream()
+                .filter(l -> !l.isEmpty())
+                .map(l -> l.replaceAll("[_?.]", "0"))
+                .collect(Collectors.toList());
+        
+        GameMatrix matrix = new GameMatrix();
+        byte[][] data = GameMatrix.parse(lines.toArray(new String[0]));
+        
+        Riddle riddle = new Riddle();
+        riddle.setAll(data);
+        Solver solver = new Solver(riddle);
+        List<Riddle> sollutions = solver.solve();
+        if (!quiet) {
+            for (Riddle r : sollutions) {
+                System.out.println(r);
+            }
+        }
+    }
+    
+    private void run() throws IOException {
         long start = System.currentTimeMillis();
+        
+        if (op == Op.Solve) {
+            solve();
+            return;
+        }
+        
         for (int i = 0; i < count; i++) {
             switch (op) {
                 case Full: {
@@ -84,7 +128,7 @@ public class Client {
         }
     }
     
-    public static void main(String[] args) throws CmdLineException {
+    public static void main(String[] args) throws CmdLineException, IOException {
         Client client = new Client();
         CmdLineParser parser = new CmdLineParser(client);
         parser.parseArgument(args);

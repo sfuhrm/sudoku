@@ -13,13 +13,16 @@ Use the following command line:
 
 The command line options for the client are as follows:
 
-     -e (-exec) [Full | Riddle | Both] : The operation to perform (default: Full)
-     -h (-help)                        : Show this command line help (default: true)
-     -n (-count) N                     : The number of outputs to create (default:
-                                         1)
-     -q (-quiet)                       : No output (default: false)
-     -t (-time)                        : Show timing information (default: false)
-
+     -e (-exec) [Full | Riddle | Both |     : The operation to perform (default:
+     Solve]                                   Full)
+     -h (-help)                             : Show this command line help (default:
+                                              true)
+     -i (-input) PATH                       : Input file to read for solving
+     -n (-count) N                          : The number of outputs to create
+                                              (default: 1)
+     -q (-quiet)                            : No output (default: false)
+     -t (-time)                             : Show timing information (default:
+                                              false)
 
 One example session is given here which creates 3 full boards:
 
