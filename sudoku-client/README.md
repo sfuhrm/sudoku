@@ -13,49 +13,47 @@ Use the following command line:
 
 The command line options for the client are as follows:
 
----------------------------------------
- -e (-exec) [Full | Riddle | Both] : The operation to perform (default: Full)
- -h (-help)                        : Show this command line help (default: true)
- -n (-count) N                     : The number of outputs to create (default:
-                                     1)
- -q (-quiet)                       : No output (default: false)
- -t (-time)                        : Show timing information (default: false)
----------------------------------------
+     -e (-exec) [Full | Riddle | Both] : The operation to perform (default: Full)
+     -h (-help)                        : Show this command line help (default: true)
+     -n (-count) N                     : The number of outputs to create (default:
+                                         1)
+     -q (-quiet)                       : No output (default: false)
+     -t (-time)                        : Show timing information (default: false)
+
 
 One example session is given here which creates 3 full boards:
 
----------------------------------------
-java -jar target/sudoku-client-*-SNAPSHOT-jar-with-dependencies.jar  -e Full -n 3
-465287391
-932514687
-871396524
-549872136
-186435972
-327961845
-794158263
-653729418
-218643759
+    java -jar target/sudoku-client-*-SNAPSHOT-jar-with-dependencies.jar  -e Full -n 3
+    465287391
+    932514687
+    871396524
+    549872136
+    186435972
+    327961845
+    794158263
+    653729418
+    218643759
+    
+    426857319
+    397214568
+    158396427
+    739682145
+    682145973
+    514739286
+    273961854
+    941578632
+    865423791
+    
+    891453627
+    762189345
+    534276891
+    126395784
+    457812936
+    983764512
+    645928173
+    219637458
+    378541269
 
-426857319
-397214568
-158396427
-739682145
-682145973
-514739286
-273961854
-941578632
-865423791
-
-891453627
-762189345
-534276891
-126395784
-457812936
-983764512
-645928173
-219637458
-378541269
----------------------------------------
 
 ## Author
 
