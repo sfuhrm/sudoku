@@ -6,9 +6,7 @@
         <artifactId>sudoku-parent</artifactId>
         <version>0.1.2-SNAPSHOT</version>
     </parent>
-    <groupId>de.sfuhrm</groupId>
     <artifactId>sudoku-client</artifactId>
-    <version>0.1.2-SNAPSHOT</version>
     <name>Sudoku Client</name>
     <description>Sudoku implementation</description>
     <url>https://github.com/sfuhrm/sudoku</url>
@@ -56,7 +54,7 @@
         <dependency>
             <groupId>de.sfuhrm</groupId>
             <artifactId>sudoku</artifactId>
-            <version>0.1.2-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>args4j</groupId>

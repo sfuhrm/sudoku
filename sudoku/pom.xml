@@ -6,9 +6,7 @@
         <artifactId>sudoku-parent</artifactId>
         <version>0.1.2-SNAPSHOT</version>
     </parent>
-    <groupId>de.sfuhrm</groupId>
     <artifactId>sudoku</artifactId>
-    <version>0.1.2-SNAPSHOT</version>
     <name>Sudoku</name>
     <description>Sudoku implementation</description>
     <url>https://github.com/sfuhrm/sudoku</url>
