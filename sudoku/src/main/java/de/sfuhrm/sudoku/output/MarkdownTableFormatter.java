@@ -33,6 +33,25 @@ public class MarkdownTableFormatter extends AbstractTextFormatter {
     public String format(GameMatrix matrix) {
         StringBuilder sb = new StringBuilder();
         
+        for (int column = 0; column < GameMatrix.SIZE; column++) {
+            if (column == 0) {
+                sb.append(tableSeparator);
+            }
+            sb.append(" ");
+            sb.append(" ");
+            sb.append(tableSeparator);
+        }
+        sb.append(getLineSeparator());
+        
+        for (int column = 0; column < GameMatrix.SIZE; column++) {
+            if (column == 0) {
+                sb.append(tableSeparator);
+            }
+            sb.append("---");
+            sb.append(tableSeparator);
+        }
+        sb.append(getLineSeparator());
+        
         for (int row = 0; row < GameMatrix.SIZE; row++) {
             for (int column = 0; column < GameMatrix.SIZE; column++) {
                 byte val = matrix.get(row, column);
@@ -44,13 +63,26 @@ public class MarkdownTableFormatter extends AbstractTextFormatter {
                 }
                 
                 if (column == 0) {
-                    sb.append(tableSeparator);                    
+                    sb.append(tableSeparator);
                 }
+                sb.append(" ");
                 sb.append(str);
+                sb.append(" ");
                 sb.append(tableSeparator);
             }
             sb.append(getLineSeparator());
         }
+        
+        for (int column = 0; column < GameMatrix.SIZE; column++) {
+            if (column == 0) {
+                sb.append(tableSeparator);
+            }
+            sb.append(" ");
+            sb.append(" ");
+            sb.append(tableSeparator);
+        }
+        sb.append(getLineSeparator());
+        
         return sb.toString();
     }
 }
