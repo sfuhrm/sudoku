@@ -130,4 +130,154 @@ public class CreatorTest {
         assertEquals(2*9, intList.size());
         assertEquals(Arrays.asList(1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9), intList);
     }
+    
+    @Test
+    public void testCreateVariant() {
+        GameMatrix original = Creator.createFull();
+        GameMatrix variant1 = Creator.createVariant(original);
+        GameMatrix variant2 = Creator.createVariant(original);
+        GameMatrix variant3 = Creator.createVariant(original);
+        
+        assertEquals(true, original.isValid());
+        assertEquals(9*9, original.getSetCount());
+        assertEquals(true, variant1.isValid());
+        assertEquals(9*9, variant1.getSetCount());
+        assertEquals(true, variant2.isValid());
+        assertEquals(9*9, variant2.getSetCount());
+        assertEquals(true, variant3.isValid());
+        assertEquals(9*9, variant3.getSetCount());
+    }    
+    
+    @Test
+    public void testSwapColumnWithFirstAndSecond() {
+        GameMatrix actual = new GameMatrix();
+        actual.setAll(GameMatrix.parse(
+                "100000000",
+                "020100000",
+                "000320100",
+                "010000456",
+                "000010000",
+                "000000010",
+                "001000000",
+                "000001000",
+                "000000001"
+                ));
+
+        GameMatrix expected = new GameMatrix();
+        expected.setAll(GameMatrix.parse(
+                "010000000",
+                "200100000",
+                "000320100",
+                "100000456",
+                "000010000",
+                "000000010",
+                "001000000",
+                "000001000",
+                "000000001"
+                ));
+                
+        Creator.swapColumn(actual, 0, 1);
+        
+        assertEquals(expected, actual);
+     }
+
+    @Test
+    public void testSwapColumnWithFirstAndLast() {
+        GameMatrix actual = new GameMatrix();
+        actual.setAll(GameMatrix.parse(
+                "100000000",
+                "020100000",
+                "000320100",
+                "010000456",
+                "000010000",
+                "000000010",
+                "001000000",
+                "000001000",
+                "000000001"
+                ));
+
+        GameMatrix expected = new GameMatrix();
+        expected.setAll(GameMatrix.parse(
+                "000000001",
+                "020100000",
+                "000320100",
+                "610000450",
+                "000010000",
+                "000000010",
+                "001000000",
+                "000001000",
+                "100000000"
+                ));
+                
+        Creator.swapColumn(actual, 0, 8);
+        
+        assertEquals(expected, actual);
+     }
+    
+    @Test
+    public void testSwapRowWithFirstAndSecond() {
+        GameMatrix actual = new GameMatrix();
+        actual.setAll(GameMatrix.parse(
+                "100000000",
+                "020100000",
+                "000320100",
+                "010000456",
+                "000010000",
+                "000000010",
+                "001000000",
+                "000001000",
+                "000000001"
+                ));
+
+        GameMatrix expected = new GameMatrix();
+        expected.setAll(GameMatrix.parse(
+                "020100000",
+                "100000000",
+                "000320100",
+                "010000456",
+                "000010000",
+                "000000010",
+                "001000000",
+                "000001000",
+                "000000001"
+                ));
+                
+        Creator.swapRow(actual, 0, 1);
+        
+        assertEquals(expected, actual);
+     }
+    
+    @Test
+    public void testSwapRowWithFirstAndLast() {
+        GameMatrix actual = new GameMatrix();
+        actual.setAll(GameMatrix.parse(
+                "100000000",
+                "020100000",
+                "000320100",
+                "010000456",
+                "000010000",
+                "000000010",
+                "001000000",
+                "000001000",
+                "000000001"
+                ));
+
+        GameMatrix expected = new GameMatrix();
+        expected.setAll(GameMatrix.parse(
+                "000000001",
+                "020100000",
+                "000320100",
+                "010000456",
+                "000010000",
+                "000000010",
+                "001000000",
+                "000001000",
+                "100000000"
+                ));
+                
+        Creator.swapRow(actual, 0, 8);
+        
+        assertEquals(expected, actual);
+     }
+
 }

@@ -103,6 +103,73 @@ public class Creator {
         
         return c.winner;
     }
+    
+    /** Creates a variant of a fully-filled game matrix. The
+     * variant is calculated very efficiently by applying simple
+     * transformations.
+     * @param matrix the input matrix to transform.
+     * @return a transformed variant of the input game matrix.
+     * @throws IllegalArgumentException if there are unset fields in the GameMatrix.
+     */
+    public static GameMatrix createVariant(GameMatrix matrix) {
+        GameMatrix target = new GameMatrix();
+        Random random = new Random();
+        
+        byte substitution[] = createNumbersToDistribute(random, 1);
+        for (int row = 0; row < GameMatrix.SIZE; row++) {
+            for (int column = 0; column < GameMatrix.SIZE; column++) {
+                byte original = matrix.get(row, column);
+                if (original == GameMatrix.UNSET)
+                    throw new IllegalArgumentException("There are unset fields in the given GameMatrix");
+                byte substitute = substitution[original-1];
+                target.set(row, column, substitute);
+            }
+        }
+        
+        // row swapping within blocks
+        for (int i=0; i < 3; i++) {
+            boolean swap = random.nextBoolean();
+            if (swap) {
+                // swapped row distance: 1 or 2
+                int distance = 1 + random.nextInt(2);
+                int offset   = distance == 2 ? 0 : random.nextInt(2);
+                swapRow(matrix, i*3 + offset, i*3 + offset + distance);
+            }
+        }
+        
+        // column swapping within blocks
+        for (int i=0; i < 3; i++) {
+            boolean swap = random.nextBoolean();
+            if (swap) {
+                // swapped column distance: 1 or 2
+                int distance = 1 + random.nextInt(2);
+                int offset   = distance == 2 ? 0 : random.nextInt(2);
+                swapColumn(matrix, i*3 + offset, i*3 + offset + distance);
+            }
+        }
+        
+        return target;
+    }
+
+    /** Swaps two rows in the given matrix. */
+    static void swapRow(GameMatrix matrix, int rowA, int rowB) {
+        for (int column = 0; column < GameMatrix.SIZE; column++) {
+            byte av = matrix.get(rowA, column);
+            byte bv = matrix.get(rowB, column);
+            matrix.set(rowB, column, av);
+            matrix.set(rowA, column, bv);
+        }
+    }
+    
+    /** Swaps two columns in the given matrix. */
+    static void swapColumn(GameMatrix matrix, int columnA, int columnB) {
+        for (int row = 0; row < GameMatrix.SIZE; row++) {
+            byte av = matrix.get(row, columnA);
+            byte bv = matrix.get(row, columnB);
+            matrix.set(row, columnB, av);
+            matrix.set(row, columnA, bv);
+        }
+    }
 
     /* Create a random array with numbers to distribute. */
     static byte[] createNumbersToDistribute(Random r, int multiplicity) {

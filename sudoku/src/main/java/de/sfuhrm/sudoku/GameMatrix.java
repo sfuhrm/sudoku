@@ -152,7 +152,7 @@ public class GameMatrix implements Cloneable {
         }
         return result;
     }
-
+        
     /**
      * Clear the cells.
      */
