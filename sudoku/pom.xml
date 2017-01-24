@@ -8,7 +8,7 @@
     </parent>
     <artifactId>sudoku</artifactId>
     <name>Sudoku</name>
-    <description>Sudoku implementation</description>
+    <description>Sudoku implementation for inclusion as a library</description>
     <url>https://github.com/sfuhrm/sudoku</url>
     <scm>
         <url>https://github.com/sfuhrm/sudoku</url>

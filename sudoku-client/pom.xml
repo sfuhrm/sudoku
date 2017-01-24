@@ -8,7 +8,7 @@
     </parent>
     <artifactId>sudoku-client</artifactId>
     <name>Sudoku Client</name>
-    <description>Sudoku implementation</description>
+    <description>Sudoku CLI client for Sudoku creation/solution</description>
     <url>https://github.com/sfuhrm/sudoku</url>
     <scm>
         <url>https://github.com/sfuhrm/sudoku</url>

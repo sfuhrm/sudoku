@@ -5,7 +5,7 @@
     <artifactId>sudoku-parent</artifactId>
     <version>0.1.4-SNAPSHOT</version>
     <name>Sudoku Parent</name>
-    <description>Sudoku implementation</description>
+    <description>Sudoku Parent POM</description>
     <url>https://github.com/sfuhrm/sudoku</url>
     <scm>
         <url>https://github.com/sfuhrm/sudoku</url>
