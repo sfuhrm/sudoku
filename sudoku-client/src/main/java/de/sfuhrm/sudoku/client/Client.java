@@ -24,6 +24,7 @@ import de.sfuhrm.sudoku.GameMatrix;
 import de.sfuhrm.sudoku.Riddle;
 import de.sfuhrm.sudoku.Solver;
 import de.sfuhrm.sudoku.output.GameMatrixFormatter;
+import de.sfuhrm.sudoku.output.LatexTableFormatter;
 import de.sfuhrm.sudoku.output.MarkdownTableFormatter;
 import de.sfuhrm.sudoku.output.PlainTextFormatter;
 import java.io.FileNotFoundException;
@@ -31,9 +32,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
@@ -56,7 +54,9 @@ public class Client {
     
     enum Formatter {
         PlainText(PlainTextFormatter.class),
-        MarkDownTable(MarkdownTableFormatter.class);
+        MarkDownTable(MarkdownTableFormatter.class),
+        LatexTable(LatexTableFormatter.class)
+        ;
 
         private final Class<? extends GameMatrixFormatter> clazz;
         private Formatter(Class<? extends GameMatrixFormatter> inClazz) {
@@ -119,6 +119,10 @@ public class Client {
         GameMatrixFormatter formatter = format.newInstance();
         long start = System.currentTimeMillis();
         
+        if (!quiet) {
+            System.out.print(formatter.documentStart());
+        }
+        
         if (op == Op.Solve) {
             solve(formatter);
         } else {
@@ -127,7 +131,7 @@ public class Client {
                     case Full: {
                         GameMatrix matrix = Creator.createFull();
                         if (!quiet) {
-                            System.out.println(formatter.format(matrix));
+                            System.out.print(formatter.format(matrix));
                         }
                         break;
                     }
@@ -135,7 +139,7 @@ public class Client {
                         GameMatrix matrix = Creator.createFull();
                         Riddle riddle = Creator.createRiddle(matrix);
                         if (!quiet) {
-                            System.out.println(formatter.format(riddle));
+                            System.out.print(formatter.format(riddle));
                         }
                         break;
                     }
@@ -143,10 +147,10 @@ public class Client {
                         GameMatrix matrix = Creator.createFull();
                         Riddle riddle = Creator.createRiddle(matrix);
                         if (!quiet) {
-                            System.out.println(formatter.format(riddle));
+                            System.out.print(formatter.format(riddle));
                         }
                         if (!quiet) {
-                            System.out.println(formatter.format(matrix));
+                            System.out.print(formatter.format(matrix));
                         }
                         break;
                     }
@@ -154,6 +158,10 @@ public class Client {
             }
         }
         long end = System.currentTimeMillis();
+        if (!quiet) {
+            System.out.print(formatter.documentEnd());
+        }
+        
         
         if (timing) {
             System.err.println("Took total of "+(end-start)+"ms");

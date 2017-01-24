@@ -33,4 +33,10 @@ public interface GameMatrixFormatter {
      * @return a String representation of the game matrix.
      */
     public String format(GameMatrix matrix);
+    
+    /** Formats the document start part. */
+    public String documentStart();
+    
+    /** Formats the document end part. */
+    public String documentEnd();
 }

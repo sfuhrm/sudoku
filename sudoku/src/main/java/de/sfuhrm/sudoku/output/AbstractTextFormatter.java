@@ -46,4 +46,14 @@ abstract class AbstractTextFormatter implements GameMatrixFormatter {
     public void setLineSeparator(String lineSeparator) {
         this.lineSeparator = lineSeparator;
     }
+
+    @Override
+    public String documentStart() {
+        return "";
+    }
+    
+    @Override
+    public String documentEnd() {
+        return "";
+    }    
 }
