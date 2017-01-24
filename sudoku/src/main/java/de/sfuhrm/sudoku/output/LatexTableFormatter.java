@@ -83,6 +83,9 @@ public class LatexTableFormatter extends AbstractTextFormatter {
         sb.append("\\end{center}");
         sb.append(getLineSeparator());
 
+        sb.append("\\vspace{25 mm}");
+        sb.append(getLineSeparator());
+
         return sb.toString();
     }
 
