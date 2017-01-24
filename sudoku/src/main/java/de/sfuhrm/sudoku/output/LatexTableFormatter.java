@@ -22,8 +22,7 @@ package de.sfuhrm.sudoku.output;
 import de.sfuhrm.sudoku.GameMatrix;
 
 /**
- * Formats the game matrix to a markdown table.
- *
+ * Formats the game matrix to a LaTeX document.
  * @author Stephan Fuhrmann
  */
 public class LatexTableFormatter extends AbstractTextFormatter {
