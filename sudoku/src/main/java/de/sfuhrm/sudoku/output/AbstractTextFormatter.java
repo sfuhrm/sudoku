@@ -28,22 +28,22 @@ abstract class AbstractTextFormatter implements GameMatrixFormatter {
     private String lineSeparator = "\n";
 
     /** Gets the String to use for unknown/unset cells. */
-    public String getUnknownCellContentCharacter() {
+    public final String getUnknownCellContentCharacter() {
         return unknownCellContentCharacter;
     }
 
     /** Sets the String to use for unknown/unset cells. */
-    public void setUnknownCellContentCharacter(String unknownCellContentCharacter) {
+    public final void setUnknownCellContentCharacter(String unknownCellContentCharacter) {
         this.unknownCellContentCharacter = unknownCellContentCharacter;
     }
 
     /** Gets the line separator String to use. */
-    public String getLineSeparator() {
+    public final String getLineSeparator() {
         return lineSeparator;
     }
 
     /** Sets the line separator String to use. */
-    public void setLineSeparator(String lineSeparator) {
+    public final void setLineSeparator(String lineSeparator) {
         this.lineSeparator = lineSeparator;
     }
 
