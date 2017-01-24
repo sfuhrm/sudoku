@@ -16,7 +16,7 @@ In the following list I want to give an overview of the features:
 
 * Very fast algorithm that is using backtracking, but terminates in some fractions of a second. For fully filled boards this is usually less than 1ms on current hardware. For partly-filled riddles this is usually less than 20ms.
 * Pure Java implementation without any runtime dependencies.
-* Plain text, Markdown and LaTeX output formats.
+* Plain text, Markdown and LaTeX output formats. For an example, see [2000-sudokus.pdf](https://github.com/sfuhrm/sudoku/releases/download/v0.1.3/2000-sudokus.pdf), a collection of 2000 Sudokus.
 
 ## Usage
 
