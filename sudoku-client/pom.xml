@@ -9,32 +9,10 @@
     <artifactId>sudoku-client</artifactId>
     <name>Sudoku Client</name>
     <description>Sudoku CLI client for Sudoku creation/solution</description>
-    <url>https://github.com/sfuhrm/sudoku</url>
-    <scm>
-        <url>https://github.com/sfuhrm/sudoku</url>
-        <connection>scm:git:https://github.com/sfuhrm/sudoku.git</connection>
-    </scm>
-    <licenses>
-        <license>
-            <name>GNU Lesser General Public License, Version 3.0</name>
-            <url>https://www.gnu.org/licenses/lgpl-3.0.en.html</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-    <developers>
-        <developer>
-            <id>stephan</id>
-            <name>Stephan Fuhrmann</name>
-            <email>s@sfuhrm.de</email>
-        </developer>
-    </developers>        
     <packaging>jar</packaging>
     <build>
         <plugins>
             <plugin>
-                <!-- NOTE: We don't need a groupId specification because the group is
-                    org.apache.maven.plugins ...which is assumed by default.
-                -->
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>3.0.0</version>
                 <configuration>

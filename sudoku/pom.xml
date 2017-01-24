@@ -10,24 +10,6 @@
     <name>Sudoku</name>
     <description>Sudoku implementation for inclusion as a library</description>
     <url>https://github.com/sfuhrm/sudoku</url>
-    <scm>
-        <url>https://github.com/sfuhrm/sudoku</url>
-        <connection>scm:git:https://github.com/sfuhrm/sudoku.git</connection>
-    </scm>
-    <licenses>
-        <license>
-            <name>GNU Lesser General Public License, Version 3.0</name>
-            <url>https://www.gnu.org/licenses/lgpl-3.0.en.html</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-    <developers>
-        <developer>
-            <id>stephan</id>
-            <name>Stephan Fuhrmann</name>
-            <email>s@sfuhrm.de</email>
-        </developer>
-    </developers>        
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
