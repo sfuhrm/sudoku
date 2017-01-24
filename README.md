@@ -16,7 +16,7 @@ In the following list I want to give an overview of the features:
 
 * Very fast algorithm that is using backtracking, but terminates in some fractions of a second. For fully filled boards this is usually less than 1ms on current hardware. For partly-filled riddles this is usually less than 20ms.
 * Pure Java implementation without any runtime dependencies.
-* Using Java 8.
+* Plain text, Markdown and LaTeX output formats.
 
 ## Usage
 
@@ -76,7 +76,7 @@ The recommended way of including the library into your project is using maven:
     <dependency>
         <groupId>de.sfuhrm</groupId>
         <artifactId>sudoku</artifactId>
-        <version>0.1.2</version>
+        <version>0.1.3</version>
     </dependency>
 ---------------------------------------
 
