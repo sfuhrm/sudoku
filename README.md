@@ -82,7 +82,7 @@ There are unit tests for many things, but the code is still young.
 The recommended way of including the library into your project is using maven:
 
 ---------------------------------------
-```
+```xml
 <dependency>
     <groupId>de.sfuhrm</groupId>
     <artifactId>sudoku</artifactId>
