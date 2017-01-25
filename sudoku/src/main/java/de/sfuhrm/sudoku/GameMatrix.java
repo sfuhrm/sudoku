@@ -44,7 +44,8 @@ public class GameMatrix implements Cloneable {
     
     /**
      * The game field. The first dimension is the row, the second the column.
-     * The value 0 means unallocated. The values 1-9 mean the corresponding cell
+     * The value 0 means unallocated (see {@link #UNSET}). 
+     * The values 1-9 mean the corresponding cell
      * value.
      */
     private byte data[][];
@@ -407,7 +408,7 @@ public class GameMatrix implements Cloneable {
      * violating the game rules.
      */
     public final boolean canSet(int row, int column, byte value) {
-        if (value == 0) {
+        if (value == UNSET) {
             return true;
         }
         int free = getFreeMask(row, column);
