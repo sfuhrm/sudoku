@@ -307,4 +307,33 @@ public class CachedGameMatrixTest {
         assertEquals(true,  matrix.canSet(4, 8, (byte)2)); // in block
         assertEquals(true,  matrix.canSet(4, 8, (byte)3)); // not in block
      }
+    
+    @Test
+    public void testGetSetCount() {
+        CachedGameMatrix matrix = new CachedGameMatrix();
+        
+        for (int row = 0; row < GameMatrix.SIZE; row++) {
+            for (int column = 0; column < GameMatrix.SIZE; column++) {
+                matrix.set(row, column, GameMatrix.UNSET);
+                assertEquals(0,  matrix.getSetCount());
+            }
+        }
+        
+        int set = 0;
+        for (int row = 0; row < GameMatrix.SIZE; row++) {
+            for (int column = 0; column < GameMatrix.SIZE; column++) {
+                matrix.set(row, column, (byte)1);
+                set++;
+                assertEquals(set,  matrix.getSetCount());
+            }
+        }
+        
+        for (int row = 0; row < GameMatrix.SIZE; row++) {
+            for (int column = 0; column < GameMatrix.SIZE; column++) {
+                matrix.set(row, column, GameMatrix.UNSET);
+                set--;
+                assertEquals(set,  matrix.getSetCount());
+            }
+        }
+     }
 }
