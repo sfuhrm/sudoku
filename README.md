@@ -20,6 +20,9 @@ In the following list I want to give an overview of the features:
 
 ## Usage
 
+You can review the [Javadoc API docs](http://api.sfuhrm.de/sudoku/) for
+detailed information.
+
 The usage for fully set Sudoku boards (no empty fields) is as following:
 
 ---------------------------------------
