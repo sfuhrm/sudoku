@@ -27,13 +27,21 @@ import java.util.Arrays;
  */
 class CachedGameMatrix extends GameMatrix implements Cloneable {
 
-    /** Buffered free masks per row. */
+    /** Buffered free masks per row. 
+     * A set 1-bit means that the digit 1 is free for use.
+     * A set 2-bit means that the digit 2 is free for use.
+     * And so on.
+     */
     private int rowFree[];
     
-    /** Buffered free masks per column. */
+    /** Buffered free masks per column. 
+     * @see #rowFree
+     */
     private int columnFree[];
     
-    /** Buffered free masks per block. */
+    /** Buffered free masks per block. 
+     * @see #rowFree
+     */
     private int blockFree[][];
 
     /**
