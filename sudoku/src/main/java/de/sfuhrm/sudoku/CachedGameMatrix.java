@@ -43,12 +43,17 @@ class CachedGameMatrix extends GameMatrix implements Cloneable {
      * @see #rowFree
      */
     private int blockFree[][];
+    
+    /** The count of non-{@link #UNSET} cells. 
+     * @see #getSetCount() 
+     */
+    private int setCount;
 
     /**
      * Creates an empty full-writable riddle.
      */
     CachedGameMatrix() {
-        blockFree = new int[3][3];
+        blockFree = new int[BLOCK_COUNT][BLOCK_COUNT];
         rowFree = new int[SIZE];
         columnFree = new int[SIZE];
         
@@ -57,8 +62,8 @@ class CachedGameMatrix extends GameMatrix implements Cloneable {
             columnFree[i] = GameMatrix.MASK_FOR_NINE_BITS;
         }
         
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < BLOCK_COUNT; i++) {
+            for (int j = 0; j < BLOCK_COUNT; j++) {
                 blockFree[i][j] = GameMatrix.MASK_FOR_NINE_BITS;
             }
         }
@@ -66,7 +71,7 @@ class CachedGameMatrix extends GameMatrix implements Cloneable {
 
     @Override
     int getBlockFreeMask(int row, int column) {
-        return blockFree[row/3][column/3];
+        return blockFree[row/BLOCK_COUNT][column/BLOCK_COUNT];
     }
 
     @Override
@@ -92,15 +97,22 @@ class CachedGameMatrix extends GameMatrix implements Cloneable {
             int bitMask = 1 << oldValue;
             rowFree[row] |= bitMask;
             columnFree[column] |= bitMask;
-            blockFree[row/3][column/3] |= bitMask;
+            blockFree[row/BLOCK_COUNT][column/BLOCK_COUNT] |= bitMask;
+            setCount--;
         }
         if (value != UNSET) {
             int bitMask = ~(1 << value);
             rowFree[row] &= bitMask;
             columnFree[column] &= bitMask;
-            blockFree[row/3][column/3] &= bitMask;
+            blockFree[row/BLOCK_COUNT][column/BLOCK_COUNT] &= bitMask;
+            setCount++;
         }        
         super.set(row, column, value); 
+    }
+    
+    @Override
+    public int getSetCount() {
+        return setCount;
     }
 
     @Override

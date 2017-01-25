@@ -65,6 +65,11 @@ public class GameMatrix implements Cloneable {
      *
      */
     protected final static int BLOCK_SIZE = 3;
+    
+    /**
+     * The total number of blocks in one dimension.
+     */
+    protected final static int BLOCK_COUNT = SIZE / BLOCK_SIZE;
 
     /**
      * Creates an empty riddle.
