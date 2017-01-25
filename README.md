@@ -26,14 +26,18 @@ detailed information.
 The usage for fully set Sudoku boards (no empty fields) is as following:
 
 ---------------------------------------
-        GameMatrix matrix = Creator.createFull();        
+```java
+GameMatrix matrix = Creator.createFull();        
+```
 ---------------------------------------
 
 You can create a solvable riddle (with empty fields) using
 
 ---------------------------------------
-        GameMatrix matrix = Creator.createFull();        
-        Riddle riddle = Creator.createRiddle(matrix);
+```java
+GameMatrix matrix = Creator.createFull();        
+Riddle riddle = Creator.createRiddle(matrix);
+```
 ---------------------------------------
 
 A solvable riddle looks like this:
@@ -55,11 +59,13 @@ A solvable riddle looks like this:
 And last but not least you can solve a riddle using
 
 ---------------------------------------
-        Riddle riddle = new Riddle();
-        riddle.setAll(GameMatrix.parse("000000000", ...));
-        
-        Solver solver = new Solver(riddle);
-        List<Riddle> solutions = solver.solve();
+```java
+    Riddle riddle = new Riddle();
+    riddle.setAll(GameMatrix.parse("000000000", ...));
+       
+    Solver solver = new Solver(riddle);
+    List<Riddle> solutions = solver.solve();
+```
 ---------------------------------------
 
 For valid riddles you'll find in magazines there is only one solution in the list.
@@ -76,11 +82,13 @@ There are unit tests for many things, but the code is still young.
 The recommended way of including the library into your project is using maven:
 
 ---------------------------------------
-    <dependency>
-        <groupId>de.sfuhrm</groupId>
-        <artifactId>sudoku</artifactId>
-        <version>0.1.3</version>
-    </dependency>
+```
+<dependency>
+    <groupId>de.sfuhrm</groupId>
+    <artifactId>sudoku</artifactId>
+    <version>0.1.3</version>
+</dependency>
+```
 ---------------------------------------
 
 ## Algorithm
