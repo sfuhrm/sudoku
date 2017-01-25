@@ -22,7 +22,6 @@ package de.sfuhrm.sudoku.client.integration;
 import de.sfuhrm.sudoku.GameMatrix;
 import de.sfuhrm.sudoku.client.Client;
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
