@@ -31,7 +31,7 @@ public class GameMatrix implements Cloneable {
     /**
      * A mask that has bits 1 to 9 set (decimal 1022).
      */
-    final static int MASK_FOR_NINE_BITS
+    protected final static int MASK_FOR_NINE_BITS
             = 1 << 1
             | 1 << 2
             | 1 << 3
@@ -116,11 +116,11 @@ public class GameMatrix implements Cloneable {
      */
     protected void block(int row, int column, final byte[] target) {
         int k = 0; // target index
-        row = roundToBlock(row);
-        column = roundToBlock(column);
+        int roundRow = roundToBlock(row);
+        int roundColumn = roundToBlock(column);
         for (int i = 0; i < BLOCK_SIZE; i++) {
             for (int j = 0; j < BLOCK_SIZE; j++) {
-                target[k++] = data[row+i][column+j];
+                target[k++] = data[roundRow+i][roundColumn+j];
             }
         }
     }
