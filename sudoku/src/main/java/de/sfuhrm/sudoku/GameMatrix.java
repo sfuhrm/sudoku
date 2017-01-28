@@ -425,4 +425,34 @@ public class GameMatrix implements Cloneable {
     static int roundToBlock(int in) {
         return in - in % BLOCK_SIZE;
     }
+    
+    /** Find the cell with the lest number of possible candidates.
+     * @param rowColumnResult a two-element int array receiving the
+     * row and column of the result. First element will be the row index,
+     * the second the column index.
+     * @return {@code true} if the minimum free cell could be found.
+     * Can be {@code false} in the case of a fully-filled matrix.
+     */
+    boolean findLeastFreeCell(int[] rowColumnResult) {
+        int minimumBits = -1;
+        int minimumRow = -1;
+        int minimumColumn = -1;
+        for (int row=0; row < GameMatrix.SIZE; row++) {
+            for (int column=0; column < GameMatrix.SIZE; column++) {
+                if (get(row, column) != GameMatrix.UNSET)
+                    continue;
+                int free = getFreeMask(row, column);
+                int bits = Integer.bitCount(free);
+                
+                if (bits != 0 && (minimumBits == -1 || bits < minimumBits)) {
+                    minimumColumn = column;
+                    minimumRow = row;
+                    minimumBits = bits;
+                }
+            }
+            rowColumnResult[0] = minimumRow;
+            rowColumnResult[1] = minimumColumn;
+        }
+        return minimumBits != -1;
+    }
 }

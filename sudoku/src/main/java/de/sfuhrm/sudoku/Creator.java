@@ -96,7 +96,7 @@ public class Creator {
             c.fillBlock(3, 3);
             c.fillBlock(6, 6);
                    
-            boolean ok = c.backtrack(9*9 - c.riddle.getSetCount());
+            boolean ok = c.backtrack(9*9 - c.riddle.getSetCount(), new int[2]);
             if (ok)
                 break;
         }
@@ -286,8 +286,9 @@ public class Creator {
     /** 
      * Do the backtracking job.
      * @param numbersToDistribute the count of fields left to fill.
+     * @param minimumCell two-int array for use within the algorithm.
      */
-    private boolean backtrack(int numbersToDistribute) {
+    private boolean backtrack(int numbersToDistribute, int minimumCell[]) {
         if (numbersToDistribute == 0) {
             if (! riddle.isValid()) {
                 throw new IllegalStateException();
@@ -295,31 +296,17 @@ public class Creator {
             return resultConsumer.apply(riddle);
         }
         
-        // current number to distribute
-        int minimumColumn = -1;
-        int minimumRow = -1;
-        int minimumBits = -1;
-        
         // determine rows + cols that are possible candidates
         // (reduce random trying)
-        for (int row=0; row < GameMatrix.SIZE; row++) {
-            for (int column=0; column < GameMatrix.SIZE; column++) {
-                if (riddle.get(row, column) != GameMatrix.UNSET)
-                    continue;
-                int free = riddle.getFreeMask(row, column);
-                int bits = Integer.bitCount(free);
-                
-                if (bits != 0 && (minimumBits == -1 || bits < minimumBits)) {
-                    minimumColumn = column;
-                    minimumRow = row;
-                    minimumBits = bits;
-                }
-            }
-        }
-        
-        if (minimumColumn == -1 || minimumRow == -1) {
+        boolean hasMinimum = riddle.findLeastFreeCell(minimumCell);
+        if (!hasMinimum) {
             return false;
         }
+        
+        int minimumRow = minimumCell[0];
+        int minimumColumn = minimumCell[1];
+        int minimumFree = riddle.getFreeMask(minimumRow, minimumColumn);
+        int minimumBits = Integer.bitCount(minimumFree);
         
         for (int bit = 0; bit < minimumBits; bit++) {
             int free = riddle.getFreeMask(minimumRow, minimumColumn);
@@ -328,7 +315,7 @@ public class Creator {
                 throw new IllegalStateException();
             }
             riddle.set(minimumRow, minimumColumn, (byte) (number));
-            boolean ok = backtrack(numbersToDistribute - 1);
+            boolean ok = backtrack(numbersToDistribute - 1, minimumCell);
             if (ok) {
                 return true;
             }

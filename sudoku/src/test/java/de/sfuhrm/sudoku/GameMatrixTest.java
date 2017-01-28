@@ -604,4 +604,54 @@ public class GameMatrixTest {
         assertEquals(6, GameMatrix.roundToBlock(7));
         assertEquals(6, GameMatrix.roundToBlock(8));
     }
+    
+    @Test
+    public void testFindLeastFreeCellWithAllFull() {
+        // full matrix
+        byte data[][] =
+        GameMatrix.parse(
+                        "367915482",
+                        "149268357",
+                        "582473619",
+                        "436187925",
+                        "975624831",
+                        "218359764",
+                        "624731598",
+                        "753892146",
+                        "891546273"
+                );
+        
+        GameMatrix matrix = new GameMatrix();
+        matrix.setAll(data);
+
+        int[] min = new int[2];
+        boolean found = matrix.findLeastFreeCell(min);
+        assertEquals(false, found);
+     }
+    
+    @Test
+    public void testFindLeastFreeCell() {
+        // a possible "full house" in the upper left block
+        byte data[][] =
+        GameMatrix.parse(
+                "123000000",
+                "456000000",
+                "780000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000"
+                );
+        
+        GameMatrix matrix = new GameMatrix();
+        matrix.setAll(data);
+
+        int[] min = new int[2];
+        boolean found = matrix.findLeastFreeCell(min);
+        assertEquals(true, found);
+        assertEquals(2, min[0]);
+        assertEquals(2, min[1]);
+     }
 }
