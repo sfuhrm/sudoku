@@ -101,7 +101,6 @@ public class Client {
                 .map(l -> l.replaceAll("[_?.]", "0"))
                 .collect(Collectors.toList());
         
-        GameMatrix matrix = new GameMatrix();
         byte[][] data = GameMatrix.parse(lines.toArray(new String[0]));
         
         Riddle riddle = new Riddle();
