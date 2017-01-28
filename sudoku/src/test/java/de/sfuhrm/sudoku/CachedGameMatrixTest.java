@@ -30,7 +30,8 @@ public class CachedGameMatrixTest {
 
     @Test
     public void testNew() {
-        new CachedGameMatrix();
+        CachedGameMatrix m = new CachedGameMatrix();
+        assertEquals(0, m.getSetCount());
     }
     
     @Test

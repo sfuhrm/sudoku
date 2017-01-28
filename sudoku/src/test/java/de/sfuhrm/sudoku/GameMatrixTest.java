@@ -32,7 +32,8 @@ public class GameMatrixTest {
 
     @Test
     public void testNew() {
-        new GameMatrix();
+        GameMatrix m = new GameMatrix();
+        assertEquals(0, m.getSetCount());
     }
     
     @Test
