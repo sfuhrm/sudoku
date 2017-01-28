@@ -69,7 +69,7 @@ public class Creator {
      * @return the index of the relative bitIndex set bit counted from 0, or -1
      * if there are no more set bits.
      */
-    final static int getSetBitOffset(final int mask, final int bitIndex) {
+    protected final static int getSetBitOffset(final int mask, final int bitIndex) {
         int count = 0;
         for (int i = 0; i < 32; i++) {
             if ((mask & 1 << i) != 0) {
@@ -152,7 +152,7 @@ public class Creator {
     }
 
     /** Swaps two rows in the given matrix. */
-    static void swapRow(GameMatrix matrix, int rowA, int rowB) {
+    protected static void swapRow(GameMatrix matrix, int rowA, int rowB) {
         for (int column = 0; column < GameMatrix.SIZE; column++) {
             byte av = matrix.get(rowA, column);
             byte bv = matrix.get(rowB, column);
@@ -162,7 +162,7 @@ public class Creator {
     }
     
     /** Swaps two columns in the given matrix. */
-    static void swapColumn(GameMatrix matrix, int columnA, int columnB) {
+    protected static void swapColumn(GameMatrix matrix, int columnA, int columnB) {
         for (int row = 0; row < GameMatrix.SIZE; row++) {
             byte av = matrix.get(row, columnA);
             byte bv = matrix.get(row, columnB);
@@ -172,7 +172,7 @@ public class Creator {
     }
 
     /* Create a random array with numbers to distribute. */
-    static byte[] createNumbersToDistribute(Random r, int multiplicity) {
+    protected static byte[] createNumbersToDistribute(Random r, int multiplicity) {
         List<Integer> numbersToDistribute= new ArrayList<>(9*multiplicity);
         for (int number = 1; number <= 9; number++) {
             for (int j=0; j < multiplicity; j++) {
