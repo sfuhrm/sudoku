@@ -275,10 +275,7 @@ public class GameMatrix implements Cloneable {
             return false;
         }
         final GameMatrix other = (GameMatrix) obj;
-        if (!Arrays.deepEquals(this.data, other.data)) {
-            return false;
-        }
-        return true;
+        return Arrays.deepEquals(this.data, other.data);
     }
     
     @Override
