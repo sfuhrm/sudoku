@@ -214,7 +214,7 @@ public class GameMatrix implements Cloneable {
         return cloneArray(data);
     }
 
-    static int[][] cloneArray(int array[][]) {
+    protected static int[][] cloneArray(int array[][]) {
         int result[][] = new int[SIZE][SIZE];
         for (int i=0; i < array.length; i++) {
             System.arraycopy(array[i], 0, result[i], 0, array[i].length);
@@ -222,7 +222,7 @@ public class GameMatrix implements Cloneable {
         return result;
     }
     
-    static byte[][] cloneArray(byte array[][]) {
+    protected static byte[][] cloneArray(byte array[][]) {
         byte result[][] = new byte[SIZE][SIZE];
         for (int i=0; i < array.length; i++) {
             System.arraycopy(array[i], 0, result[i], 0, array[i].length);
@@ -230,7 +230,7 @@ public class GameMatrix implements Cloneable {
         return result;
     }
     
-    static boolean[][] cloneArray(boolean array[][]) {
+    protected static boolean[][] cloneArray(boolean array[][]) {
         boolean result[][] = new boolean[SIZE][SIZE];
         for (int i=0; i < array.length; i++) {
             System.arraycopy(array[i], 0, result[i], 0, array[i].length);
@@ -298,7 +298,7 @@ public class GameMatrix implements Cloneable {
      * @param data the cell data from 0-9.
      * @return a mask with bits 1-9 set if the numbers 1-9 occur multiple times.
      */
-    static int findDuplicateBits(final byte data[]) {
+    protected static int findDuplicateBits(final byte data[]) {
         int currentMask = 0;
         int duplicates = 0;
         for (int i = 0; i < data.length; i++) {
@@ -313,7 +313,7 @@ public class GameMatrix implements Cloneable {
      * @param data the cell data from 0-9.
      * @return a mask with bits 1-9 set if the numbers 1-9 occur.
      */
-    static int getNumberMask(final byte data[]) {
+    protected static int getNumberMask(final byte data[]) {
         int currentMask = 0;
         for (int i = 0; i < data.length; i++) {
             currentMask |= 1 << data[i];
@@ -356,7 +356,7 @@ public class GameMatrix implements Cloneable {
      * the bit 2 telling whether the number 2 is free, and so on. The bit 0
      * is not used.     
      */
-    int getRowFreeMask(int row) {
+    protected int getRowFreeMask(int row) {
         byte tmpData[] = new byte[9];
         row(row, tmpData);
         return (~getNumberMask(tmpData)) & MASK_FOR_NINE_BITS;
@@ -368,7 +368,7 @@ public class GameMatrix implements Cloneable {
      * the bit 2 telling whether the number 2 is free, and so on. The bit 0
      * is not used.
      */
-    int getColumnFreeMask(int column) {
+    protected int getColumnFreeMask(int column) {
         byte tmpData[] = new byte[9];
         column(column, tmpData);
         return (~getNumberMask(tmpData)) & MASK_FOR_NINE_BITS;
@@ -381,7 +381,7 @@ public class GameMatrix implements Cloneable {
      * the bit 2 telling whether the number 2 is free, and so on. The bit 0
      * is not used.
      */
-    int getBlockFreeMask(int row, int column) {
+    protected int getBlockFreeMask(int row, int column) {
         byte tmpData[] = new byte[9];
         block(row, column, tmpData);
         return (~getNumberMask(tmpData)) & MASK_FOR_NINE_BITS;
@@ -394,7 +394,7 @@ public class GameMatrix implements Cloneable {
      * the bit 2 telling whether the number 2 is free, and so on. The bit 0
      * is not used.
      */
-    int getFreeMask(int row, int column) {
+    protected int getFreeMask(int row, int column) {
         int free = MASK_FOR_NINE_BITS;
         free &= getRowFreeMask(row);
         free &= getColumnFreeMask(column);
@@ -422,7 +422,7 @@ public class GameMatrix implements Cloneable {
     
     /** Round the given column/row to the next block bound.
      */
-    static int roundToBlock(int in) {
+    protected static int roundToBlock(int in) {
         return in - in % BLOCK_SIZE;
     }
     
@@ -433,7 +433,7 @@ public class GameMatrix implements Cloneable {
      * @return {@code true} if the minimum free cell could be found.
      * Can be {@code false} in the case of a fully-filled matrix.
      */
-    boolean findLeastFreeCell(int[] rowColumnResult) {
+    protected boolean findLeastFreeCell(int[] rowColumnResult) {
         int minimumBits = -1;
         int minimumRow = -1;
         int minimumColumn = -1;
