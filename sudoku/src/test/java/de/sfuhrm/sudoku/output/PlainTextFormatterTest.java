@@ -31,9 +31,10 @@ public class PlainTextFormatterTest {
 
     @Test
     public void testNew() {
-        new PlainTextFormatter();
-    }
-    
+        PlainTextFormatter formatter = new PlainTextFormatter();
+        assertEquals("\n", formatter.getLineSeparator());
+        assertEquals(".", formatter.getUnknownCellContentCharacter());
+    }    
     @Test
     public void testFormatWithEmpty() {
         GameMatrix matrix = new GameMatrix();
