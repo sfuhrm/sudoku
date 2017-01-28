@@ -630,6 +630,32 @@ public class GameMatrixTest {
      }
     
     @Test
+    public void testFindLeastFreeCellWithAlmostFull() {
+        // 0,0 free matrix
+        byte data[][] =
+        GameMatrix.parse(
+                        "067915482",
+                        "149268357",
+                        "582473619",
+                        "436187925",
+                        "975624831",
+                        "218359764",
+                        "624731598",
+                        "753892146",
+                        "891546273"
+                );
+        
+        GameMatrix matrix = new GameMatrix();
+        matrix.setAll(data);
+
+        int[] min = new int[2];
+        boolean found = matrix.findLeastFreeCell(min);
+        assertEquals(true, found);
+        assertEquals(0, min[0]);
+        assertEquals(0, min[1]);        
+     }
+    
+    @Test
     public void testFindLeastFreeCell() {
         // a possible "full house" in the upper left block
         byte data[][] =
