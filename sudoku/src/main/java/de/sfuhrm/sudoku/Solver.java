@@ -67,7 +67,7 @@ public class Solver {
      * @param minimumCell two-int array for use within the algorithm.
      * @return the total number of solutions.
      */
-    private int backtrack(int freeCells, int[] minimumCell) {
+    private int backtrack(final int freeCells, final int[] minimumCell) {
 
         // just one result, we have no more to choose
         if (freeCells == 0) {
@@ -90,25 +90,21 @@ public class Solver {
         int minimumFree = riddle.getFreeMask(minimumRow, minimumColumn);
         int minimumBits = Integer.bitCount(minimumFree);
 
-        if (hasMin) {
-            // else we are done
+        // else we are done
 
-            // now try each number
-            for (int bit = 0; bit < minimumBits; bit++) {
-                int index = Creator.getSetBitOffset(minimumFree, bit);
-                if (index < 0) {
-                    throw new IllegalStateException("minV=" + minimumFree + ", i=" + bit + ", idx=" + index);
-                }
-
-                riddle.set(minimumRow, minimumColumn, (byte) index);
-                int resultCount = backtrack(freeCells - 1, minimumCell);
-                result += resultCount;
+        // now try each number
+        for (int bit = 0; bit < minimumBits; bit++) {
+            int index = Creator.getSetBitOffset(minimumFree, bit);
+            if (index < 0) {
+                throw new IllegalStateException("minV=" + minimumFree + ", i=" + bit + ", idx=" + index);
             }
-            riddle.set(minimumRow, minimumColumn, Riddle.UNSET);
-        } else {
-            // freeCells != 0 and !hasMin -> dead end
-            result = 0;
+
+            riddle.set(minimumRow, minimumColumn, (byte) index);
+            int resultCount = backtrack(freeCells - 1, minimumCell);
+            result += resultCount;
         }
+        riddle.set(minimumRow, minimumColumn, Riddle.UNSET);
+        
         return result;
     }
 }

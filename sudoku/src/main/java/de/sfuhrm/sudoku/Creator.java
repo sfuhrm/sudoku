@@ -288,7 +288,7 @@ public class Creator {
      * @param numbersToDistribute the count of fields left to fill.
      * @param minimumCell two-int array for use within the algorithm.
      */
-    private boolean backtrack(int numbersToDistribute, int minimumCell[]) {
+    private boolean backtrack(final int numbersToDistribute, final int minimumCell[]) {
         if (numbersToDistribute == 0) {
             if (! riddle.isValid()) {
                 throw new IllegalStateException();
