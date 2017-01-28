@@ -153,6 +153,8 @@ public class Client {
                         }
                         break;
                     }
+                    default:
+                        throw new IllegalStateException("Unhandled case "+op);
                 }
             }
         }
