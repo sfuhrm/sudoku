@@ -33,7 +33,7 @@ public class Creator {
 
     /**
      * The result consumer. Consumes a valid sudoku
-     * and returns wheter to abort (true) or continue (false).
+     * and returns whether to abort (true) or continue (false).
      */
     private final Function<GameMatrix, Boolean> resultConsumer;
 
