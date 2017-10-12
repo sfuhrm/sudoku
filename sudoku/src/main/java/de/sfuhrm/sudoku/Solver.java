@@ -56,7 +56,7 @@ public class Solver {
         possibleSolutions.clear();
         int freeCells = GameMatrix.SIZE * GameMatrix.SIZE - riddle.getSetCount();
 
-        backtrack(freeCells);
+        backtrack(freeCells, new int[2]);
 
         return Collections.unmodifiableList(possibleSolutions);
     }
@@ -64,9 +64,10 @@ public class Solver {
     /**
      * Solves a Sudoku using backtracking.
      * @param freeCells number of free cells, abort criterion.
+     * @param minimumCell two-int array for use within the algorithm.
      * @return the total number of solutions.
      */
-    private int backtrack(int freeCells) {
+    private int backtrack(final int freeCells, final int[] minimumCell) {
 
         // just one result, we have no more to choose
         if (freeCells == 0) {
@@ -77,61 +78,33 @@ public class Solver {
             return 1;
         }
 
-        boolean hasMin = false;
+        boolean hasMin = riddle.findLeastFreeCell(minimumCell);
+        if (!hasMin) {
+            // no solution
+            return 0;
+        }
+        
         int result = 0;
-        int minColumn = 0;
-        int minRow = 0;
-        int minFreeMask = 0;
-        int minBits = 0;
-        // find the cell with the smallest number of free bits
-        // TODO this look is the hot spot. Could do something with a list
-        // sorted by free bit count, but this requires nasty structures.
-        for (int i = 0; i < Riddle.SIZE && (hasMin == false || minBits != 1); i++) {
-            for (int j = 0; j < Riddle.SIZE && (hasMin == false || minBits != 1); j++) {
-                if (riddle.get(j, i) != Riddle.UNSET) {
-                    continue;
-                }
+        int minimumRow = minimumCell[0];
+        int minimumColumn = minimumCell[1];
+        int minimumFree = riddle.getFreeMask(minimumRow, minimumColumn);
+        int minimumBits = Integer.bitCount(minimumFree);
 
-                int free = riddle.getFreeMask(j, i);
-                if (free == 0) {
-                    // the field is empty, but there are no values we could
-                    // insert.
-                    // this means we have a paradoxon and must abort this
-                    // backtrack branch
-                    return 0;
-                }
+        // else we are done
 
-                int bits = Integer.bitCount(free);
-
-                if ((!hasMin) || bits < minBits) {
-                    minFreeMask = free;
-                    minColumn = i;
-                    minRow = j;
-                    minBits = bits;
-                    hasMin = true;
-                }
+        // now try each number
+        for (int bit = 0; bit < minimumBits; bit++) {
+            int index = Creator.getSetBitOffset(minimumFree, bit);
+            if (index < 0) {
+                throw new IllegalStateException("minV=" + minimumFree + ", i=" + bit + ", idx=" + index);
             }
+
+            riddle.set(minimumRow, minimumColumn, (byte) index);
+            int resultCount = backtrack(freeCells - 1, minimumCell);
+            result += resultCount;
         }
-
-        if (hasMin) {
-            // else we are done
-
-            // now try each number
-            for (int bit = 0; bit < minBits; bit++) {
-                int index = Creator.getSetBitOffset(minFreeMask, bit);
-                if (index < 0) {
-                    throw new IllegalStateException("minV=" + minFreeMask + ", i=" + bit + ", idx=" + index);
-                }
-
-                riddle.set(minRow, minColumn, (byte) index);
-                int resultCount = backtrack(freeCells - 1);
-                result += resultCount;
-            }
-            riddle.set(minRow, minColumn, Riddle.UNSET);
-        } else {
-            // freeCells != 0 and !hasMin -> dead end
-            result = 0;
-        }
+        riddle.set(minimumRow, minimumColumn, Riddle.UNSET);
+        
         return result;
     }
 }

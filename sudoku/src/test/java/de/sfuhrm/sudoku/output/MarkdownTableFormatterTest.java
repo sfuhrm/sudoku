@@ -31,7 +31,9 @@ public class MarkdownTableFormatterTest {
 
     @Test
     public void testNew() {
-        new MarkdownTableFormatter();
+        MarkdownTableFormatter formatter = new MarkdownTableFormatter();
+        assertEquals("\n", formatter.getLineSeparator());
+        assertEquals(".", formatter.getUnknownCellContentCharacter());
     }
     
     @Test

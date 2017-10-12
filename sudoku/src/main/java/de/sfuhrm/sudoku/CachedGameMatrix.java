@@ -70,17 +70,17 @@ class CachedGameMatrix extends GameMatrix implements Cloneable {
     }
 
     @Override
-    int getBlockFreeMask(int row, int column) {
+    protected int getBlockFreeMask(int row, int column) {
         return blockFree[row/BLOCK_COUNT][column/BLOCK_COUNT];
     }
 
     @Override
-    int getColumnFreeMask(int column) {
+    protected int getColumnFreeMask(int column) {
         return columnFree[column];
     }
     
     @Override
-    int getRowFreeMask(int row) {
+    protected int getRowFreeMask(int row) {
         return rowFree[row];
     }
     
