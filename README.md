@@ -3,6 +3,10 @@
 A Java implementation of a very fast algorithm for creating [Sudoku](https://en.wikipedia.org/wiki/Sudoku) riddles.
 Has also the functionality to solve Sudoku riddles.
 
+![Creating a riddle](http://sfuhrm.de/wp-content/uploads/2017/11/Sudoku-Create-Riddle-SF-1.gif
+ "Creating a riddle")
+
+
 ## Building it
 
 For building the application you need Apache Maven.
