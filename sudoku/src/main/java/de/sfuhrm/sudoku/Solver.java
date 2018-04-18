@@ -97,7 +97,7 @@ public final class Solver {
         // now try each number
         for (int bit = 0; bit < minimumBits; bit++) {
             int index = Creator.getSetBitOffset(minimumFree, bit);
-            if (index < 0) {
+            if (index <= 0) {
                 throw new IllegalStateException(
                         "minV=" + minimumFree
                       + ", i=" + bit
