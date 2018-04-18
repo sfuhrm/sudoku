@@ -30,6 +30,11 @@ import java.util.function.Function;
  * @author Stephan Fuhrmann
  */
 public final class Creator {
+    /** Number of bits in an integer. */
+    private static final int INTEGER_BITS = 32;
+
+    /** Number of random cleared fields before systematic clearing. */
+    private static final int CREATE_RIDDLE_RANDOM_CLEAR = 10;
 
     /**
      * The result consumer. Consumes a valid sudoku
@@ -63,9 +68,6 @@ public final class Creator {
             return true;
         };
     }
-
-    /** Number of bits in an integer. */
-    private static final int INTEGER_BITS = 32;
 
     /**
      * Get the index of the nth bit set.
@@ -274,9 +276,6 @@ public final class Creator {
         riddle.set(row, column, (byte) old);
         return result;
     }
-
-    /** Number of random cleared fields before systematic clearing. */
-    private static final int CREATE_RIDDLE_RANDOM_CLEAR = 10;
 
     /**
      * Creates a riddle setup sudoku.
