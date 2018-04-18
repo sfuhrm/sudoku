@@ -23,6 +23,9 @@ import java.util.Arrays;
 
 /**
  * A version with caching of free candidates for performance purposes.
+ * Note that this class expects that no illegal moves are performed.
+ * This class is for calculations of a computer, not for playing with
+ * a human being.
  * @author Stephan Fuhrmann
  */
 class CachedGameMatrix extends GameMatrix implements Cloneable {
