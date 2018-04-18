@@ -93,16 +93,16 @@ public class GameMatrix implements Cloneable {
         }
     }
 
-    /** Gets a stream of the given row.
-     * @param index the row index to get the stream for.
+    /** Gets a copy of the given row.
+     * @param index the row index to get the array for.
      * @param target a 9-element array to receive the row data.
      */
     protected final void row(final int index, final byte[] target) {
         System.arraycopy(data[index], 0, target, 0, SIZE);
     }
 
-    /** Gets a stream of the given column.
-     * @param index the column index to get the stream for.
+    /** Gets a copy of the given column.
+     * @param index the column index to get the array for.
      * @param target a 9-element array to receive the column data.
      */
     protected final void column(final int index, final byte[] target) {
@@ -111,7 +111,7 @@ public class GameMatrix implements Cloneable {
         }
     }
 
-    /** Gets a stream of the given block.
+    /** Gets a copy of the given block.
      * @param row start row of the block (0..6).
      * @param column start column of the block (0..6).
      * @param target a 9-element array to receive the block data.
