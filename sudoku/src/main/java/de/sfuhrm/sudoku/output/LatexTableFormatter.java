@@ -25,24 +25,27 @@ import de.sfuhrm.sudoku.GameMatrix;
  * Formats the game matrix to a LaTeX document.
  * @author Stephan Fuhrmann
  */
-public class LatexTableFormatter extends AbstractTextFormatter {
+public final class LatexTableFormatter extends AbstractTextFormatter {
 
-    private final String tableSeparator = "&";
+    /** Latex table cell separator. */
+    private static final String TABLE_CELL_SEPARATOR = "&";
 
+    /** Constructs a new instance.
+     */
     public LatexTableFormatter() {
         setUnknownCellContentCharacter(" ");
     }
 
     @Override
-    public String format(GameMatrix matrix) {
+    public String format(final GameMatrix matrix) {
         StringBuilder sb = new StringBuilder();
 
         sb.append("\\begin{center}");
         sb.append("\\huge");
         sb.append(getLineSeparator());
         sb.append("\\begin{tabular}{");
-        for (int i = 0; i < 9; i++) {
-            if (i % 3 == 0 && i != 0) {
+        for (int i = 0; i < GameMatrix.SIZE; i++) {
+            if (i % GameMatrix.BLOCK_SIZE == 0 && i != 0) {
                 sb.append("|");
             }
             sb.append("|C{1.1em}");
@@ -52,7 +55,7 @@ public class LatexTableFormatter extends AbstractTextFormatter {
         sb.append(getLineSeparator());
 
         for (int row = 0; row < GameMatrix.SIZE; row++) {
-            if (row % 3 == 0) {
+            if (row % GameMatrix.BLOCK_SIZE == 0) {
                 sb.append("\\hline");
                 sb.append(getLineSeparator());
             }
@@ -66,7 +69,7 @@ public class LatexTableFormatter extends AbstractTextFormatter {
                 }
 
                 if (column != 0) {
-                    sb.append(tableSeparator);
+                    sb.append(TABLE_CELL_SEPARATOR);
                 }
                 sb.append(" ");
                 sb.append(str);
@@ -96,11 +99,17 @@ public class LatexTableFormatter extends AbstractTextFormatter {
         sb.append(getLineSeparator());
         sb.append("\\usepackage{array}");
         sb.append(getLineSeparator());
-        sb.append("\\newcolumntype{L}[1]{>{\\raggedright\\let\\newline\\\\\\arraybackslash\\hspace{0pt}}m{#1}}");
+        sb.append("\\newcolumntype{L}[1]"
+                + "{>{\\raggedright\\let\\newline\\\\\\arraybackslash"
+                + "\\hspace{0pt}}m{#1}}");
         sb.append(getLineSeparator());
-        sb.append("\\newcolumntype{C}[1]{>{\\centering\\let\\newline\\\\\\arraybackslash\\hspace{0pt}}m{#1}}");
+        sb.append("\\newcolumntype{C}[1]"
+                + "{>{\\centering\\let\\newline\\\\\\arraybackslash"
+                + "\\hspace{0pt}}m{#1}}");
         sb.append(getLineSeparator());
-        sb.append("\\newcolumntype{R}[1]{>{\\raggedleft\\let\\newline\\\\\\arraybackslash\\hspace{0pt}}m{#1}}");
+        sb.append("\\newcolumntype{R}[1]"
+                + "{>{\\raggedleft\\let\\newline\\\\\\arraybackslash"
+                + "\\hspace{0pt}}m{#1}}");
         sb.append(getLineSeparator());
         sb.append("\\begin{document}");
         sb.append(getLineSeparator());

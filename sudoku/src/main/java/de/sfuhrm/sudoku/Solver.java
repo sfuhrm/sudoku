@@ -28,22 +28,23 @@ import java.util.List;
  * there.
  * @author Stephan Fuhrmann
  */
-public class Solver {
+public final class Solver {
 
     /**
      * Current working copy.
      */
     private final Riddle riddle;
-    
+
     /** The possible solutions for this riddle. */
     private final List<Riddle> possibleSolutions;
 
     /** The maximum number of solutions to search. */
-    public final static int LIMIT = 20;
+    public static final int LIMIT = 20;
 
     /** Creates a solver for the given riddle.
+     * @param solveMe the riddle to solve.
      */
-    public Solver(Riddle solveMe) {
+    public Solver(final Riddle solveMe) {
         riddle = (Riddle) solveMe.clone();
         possibleSolutions = new ArrayList<>();
     }
@@ -54,7 +55,8 @@ public class Solver {
      */
     public List<Riddle> solve() {
         possibleSolutions.clear();
-        int freeCells = GameMatrix.SIZE * GameMatrix.SIZE - riddle.getSetCount();
+        int freeCells = GameMatrix.SIZE * GameMatrix.SIZE
+                - riddle.getSetCount();
 
         backtrack(freeCells, new int[2]);
 
@@ -83,7 +85,7 @@ public class Solver {
             // no solution
             return 0;
         }
-        
+
         int result = 0;
         int minimumRow = minimumCell[0];
         int minimumColumn = minimumCell[1];
@@ -96,7 +98,10 @@ public class Solver {
         for (int bit = 0; bit < minimumBits; bit++) {
             int index = Creator.getSetBitOffset(minimumFree, bit);
             if (index < 0) {
-                throw new IllegalStateException("minV=" + minimumFree + ", i=" + bit + ", idx=" + index);
+                throw new IllegalStateException(
+                        "minV=" + minimumFree
+                      + ", i=" + bit
+                      + ", idx=" + index);
             }
 
             riddle.set(minimumRow, minimumColumn, (byte) index);
@@ -104,7 +109,7 @@ public class Solver {
             result += resultCount;
         }
         riddle.set(minimumRow, minimumColumn, Riddle.UNSET);
-        
+
         return result;
     }
 }

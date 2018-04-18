@@ -24,36 +24,50 @@ package de.sfuhrm.sudoku.output;
  * @author Stephan Fuhrmann
  */
 abstract class AbstractTextFormatter implements GameMatrixFormatter {
+    /** The String used to display an empty or not filled cell.
+     */
     private String unknownCellContentCharacter = ".";
+
+    /** The line separator used.
+     */
     private String lineSeparator = "\n";
 
-    /** Gets the String to use for unknown/unset cells. */
+    /** Gets the String to use for unknown/unset cells.
+     * @return the unknown cell content String.
+     */
     public final String getUnknownCellContentCharacter() {
         return unknownCellContentCharacter;
     }
 
-    /** Sets the String to use for unknown/unset cells. */
-    public final void setUnknownCellContentCharacter(String unknownCellContentCharacter) {
-        this.unknownCellContentCharacter = unknownCellContentCharacter;
+    /** Sets the String to use for unknown/unset cells.
+     * @param newUnknownCellContentCharacter the new value for unknown cells.
+     */
+    public final void setUnknownCellContentCharacter(
+            final String newUnknownCellContentCharacter) {
+        this.unknownCellContentCharacter = newUnknownCellContentCharacter;
     }
 
-    /** Gets the line separator String to use. */
+    /** Gets the line separator String to use.
+     * @return the line separator String.
+     */
     public final String getLineSeparator() {
         return lineSeparator;
     }
 
-    /** Sets the line separator String to use. */
-    public final void setLineSeparator(String lineSeparator) {
-        this.lineSeparator = lineSeparator;
+    /** Sets the line separator String to use.
+     * @param newLineSeparator the new String to use as line separator.
+     */
+    public final void setLineSeparator(final String newLineSeparator) {
+        this.lineSeparator = newLineSeparator;
     }
 
     @Override
     public String documentStart() {
         return "";
     }
-    
+
     @Override
     public String documentEnd() {
         return "";
-    }    
+    }
 }

@@ -19,7 +19,7 @@ Boston, MA  02110-1301, USA.
 */
 package de.sfuhrm.sudoku;
 
-import static de.sfuhrm.sudoku.Riddle.roundToBlock;
+import static de.sfuhrm.sudoku.GameMatrix.roundToBlock;
 import java.util.Arrays;
 
 /**
@@ -27,53 +27,55 @@ import java.util.Arrays;
  * @author Stephan Fuhrmann
  */
 public class GameMatrix implements Cloneable {
-    
+
     /**
      * A mask that has bits 1 to 9 set (decimal 1022).
      */
-    protected final static int MASK_FOR_NINE_BITS
-            = 1 << 1
-            | 1 << 2
-            | 1 << 3
-            | 1 << 4
-            | 1 << 5
-            | 1 << 6
-            | 1 << 7
-            | 1 << 8
-            | 1 << 9;
-    
+    protected static final int MASK_FOR_NINE_BITS
+            = 1022;
+
     /**
      * The game field. The first dimension is the row, the second the column.
-     * The value 0 means unallocated (see {@link #UNSET}). 
+     * The value 0 means unallocated (see {@link #UNSET}).
      * The values 1-9 mean the corresponding cell
      * value.
      */
-    private byte data[][];
+    private byte[][] data;
 
     /**
      * The value that is assigned to unset fields.
      */
-    public final static byte UNSET = 0;
+    public static final byte UNSET = 0;
+
+    /**
+     * The valid value that is the minimum (1).
+     */
+    protected static final byte MINIMUM_VALUE = 1;
+
+    /**
+     * The valid value that is the maximum (9).
+     */
+    protected static final byte MAXIMUM_VALUE = 9;
 
     /**
      * The size in one dimension.
      */
-    public final static int SIZE = 9;
+    public static final int SIZE = 9;
 
     /**
      * The edge dimension of a 3x3 block.
      *
      */
-    protected final static int BLOCK_SIZE = 3;
-    
+    public static final int BLOCK_SIZE = 3;
+
     /**
      * The total number of blocks in one dimension.
      */
-    protected final static int BLOCK_COUNT = SIZE / BLOCK_SIZE;
+    protected static final int BLOCK_COUNT = SIZE / BLOCK_SIZE;
 
     /**
      * Creates an empty riddle.
-     * @see #setAll(byte[][]) 
+     * @see #setAll(byte[][])
      */
     public GameMatrix() {
         data = new byte[SIZE][SIZE];
@@ -83,48 +85,48 @@ public class GameMatrix implements Cloneable {
      * @param initializationData initialization data with the first dimension
      * being the rows and the second dimension being the columns.
      */
-    public final void setAll(byte initializationData[][]) {
+    public final void setAll(final byte[][] initializationData) {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 set(j, i, initializationData[j][i]);
             }
         }
     }
-    
-    /** Gets a stream of the given row. 
+
+    /** Gets a stream of the given row.
      * @param index the row index to get the stream for.
      * @param target a 9-element array to receive the row data.
      */
     protected void row(final int index, final byte[] target) {
         System.arraycopy(data[index], 0, target, 0, SIZE);
     }
-    
-    /** Gets a stream of the given column. 
+
+    /** Gets a stream of the given column.
      * @param index the column index to get the stream for.
      * @param target a 9-element array to receive the column data.
      */
     protected void column(final int index, final byte[] target) {
-        for (int i=0; i < SIZE; i++) {
+        for (int i = 0; i < SIZE; i++) {
             target[i] = data[i][index];
         }
     }
-    
-    /** Gets a stream of the given block. 
+
+    /** Gets a stream of the given block.
      * @param row start row of the block (0..6).
      * @param column start column of the block (0..6).
      * @param target a 9-element array to receive the block data.
      */
-    protected void block(int row, int column, final byte[] target) {
+    protected void block(final int row, final int column, final byte[] target) {
         int k = 0; // target index
         int roundRow = roundToBlock(row);
         int roundColumn = roundToBlock(column);
         for (int i = 0; i < BLOCK_SIZE; i++) {
             for (int j = 0; j < BLOCK_SIZE; j++) {
-                target[k++] = data[roundRow+i][roundColumn+j];
+                target[k++] = data[roundRow + i][roundColumn + j];
             }
         }
     }
-    
+
     /**
      * Parses a string based field descriptor.
      *
@@ -134,23 +136,28 @@ public class GameMatrix implements Cloneable {
      * @return the parsed array.
      * @throws IllegalArgumentException if one of the rows has a wrong size.
      */
-    public final static byte[][] parse(String... rows) {
+    public static byte[][] parse(final String... rows) {
         if (rows.length != SIZE) {
-            throw new IllegalArgumentException("Array must have " + SIZE + " elements");
+            throw new IllegalArgumentException("Array must have "
+                    + SIZE + " elements");
         }
 
-        byte result[][] = new byte[SIZE][SIZE];
+        byte[][] result = new byte[SIZE][SIZE];
 
         for (int r = 0; r < rows.length; r++) {
             if (rows[r].length() != SIZE) {
-                throw new IllegalArgumentException("Row " + r + " must have " + SIZE + " elements: " + rows[r]);
+                throw new IllegalArgumentException(
+                        "Row " + r
+                                + " must have "
+                                + SIZE + " elements: "
+                                + rows[r]);
             }
 
             for (int c = 0; c < SIZE; c++) {
                 char v = rows[r].charAt(c);
 
                 if (v >= '0' && v <= '9') {
-                    result[r][c] = (byte)(v - '0');
+                    result[r][c] = (byte) (v - '0');
                 } else {
                     result[r][c] = UNSET;
                 }
@@ -158,7 +165,7 @@ public class GameMatrix implements Cloneable {
         }
         return result;
     }
-        
+
     /**
      * Clear the cells.
      */
@@ -176,7 +183,7 @@ public class GameMatrix implements Cloneable {
      * @param column the column of the cell to get the value for.
      * @return the cell value ranging from 0 to 9.
      */
-    public final byte get(int row, int column) {
+    public final byte get(final int row, final int column) {
         return data[row][column];
     }
 
@@ -189,7 +196,7 @@ public class GameMatrix implements Cloneable {
     public void set(final int row, final int column, final byte value) {
         data[row][column] = value;
     }
-    
+
     /**
      * Get the number of set cells.
      * @return the number of fields with a number in. Can be in the range
@@ -199,13 +206,15 @@ public class GameMatrix implements Cloneable {
         int count = 0;
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                count += data[i][j] != UNSET ? 1 : 0;
+                if (data[i][j] != UNSET) {
+                    count++;
+                }
             }
         }
         return count;
     }
-    
-    /** Gets a copy of the underlying array. 
+
+    /** Gets a copy of the underlying array.
      * @return the data array containing numbers between 0 and 9.
      * The first index is the row index, the second index is the column
      * index.
@@ -214,25 +223,37 @@ public class GameMatrix implements Cloneable {
         return cloneArray(data);
     }
 
-    protected static int[][] cloneArray(int array[][]) {
-        int result[][] = new int[SIZE][SIZE];
-        for (int i=0; i < array.length; i++) {
+    /** Clones the given two-dimensional int array.
+     * @param array the array to clone.
+     * @return a clone of the input array with same dimensions and content.
+     */
+    protected static int[][] cloneArray(final int[][] array) {
+        int[][] result = new int[SIZE][SIZE];
+        for (int i = 0; i < array.length; i++) {
             System.arraycopy(array[i], 0, result[i], 0, array[i].length);
         }
         return result;
     }
-    
-    protected static byte[][] cloneArray(byte array[][]) {
-        byte result[][] = new byte[SIZE][SIZE];
-        for (int i=0; i < array.length; i++) {
+
+    /** Clones the given two-dimensional byte array.
+     * @param array the array to clone.
+     * @return a clone of the input array with same dimensions and content.
+     */
+    protected static byte[][] cloneArray(final byte[][] array) {
+        byte[][] result = new byte[SIZE][SIZE];
+        for (int i = 0; i < array.length; i++) {
             System.arraycopy(array[i], 0, result[i], 0, array[i].length);
         }
         return result;
     }
-    
-    protected static boolean[][] cloneArray(boolean array[][]) {
-        boolean result[][] = new boolean[SIZE][SIZE];
-        for (int i=0; i < array.length; i++) {
+
+    /** Clones the given two-dimensional boolean array.
+     * @param array the array to clone.
+     * @return a clone of the input array with same dimensions and content.
+     */
+    protected static boolean[][] cloneArray(final boolean[][] array) {
+        boolean[][] result = new boolean[SIZE][SIZE];
+        for (int i = 0; i < array.length; i++) {
             System.arraycopy(array[i], 0, result[i], 0, array[i].length);
         }
         return result;
@@ -258,13 +279,11 @@ public class GameMatrix implements Cloneable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 53 * hash + Arrays.deepHashCode(this.data);
-        return hash;
+        return Arrays.deepHashCode(this.data);
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
@@ -277,7 +296,7 @@ public class GameMatrix implements Cloneable {
         final GameMatrix other = (GameMatrix) obj;
         return Arrays.deepEquals(this.data, other.data);
     }
-    
+
     @Override
     public Object clone() {
         GameMatrix clone;
@@ -287,15 +306,15 @@ public class GameMatrix implements Cloneable {
         } catch (CloneNotSupportedException ex) {
             throw new IllegalStateException();
         }
-        
+
         return clone;
     }
-    
-    /** Finds the duplicate bits. 
+
+    /** Finds the duplicate bits.
      * @param data the cell data from 0-9.
      * @return a mask with bits 1-9 set if the numbers 1-9 occur multiple times.
      */
-    protected static int findDuplicateBits(final byte data[]) {
+    protected static int findDuplicateBits(final byte[] data) {
         int currentMask = 0;
         int duplicates = 0;
         for (int i = 0; i < data.length; i++) {
@@ -305,12 +324,12 @@ public class GameMatrix implements Cloneable {
         }
         return duplicates & (~1);
     }
-    
-    /** Finds the used numbers. 
+
+    /** Finds the used numbers.
      * @param data the cell data from 0-9.
      * @return a mask with bits 1-9 set if the numbers 1-9 occur.
      */
-    protected static int getNumberMask(final byte data[]) {
+    protected static int getNumberMask(final byte[] data) {
         int currentMask = 0;
         for (int i = 0; i < data.length; i++) {
             currentMask |= 1 << data[i];
@@ -320,13 +339,14 @@ public class GameMatrix implements Cloneable {
 
     /**
      * Checks if the whole play field is valid.
-     * @return {@code true} if the filled rows, columns and blocks contain no duplicate numbers.
+     * @return {@code true} if the filled rows, columns and blocks
+     * contain no duplicate numbers.
      */
     public final boolean isValid() {
         boolean result = true;
 
-        byte tmpData[] = new byte[9];
-        
+        byte[] tmpData = new byte[GameMatrix.SIZE];
+
         for (int i = 0; i < SIZE && result; i++) {
             row(i, tmpData);
             result &= findDuplicateBits(tmpData) == 0;
@@ -346,44 +366,45 @@ public class GameMatrix implements Cloneable {
 
         return result;
     }
-    
-    /** Gets the free mask for the given row. 
+
+    /** Gets the free mask for the given row.
      * @param row the row to get the free mask for.
      * @return bit mask with the bit 1 telling whether the number 1 is free,
      * the bit 2 telling whether the number 2 is free, and so on. The bit 0
-     * is not used.     
+     * is not used.
      */
-    protected int getRowFreeMask(int row) {
-        byte tmpData[] = new byte[9];
+    protected int getRowFreeMask(final int row) {
+        byte[] tmpData = new byte[GameMatrix.SIZE];
         row(row, tmpData);
         return (~getNumberMask(tmpData)) & MASK_FOR_NINE_BITS;
     }
-    
-    /** Gets the free mask for the given column. 
+
+    /** Gets the free mask for the given column.
      * @param column the column to get the free mask for.
      * @return bit mask with the bit 1 telling whether the number 1 is free,
      * the bit 2 telling whether the number 2 is free, and so on. The bit 0
      * is not used.
      */
-    protected int getColumnFreeMask(int column) {
-        byte tmpData[] = new byte[9];
+    protected int getColumnFreeMask(final int column) {
+        byte[] tmpData = new byte[GameMatrix.SIZE];
         column(column, tmpData);
         return (~getNumberMask(tmpData)) & MASK_FOR_NINE_BITS;
     }
-    
-    /** Gets the free mask for the given block. 
+
+    /** Gets the free mask for the given block.
      * @param row the row of the block start to get the free mask for.
      * @param column the column of the block start to get the free mask for.
      * @return bit mask with the bit 1 telling whether the number 1 is free,
      * the bit 2 telling whether the number 2 is free, and so on. The bit 0
      * is not used.
      */
-    protected int getBlockFreeMask(int row, int column) {
-        byte tmpData[] = new byte[9];
+    protected int getBlockFreeMask(final int row, final int column) {
+        byte[] tmpData = new byte[GameMatrix.BLOCK_SIZE
+                * GameMatrix.BLOCK_SIZE];
         block(row, column, tmpData);
         return (~getNumberMask(tmpData)) & MASK_FOR_NINE_BITS;
     }
-    
+
     /** Gets the free mask for the given cell.
      * @param row the row of the cell to get the free mask for.
      * @param column the column of the to get the free mask for.
@@ -391,7 +412,9 @@ public class GameMatrix implements Cloneable {
      * the bit 2 telling whether the number 2 is free, and so on. The bit 0
      * is not used.
      */
-    protected int getFreeMask(int row, int column) {
+    protected int getFreeMask(
+            final int row,
+            final int column) {
         int free = MASK_FOR_NINE_BITS;
         free &= getRowFreeMask(row);
         free &= getColumnFreeMask(column);
@@ -406,23 +429,29 @@ public class GameMatrix implements Cloneable {
      * @param row the row of the cell to test validity for.
      * @param column the column of the cell to test validity for.
      * @param value the value to simulate setting for.
-     * @return {@code true} if the given cell can be set to  {@code value} without
+     * @return {@code true} if the given cell can be set to
+     * {@code value} without
      * violating the game rules.
      */
-    public final boolean canSet(int row, int column, byte value) {
+    public final boolean canSet(
+            final int row,
+            final int column,
+            final byte value) {
         if (value == UNSET) {
             return true;
         }
         int free = getFreeMask(row, column);
-        return (free & (1<<value)) != 0;
+        return (free & (1 << value)) != 0;
     }
-    
-    /** Round the given column/row to the next block bound.
+
+    /** Round the given column/row to the next block boundary.
+     * @param in the column/row index to round.
+     * @return a row/column index at a block boundary.
      */
-    protected static int roundToBlock(int in) {
+    protected static int roundToBlock(final int in) {
         return in - in % BLOCK_SIZE;
     }
-    
+
     /** Find the cell with the lest number of possible candidates.
      * @param rowColumnResult a two-element int array receiving the
      * row and column of the result. First element will be the row index,
@@ -430,17 +459,18 @@ public class GameMatrix implements Cloneable {
      * @return {@code true} if the minimum free cell could be found.
      * Can be {@code false} in the case of a fully-filled matrix.
      */
-    protected boolean findLeastFreeCell(int[] rowColumnResult) {
+    protected boolean findLeastFreeCell(final int[] rowColumnResult) {
         int minimumBits = -1;
         int minimumRow = -1;
         int minimumColumn = -1;
-        for (int row=0; row < GameMatrix.SIZE; row++) {
-            for (int column=0; column < GameMatrix.SIZE; column++) {
-                if (get(row, column) != GameMatrix.UNSET)
+        for (int row = 0; row < GameMatrix.SIZE; row++) {
+            for (int column = 0; column < GameMatrix.SIZE; column++) {
+                if (get(row, column) != GameMatrix.UNSET) {
                     continue;
+                }
                 int free = getFreeMask(row, column);
                 int bits = Integer.bitCount(free);
-                
+
                 if (bits != 0 && (minimumBits == -1 || bits < minimumBits)) {
                     minimumColumn = column;
                     minimumRow = row;

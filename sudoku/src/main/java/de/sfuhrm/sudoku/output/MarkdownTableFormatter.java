@@ -25,33 +25,34 @@ import de.sfuhrm.sudoku.GameMatrix;
  * Formats the game matrix to a markdown table.
  * @author Stephan Fuhrmann
  */
-public class MarkdownTableFormatter extends AbstractTextFormatter {
+public final class MarkdownTableFormatter extends AbstractTextFormatter {
 
-    private final String tableSeparator = "|";
-    
+    /** The table separator String in Markdown. */
+    private static final String TABLE_SEPARATOR = "|";
+
     @Override
-    public String format(GameMatrix matrix) {
+    public String format(final GameMatrix matrix) {
         StringBuilder sb = new StringBuilder();
-        
+
         for (int column = 0; column < GameMatrix.SIZE; column++) {
             if (column == 0) {
-                sb.append(tableSeparator);
+                sb.append(TABLE_SEPARATOR);
             }
             sb.append(" ");
             sb.append(" ");
-            sb.append(tableSeparator);
+            sb.append(TABLE_SEPARATOR);
         }
         sb.append(getLineSeparator());
-        
+
         for (int column = 0; column < GameMatrix.SIZE; column++) {
             if (column == 0) {
-                sb.append(tableSeparator);
+                sb.append(TABLE_SEPARATOR);
             }
             sb.append("---");
-            sb.append(tableSeparator);
+            sb.append(TABLE_SEPARATOR);
         }
         sb.append(getLineSeparator());
-        
+
         for (int row = 0; row < GameMatrix.SIZE; row++) {
             for (int column = 0; column < GameMatrix.SIZE; column++) {
                 byte val = matrix.get(row, column);
@@ -61,28 +62,28 @@ public class MarkdownTableFormatter extends AbstractTextFormatter {
                 } else {
                     str = Integer.toString(val);
                 }
-                
+
                 if (column == 0) {
-                    sb.append(tableSeparator);
+                    sb.append(TABLE_SEPARATOR);
                 }
                 sb.append(" ");
                 sb.append(str);
                 sb.append(" ");
-                sb.append(tableSeparator);
+                sb.append(TABLE_SEPARATOR);
             }
             sb.append(getLineSeparator());
         }
-        
+
         for (int column = 0; column < GameMatrix.SIZE; column++) {
             if (column == 0) {
-                sb.append(tableSeparator);
+                sb.append(TABLE_SEPARATOR);
             }
             sb.append(" ");
             sb.append(" ");
-            sb.append(tableSeparator);
+            sb.append(TABLE_SEPARATOR);
         }
         sb.append(getLineSeparator());
-        
+
         return sb.toString();
     }
 }

@@ -25,12 +25,12 @@ import de.sfuhrm.sudoku.GameMatrix;
  * Formats the game matrix to a plain text.
  * @author Stephan Fuhrmann
  */
-public class PlainTextFormatter extends AbstractTextFormatter {
+public final class PlainTextFormatter extends AbstractTextFormatter {
 
     @Override
-    public String format(GameMatrix matrix) {
+    public String format(final GameMatrix matrix) {
         StringBuilder sb = new StringBuilder();
-        
+
         for (int row = 0; row < GameMatrix.SIZE; row++) {
             for (int column = 0; column < GameMatrix.SIZE; column++) {
                 byte val = matrix.get(row, column);
@@ -39,7 +39,7 @@ public class PlainTextFormatter extends AbstractTextFormatter {
                     str = getUnknownCellContentCharacter();
                 } else {
                     str = Integer.toString(val);
-                }                
+                }
                 sb.append(str);
             }
             sb.append(getLineSeparator());

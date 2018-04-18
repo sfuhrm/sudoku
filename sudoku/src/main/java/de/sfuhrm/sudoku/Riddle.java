@@ -31,7 +31,7 @@ public class Riddle extends CachedGameMatrix implements Cloneable {
      * Whether the cell is writable. Pre-defined cells are only readable, use
      * settable cells are writable.
      */
-    private boolean writeable[][];
+    private boolean[][] writeable;
 
     /**
      * Creates an empty full-writable riddle.
@@ -54,19 +54,21 @@ public class Riddle extends CachedGameMatrix implements Cloneable {
     public final boolean getWritable(final int row, final int column) {
         return writeable[row][column];
     }
-    
+
     /**
      * Set a certain field writable.
      * @param row the row of the cell to set the writability for.
      * @param column the column of the cell to set the writability for.
      * @param set the value to set for the cell, {@code true} means writable.
      */
-    public final void setWritable(final int row, final int column, final boolean set) {
+    public final void setWritable(final int row,
+            final int column,
+            final boolean set) {
         writeable[row][column] = set;
     }
-    
+
     @Override
-    public Object clone() {
+    public final Object clone() {
         Riddle clone;
         clone = (Riddle) super.clone();
         clone.writeable = cloneArray(writeable);

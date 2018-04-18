@@ -29,7 +29,7 @@ import java.util.function.Function;
  * Creates a fully filled sudoku.
  * @author Stephan Fuhrmann
  */
-public class Creator {
+public final class Creator {
 
     /**
      * The result consumer. Consumes a valid sudoku
@@ -41,7 +41,7 @@ public class Creator {
      * Current work in progress.
      */
     private final GameMatrix riddle;
-    
+
     /**
      * Possibly found Sudoku.
      */
@@ -52,15 +52,20 @@ public class Creator {
      */
     private final Random random;
 
+    /** Private constructor. Use the static methods instead.
+     */
     private Creator() {
         riddle = new CachedGameMatrix();
         random = new Random();
-        
+
         resultConsumer = t -> {
             winner = t;
             return true;
         };
     }
+
+    /** Number of bits in an integer. */
+    private static final int INTEGER_BITS = 32;
 
     /**
      * Get the index of the nth bit set.
@@ -69,9 +74,10 @@ public class Creator {
      * @return the index of the relative bitIndex set bit counted from 0, or -1
      * if there are no more set bits.
      */
-    protected final static int getSetBitOffset(final int mask, final int bitIndex) {
+    protected static int getSetBitOffset(final int mask,
+            final int bitIndex) {
         int count = 0;
-        for (int i = 0; i < 32; i++) {
+        for (int i = 0; i < INTEGER_BITS; i++) {
             if ((mask & 1 << i) != 0) {
                 if (count == bitIndex) {
                     return i;
@@ -90,69 +96,95 @@ public class Creator {
         Creator c = new Creator();
         while (true) {
             // the number to distribute
-            
+
             c.riddle.clear();
-            c.fillBlock(0, 0);
-            c.fillBlock(3, 3);
-            c.fillBlock(6, 6);
-                   
-            boolean ok = c.backtrack(9*9 - c.riddle.getSetCount(), new int[2]);
-            if (ok)
+
+            for (int i = 0; i < GameMatrix.BLOCK_COUNT; i++) {
+                c.fillBlock(
+                        i * GameMatrix.BLOCK_SIZE,
+                        i * GameMatrix.BLOCK_SIZE);
+
+            }
+
+            int fields = GameMatrix.SIZE * GameMatrix.BLOCK_SIZE;
+            boolean ok = c.backtrack(fields - c.riddle.getSetCount(),
+                    new int[2]);
+            if (ok) {
                 break;
+            }
         }
-        
+
         return c.winner;
     }
-    
+
     /** Creates a variant of a fully-filled game matrix. The
      * variant is calculated very efficiently by applying simple
      * transformations.
      * @param matrix the input matrix to transform.
      * @return a transformed variant of the input game matrix.
-     * @throws IllegalArgumentException if there are unset fields in the GameMatrix.
+     * @throws IllegalArgumentException if there are unset fields in the
+     * GameMatrix.
      */
-    public static GameMatrix createVariant(GameMatrix matrix) {
+    public static GameMatrix createVariant(final GameMatrix matrix) {
         GameMatrix target = new GameMatrix();
         Random random = new Random();
-        
-        byte substitution[] = createNumbersToDistribute(random, 1);
+
+        byte[] substitution = createNumbersToDistribute(random, 1);
         for (int row = 0; row < GameMatrix.SIZE; row++) {
             for (int column = 0; column < GameMatrix.SIZE; column++) {
                 byte original = matrix.get(row, column);
-                if (original == GameMatrix.UNSET)
-                    throw new IllegalArgumentException("There are unset fields in the given GameMatrix");
-                byte substitute = substitution[original-1];
+                if (original == GameMatrix.UNSET) {
+                    throw new IllegalArgumentException(
+                            "There are unset fields in the given GameMatrix");
+                }
+                byte substitute = substitution[original - 1];
                 target.set(row, column, substitute);
             }
         }
-        
+
         // row swapping within blocks
-        for (int i=0; i < 3; i++) {
+        for (int i = 0; i < GameMatrix.BLOCK_COUNT; i++) {
             boolean swap = random.nextBoolean();
             if (swap) {
                 // swapped row distance: 1 or 2
                 int distance = 1 + random.nextInt(2);
-                int offset   = distance == 2 ? 0 : random.nextInt(2);
-                swapRow(matrix, i*3 + offset, i*3 + offset + distance);
+                int offset = 0;
+                if (distance != 2) {
+                    offset = random.nextInt(2);
+                }
+                swapRow(matrix,
+                        i * GameMatrix.BLOCK_SIZE + offset,
+                        i * GameMatrix.BLOCK_SIZE + offset + distance);
             }
         }
-        
+
         // column swapping within blocks
-        for (int i=0; i < 3; i++) {
+        for (int i = 0; i < GameMatrix.BLOCK_COUNT; i++) {
             boolean swap = random.nextBoolean();
             if (swap) {
                 // swapped column distance: 1 or 2
                 int distance = 1 + random.nextInt(2);
-                int offset   = distance == 2 ? 0 : random.nextInt(2);
-                swapColumn(matrix, i*3 + offset, i*3 + offset + distance);
+                int offset = 0;
+                if (distance != 2) {
+                    offset = random.nextInt(2);
+                }
+                swapColumn(matrix,
+                        i * GameMatrix.BLOCK_SIZE + offset,
+                        i * GameMatrix.BLOCK_SIZE + offset + distance);
             }
         }
-        
+
         return target;
     }
 
-    /** Swaps two rows in the given matrix. */
-    protected static void swapRow(GameMatrix matrix, int rowA, int rowB) {
+    /** Swaps two rows in the given matrix.
+     * @param matrix the game matrix to swap rows in.
+     * @param rowA the first row to swap.
+     * @param rowB the second row to swap.
+     */
+    protected static void swapRow(final GameMatrix matrix,
+            final int rowA,
+            final int rowB) {
         for (int column = 0; column < GameMatrix.SIZE; column++) {
             byte av = matrix.get(rowA, column);
             byte bv = matrix.get(rowB, column);
@@ -160,9 +192,15 @@ public class Creator {
             matrix.set(rowA, column, bv);
         }
     }
-    
-    /** Swaps two columns in the given matrix. */
-    protected static void swapColumn(GameMatrix matrix, int columnA, int columnB) {
+
+    /** Swaps two columns in the given matrix.
+     * @param matrix the game matrix to swap rows in.
+     * @param columnA the first column to swap.
+     * @param columnB the second column to swap.
+     */
+    protected static void swapColumn(final GameMatrix matrix,
+            final int columnA,
+            final int columnB) {
         for (int row = 0; row < GameMatrix.SIZE; row++) {
             byte av = matrix.get(row, columnA);
             byte bv = matrix.get(row, columnB);
@@ -171,11 +209,24 @@ public class Creator {
         }
     }
 
-    /* Create a random array with numbers to distribute. */
-    protected static byte[] createNumbersToDistribute(Random r, int multiplicity) {
-        List<Integer> numbersToDistribute= new ArrayList<>(9*multiplicity);
-        for (int number = 1; number <= 9; number++) {
-            for (int j=0; j < multiplicity; j++) {
+    /** Create a random array with numbers to distribute.
+    ** @param r the random number generator to use.
+    ** @param multiplicity the number of times to add the numbers 1 to 9.
+    * 1 means adding 1 to 9 only once. 2 means adding 1 to 9 twice.
+    * @return an array with randomly ordered numbers from 1 to 9
+    * with each number occuring {@code multiplicity} times.
+    */
+    protected static byte[] createNumbersToDistribute(
+            final Random r,
+            final int multiplicity) {
+        int totalNumbers = GameMatrix.MAXIMUM_VALUE
+                - GameMatrix.MINIMUM_VALUE + 1;
+        List<Integer> numbersToDistribute = new ArrayList<>(totalNumbers
+                * multiplicity);
+        for (int number = GameMatrix.MINIMUM_VALUE;
+                number <= GameMatrix.MAXIMUM_VALUE;
+                number++) {
+            for (int j = 0; j < multiplicity; j++) {
                 numbersToDistribute.add(number);
             }
         }
@@ -194,8 +245,12 @@ public class Creator {
      * @param riddle riddle to check clearability in.
      * @param column the column in the riddle.
      * @param row the row in the riddle.
+     * @return {@code true} if the field with the coordinates can be
+     * cleared without endangering the unique solvability of the Sudoku.
      */
-    private static boolean canClear(Riddle riddle, int column, int row) {
+    private static boolean canClear(final Riddle riddle,
+            final int column,
+            final int row) {
         if (riddle.get(row, column) == Riddle.UNSET) {
             return false;
         }
@@ -220,13 +275,16 @@ public class Creator {
         return result;
     }
 
+    /** Number of random cleared fields before systematic clearing. */
+    private static final int CREATE_RIDDLE_RANDOM_CLEAR = 10;
+
     /**
      * Creates a riddle setup sudoku.
      *
      * @param in a fully set up (solved) and valid sudoku.
      * @return a maximally cleared sudoku.
      */
-    public static Riddle createRiddle(GameMatrix in) {
+    public static Riddle createRiddle(final GameMatrix in) {
         Random random = new Random();
 
         Riddle cur = new Riddle();
@@ -236,7 +294,7 @@ public class Creator {
         // this could be improved:
         // first the randomized loop can run
         // second a loop over all cells can run
-        while (multi < 10) {
+        while (multi < CREATE_RIDDLE_RANDOM_CLEAR) {
             int i = random.nextInt(Riddle.SIZE);
             int j = random.nextInt(Riddle.SIZE);
 
@@ -272,8 +330,12 @@ public class Creator {
 
         return cur;
     }
-    
-    private void fillBlock(int row, int column) {
+
+    /** Fills a block with randomly ordered numbers from 1 to 9.
+     * @param row the start row of the block.
+     * @param column the start column of the block.
+     */
+    private void fillBlock(final int row, final int column) {
         byte[] numbers = createNumbersToDistribute(random, 1);
         int k = 0;
         for (int i = 0; i < Riddle.BLOCK_SIZE; i++) {
@@ -282,32 +344,36 @@ public class Creator {
             }
         }
     }
-    
-    /** 
+
+    /**
      * Do the backtracking job.
      * @param numbersToDistribute the count of fields left to fill.
      * @param minimumCell two-int array for use within the algorithm.
+     * @return {@code true} if the search shall be aborted by the
+     * call hierarchy or {@code false} if search shall continue.
      */
-    private boolean backtrack(final int numbersToDistribute, final int minimumCell[]) {
+    private boolean backtrack(
+            final int numbersToDistribute,
+            final int[] minimumCell) {
         if (numbersToDistribute == 0) {
-            if (! riddle.isValid()) {
+            if (!riddle.isValid()) {
                 throw new IllegalStateException();
             }
             return resultConsumer.apply(riddle);
         }
-        
+
         // determine rows + cols that are possible candidates
         // (reduce random trying)
         boolean hasMinimum = riddle.findLeastFreeCell(minimumCell);
         if (!hasMinimum) {
             return false;
         }
-        
+
         int minimumRow = minimumCell[0];
         int minimumColumn = minimumCell[1];
         int minimumFree = riddle.getFreeMask(minimumRow, minimumColumn);
         int minimumBits = Integer.bitCount(minimumFree);
-        
+
         for (int bit = 0; bit < minimumBits; bit++) {
             int free = riddle.getFreeMask(minimumRow, minimumColumn);
             int number = getSetBitOffset(free, bit);

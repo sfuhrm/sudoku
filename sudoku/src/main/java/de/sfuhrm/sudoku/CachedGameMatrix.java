@@ -27,25 +27,25 @@ import java.util.Arrays;
  */
 class CachedGameMatrix extends GameMatrix implements Cloneable {
 
-    /** Buffered free masks per row. 
+    /** Buffered free masks per row.
      * A set 1-bit means that the digit 1 is free for use.
      * A set 2-bit means that the digit 2 is free for use.
      * And so on.
      */
-    private int rowFree[];
-    
-    /** Buffered free masks per column. 
+    private int[] rowFree;
+
+    /** Buffered free masks per column.
      * @see #rowFree
      */
-    private int columnFree[];
-    
-    /** Buffered free masks per block. 
+    private int[] columnFree;
+
+    /** Buffered free masks per block.
      * @see #rowFree
      */
-    private int blockFree[][];
-    
-    /** The count of non-{@link #UNSET} cells. 
-     * @see #getSetCount() 
+    private int[][] blockFree;
+
+    /** The count of non-{@link #UNSET} cells.
+     * @see #getSetCount()
      */
     private int setCount;
 
@@ -56,12 +56,12 @@ class CachedGameMatrix extends GameMatrix implements Cloneable {
         blockFree = new int[BLOCK_COUNT][BLOCK_COUNT];
         rowFree = new int[SIZE];
         columnFree = new int[SIZE];
-        
+
         for (int i = 0; i < SIZE; i++) {
             rowFree[i] = GameMatrix.MASK_FOR_NINE_BITS;
             columnFree[i] = GameMatrix.MASK_FOR_NINE_BITS;
         }
-        
+
         for (int i = 0; i < BLOCK_COUNT; i++) {
             for (int j = 0; j < BLOCK_COUNT; j++) {
                 blockFree[i][j] = GameMatrix.MASK_FOR_NINE_BITS;
@@ -70,46 +70,48 @@ class CachedGameMatrix extends GameMatrix implements Cloneable {
     }
 
     @Override
-    protected int getBlockFreeMask(int row, int column) {
-        return blockFree[row/BLOCK_COUNT][column/BLOCK_COUNT];
+    protected int getBlockFreeMask(final int row, final int column) {
+        return blockFree[row / BLOCK_COUNT][column / BLOCK_COUNT];
     }
 
     @Override
-    protected int getColumnFreeMask(int column) {
+    protected int getColumnFreeMask(final int column) {
         return columnFree[column];
     }
-    
+
     @Override
-    protected int getRowFreeMask(int row) {
+    protected int getRowFreeMask(final int row) {
         return rowFree[row];
-    }
-    
-    @Override
-    public int getFreeMask(int row, int column) {
-        return rowFree[row] & columnFree[column] & blockFree[row/BLOCK_COUNT][column/BLOCK_COUNT];
     }
 
     @Override
-    public void set(int row, int column, byte value) {
+    public int getFreeMask(final int row, final int column) {
+        return rowFree[row]
+                & columnFree[column]
+                & blockFree[row / BLOCK_COUNT][column / BLOCK_COUNT];
+    }
+
+    @Override
+    public void set(final int row, final int column, final byte value) {
         byte oldValue = super.get(row, column);
-        
+
         if (oldValue != UNSET) {
             int bitMask = 1 << oldValue;
             rowFree[row] |= bitMask;
             columnFree[column] |= bitMask;
-            blockFree[row/BLOCK_COUNT][column/BLOCK_COUNT] |= bitMask;
+            blockFree[row / BLOCK_COUNT][column / BLOCK_COUNT] |= bitMask;
             setCount--;
         }
         if (value != UNSET) {
             int bitMask = ~(1 << value);
             rowFree[row] &= bitMask;
             columnFree[column] &= bitMask;
-            blockFree[row/BLOCK_COUNT][column/BLOCK_COUNT] &= bitMask;
+            blockFree[row / BLOCK_COUNT][column / BLOCK_COUNT] &= bitMask;
             setCount++;
-        }        
-        super.set(row, column, value); 
+        }
+        super.set(row, column, value);
     }
-    
+
     @Override
     public int getSetCount() {
         return setCount;

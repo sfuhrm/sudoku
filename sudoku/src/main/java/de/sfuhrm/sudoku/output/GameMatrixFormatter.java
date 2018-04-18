@@ -26,17 +26,21 @@ import de.sfuhrm.sudoku.GameMatrix;
  * @author Stephan Fuhrmann
  */
 public interface GameMatrixFormatter {
-    
-    /** 
+
+    /**
      * Formats the input game matrix to a text representation.
      * @param matrix the matrix to format to String format.
      * @return a String representation of the game matrix.
      */
-    public String format(GameMatrix matrix);
-    
-    /** Formats the document start part. */
-    public String documentStart();
-    
-    /** Formats the document end part. */
-    public String documentEnd();
+    String format(GameMatrix matrix);
+
+    /** Formats the document start part.
+     * @return a String representation of the document start.
+     */
+    String documentStart();
+
+    /** Formats the document end part.
+     * @return a String representation of the document end.
+     */
+    String documentEnd();
 }
