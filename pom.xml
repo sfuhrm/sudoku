@@ -131,6 +131,10 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <suppressionsLocation>src/test/checkstyle/checkstyle-suppression.xml</suppressionsLocation>
+                    <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
+                </configuration>
             </plugin>
         </plugins>
     </build>

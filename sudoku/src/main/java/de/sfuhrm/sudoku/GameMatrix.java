@@ -97,7 +97,7 @@ public class GameMatrix implements Cloneable {
      * @param index the row index to get the stream for.
      * @param target a 9-element array to receive the row data.
      */
-    protected void row(final int index, final byte[] target) {
+    protected final void row(final int index, final byte[] target) {
         System.arraycopy(data[index], 0, target, 0, SIZE);
     }
 
@@ -105,7 +105,7 @@ public class GameMatrix implements Cloneable {
      * @param index the column index to get the stream for.
      * @param target a 9-element array to receive the column data.
      */
-    protected void column(final int index, final byte[] target) {
+    protected final void column(final int index, final byte[] target) {
         for (int i = 0; i < SIZE; i++) {
             target[i] = data[i][index];
         }
@@ -116,7 +116,9 @@ public class GameMatrix implements Cloneable {
      * @param column start column of the block (0..6).
      * @param target a 9-element array to receive the block data.
      */
-    protected void block(final int row, final int column, final byte[] target) {
+    protected final void block(final int row,
+            final int column,
+            final byte[] target) {
         int k = 0; // target index
         int roundRow = roundToBlock(row);
         int roundColumn = roundToBlock(column);
@@ -169,7 +171,7 @@ public class GameMatrix implements Cloneable {
     /**
      * Clear the cells.
      */
-    public void clear() {
+    public final void clear() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 set(j, i, UNSET);
@@ -219,7 +221,7 @@ public class GameMatrix implements Cloneable {
      * The first index is the row index, the second index is the column
      * index.
      */
-    public byte[][] getArray() {
+    public final byte[][] getArray() {
         return cloneArray(data);
     }
 
@@ -260,7 +262,7 @@ public class GameMatrix implements Cloneable {
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < SIZE; i++) {
@@ -283,7 +285,7 @@ public class GameMatrix implements Cloneable {
     }
 
     @Override
-    public boolean equals(final Object obj) {
+    public final boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
@@ -459,7 +461,7 @@ public class GameMatrix implements Cloneable {
      * @return {@code true} if the minimum free cell could be found.
      * Can be {@code false} in the case of a fully-filled matrix.
      */
-    protected boolean findLeastFreeCell(final int[] rowColumnResult) {
+    protected final boolean findLeastFreeCell(final int[] rowColumnResult) {
         int minimumBits = -1;
         int minimumRow = -1;
         int minimumColumn = -1;
