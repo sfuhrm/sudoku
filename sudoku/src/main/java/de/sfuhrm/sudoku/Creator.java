@@ -93,6 +93,7 @@ public final class Creator {
     /**
      * Creates a valid fully setup sudoku.
      * @return a fully filled sudoku board.
+     * No fields are {@link GameMatrix#UNSET unset}.
      */
     public static GameMatrix createFull() {
         Creator c = new Creator();
@@ -288,7 +289,9 @@ public final class Creator {
      * Creates a riddle setup sudoku.
      *
      * @param in a fully set up (solved) and valid sudoku.
-     * @return a maximally cleared sudoku.
+     * @return a maximally cleared sudoku. Contains
+     * {@link GameMatrix#UNSET unset} value fields for places where
+     * the user/player needs to guess values.
      */
     public static Riddle createRiddle(final GameMatrix in) {
         Random random = new Random();
