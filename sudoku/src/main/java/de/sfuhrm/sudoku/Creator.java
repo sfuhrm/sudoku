@@ -116,8 +116,8 @@ public final class Creator {
 
             }
 
-            int fields = GameMatrix.SIZE * GameMatrix.SIZE;
-            boolean ok = c.backtrack(fields - c.riddle.getSetCount(),
+            boolean ok = c.backtrack(GameMatrix.TOTAL_FIELDS
+                    - c.riddle.getSetCount(),
                     new int[2]);
             if (ok) {
                 break;

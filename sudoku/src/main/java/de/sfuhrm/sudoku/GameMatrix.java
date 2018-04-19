@@ -63,6 +63,11 @@ public class GameMatrix implements Cloneable {
     public static final int SIZE = 9;
 
     /**
+     * The total number of fields.
+     */
+    public static final int TOTAL_FIELDS = SIZE * SIZE;
+
+    /**
      * The edge dimension of a 3x3 block.
      *
      */
