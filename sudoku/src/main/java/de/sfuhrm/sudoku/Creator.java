@@ -130,19 +130,20 @@ public final class Creator {
     /** Creates a variant of a fully-filled game matrix. The
      * variant is calculated very efficiently by applying simple
      * transformations.
-     * @param matrix the input matrix to transform.
+     * @param fullyFilled the input matrix to transform. All fields need
+     * to be filled.
      * @return a transformed variant of the input game matrix.
      * @throws IllegalArgumentException if there are unset fields in the
      * GameMatrix.
      */
-    public static GameMatrix createVariant(final GameMatrix matrix) {
+    public static GameMatrix createVariant(final GameMatrix fullyFilled) {
         GameMatrix target = new GameMatrix();
         Random random = new Random();
 
         byte[] substitution = createNumbersToDistribute(random, 1);
         for (int row = 0; row < GameMatrix.SIZE; row++) {
             for (int column = 0; column < GameMatrix.SIZE; column++) {
-                byte original = matrix.get(row, column);
+                byte original = fullyFilled.get(row, column);
                 if (original == GameMatrix.UNSET) {
                     throw new IllegalArgumentException(
                             "There are unset fields in the given GameMatrix");
@@ -162,7 +163,7 @@ public final class Creator {
                 if (distance != 2) {
                     offset = random.nextInt(2);
                 }
-                swapRow(matrix,
+                swapRow(fullyFilled,
                         i * GameMatrix.BLOCK_SIZE + offset,
                         i * GameMatrix.BLOCK_SIZE + offset + distance);
             }
@@ -178,7 +179,7 @@ public final class Creator {
                 if (distance != 2) {
                     offset = random.nextInt(2);
                 }
-                swapColumn(matrix,
+                swapColumn(fullyFilled,
                         i * GameMatrix.BLOCK_SIZE + offset,
                         i * GameMatrix.BLOCK_SIZE + offset + distance);
             }
