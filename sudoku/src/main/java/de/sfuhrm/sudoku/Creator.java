@@ -288,16 +288,21 @@ public final class Creator {
     /**
      * Creates a riddle setup sudoku.
      *
-     * @param in a fully set up (solved) and valid sudoku.
+     * @param fullMatrix a fully set up (solved) and valid sudoku.
+     * Can be created using {@link #createFull()} or
+     * {@link #createVariant(de.sfuhrm.sudoku.GameMatrix)} of a full
+     * matrix.
      * @return a maximally cleared sudoku. Contains
      * {@link GameMatrix#UNSET unset} value fields for places where
      * the user/player needs to guess values.
+     * @see #createFull()
+     * @see #createVariant(de.sfuhrm.sudoku.GameMatrix)
      */
-    public static Riddle createRiddle(final GameMatrix in) {
+    public static Riddle createRiddle(final GameMatrix fullMatrix) {
         Random random = new Random();
 
         Riddle cur = new Riddle();
-        cur.setAll(in.getArray());
+        cur.setAll(fullMatrix.getArray());
 
         int multi = 0;
         // this could be improved:
