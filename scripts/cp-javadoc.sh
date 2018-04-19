@@ -12,6 +12,6 @@ if [ ! -e ${SRCDIR} ]; then
   exit
 fi
 
-ssh p45319591@sfuhrm rm -fr api/sudoku
-scp -r $SRCDIR p45319591@sfuhrm:api/sudoku
+ssh sfuhrm rm -fr api/sudoku
+scp -r $SRCDIR sfuhrm:api/sudoku
 
