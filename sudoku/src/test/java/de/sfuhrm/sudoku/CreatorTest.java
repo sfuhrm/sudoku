@@ -100,6 +100,10 @@ public class CreatorTest {
         assertEquals(7, v);
         v = Creator.getSetBitOffset(0xffffffff, 8);
         assertEquals(8, v);
+        v = Creator.getSetBitOffset(0xffffffff, 31);
+        assertEquals(31, v);
+        v = Creator.getSetBitOffset(0xffffffff, 32);
+        assertEquals(-1, v);
     }
 
 

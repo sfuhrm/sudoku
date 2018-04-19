@@ -80,14 +80,14 @@ public final class Creator {
             final int bitIndex) {
         int count = 0; // index of the next bit seen being set
         int workingMask = mask; // the left unseen bits are set
-        for (int i = 0; i < INTEGER_BITS && workingMask != 0; i++) {
-            if ((mask & 1 << i) != 0) {
+        for (int i = 0; workingMask != 0; i++) {
+            if ((workingMask & 1) != 0) {
                 if (count == bitIndex) {
                     return i;
                 }
-                workingMask &= ~(1 << i);
                 count++;
             }
+            workingMask >>>= 1;
         }
         return -1;
     }
