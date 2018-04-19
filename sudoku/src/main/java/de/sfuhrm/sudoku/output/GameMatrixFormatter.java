@@ -23,6 +23,12 @@ import de.sfuhrm.sudoku.GameMatrix;
 
 /**
  * Formats the game matrix to a text representation.
+ * The text representation has a
+ * <ul>
+ * <li> document #{@link #documentStart() start}
+ * <li> document #{@link #format(de.sfuhrm.sudoku.GameMatrix) main part} and a
+ * <li> document #{@link #documentEnd() end}.
+ * </ul>
  * @author Stephan Fuhrmann
  */
 public interface GameMatrixFormatter {
