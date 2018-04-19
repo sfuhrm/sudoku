@@ -13,11 +13,23 @@ if [ "x${NEWVERSION}" = "x" ]; then
 	exit 10
 fi
 
+if [ "${NEWVERSION##*-}" = "SNAPSHOT" ]; then
+  ISSNAPSHOT=1
+else
+  ISSNAPSHOT=0
+fi
+
 ROOT=${PWD}
 TMP=/tmp/set-version.$$
 
 echo "- pom.xml"
 mvn versions:set -DnewVersion=${NEWVERSION} || exit
 rm -f pom.xml.versionsBackup
+
+echo "- README.md"
+sed < README.md > README.md.new -e"s#<version>.*</version>#<version>${NEWVERSION}</version>#g"|| exit
+if [ $ISSNAPSHOT = 0 ]; then
+  mv README.md.new README.md || exit
+fi
 
 rm -f ${TMP}
