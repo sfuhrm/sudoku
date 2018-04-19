@@ -103,6 +103,13 @@ public final class Creator {
 
             c.riddle.clear();
 
+            // * 0 0
+            // 0 * 0
+            // 0 0 *
+            //
+            // The blocks on the diagonal can be filled independently in random
+            // because they can not collide.
+            // This way we fill 1/3 of the matrix 'for free'.
             for (int i = 0; i < GameMatrix.BLOCK_COUNT; i++) {
                 c.fillBlock(
                         i * GameMatrix.BLOCK_SIZE,
