@@ -163,7 +163,7 @@ public final class Creator {
                 if (distance != 2) {
                     offset = random.nextInt(2);
                 }
-                swapRow(fullyFilled,
+                swapRow(target,
                         i * GameMatrix.BLOCK_SIZE + offset,
                         i * GameMatrix.BLOCK_SIZE + offset + distance);
             }
@@ -179,7 +179,7 @@ public final class Creator {
                 if (distance != 2) {
                     offset = random.nextInt(2);
                 }
-                swapColumn(fullyFilled,
+                swapColumn(target,
                         i * GameMatrix.BLOCK_SIZE + offset,
                         i * GameMatrix.BLOCK_SIZE + offset + distance);
             }
