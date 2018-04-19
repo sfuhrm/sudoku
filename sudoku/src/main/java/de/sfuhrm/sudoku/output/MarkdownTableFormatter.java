@@ -1,6 +1,6 @@
 /*
 Sudoku - a fast Java Sudoku game creation library.
-Copyright (C) 2017  Stephan Fuhrmann
+Copyright (C) 2017-2018  Stephan Fuhrmann
 
 This library is free software; you can redistribute it and/or
 modify it under the terms of the GNU Library General Public
