@@ -2,3 +2,4 @@
 /sudoku/target/
 /sudoku-client/target/
 *~
+*.versionsBackup
