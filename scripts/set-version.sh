@@ -6,6 +6,8 @@
 #
 # (c) 2017-2018 Stephan Fuhrmann
 
+ROOT=$(cd $(dirname $0)/..; pwd)
+OLDPWD=$PWD
 NEWVERSION=$1
 
 if [ "x${NEWVERSION}" = "x" ]; then
@@ -19,17 +21,16 @@ else
   ISSNAPSHOT=0
 fi
 
-ROOT=${PWD}
-TMP=/tmp/set-version.$$
+cd ${ROOT}
 
 echo "- pom.xml"
 mvn versions:set -DnewVersion=${NEWVERSION} || exit
 rm -f pom.xml.versionsBackup
 
 echo "- README.md"
-sed < README.md > README.md.new -e"s#<version>.*</version>#<version>${NEWVERSION}</version>#g"|| exit
+sed < README.md > README.md.new -e"s#<version>.*</version>#<version>${NEWVERSION}</version>#g" || exit
 if [ $ISSNAPSHOT = 0 ]; then
   mv README.md.new README.md || exit
 fi
 
-rm -f ${TMP}
+cd $OLDPWD
