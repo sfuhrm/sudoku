@@ -41,7 +41,7 @@
     </build>    
     <dependencies>
         <dependency>
-            <groupId>de.sfuhrm</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>sudoku</artifactId>
             <version>${project.version}</version>
         </dependency>
