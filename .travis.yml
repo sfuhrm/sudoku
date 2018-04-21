@@ -1,4 +1,5 @@
 language: java
 jdk:
   - oraclejdk8
-install: mvn install -Dgpg.skip
+  - oraclejdk9
+install: mvn install -Dgpg.skip -DrepoToken=${coveralls_token}
