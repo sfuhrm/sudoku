@@ -159,6 +159,12 @@ public class CreatorTest {
         assertEquals(Arrays.asList(1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9), intList);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateVariantWithEmpty() {
+        GameMatrix original = new GameMatrix();
+        Creator.createVariant(original);
+    }
+
     @Test
     public void testCreateVariant() {
         GameMatrix original = Creator.createFull();
