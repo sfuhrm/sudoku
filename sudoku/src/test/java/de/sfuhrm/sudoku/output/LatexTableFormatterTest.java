@@ -19,6 +19,7 @@ Boston, MA  02110-1301, USA.
 */
 package de.sfuhrm.sudoku.output;
 
+import de.sfuhrm.sudoku.GameMatrix;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -47,5 +48,15 @@ public class LatexTableFormatterTest extends AbstractTextFormatterTest {
     public void testGetUnknownCellContentCharacter() {
         AbstractTextFormatter formatter = newInstance();
         assertEquals(" ", formatter.getUnknownCellContentCharacter());
+    }
+
+    @Test
+    public void testFormat() {
+        AbstractTextFormatter formatter = newInstance();
+        GameMatrix gameMatrix = new GameMatrix();
+
+        // this test sucks, but it's better than nothing
+        String actual = formatter.format(gameMatrix);
+        assertTrue(actual.contains("\\begin"));
     }
 }
