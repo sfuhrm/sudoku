@@ -139,6 +139,87 @@ public class GameMatrixTest {
         assertEquals(8, data[8][1]);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testParseWithWrongOuterLength() {
+        byte data[][] =
+        GameMatrix.parse(
+                "000000000"
+                );
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testParseWithWrongInnerLength() {
+        byte data[][] =
+        GameMatrix.parse(
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "00000000"
+                );
+    }
+
+    @Test
+    public void testEqualsWithSame() {
+        GameMatrix instance = new GameMatrix();
+        assertEquals(true, instance.equals(instance));
+    }
+
+    @Test
+    public void testEqualsWithNull() {
+        GameMatrix instance = new GameMatrix();
+        assertEquals(false, instance.equals(null));
+    }
+
+    @Test
+    public void testEqualsWithOtherClass() {
+        GameMatrix instance = new GameMatrix();
+        assertEquals(false, instance.equals("foobar"));
+    }
+
+
+    @Test
+    public void testHashCode() {
+        GameMatrix instance = new GameMatrix();
+        instance.hashCode();
+    }
+
+    @Test
+    public void testParseWithWrongChars() {
+        byte expected[][] =
+        GameMatrix.parse(
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000"
+                );
+
+        byte actual[][] =
+        GameMatrix.parse(
+                "?00000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000"
+                );
+
+        assertArrayEquals(expected, actual);
+    }
+
+
     @Test
     public void testSetAll() {
         byte data[][] =
