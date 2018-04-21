@@ -19,57 +19,33 @@ Boston, MA  02110-1301, USA.
 */
 package de.sfuhrm.sudoku.output;
 
-import de.sfuhrm.sudoku.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
- * Test for {@link AbstractTextFormatter}.
+ * Test for {@link LatexTableFormatter}.
  * @author Stephan Fuhrmann
  */
-public class AbstractTextFormatterTest {
-
+public class LatexTableFormatterTest extends AbstractTextFormatterTest {
+    @Override
     protected AbstractTextFormatter newInstance() {
-        return new AbstractTextFormatter() {
-            @Override
-            public String format(GameMatrix matrix) {
-                return "";
-            }
-        };
+        return new LatexTableFormatter();
     }
 
     @Test
+    @Override
     public void testNew() {
         AbstractTextFormatter formatter = newInstance();
         assertEquals("\n", formatter.getLineSeparator());
-        assertEquals(".", formatter.getUnknownCellContentCharacter());
-        assertEquals("", formatter.documentStart());
-        assertEquals("", formatter.documentEnd());
+        assertEquals(" ", formatter.getUnknownCellContentCharacter());
+        assertNotEquals("", formatter.documentStart());
+        assertNotEquals("", formatter.documentEnd());
     }
 
     @Test
-    public void testGetLineSeparator() {
-        AbstractTextFormatter formatter = newInstance();
-        assertEquals("\n", formatter.getLineSeparator());
-    }
-
-    @Test
-    public void testSetLineSeparator() {
-        AbstractTextFormatter formatter = newInstance();
-        formatter.setLineSeparator("\r\n");
-        assertEquals("\r\n", formatter.getLineSeparator());
-    }
-
-    @Test
+    @Override
     public void testGetUnknownCellContentCharacter() {
         AbstractTextFormatter formatter = newInstance();
-        assertEquals(".", formatter.getUnknownCellContentCharacter());
-    }
-
-    @Test
-    public void testSetUnknownCellContentCharacter() {
-        AbstractTextFormatter formatter = newInstance();
-        formatter.setUnknownCellContentCharacter("?");
-        assertEquals("?", formatter.getUnknownCellContentCharacter());
+        assertEquals(" ", formatter.getUnknownCellContentCharacter());
     }
 }

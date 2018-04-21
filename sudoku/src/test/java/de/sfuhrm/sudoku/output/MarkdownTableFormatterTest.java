@@ -20,26 +20,31 @@ Boston, MA  02110-1301, USA.
 package de.sfuhrm.sudoku.output;
 
 import de.sfuhrm.sudoku.*;
-import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
  * Test for {@link MarkdownTableFormatter}.
  * @author Stephan Fuhrmann
  */
-public class MarkdownTableFormatterTest {
+public class MarkdownTableFormatterTest extends AbstractTextFormatterTest {
+
+    @Override
+    protected AbstractTextFormatter newInstance() {
+        return new MarkdownTableFormatter();
+    }
 
     @Test
     public void testNew() {
-        MarkdownTableFormatter formatter = new MarkdownTableFormatter();
+        AbstractTextFormatter formatter = newInstance();
         assertEquals("\n", formatter.getLineSeparator());
         assertEquals(".", formatter.getUnknownCellContentCharacter());
     }
-    
+
     @Test
     public void testFormatWithEmpty() {
         GameMatrix matrix = new GameMatrix();
-        String actual = new MarkdownTableFormatter().format(matrix);
+        String actual = newInstance().format(matrix);
         assertEquals(
 "|  |  |  |  |  |  |  |  |  |\n"+
 "|---|---|---|---|---|---|---|---|---|\n"+
@@ -55,11 +60,11 @@ public class MarkdownTableFormatterTest {
 "|  |  |  |  |  |  |  |  |  |\n"
                 , actual);
     }
-    
+
     @Test
     public void testFormatWithEmptyAndOtherUnknownCharacter() {
         GameMatrix matrix = new GameMatrix();
-        MarkdownTableFormatter formatter = new MarkdownTableFormatter();
+        AbstractTextFormatter formatter = newInstance();
         formatter.setUnknownCellContentCharacter("?");
         String actual = formatter.format(matrix);
         assertEquals(
@@ -77,7 +82,7 @@ public class MarkdownTableFormatterTest {
 "|  |  |  |  |  |  |  |  |  |\n"
                 , actual);
     }
-    
+
     @Test
     public void testFormatWithFullMatrix() {
         GameMatrix matrix = new GameMatrix();
@@ -91,7 +96,7 @@ public class MarkdownTableFormatterTest {
                 "358612497",
                 "942387615",
                 "167594382"));
-        MarkdownTableFormatter formatter = new MarkdownTableFormatter();
+        AbstractTextFormatter formatter = newInstance();
         formatter.setUnknownCellContentCharacter("?");
         String actual = formatter.format(matrix);
         assertEquals(
@@ -108,5 +113,5 @@ public class MarkdownTableFormatterTest {
 "| 1 | 6 | 7 | 5 | 9 | 4 | 3 | 8 | 2 |\n"+
 "|  |  |  |  |  |  |  |  |  |\n"
                 , actual);
-    }    
+    }
 }
