@@ -4,4 +4,4 @@ jdk:
   - oraclejdk9
 install: mvn install -Dgpg.skip
 after_success:
-  - mvn clean test jacoco:report coveralls:report -DrepoToken=${coveralls_token}
+  - mvn -DrepoToken=${coveralls_token} clean test jacoco:report coveralls:report --projects=sudoku
