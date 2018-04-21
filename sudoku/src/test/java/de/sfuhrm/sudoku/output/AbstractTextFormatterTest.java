@@ -42,4 +42,18 @@ public class AbstractTextFormatterTest {
         assertEquals("", formatter.documentStart());
         assertEquals("", formatter.documentEnd());
     }
+
+    @Test
+    public void testSetLineSeparator() {
+        AbstractTextFormatter formatter = new AbstractTextFormatter() {
+            @Override
+            public String format(GameMatrix matrix) {
+                return "";
+            }
+        };
+        assertEquals("\n", formatter.getLineSeparator());
+
+        formatter.setLineSeparator("\r\n");
+        assertEquals("\r\n", formatter.getLineSeparator());
+    }
 }
