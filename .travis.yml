@@ -3,8 +3,6 @@ jdk:
   - oraclejdk8
   - oraclejdk9
   - openjdk8
-  - openjdk9
-  - openjdk10
 install: mvn install -Dgpg.skip
 after_success:
   - mvn -DrepoToken=${coveralls_token} clean test jacoco:report coveralls:report --projects=sudoku
