@@ -2,4 +2,6 @@ language: java
 jdk:
   - oraclejdk8
   - oraclejdk9
-install: mvn install -Dgpg.skip -DrepoToken=${coveralls_token}
+install: mvn install -Dgpg.skip
+after_success:
+  - mvn clean test jacoco:report coveralls:report -DrepoToken=${coveralls_token}
