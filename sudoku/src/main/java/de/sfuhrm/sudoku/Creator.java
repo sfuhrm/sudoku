@@ -390,8 +390,7 @@ public final class Creator {
         int minimumBits = Integer.bitCount(minimumFree);
 
         for (int bit = 0; bit < minimumBits; bit++) {
-            int free = riddle.getFreeMask(minimumRow, minimumColumn);
-            int number = getSetBitOffset(free, bit);
+            int number = getSetBitOffset(minimumFree, bit);
             if (number <= 0) {
                 throw new IllegalStateException();
             }
@@ -400,8 +399,8 @@ public final class Creator {
             if (ok) {
                 return true;
             }
-            riddle.set(minimumRow, minimumColumn, GameMatrix.UNSET);
         }
+        riddle.set(minimumRow, minimumColumn, GameMatrix.UNSET);
 
         return false;
     }
