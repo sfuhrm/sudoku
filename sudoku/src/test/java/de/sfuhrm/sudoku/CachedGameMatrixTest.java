@@ -78,7 +78,7 @@ public class CachedGameMatrixTest {
 
         for (int i=0; i < GameMatrix.SIZE; i++) {
            for (int j=0; j < GameMatrix.SIZE; j++) {
-                assertEquals(i, matrix.get(i, j));
+                assertEquals(data[i][j], matrix.get(i, j));
            }
         }
     }
