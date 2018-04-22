@@ -204,9 +204,9 @@ public class GameMatrix implements Cloneable {
      * @param value the value of the field.
      */
     public void set(final int row, final int column, final byte value) {
-        assert value >= MINIMUM_VALUE
-                && value <= MAXIMUM_VALUE
-                && value != UNSET
+        assert (value >= MINIMUM_VALUE
+                && value <= MAXIMUM_VALUE)
+                || value == UNSET
                 : "Value out of range: " + value;
         data[row][column] = value;
     }
