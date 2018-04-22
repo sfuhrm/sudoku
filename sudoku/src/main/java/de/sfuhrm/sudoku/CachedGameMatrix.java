@@ -105,7 +105,7 @@ class CachedGameMatrix extends GameMatrix implements Cloneable {
             blockFree[row / BLOCK_COUNT][column / BLOCK_COUNT] |= bitMask;
             setCount--;
         }
-        assert (getFreeMask(row, column) & (1<<value)) != 0
+        assert (getFreeMask(row, column) & (1 << value)) != 0
                 : "Passed value is already used, would destroy class invariant";
         if (value != UNSET) {
             int bitMask = ~(1 << value);
