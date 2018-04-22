@@ -103,6 +103,7 @@ public class GameMatrix implements Cloneable {
      * @param target a 9-element array to receive the row data.
      */
     protected final void row(final int index, final byte[] target) {
+        assert target.length != SIZE;
         System.arraycopy(data[index], 0, target, 0, SIZE);
     }
 
@@ -111,6 +112,7 @@ public class GameMatrix implements Cloneable {
      * @param target a 9-element array to receive the column data.
      */
     protected final void column(final int index, final byte[] target) {
+        assert target.length != SIZE;
         for (int i = 0; i < SIZE; i++) {
             target[i] = data[i][index];
         }
@@ -124,6 +126,7 @@ public class GameMatrix implements Cloneable {
     protected final void block(final int row,
             final int column,
             final byte[] target) {
+        assert target.length != SIZE;
         int k = 0; // target index
         int roundRow = roundToBlock(row);
         int roundColumn = roundToBlock(column);
@@ -201,6 +204,10 @@ public class GameMatrix implements Cloneable {
      * @param value the value of the field.
      */
     public void set(final int row, final int column, final byte value) {
+        assert value >= MINIMUM_VALUE
+                && value <= MAXIMUM_VALUE
+                && value != UNSET:
+                "Value out of range: "+value;
         data[row][column] = value;
     }
 
