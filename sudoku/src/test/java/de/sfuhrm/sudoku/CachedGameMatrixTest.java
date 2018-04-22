@@ -19,8 +19,8 @@ Boston, MA  02110-1301, USA.
 */
 package de.sfuhrm.sudoku;
 
-import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
  * Test for {@link CachedGameMatrix}.
@@ -33,7 +33,7 @@ public class CachedGameMatrixTest {
         CachedGameMatrix m = new CachedGameMatrix();
         assertEquals(0, m.getSetCount());
     }
-    
+
     @Test
     public void testGet() {
         GameMatrix matrix = new CachedGameMatrix();
@@ -42,7 +42,7 @@ public class CachedGameMatrixTest {
         value = matrix.get(8, 8);
         assertEquals(GameMatrix.UNSET, value);
     }
-    
+
     @Test
     public void testSet() {
         GameMatrix matrix = new CachedGameMatrix();
@@ -52,7 +52,7 @@ public class CachedGameMatrixTest {
         value = matrix.get(0, 0);
         assertEquals(4, value);
     }
-    
+
     @Test
     public void testSetAll() {
         byte data[][] =
@@ -67,10 +67,10 @@ public class CachedGameMatrixTest {
                 "777777777",
                 "888888888"
                 );
-        
+
         GameMatrix matrix = new CachedGameMatrix();
         matrix.setAll(data);
-        
+
         for (int i=0; i < GameMatrix.SIZE; i++) {
            for (int j=0; j < GameMatrix.SIZE; j++) {
                 assertEquals(i, matrix.get(i, j));
@@ -92,11 +92,11 @@ public class CachedGameMatrixTest {
                 "777777777",
                 "888888888"
                 );
-        
+
         CachedGameMatrix matrix = new CachedGameMatrix();
         matrix.setAll(data);
         CachedGameMatrix clone = (CachedGameMatrix) matrix.clone();
-        
+
         String out = clone.toString();
         assertEquals("_________\n"+
                 "111111111\n"+
@@ -109,7 +109,7 @@ public class CachedGameMatrixTest {
                 "888888888\n"
                 , out);
      }
-    
+
     @Test
     public void testIsValidWithInvalid() {
         byte data[][] =
@@ -124,12 +124,12 @@ public class CachedGameMatrixTest {
                 "777777777",
                 "888888888"
                 );
-        
+
         CachedGameMatrix matrix = new CachedGameMatrix();
         matrix.setAll(data);
         assertEquals(false, matrix.isValid());
      }
-    
+
     @Test
     public void testIsValidWithEmptyValid() {
         byte data[][] =
@@ -144,12 +144,12 @@ public class CachedGameMatrixTest {
                 "000000000",
                 "000000000"
                 );
-        
+
         CachedGameMatrix matrix = new CachedGameMatrix();
         matrix.setAll(data);
         assertEquals(true, matrix.isValid());
      }
-    
+
     @Test
     public void testIsValidWithPartlyFullValid() {
         byte data[][] =
@@ -164,12 +164,12 @@ public class CachedGameMatrixTest {
                 "000001000",
                 "000000001"
                 );
-        
+
         CachedGameMatrix matrix = new CachedGameMatrix();
         matrix.setAll(data);
         assertEquals(true, matrix.isValid());
      }
-    
+
     @Test
     public void testGetRowFreeMask() {
         byte data[][] =
@@ -184,7 +184,7 @@ public class CachedGameMatrixTest {
                 "000001000",
                 "000000001"
                 );
-        
+
         CachedGameMatrix matrix = new CachedGameMatrix();
         matrix.setAll(data);
         int mask = matrix.getRowFreeMask(0);
@@ -211,7 +211,7 @@ public class CachedGameMatrixTest {
                 "000001000",
                 "000000001"
                 );
-        
+
         CachedGameMatrix matrix = new CachedGameMatrix();
         matrix.setAll(data);
         int mask = matrix.getColumnFreeMask(0);
@@ -223,7 +223,7 @@ public class CachedGameMatrixTest {
         mask = matrix.getColumnFreeMask(3);
         assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<3))), mask);
      }
-    
+
     @Test
     public void testGetBlockFreeMask() {
         byte data[][] =
@@ -238,7 +238,7 @@ public class CachedGameMatrixTest {
                 "000001000",
                 "000000001"
                 );
-        
+
         CachedGameMatrix matrix = new CachedGameMatrix();
         matrix.setAll(data);
         int mask = matrix.getBlockFreeMask(0,0);
@@ -250,7 +250,7 @@ public class CachedGameMatrixTest {
         mask = matrix.getBlockFreeMask(3,6);
         assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
      }
-    
+
     @Test
     public void testGetFreeMask() {
         byte data[][] =
@@ -265,7 +265,7 @@ public class CachedGameMatrixTest {
                 "000001000",
                 "000000001"
                 );
-        
+
         CachedGameMatrix matrix = new CachedGameMatrix();
         matrix.setAll(data);
         int mask = matrix.getFreeMask(0,0);
@@ -277,7 +277,7 @@ public class CachedGameMatrixTest {
         mask = matrix.getFreeMask(3,6);
         assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
      }
-    
+
     @Test
     public void testCanSet() {
         byte data[][] =
@@ -294,7 +294,7 @@ public class CachedGameMatrixTest {
                 "000001000",
                 "000000001"
                 );
-        
+
         CachedGameMatrix matrix = new CachedGameMatrix();
         matrix.setAll(data);
 
@@ -302,39 +302,39 @@ public class CachedGameMatrixTest {
         assertEquals(true,  matrix.canSet(0, 0, (byte)0)); // always works
         assertEquals(false, matrix.canSet(0, 0, (byte)2)); // in block
         assertEquals(true,  matrix.canSet(0, 0, (byte)3)); // not in block
-        
+
         // the "y" cell marked above
         assertEquals(true,  matrix.canSet(4, 8, (byte)0)); // always works
         assertEquals(true,  matrix.canSet(4, 8, (byte)2)); // in block
         assertEquals(true,  matrix.canSet(4, 8, (byte)3)); // not in block
      }
-    
+
     @Test
     public void testGetSetCount() {
         CachedGameMatrix matrix = new CachedGameMatrix();
-        
+
         for (int row = 0; row < GameMatrix.SIZE; row++) {
             for (int column = 0; column < GameMatrix.SIZE; column++) {
                 matrix.set(row, column, GameMatrix.UNSET);
                 assertEquals(0,  matrix.getSetCount());
             }
         }
-        
+
         int set = 0;
-        for (int row = 0; row < GameMatrix.SIZE; row++) {
-            for (int column = 0; column < GameMatrix.SIZE; column++) {
-                matrix.set(row, column, (byte)1);
-                set++;
-                assertEquals(set,  matrix.getSetCount());
-            }
-        }
-        
-        for (int row = 0; row < GameMatrix.SIZE; row++) {
-            for (int column = 0; column < GameMatrix.SIZE; column++) {
-                matrix.set(row, column, GameMatrix.UNSET);
-                set--;
-                assertEquals(set,  matrix.getSetCount());
-            }
-        }
+        matrix.set(0, 0, (byte)1);
+        set++;
+        assertEquals(set,  matrix.getSetCount());
+
+        matrix.set(1, 1, (byte)2);
+        set++;
+        assertEquals(set,  matrix.getSetCount());
+
+        matrix.set(1, 2, (byte)3);
+        set++;
+        assertEquals(set,  matrix.getSetCount());
+
+        matrix.set(1, 2, (byte)GameMatrix.UNSET);
+        set--;
+        assertEquals(set,  matrix.getSetCount());
      }
 }
