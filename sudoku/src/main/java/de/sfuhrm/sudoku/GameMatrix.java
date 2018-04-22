@@ -492,9 +492,9 @@ public class GameMatrix implements Cloneable {
                     minimumBits = bits;
                 }
             }
-            rowColumnResult[0] = minimumRow;
-            rowColumnResult[1] = minimumColumn;
         }
+        rowColumnResult[0] = minimumRow;
+        rowColumnResult[1] = minimumColumn;
         return minimumBits != -1;
     }
 }
