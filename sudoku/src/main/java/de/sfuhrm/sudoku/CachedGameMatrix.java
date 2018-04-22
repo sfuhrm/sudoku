@@ -96,7 +96,9 @@ class CachedGameMatrix extends GameMatrix implements Cloneable {
 
     @Override
     public void set(final int row, final int column, final byte value) {
+        assert validValue(value);
         byte oldValue = super.get(row, column);
+        assert validValue(oldValue);
 
         if (oldValue != UNSET) {
             int bitMask = 1 << oldValue;

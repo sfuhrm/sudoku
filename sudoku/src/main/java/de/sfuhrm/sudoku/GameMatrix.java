@@ -86,6 +86,14 @@ public class GameMatrix implements Cloneable {
         data = new byte[SIZE][SIZE];
     }
 
+    /** Is the value passed in valid for a field?
+     * @param b value to check.
+     * @return {@code true} if valid.
+     */
+    protected static boolean validValue(final byte b) {
+        return b == UNSET || (b >= MINIMUM_VALUE && b <= MAXIMUM_VALUE);
+    }
+
     /** Sets all cells to the given values.
      * @param initializationData initialization data with the first dimension
      * being the rows and the second dimension being the columns.
@@ -204,9 +212,7 @@ public class GameMatrix implements Cloneable {
      * @param value the value of the field.
      */
     public void set(final int row, final int column, final byte value) {
-        assert (value >= MINIMUM_VALUE
-                && value <= MAXIMUM_VALUE)
-                || value == UNSET
+        assert validValue(value)
                 : "Value out of range: " + value;
         data[row][column] = value;
     }
@@ -220,6 +226,7 @@ public class GameMatrix implements Cloneable {
         int count = 0;
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
+                assert validValue(data[i][j]);
                 if (data[i][j] != UNSET) {
                     count++;
                 }
@@ -281,6 +288,7 @@ public class GameMatrix implements Cloneable {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 byte v = get(i, j);
+                assert validValue(v);
                 if (v != UNSET) {
                     sb.append(Integer.toString(get(i, j)));
                 } else {
@@ -349,6 +357,7 @@ public class GameMatrix implements Cloneable {
         for (int i = 0; i < data.length; i++) {
             currentMask |= 1 << data[i];
         }
+        // mask out UNSET (1 == 1<<0)
         return currentMask & (~1);
     }
 
