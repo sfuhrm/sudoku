@@ -16,16 +16,18 @@ You should have received a copy of the GNU Library General Public
 License along with this library; if not, write to the
 Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
 Boston, MA  02110-1301, USA.
-*/
+ */
 package de.sfuhrm.sudoku;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Solves a partially filled Sudoku. Can find multiple solutions if they are
  * there.
+ *
  * @author Stephan Fuhrmann
  */
 public final class Solver {
@@ -35,22 +37,30 @@ public final class Solver {
      */
     private final Riddle riddle;
 
-    /** The possible solutions for this riddle. */
+    /**
+     * The possible solutions for this riddle.
+     */
     private final List<Riddle> possibleSolutions;
 
-    /** The maximum number of solutions to search. */
+    /**
+     * The maximum number of solutions to search.
+     */
     public static final int LIMIT = 20;
 
-    /** Creates a solver for the given riddle.
+    /**
+     * Creates a solver for the given riddle.
+     *
      * @param solveMe the riddle to solve.
      */
     public Solver(final Riddle solveMe) {
+        Objects.requireNonNull(solveMe, "solveMe is null");
         riddle = (Riddle) solveMe.clone();
         possibleSolutions = new ArrayList<>();
     }
 
     /**
      * Solves the Sudoku problem.
+     *
      * @return the found solutions. Should be only one.
      */
     public List<Riddle> solve() {
@@ -65,11 +75,13 @@ public final class Solver {
 
     /**
      * Solves a Sudoku using backtracking.
+     *
      * @param freeCells number of free cells, abort criterion.
      * @param minimumCell two-int array for use within the algorithm.
      * @return the total number of solutions.
      */
     private int backtrack(final int freeCells, final int[] minimumCell) {
+        assert freeCells > 0 : "freeCells is negative";
 
         // just one result, we have no more to choose
         if (freeCells == 0) {
@@ -93,16 +105,10 @@ public final class Solver {
         int minimumBits = Integer.bitCount(minimumFree);
 
         // else we are done
-
         // now try each number
         for (int bit = 0; bit < minimumBits; bit++) {
             int index = Creator.getSetBitOffset(minimumFree, bit);
-            if (index <= 0) {
-                throw new IllegalStateException(
-                        "minV=" + minimumFree
-                      + ", i=" + bit
-                      + ", idx=" + index);
-            }
+            assert index > 0;
 
             riddle.set(minimumRow, minimumColumn, (byte) index);
             int resultCount = backtrack(freeCells - 1, minimumCell);
