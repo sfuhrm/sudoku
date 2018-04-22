@@ -390,9 +390,8 @@ public final class Creator {
 
         for (int bit = 0; bit < minimumBits; bit++) {
             int number = getSetBitOffset(minimumFree, bit);
-            if (number <= 0) {
-                throw new IllegalStateException();
-            }
+            assert number >= GameMatrix.MINIMUM_VALUE
+                    && number <= GameMatrix.MAXIMUM_VALUE;
             riddle.set(minimumRow, minimumColumn, (byte) (number));
             boolean ok = backtrack(numbersToDistribute - 1, minimumCell);
             if (ok) {
