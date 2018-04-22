@@ -104,6 +104,7 @@ class CachedGameMatrix extends GameMatrix implements Cloneable {
             columnFree[column] |= bitMask;
             blockFree[row / BLOCK_COUNT][column / BLOCK_COUNT] |= bitMask;
             setCount--;
+            assert setCount > 0;
         }
         if (value != UNSET) {
             assert (getFreeMask(row, column) & (1 << value)) != 0
@@ -114,6 +115,7 @@ class CachedGameMatrix extends GameMatrix implements Cloneable {
             columnFree[column] &= bitMask;
             blockFree[row / BLOCK_COUNT][column / BLOCK_COUNT] &= bitMask;
             setCount++;
+            assert setCount < TOTAL_FIELDS;
         }
         super.set(row, column, value);
     }
