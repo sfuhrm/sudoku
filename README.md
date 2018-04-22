@@ -119,10 +119,17 @@ After that, backtracking for the remaining fields starts.
 The field with the lest number of possible number candidates on the board is searched. 
 All candidates are tried until the first candidate leads to a valid backtracking tree path. Backtracking occurs in this loop.
 
-### Warning
+#### Note on algorithm optimization
 
-At the time of writing it seems that it's enough to reduce each backtracking recursion to one field.
-I didn't prove this. Many test iterations show that it works.
+It's enough to restrict each backtracking recursion to one field. 
+This means there are no *field*-dead-ends, only *value*-dead-ends
+the algorithm runs in.
+
+This can be proved because as long as the algorithms invariant to only
+add valid values is true, no fields become dead-ends. The requirement
+for field-dead-ends is that the surrounding fields have an illegal
+setup which leads to a rule-violation for each and every value of the
+field in question.
 
 ## Author
 
