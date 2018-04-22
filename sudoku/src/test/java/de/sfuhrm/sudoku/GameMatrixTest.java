@@ -181,6 +181,63 @@ public class GameMatrixTest {
         assertEquals(false, instance.equals("foobar"));
     }
 
+    @Test
+    public void testEqualsWithEqualMatrix() {
+        byte[][] matrix =
+        GameMatrix.parse(
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000"
+                );
+        GameMatrix instance1 = new GameMatrix();
+        instance1.setAll(matrix);
+
+        GameMatrix instance2 = new GameMatrix();
+        instance1.setAll(matrix);
+
+        assertEquals(instance1, instance2);
+    }
+
+    @Test
+    public void testEqualsWithUnequalMatrix() {
+        byte[][] matrix1 =
+        GameMatrix.parse(
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000"
+                );
+        GameMatrix instance1 = new GameMatrix();
+        instance1.setAll(matrix1);
+
+        byte[][] matrix2 =
+        GameMatrix.parse(
+                "123000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000",
+                "000000000"
+                );
+        GameMatrix instance2 = new GameMatrix();
+        instance2.setAll(matrix2);
+
+        assertNotEquals(instance1, instance2);
+    }
 
     @Test
     public void testHashCode() {
