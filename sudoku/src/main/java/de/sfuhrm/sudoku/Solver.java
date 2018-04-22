@@ -81,7 +81,7 @@ public final class Solver {
      * @return the total number of solutions.
      */
     private int backtrack(final int freeCells, final int[] minimumCell) {
-        assert freeCells > 0 : "freeCells is negative";
+        assert freeCells >= 0 : "freeCells is negative";
 
         // just one result, we have no more to choose
         if (freeCells == 0) {

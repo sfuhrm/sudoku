@@ -115,7 +115,7 @@ class CachedGameMatrix extends GameMatrix implements Cloneable {
             columnFree[column] &= bitMask;
             blockFree[row / BLOCK_COUNT][column / BLOCK_COUNT] &= bitMask;
             setCount++;
-            assert setCount < TOTAL_FIELDS;
+            assert setCount <= TOTAL_FIELDS;
         }
         super.set(row, column, value);
     }
