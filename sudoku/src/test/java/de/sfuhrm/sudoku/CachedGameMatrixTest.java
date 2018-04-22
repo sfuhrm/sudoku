@@ -19,6 +19,8 @@ Boston, MA  02110-1301, USA.
 */
 package de.sfuhrm.sudoku;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -27,6 +29,19 @@ import org.junit.Test;
  * @author Stephan Fuhrmann
  */
 public class CachedGameMatrixTest {
+
+    public final static String[] FULL_EXAMPLE
+            = new String[]{
+                "359162487",
+                "412837659",
+                "687594123",
+                "876459312",
+                "941623875",
+                "523718946",
+                "234985761",
+                "765341298",
+                "198276534"};
+
 
     @Test
     public void testNew() {
@@ -81,53 +96,17 @@ public class CachedGameMatrixTest {
     @Test
     public void testClone() {
         byte data[][] =
-        GameMatrix.parse(
-                "000000000",
-                "111111111",
-                "222222222",
-                "333333333",
-                "444444444",
-                "555555555",
-                "666666666",
-                "777777777",
-                "888888888"
-                );
+        GameMatrix.parse(FULL_EXAMPLE);
 
         CachedGameMatrix matrix = new CachedGameMatrix();
         matrix.setAll(data);
         CachedGameMatrix clone = (CachedGameMatrix) matrix.clone();
 
         String out = clone.toString();
-        assertEquals("_________\n"+
-                "111111111\n"+
-                "222222222\n"+
-                "333333333\n"+
-                "444444444\n"+
-                "555555555\n"+
-                "666666666\n"+
-                "777777777\n"+
-                "888888888\n"
-                , out);
-     }
-
-    @Test
-    public void testIsValidWithInvalid() {
-        byte data[][] =
-        GameMatrix.parse(
-                "000000000",
-                "111111111",
-                "222222222",
-                "333333333",
-                "444444444",
-                "555555555",
-                "666666666",
-                "777777777",
-                "888888888"
-                );
-
-        CachedGameMatrix matrix = new CachedGameMatrix();
-        matrix.setAll(data);
-        assertEquals(false, matrix.isValid());
+        String expected = Arrays.asList(FULL_EXAMPLE)
+                .stream()
+                .collect(Collectors.joining("\n"))+"\n";
+        assertEquals(expected, out);
      }
 
     @Test
