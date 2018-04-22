@@ -126,7 +126,7 @@ I didn't prove this. Many test iterations show that it works.
 
 ## Author
 
-Written 2017 by Stephan Fuhrmann. You can reach me via email to s (at) sfuhrm.de
+Written 2017-2018 by Stephan Fuhrmann. You can reach me via email to s (at) sfuhrm.de
 
 ## License
 
