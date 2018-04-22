@@ -116,7 +116,7 @@ After that, backtracking for the remaining fields starts.
 
 ### Backtracking
 
-The field with the lest number of possible number candidates on the board is searched. 
+The field with the least number of possible number candidates on the board is searched. 
 All candidates are tried until the first candidate leads to a valid backtracking tree path. Backtracking occurs in this loop.
 
 #### Note on algorithm optimization
