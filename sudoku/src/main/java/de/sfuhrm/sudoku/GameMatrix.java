@@ -225,6 +225,7 @@ public class GameMatrix implements Cloneable {
                 }
             }
         }
+        assert count >= 0 && count <= TOTAL_FIELDS;
         return count;
     }
 
