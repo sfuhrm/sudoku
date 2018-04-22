@@ -78,7 +78,9 @@ public final class Creator {
             final int bitIndex) {
         int count = 0; // index of the next bit seen being set
         int workingMask = mask; // the left unseen bits are set
-        for (int i = 0; workingMask != 0; i++) {
+        int low = Integer.numberOfTrailingZeros(workingMask);
+        workingMask >>>= low;
+        for (int i = low; workingMask != 0; i++) {
             if ((workingMask & 1) != 0) {
                 if (count == bitIndex) {
                     return i;
