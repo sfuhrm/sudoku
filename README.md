@@ -6,14 +6,13 @@ Has also the functionality to solve Sudoku riddles.
 ![Creating a riddle](http://sfuhrm.de/wp-content/uploads/2017/11/Sudoku-Create-Riddle-SF-1.gif
  "Creating a riddle")
 
-
 ## Building it
 
 For building the application you need Apache Maven.
 Use the following command line:
 
     $ mvn clean package
-    
+
 ## Features
 
 In the following list I want to give an overview of the features:
@@ -30,21 +29,26 @@ detailed information.
 The usage for fully set Sudoku boards (no empty fields) is as following:
 
 ---------------------------------------
+
 ```java
-GameMatrix matrix = Creator.createFull();        
+GameMatrix matrix = Creator.createFull();
 ```
+
 ---------------------------------------
 
 You can create a solvable riddle (with empty fields) using
 
 ---------------------------------------
+
 ```java
-GameMatrix matrix = Creator.createFull();        
+GameMatrix matrix = Creator.createFull();
 Riddle riddle = Creator.createRiddle(matrix);
 ```
+
 ---------------------------------------
 
 A solvable riddle looks like this:
+
 ---------------------------------------
 |  |  |  |  |  |  |  |  |  |
 |---|---|---|---|---|---|---|---|---|
@@ -63,13 +67,15 @@ A solvable riddle looks like this:
 And last but not least you can solve a riddle using
 
 ---------------------------------------
+
 ```java
     Riddle riddle = new Riddle();
     riddle.setAll(GameMatrix.parse("000000000", ...));
-       
+
     Solver solver = new Solver(riddle);
     List<Riddle> solutions = solver.solve();
 ```
+
 ---------------------------------------
 
 For valid riddles you'll find in magazines there is only one solution in the list.
@@ -86,6 +92,7 @@ There are unit tests for many things, but the code is still young.
 The recommended way of including the library into your project is using maven:
 
 ---------------------------------------
+
 ```xml
 <dependency>
     <groupId>de.sfuhrm</groupId>
@@ -93,6 +100,7 @@ The recommended way of including the library into your project is using maven:
     <version>1.0.0</version>
 </dependency>
 ```
+
 ---------------------------------------
 
 ## Algorithm
