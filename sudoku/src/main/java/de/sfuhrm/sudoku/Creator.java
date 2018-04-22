@@ -371,9 +371,8 @@ public final class Creator {
             final int numbersToDistribute,
             final int[] minimumCell) {
         if (numbersToDistribute == 0) {
-            if (!riddle.isValid()) {
-                throw new IllegalStateException();
-            }
+            assert riddle.isValid()
+                    : "Riddle went non-valid while backtracking";
             return resultConsumer.apply(riddle);
         }
 
