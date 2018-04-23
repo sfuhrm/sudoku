@@ -94,6 +94,15 @@ public class GameMatrix implements Cloneable {
         return b == UNSET || (b >= MINIMUM_VALUE && b <= MAXIMUM_VALUE);
     }
 
+    /** Is the coordinate pair passed valid?
+     * @param row the row index.
+     * @param column the column index.
+     * @return {@code true} if valid.
+     */
+    protected static boolean validCoords(final int row, final int column) {
+        return row >= 0 && row < SIZE && column >= 0 && column < SIZE;
+    }
+
     /** Sets all cells to the given values.
      * @param initializationData initialization data with the first dimension
      * being the rows and the second dimension being the columns.
@@ -135,6 +144,7 @@ public class GameMatrix implements Cloneable {
             final int column,
             final byte[] target) {
         assert target.length == SIZE;
+        assert validCoords(row, column);
         int k = 0; // target index
         int roundRow = roundToBlock(row);
         int roundColumn = roundToBlock(column);
@@ -202,6 +212,7 @@ public class GameMatrix implements Cloneable {
      * @return the cell value ranging from 0 to 9.
      */
     public final byte get(final int row, final int column) {
+        assert validCoords(row, column);
         return data[row][column];
     }
 
@@ -212,6 +223,7 @@ public class GameMatrix implements Cloneable {
      * @param value the value of the field.
      */
     public void set(final int row, final int column, final byte value) {
+        assert validCoords(row, column);
         assert validValue(value)
                 : "Value out of range: " + value;
         data[row][column] = value;
@@ -440,6 +452,7 @@ public class GameMatrix implements Cloneable {
             final int row,
             final int column) {
         int free = MASK_FOR_NINE_BITS;
+        assert validCoords(row, column);
         free &= getRowFreeMask(row);
         free &= getColumnFreeMask(column);
         free &= getBlockFreeMask(row, column);
@@ -461,6 +474,8 @@ public class GameMatrix implements Cloneable {
             final int row,
             final int column,
             final byte value) {
+        assert validCoords(row, column);
+        assert validValue(value);
         if (value == UNSET) {
             return true;
         }
