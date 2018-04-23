@@ -65,7 +65,7 @@ public final class Solver {
      */
     public List<Riddle> solve() {
         possibleSolutions.clear();
-        int freeCells = GameMatrixInterace.TOTAL_FIELDS
+        int freeCells = GameMatrixInterface.TOTAL_FIELDS
                 - riddle.getSetCount();
 
         backtrack(freeCells, new int[2]);

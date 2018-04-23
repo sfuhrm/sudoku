@@ -26,7 +26,7 @@ import java.util.Arrays;
  * The quadratic matrix.
  * @author Stephan Fuhrmann
  */
-public class GameMatrix implements Cloneable, GameMatrixInterace {
+public class GameMatrix implements Cloneable, GameMatrixInterface {
 
     /**
      * The game field. The first dimension is the row, the second the column.
@@ -346,7 +346,7 @@ public class GameMatrix implements Cloneable, GameMatrixInterace {
     public final boolean isValid() {
         boolean result = true;
 
-        byte[] tmpData = new byte[GameMatrixInterace.SIZE];
+        byte[] tmpData = new byte[GameMatrixInterface.SIZE];
 
         for (int i = 0; i < SIZE && result; i++) {
             row(i, tmpData);
@@ -375,7 +375,7 @@ public class GameMatrix implements Cloneable, GameMatrixInterace {
      * is not used.
      */
     protected int getRowFreeMask(final int row) {
-        byte[] tmpData = new byte[GameMatrixInterace.SIZE];
+        byte[] tmpData = new byte[GameMatrixInterface.SIZE];
         row(row, tmpData);
         return (~getNumberMask(tmpData)) & MASK_FOR_NINE_BITS;
     }
@@ -387,7 +387,7 @@ public class GameMatrix implements Cloneable, GameMatrixInterace {
      * is not used.
      */
     protected int getColumnFreeMask(final int column) {
-        byte[] tmpData = new byte[GameMatrixInterace.SIZE];
+        byte[] tmpData = new byte[GameMatrixInterface.SIZE];
         column(column, tmpData);
         return (~getNumberMask(tmpData)) & MASK_FOR_NINE_BITS;
     }
@@ -400,8 +400,8 @@ public class GameMatrix implements Cloneable, GameMatrixInterace {
      * is not used.
      */
     protected int getBlockFreeMask(final int row, final int column) {
-        byte[] tmpData = new byte[GameMatrixInterace.BLOCK_SIZE
-                * GameMatrixInterace.BLOCK_SIZE];
+        byte[] tmpData = new byte[GameMatrixInterface.BLOCK_SIZE
+                * GameMatrixInterface.BLOCK_SIZE];
         block(row, column, tmpData);
         return (~getNumberMask(tmpData)) & MASK_FOR_NINE_BITS;
     }
@@ -468,9 +468,9 @@ public class GameMatrix implements Cloneable, GameMatrixInterace {
         int minimumBits = -1;
         int minimumRow = -1;
         int minimumColumn = -1;
-        for (int row = 0; row < GameMatrixInterace.SIZE; row++) {
-            for (int column = 0; column < GameMatrixInterace.SIZE; column++) {
-                if (get(row, column) != GameMatrixInterace.UNSET) {
+        for (int row = 0; row < GameMatrixInterface.SIZE; row++) {
+            for (int column = 0; column < GameMatrixInterface.SIZE; column++) {
+                if (get(row, column) != GameMatrixInterface.UNSET) {
                     continue;
                 }
                 int free = getFreeMask(row, column);

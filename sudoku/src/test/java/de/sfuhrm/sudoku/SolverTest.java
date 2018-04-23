@@ -33,7 +33,7 @@ public class SolverTest {
     @Test
     public void testSolveWithNoStep() {
         // create full matrix
-        GameMatrixInterace matrix = Creator.createFull();
+        GameMatrixInterface matrix = Creator.createFull();
 
         Riddle riddle = new Riddle();
         riddle.setAll(matrix.getArray());
@@ -47,7 +47,7 @@ public class SolverTest {
     @Test
     public void testSolveWithOneStep() {
         // create full matrix
-        GameMatrixInterace matrix = Creator.createFull();
+        GameMatrixInterface matrix = Creator.createFull();
         Random random = new Random();
 
         int row = random.nextInt(9);
@@ -55,7 +55,7 @@ public class SolverTest {
 
         Riddle riddle = new Riddle();
         riddle.setAll(matrix.getArray());
-        riddle.set(row, column, GameMatrixInterace.UNSET);
+        riddle.set(row, column, GameMatrixInterface.UNSET);
         riddle.setWritable(row, column, true);
 
         Solver solver = new Solver(riddle);

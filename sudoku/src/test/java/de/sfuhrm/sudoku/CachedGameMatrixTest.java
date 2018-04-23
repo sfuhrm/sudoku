@@ -51,18 +51,18 @@ public class CachedGameMatrixTest {
 
     @Test
     public void testGet() {
-        GameMatrixInterace matrix = new CachedGameMatrix();
+        GameMatrixInterface matrix = new CachedGameMatrix();
         byte value = matrix.get(0, 0);
-        assertEquals(GameMatrixInterace.UNSET, value);
+        assertEquals(GameMatrixInterface.UNSET, value);
         value = matrix.get(8, 8);
-        assertEquals(GameMatrixInterace.UNSET, value);
+        assertEquals(GameMatrixInterface.UNSET, value);
     }
 
     @Test
     public void testSet() {
-        GameMatrixInterace matrix = new CachedGameMatrix();
+        GameMatrixInterface matrix = new CachedGameMatrix();
         byte value = matrix.get(0, 0);
-        assertEquals(GameMatrixInterace.UNSET, value);
+        assertEquals(GameMatrixInterface.UNSET, value);
         matrix.set(0,0,(byte)4);
         value = matrix.get(0, 0);
         assertEquals(4, value);
@@ -76,8 +76,8 @@ public class CachedGameMatrixTest {
         GameMatrix matrix = new CachedGameMatrix();
         matrix.setAll(data);
 
-        for (int i=0; i < GameMatrixInterace.SIZE; i++) {
-           for (int j=0; j < GameMatrixInterace.SIZE; j++) {
+        for (int i=0; i < GameMatrixInterface.SIZE; i++) {
+           for (int j=0; j < GameMatrixInterface.SIZE; j++) {
                 assertEquals(data[i][j], matrix.get(i, j));
            }
         }
@@ -157,13 +157,13 @@ public class CachedGameMatrixTest {
         CachedGameMatrix matrix = new CachedGameMatrix();
         matrix.setAll(data);
         int mask = matrix.getRowFreeMask(0);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~(1<<1)), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~(1<<1)), mask);
         mask = matrix.getRowFreeMask(1);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
         mask = matrix.getRowFreeMask(2);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2) | (1<<3))), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2) | (1<<3))), mask);
         mask = matrix.getRowFreeMask(3);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
      }
 
     @Test
@@ -184,13 +184,13 @@ public class CachedGameMatrixTest {
         CachedGameMatrix matrix = new CachedGameMatrix();
         matrix.setAll(data);
         int mask = matrix.getColumnFreeMask(0);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~(1<<1)), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~(1<<1)), mask);
         mask = matrix.getColumnFreeMask(1);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
         mask = matrix.getColumnFreeMask(2);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~((1<<1))), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1))), mask);
         mask = matrix.getColumnFreeMask(3);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<3))), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<3))), mask);
      }
 
     @Test
@@ -211,13 +211,13 @@ public class CachedGameMatrixTest {
         CachedGameMatrix matrix = new CachedGameMatrix();
         matrix.setAll(data);
         int mask = matrix.getBlockFreeMask(0,0);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
         mask = matrix.getBlockFreeMask(0,3);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2) | (1<<3))), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2) | (1<<3))), mask);
         mask = matrix.getBlockFreeMask(0,6);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~((1<<1))), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1))), mask);
         mask = matrix.getBlockFreeMask(3,6);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
      }
 
     @Test
@@ -238,13 +238,13 @@ public class CachedGameMatrixTest {
         CachedGameMatrix matrix = new CachedGameMatrix();
         matrix.setAll(data);
         int mask = matrix.getFreeMask(0,0);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
         mask = matrix.getFreeMask(0,3);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2) | (1<<3))), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2) | (1<<3))), mask);
         mask = matrix.getFreeMask(0,6);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4))), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4))), mask);
         mask = matrix.getFreeMask(3,6);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
      }
 
     @Test
@@ -282,9 +282,9 @@ public class CachedGameMatrixTest {
     public void testGetSetCount() {
         CachedGameMatrix matrix = new CachedGameMatrix();
 
-        for (int row = 0; row < GameMatrixInterace.SIZE; row++) {
-            for (int column = 0; column < GameMatrixInterace.SIZE; column++) {
-                matrix.set(row, column, GameMatrixInterace.UNSET);
+        for (int row = 0; row < GameMatrixInterface.SIZE; row++) {
+            for (int column = 0; column < GameMatrixInterface.SIZE; column++) {
+                matrix.set(row, column, GameMatrixInterface.UNSET);
                 assertEquals(0,  matrix.getSetCount());
             }
         }
@@ -302,7 +302,7 @@ public class CachedGameMatrixTest {
         set++;
         assertEquals(set,  matrix.getSetCount());
 
-        matrix.set(1, 2, GameMatrixInterace.UNSET);
+        matrix.set(1, 2, GameMatrixInterface.UNSET);
         set--;
         assertEquals(set,  matrix.getSetCount());
      }

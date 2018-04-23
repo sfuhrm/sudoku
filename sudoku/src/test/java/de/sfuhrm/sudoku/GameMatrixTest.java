@@ -40,9 +40,9 @@ public class GameMatrixTest {
     public void testGet() {
         GameMatrix matrix = new GameMatrix();
         byte value = matrix.get(0, 0);
-        assertEquals(GameMatrixInterace.UNSET, value);
+        assertEquals(GameMatrixInterface.UNSET, value);
         value = matrix.get(8, 8);
-        assertEquals(GameMatrixInterace.UNSET, value);
+        assertEquals(GameMatrixInterface.UNSET, value);
     }
 
     @Test
@@ -88,7 +88,7 @@ public class GameMatrixTest {
     public void testSet() {
         GameMatrix matrix = new GameMatrix();
         byte value = matrix.get(0, 0);
-        assertEquals(GameMatrixInterace.UNSET, value);
+        assertEquals(GameMatrixInterface.UNSET, value);
         matrix.set(0,0,(byte)4);
         value = matrix.get(0, 0);
         assertEquals(4, value);
@@ -295,8 +295,8 @@ public class GameMatrixTest {
         GameMatrix matrix = new GameMatrix();
         matrix.setAll(data);
 
-        for (int i=0; i < GameMatrixInterace.SIZE; i++) {
-           for (int j=0; j < GameMatrixInterace.SIZE; j++) {
+        for (int i=0; i < GameMatrixInterface.SIZE; i++) {
+           for (int j=0; j < GameMatrixInterface.SIZE; j++) {
                 assertEquals(i, matrix.get(i, j));
            }
         }
@@ -322,8 +322,8 @@ public class GameMatrixTest {
 
         byte[] target = new byte[9];
 
-        for (int i=0; i < GameMatrixInterace.SIZE; i++) {
-           for (int j=0; j < GameMatrixInterace.SIZE; j++) {
+        for (int i=0; i < GameMatrixInterface.SIZE; i++) {
+           for (int j=0; j < GameMatrixInterface.SIZE; j++) {
                 matrix.row(i, target);
                 List<Integer> vals = Utility.toIntList(target);
                 assertEquals(Arrays.asList(i,i,i,i,i,i,i,i,i), vals);
@@ -351,8 +351,8 @@ public class GameMatrixTest {
 
         byte[] target = new byte[9];
 
-        for (int i=0; i < GameMatrixInterace.SIZE; i++) {
-           for (int j=0; j < GameMatrixInterace.SIZE; j++) {
+        for (int i=0; i < GameMatrixInterface.SIZE; i++) {
+           for (int j=0; j < GameMatrixInterface.SIZE; j++) {
                 matrix.column(i, target);
                 List<Integer> vals = Utility.toIntList(target);
                 assertEquals(Arrays.asList(0,1,2,3,4,5,6,7,8), vals);
@@ -750,13 +750,13 @@ public class GameMatrixTest {
         GameMatrix matrix = new GameMatrix();
         matrix.setAll(data);
         int mask = matrix.getRowFreeMask(0);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~(1<<1)), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~(1<<1)), mask);
         mask = matrix.getRowFreeMask(1);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
         mask = matrix.getRowFreeMask(2);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2) | (1<<3))), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2) | (1<<3))), mask);
         mask = matrix.getRowFreeMask(3);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
      }
 
     @Test
@@ -777,13 +777,13 @@ public class GameMatrixTest {
         GameMatrix matrix = new GameMatrix();
         matrix.setAll(data);
         int mask = matrix.getColumnFreeMask(0);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~(1<<1)), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~(1<<1)), mask);
         mask = matrix.getColumnFreeMask(1);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
         mask = matrix.getColumnFreeMask(2);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~((1<<1))), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1))), mask);
         mask = matrix.getColumnFreeMask(3);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<3))), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<3))), mask);
      }
 
     @Test
@@ -804,13 +804,13 @@ public class GameMatrixTest {
         GameMatrix matrix = new GameMatrix();
         matrix.setAll(data);
         int mask = matrix.getBlockFreeMask(0,0);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
         mask = matrix.getBlockFreeMask(0,3);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2) | (1<<3))), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2) | (1<<3))), mask);
         mask = matrix.getBlockFreeMask(0,6);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~((1<<1))), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1))), mask);
         mask = matrix.getBlockFreeMask(3,6);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
      }
 
     @Test
@@ -831,13 +831,13 @@ public class GameMatrixTest {
         GameMatrix matrix = new GameMatrix();
         matrix.setAll(data);
         int mask = matrix.getFreeMask(0,0);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
         mask = matrix.getFreeMask(0,3);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2) | (1<<3))), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2) | (1<<3))), mask);
         mask = matrix.getFreeMask(0,6);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4))), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4))), mask);
         mask = matrix.getFreeMask(3,6);
-        assertEquals(GameMatrixInterace.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
+        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
      }
 
     @Test
