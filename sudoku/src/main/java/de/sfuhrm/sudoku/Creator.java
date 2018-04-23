@@ -279,6 +279,7 @@ public final class Creator {
         riddle.set(row, column, Riddle.UNSET);
 
         Solver s = new Solver(riddle);
+        s.setLimit(2);
         List<Riddle> results = s.solve();
         boolean result = (results.size() == 1);
 
