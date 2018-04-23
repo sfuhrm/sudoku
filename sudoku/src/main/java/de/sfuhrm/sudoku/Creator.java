@@ -271,7 +271,7 @@ public final class Creator {
         // if there's only one free val, it's unique
         int freeMask = riddle.getFreeMask(row, column);
         int freeVals = Integer.bitCount(freeMask);
-        if (freeVals == 1) {
+        if (freeVals == 0) {
             return true;
         }
 
