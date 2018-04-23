@@ -19,7 +19,7 @@ Boston, MA  02110-1301, USA.
 */
 package de.sfuhrm.sudoku.output;
 
-import de.sfuhrm.sudoku.GameMatrix;
+import de.sfuhrm.sudoku.GameMatrixInterace;
 
 /**
  * Formats the game matrix to a markdown table.
@@ -31,10 +31,10 @@ public final class MarkdownTableFormatter extends AbstractTextFormatter {
     private static final String TABLE_SEPARATOR = "|";
 
     @Override
-    public String format(final GameMatrix matrix) {
+    public String format(final GameMatrixInterace matrix) {
         StringBuilder sb = new StringBuilder();
 
-        for (int column = 0; column < GameMatrix.SIZE; column++) {
+        for (int column = 0; column < GameMatrixInterace.SIZE; column++) {
             if (column == 0) {
                 sb.append(TABLE_SEPARATOR);
             }
@@ -44,7 +44,7 @@ public final class MarkdownTableFormatter extends AbstractTextFormatter {
         }
         sb.append(getLineSeparator());
 
-        for (int column = 0; column < GameMatrix.SIZE; column++) {
+        for (int column = 0; column < GameMatrixInterace.SIZE; column++) {
             if (column == 0) {
                 sb.append(TABLE_SEPARATOR);
             }
@@ -53,11 +53,11 @@ public final class MarkdownTableFormatter extends AbstractTextFormatter {
         }
         sb.append(getLineSeparator());
 
-        for (int row = 0; row < GameMatrix.SIZE; row++) {
-            for (int column = 0; column < GameMatrix.SIZE; column++) {
+        for (int row = 0; row < GameMatrixInterace.SIZE; row++) {
+            for (int column = 0; column < GameMatrixInterace.SIZE; column++) {
                 byte val = matrix.get(row, column);
                 String str;
-                if (val == GameMatrix.UNSET) {
+                if (val == GameMatrixInterace.UNSET) {
                     str = getUnknownCellContentCharacter();
                 } else {
                     str = Integer.toString(val);
@@ -74,7 +74,7 @@ public final class MarkdownTableFormatter extends AbstractTextFormatter {
             sb.append(getLineSeparator());
         }
 
-        for (int column = 0; column < GameMatrix.SIZE; column++) {
+        for (int column = 0; column < GameMatrixInterace.SIZE; column++) {
             if (column == 0) {
                 sb.append(TABLE_SEPARATOR);
             }

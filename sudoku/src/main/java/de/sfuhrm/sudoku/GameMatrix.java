@@ -26,13 +26,7 @@ import java.util.Arrays;
  * The quadratic matrix.
  * @author Stephan Fuhrmann
  */
-public class GameMatrix implements Cloneable {
-
-    /**
-     * A mask that has bits 1 to 9 set (decimal 1022).
-     */
-    protected static final int MASK_FOR_NINE_BITS
-            = 1022;
+public class GameMatrix implements Cloneable, GameMatrixInterace {
 
     /**
      * The game field. The first dimension is the row, the second the column.
@@ -41,42 +35,6 @@ public class GameMatrix implements Cloneable {
      * value.
      */
     private byte[][] data;
-
-    /**
-     * The value that is assigned to unset fields.
-     */
-    public static final byte UNSET = 0;
-
-    /**
-     * The valid value that is the minimum (1).
-     */
-    protected static final byte MINIMUM_VALUE = 1;
-
-    /**
-     * The valid value that is the maximum (9).
-     */
-    protected static final byte MAXIMUM_VALUE = 9;
-
-    /**
-     * The size in one dimension.
-     */
-    public static final int SIZE = 9;
-
-    /**
-     * The total number of fields.
-     */
-    public static final int TOTAL_FIELDS = SIZE * SIZE;
-
-    /**
-     * The edge dimension of a 3x3 block.
-     *
-     */
-    public static final int BLOCK_SIZE = 3;
-
-    /**
-     * The total number of blocks in one dimension.
-     */
-    protected static final int BLOCK_COUNT = SIZE / BLOCK_SIZE;
 
     /**
      * Creates an empty riddle.
@@ -197,6 +155,7 @@ public class GameMatrix implements Cloneable {
     /**
      * Clear the cells.
      */
+    @Override
     public final void clear() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
@@ -211,6 +170,7 @@ public class GameMatrix implements Cloneable {
      * @param column the column of the cell to get the value for.
      * @return the cell value ranging from 0 to 9.
      */
+    @Override
     public final byte get(final int row, final int column) {
         assert validCoords(row, column);
         return data[row][column];
@@ -222,6 +182,7 @@ public class GameMatrix implements Cloneable {
      * @param row the row of the field.
      * @param value the value of the field.
      */
+    @Override
     public void set(final int row, final int column, final byte value) {
         assert validCoords(row, column);
         assert validValue(value)
@@ -234,6 +195,7 @@ public class GameMatrix implements Cloneable {
      * @return the number of fields with a number in. Can be in the range
      * between 0 and 81.
      */
+    @Override
     public int getSetCount() {
         int count = 0;
         for (int i = 0; i < SIZE; i++) {
@@ -253,6 +215,7 @@ public class GameMatrix implements Cloneable {
      * The first index is the row index, the second index is the column
      * index.
      */
+    @Override
     public final byte[][] getArray() {
         return cloneArray(data);
     }
@@ -378,10 +341,11 @@ public class GameMatrix implements Cloneable {
      * @return {@code true} if the filled rows, columns and blocks
      * contain no duplicate numbers.
      */
+    @Override
     public final boolean isValid() {
         boolean result = true;
 
-        byte[] tmpData = new byte[GameMatrix.SIZE];
+        byte[] tmpData = new byte[GameMatrixInterace.SIZE];
 
         for (int i = 0; i < SIZE && result; i++) {
             row(i, tmpData);
@@ -410,7 +374,7 @@ public class GameMatrix implements Cloneable {
      * is not used.
      */
     protected int getRowFreeMask(final int row) {
-        byte[] tmpData = new byte[GameMatrix.SIZE];
+        byte[] tmpData = new byte[GameMatrixInterace.SIZE];
         row(row, tmpData);
         return (~getNumberMask(tmpData)) & MASK_FOR_NINE_BITS;
     }
@@ -422,7 +386,7 @@ public class GameMatrix implements Cloneable {
      * is not used.
      */
     protected int getColumnFreeMask(final int column) {
-        byte[] tmpData = new byte[GameMatrix.SIZE];
+        byte[] tmpData = new byte[GameMatrixInterace.SIZE];
         column(column, tmpData);
         return (~getNumberMask(tmpData)) & MASK_FOR_NINE_BITS;
     }
@@ -435,8 +399,8 @@ public class GameMatrix implements Cloneable {
      * is not used.
      */
     protected int getBlockFreeMask(final int row, final int column) {
-        byte[] tmpData = new byte[GameMatrix.BLOCK_SIZE
-                * GameMatrix.BLOCK_SIZE];
+        byte[] tmpData = new byte[GameMatrixInterace.BLOCK_SIZE
+                * GameMatrixInterace.BLOCK_SIZE];
         block(row, column, tmpData);
         return (~getNumberMask(tmpData)) & MASK_FOR_NINE_BITS;
     }
@@ -470,6 +434,7 @@ public class GameMatrix implements Cloneable {
      * {@code value} without
      * violating the game rules.
      */
+    @Override
     public final boolean canSet(
             final int row,
             final int column,
@@ -502,9 +467,9 @@ public class GameMatrix implements Cloneable {
         int minimumBits = -1;
         int minimumRow = -1;
         int minimumColumn = -1;
-        for (int row = 0; row < GameMatrix.SIZE; row++) {
-            for (int column = 0; column < GameMatrix.SIZE; column++) {
-                if (get(row, column) != GameMatrix.UNSET) {
+        for (int row = 0; row < GameMatrixInterace.SIZE; row++) {
+            for (int column = 0; column < GameMatrixInterace.SIZE; column++) {
+                if (get(row, column) != GameMatrixInterace.UNSET) {
                     continue;
                 }
                 int free = getFreeMask(row, column);

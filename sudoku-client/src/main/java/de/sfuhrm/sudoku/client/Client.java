@@ -21,6 +21,7 @@ package de.sfuhrm.sudoku.client;
 
 import de.sfuhrm.sudoku.Creator;
 import de.sfuhrm.sudoku.GameMatrix;
+import de.sfuhrm.sudoku.GameMatrixInterace;
 import de.sfuhrm.sudoku.Riddle;
 import de.sfuhrm.sudoku.Solver;
 import de.sfuhrm.sudoku.output.GameMatrixFormatter;
@@ -176,7 +177,7 @@ public class Client {
             solve(formatter);
         } else {
             for (int i = 0; i < count; i++) {
-                GameMatrix matrix;
+                GameMatrixInterace matrix;
                 Riddle riddle;
                 switch (op) {
                     case Full:

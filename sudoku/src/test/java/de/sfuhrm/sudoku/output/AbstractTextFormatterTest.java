@@ -32,7 +32,7 @@ public class AbstractTextFormatterTest {
     protected AbstractTextFormatter newInstance() {
         return new AbstractTextFormatter() {
             @Override
-            public String format(GameMatrix matrix) {
+            public String format(GameMatrixInterace matrix) {
                 return "";
             }
         };

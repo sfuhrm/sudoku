@@ -61,13 +61,13 @@ class CachedGameMatrix extends GameMatrix implements Cloneable {
         columnFree = new int[SIZE];
 
         for (int i = 0; i < SIZE; i++) {
-            rowFree[i] = GameMatrix.MASK_FOR_NINE_BITS;
-            columnFree[i] = GameMatrix.MASK_FOR_NINE_BITS;
+            rowFree[i] = MASK_FOR_NINE_BITS;
+            columnFree[i] = MASK_FOR_NINE_BITS;
         }
 
         for (int i = 0; i < BLOCK_COUNT; i++) {
             for (int j = 0; j < BLOCK_COUNT; j++) {
-                blockFree[i][j] = GameMatrix.MASK_FOR_NINE_BITS;
+                blockFree[i][j] = MASK_FOR_NINE_BITS;
             }
         }
     }

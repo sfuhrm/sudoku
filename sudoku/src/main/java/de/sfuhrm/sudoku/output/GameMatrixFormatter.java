@@ -19,7 +19,7 @@ Boston, MA  02110-1301, USA.
 */
 package de.sfuhrm.sudoku.output;
 
-import de.sfuhrm.sudoku.GameMatrix;
+import de.sfuhrm.sudoku.GameMatrixInterace;
 
 /**
  * Formats the game matrix to a text representation.
@@ -38,7 +38,7 @@ public interface GameMatrixFormatter {
      * @param matrix the matrix to format to String format.
      * @return a String representation of the game matrix.
      */
-    String format(GameMatrix matrix);
+    String format(GameMatrixInterace matrix);
 
     /** Formats the document start part.
      * @return a String representation of the document start.

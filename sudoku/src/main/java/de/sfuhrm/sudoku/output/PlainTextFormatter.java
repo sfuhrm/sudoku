@@ -19,7 +19,7 @@ Boston, MA  02110-1301, USA.
 */
 package de.sfuhrm.sudoku.output;
 
-import de.sfuhrm.sudoku.GameMatrix;
+import de.sfuhrm.sudoku.GameMatrixInterace;
 
 /**
  * Formats the game matrix to a plain text.
@@ -28,14 +28,14 @@ import de.sfuhrm.sudoku.GameMatrix;
 public final class PlainTextFormatter extends AbstractTextFormatter {
 
     @Override
-    public String format(final GameMatrix matrix) {
+    public String format(final GameMatrixInterace matrix) {
         StringBuilder sb = new StringBuilder();
 
-        for (int row = 0; row < GameMatrix.SIZE; row++) {
-            for (int column = 0; column < GameMatrix.SIZE; column++) {
+        for (int row = 0; row < GameMatrixInterace.SIZE; row++) {
+            for (int column = 0; column < GameMatrixInterace.SIZE; column++) {
                 byte val = matrix.get(row, column);
                 String str;
-                if (val == GameMatrix.UNSET) {
+                if (val == GameMatrixInterace.UNSET) {
                     str = getUnknownCellContentCharacter();
                 } else {
                     str = Integer.toString(val);

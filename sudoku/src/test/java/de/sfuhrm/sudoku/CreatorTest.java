@@ -109,7 +109,7 @@ public class CreatorTest {
 
     @Test
     public void testCreateFull() {
-        GameMatrix r = Creator.createFull();
+        GameMatrixInterace r = Creator.createFull();
         assertEquals(9*9, r.getSetCount());
         assertEquals(true, r.isValid());
     }
@@ -118,7 +118,7 @@ public class CreatorTest {
     public void testCreateFullWithMultipleInvocations() {
 //        for (int i=0; i < 100000; i++) {
         for (int i=0; i < 1000; i++) {
-            GameMatrix r = Creator.createFull();
+            GameMatrixInterace r = Creator.createFull();
             assertEquals(9*9, r.getSetCount());
             assertEquals(true, r.isValid());
         }
@@ -126,7 +126,7 @@ public class CreatorTest {
 
     @Test
     public void testCreateRiddle() {
-        GameMatrix matrix = Creator.createFull();
+        GameMatrixInterace matrix = Creator.createFull();
         Riddle riddle = Creator.createRiddle(matrix);
         for (int i=0; i < GameMatrix.SIZE; i++) {
             for (int j=0; j < GameMatrix.SIZE; j++) {
@@ -167,10 +167,10 @@ public class CreatorTest {
 
     @Test
     public void testCreateVariant() {
-        GameMatrix original = Creator.createFull();
-        GameMatrix variant1 = Creator.createVariant(original);
-        GameMatrix variant2 = Creator.createVariant(original);
-        GameMatrix variant3 = Creator.createVariant(original);
+        GameMatrixInterace original = Creator.createFull();
+        GameMatrixInterace variant1 = Creator.createVariant(original);
+        GameMatrixInterace variant2 = Creator.createVariant(original);
+        GameMatrixInterace variant3 = Creator.createVariant(original);
 
         assertEquals(true, original.isValid());
         assertEquals(9*9, original.getSetCount());
