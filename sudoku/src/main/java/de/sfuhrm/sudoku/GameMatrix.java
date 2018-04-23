@@ -65,6 +65,7 @@ public class GameMatrix implements Cloneable, GameMatrixInterace {
      * @param initializationData initialization data with the first dimension
      * being the rows and the second dimension being the columns.
      */
+    @Override
     public final void setAll(final byte[][] initializationData) {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
