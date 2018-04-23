@@ -24,7 +24,7 @@ package de.sfuhrm.sudoku;
  *
  * @author Stephan Fuhrmann
  */
-interface GameMatrixInterace {
+public interface GameMatrixInterace {
 
     /**
      * A mask that has bits 1 to 9 set (decimal 1022).
