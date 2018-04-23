@@ -74,7 +74,7 @@ class CachedGameMatrix extends GameMatrix implements Cloneable {
 
     @Override
     protected int getBlockFreeMask(final int row, final int column) {
-        return blockFree[row / BLOCK_COUNT][column / BLOCK_COUNT];
+        return blockFree[row / BLOCK_SIZE][column / BLOCK_SIZE];
     }
 
     @Override
@@ -91,7 +91,7 @@ class CachedGameMatrix extends GameMatrix implements Cloneable {
     public int getFreeMask(final int row, final int column) {
         return rowFree[row]
                 & columnFree[column]
-                & blockFree[row / BLOCK_COUNT][column / BLOCK_COUNT];
+                & blockFree[row / BLOCK_SIZE][column / BLOCK_SIZE];
     }
 
     @Override
@@ -104,7 +104,7 @@ class CachedGameMatrix extends GameMatrix implements Cloneable {
             int bitMask = 1 << oldValue;
             rowFree[row] |= bitMask;
             columnFree[column] |= bitMask;
-            blockFree[row / BLOCK_COUNT][column / BLOCK_COUNT] |= bitMask;
+            blockFree[row / BLOCK_SIZE][column / BLOCK_SIZE] |= bitMask;
             setCount--;
             assert setCount >= 0;
         }
@@ -115,7 +115,7 @@ class CachedGameMatrix extends GameMatrix implements Cloneable {
             int bitMask = ~(1 << value);
             rowFree[row] &= bitMask;
             columnFree[column] &= bitMask;
-            blockFree[row / BLOCK_COUNT][column / BLOCK_COUNT] &= bitMask;
+            blockFree[row / BLOCK_SIZE][column / BLOCK_SIZE] &= bitMask;
             setCount++;
             assert setCount <= TOTAL_FIELDS;
         }
