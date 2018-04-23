@@ -294,13 +294,13 @@ public final class Creator {
      *
      * @param fullMatrix a fully set up (solved) and valid sudoku.
      * Can be created using {@link #createFull()} or
-     * {@link #createVariant(de.sfuhrm.sudoku.GameMatrix)} of a full
+     * {@link #createVariant(de.sfuhrm.sudoku.GameMatrixInterace)} of a full
      * matrix.
      * @return a maximally cleared sudoku. Contains
-     * {@link GameMatrix#UNSET unset} value fields for places where
+     * {@link GameMatrixInterace#UNSET unset} value fields for places where
      * the user/player needs to guess values.
      * @see #createFull()
-     * @see #createVariant(de.sfuhrm.sudoku.GameMatrix)
+     * @see #createVariant(de.sfuhrm.sudoku.GameMatrixInterace)
      */
     public static Riddle createRiddle(final GameMatrixInterace fullMatrix) {
         Random random = new Random();
@@ -342,7 +342,8 @@ public final class Creator {
         // set the preset fields non-writable
         for (int i = 0; i < GameMatrixInterace.SIZE; i++) {
             for (int j = 0; j < GameMatrixInterace.SIZE; j++) {
-                cur.setWritable(j, i, cur.get(j, i) == GameMatrixInterace.UNSET);
+                cur.setWritable(j, i, cur.get(j, i)
+                        == GameMatrixInterace.UNSET);
             }
         }
 

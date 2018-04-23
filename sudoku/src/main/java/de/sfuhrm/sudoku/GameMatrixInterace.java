@@ -29,44 +29,43 @@ public interface GameMatrixInterace {
     /**
      * A mask that has bits 1 to 9 set (decimal 1022).
      */
-    static final int MASK_FOR_NINE_BITS
-            = 1022;
+    int MASK_FOR_NINE_BITS = 1022;
 
     /**
      * The value that is assigned to unset fields.
      */
-    static final byte UNSET = 0;
+    byte UNSET = 0;
 
     /**
      * The valid value that is the minimum (1).
      */
-    static final byte MINIMUM_VALUE = 1;
+    byte MINIMUM_VALUE = 1;
 
     /**
      * The valid value that is the maximum (9).
      */
-    static final byte MAXIMUM_VALUE = 9;
+    byte MAXIMUM_VALUE = 9;
 
     /**
      * The size in one dimension.
      */
-    static final int SIZE = 9;
+    int SIZE = 9;
 
     /**
      * The total number of fields.
      */
-    static final int TOTAL_FIELDS = SIZE * SIZE;
+    int TOTAL_FIELDS = SIZE * SIZE;
 
     /**
      * The edge dimension of a 3x3 block.
      *
      */
-    static final int BLOCK_SIZE = 3;
+    int BLOCK_SIZE = 3;
 
     /**
      * The total number of blocks in one dimension.
      */
-    static final int BLOCK_COUNT = SIZE / BLOCK_SIZE;
+    int BLOCK_COUNT = SIZE / BLOCK_SIZE;
 
     /**
      * Clear the cells.
