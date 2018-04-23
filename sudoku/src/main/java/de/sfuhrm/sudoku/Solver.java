@@ -50,7 +50,7 @@ public final class Solver {
     /**
      * The maximum number of solutions to search.
      */
-    public int limit;
+    private int limit;
 
     /**
      * Creates a solver for the given riddle.
@@ -67,7 +67,7 @@ public final class Solver {
     /** Set the limit for maximum results.
      * @param set the new limit.
      */
-    public void setLimit(int set) {
+    public void setLimit(final int set) {
         this.limit = set;
     }
 
