@@ -16,105 +16,112 @@ You should have received a copy of the GNU Library General Public
 License along with this library; if not, write to the
 Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
 Boston, MA  02110-1301, USA.
-*/
+ */
 package de.sfuhrm.sudoku;
 
 /**
  * The quadratic matrix.
+ *
  * @author Stephan Fuhrmann
  */
-public interface GameMatrixInterace {
+interface GameMatrixInterace {
 
     /**
      * A mask that has bits 1 to 9 set (decimal 1022).
      */
-    public static final int MASK_FOR_NINE_BITS
+    static final int MASK_FOR_NINE_BITS
             = 1022;
 
     /**
      * The value that is assigned to unset fields.
      */
-    public static final byte UNSET = 0;
+    static final byte UNSET = 0;
 
     /**
      * The valid value that is the minimum (1).
      */
-    public static final byte MINIMUM_VALUE = 1;
+    static final byte MINIMUM_VALUE = 1;
 
     /**
      * The valid value that is the maximum (9).
      */
-    public static final byte MAXIMUM_VALUE = 9;
+    static final byte MAXIMUM_VALUE = 9;
 
     /**
      * The size in one dimension.
      */
-    public static final int SIZE = 9;
+    static final int SIZE = 9;
 
     /**
      * The total number of fields.
      */
-    public static final int TOTAL_FIELDS = SIZE * SIZE;
+    static final int TOTAL_FIELDS = SIZE * SIZE;
 
     /**
      * The edge dimension of a 3x3 block.
      *
      */
-    public static final int BLOCK_SIZE = 3;
+    static final int BLOCK_SIZE = 3;
 
     /**
      * The total number of blocks in one dimension.
      */
-    public static final int BLOCK_COUNT = SIZE / BLOCK_SIZE;
+    static final int BLOCK_COUNT = SIZE / BLOCK_SIZE;
 
     /**
      * Clear the cells.
      */
-    public void clear();
+    void clear();
 
     /**
      * Get the value of a field.
+     *
      * @param row the row of the cell to get the value for.
      * @param column the column of the cell to get the value for.
      * @return the cell value ranging from 0 to 9.
      */
-    public byte get(final int row, final int column);
+    byte get(final int row, final int column);
 
     /**
      * Set the value of a field.
+     *
      * @param column the column of the field.
      * @param row the row of the field.
      * @param value the value of the field.
      */
-    public void set(final int row, final int column, final byte value);
+    void set(final int row, final int column, final byte value);
 
-
-    /** Sets all cells to the given values.
+    /**
+     * Sets all cells to the given values.
+     *
      * @param initializationData initialization data with the first dimension
      * being the rows and the second dimension being the columns.
      */
-    public void setAll(byte[][] initializationData);
+    void setAll(byte[][] initializationData);
 
     /**
      * Get the number of set cells.
+     *
      * @return the number of fields with a number in. Can be in the range
      * between 0 and 81.
      */
-    public int getSetCount();
+    int getSetCount();
 
-    /** Gets a copy of the underlying array.
-     * @return the data array containing numbers between 0 and 9.
-     * The first index is the row index, the second index is the column
-     * index.
+    /**
+     * Gets a copy of the underlying array.
+     *
+     * @return the data array containing numbers between 0 and 9. The first
+     * index is the row index, the second index is the column index.
      */
-    public byte[][] getArray();
+    byte[][] getArray();
 
     /**
      * Checks if the whole play field is valid.
-     * @return {@code true} if the filled rows, columns and blocks
-     * contain no duplicate numbers.
+     *
+     * @return {@code true} if the filled rows, columns and blocks contain no
+     * duplicate numbers.
      */
-    public boolean isValid();
+    boolean isValid();
 
     /**
      * Checks if the effect of one set operation is valid. This is much quicker
@@ -123,11 +130,10 @@ public interface GameMatrixInterace {
      * @param row the row of the cell to test validity for.
      * @param column the column of the cell to test validity for.
      * @param value the value to simulate setting for.
-     * @return {@code true} if the given cell can be set to
-     * {@code value} without
-     * violating the game rules.
+     * @return {@code true} if the given cell can be set to {@code value}
+     * without violating the game rules.
      */
-    public boolean canSet(
+    boolean canSet(
             final int row,
             final int column,
             final byte value);
