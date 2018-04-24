@@ -263,7 +263,6 @@ public final class Creator {
     private static boolean canClear(final Riddle riddle,
             final int row,
             final int column) {
-        
         assert riddle.get(row, column) != Riddle.UNSET;
 
         // if there's only one free val, it's unique
