@@ -12,6 +12,12 @@
     <url>https://github.com/sfuhrm/sudoku</url>
     <packaging>jar</packaging>
     <dependencies>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20180130</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

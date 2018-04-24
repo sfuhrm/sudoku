@@ -24,6 +24,7 @@ import de.sfuhrm.sudoku.GameMatrix;
 import de.sfuhrm.sudoku.Riddle;
 import de.sfuhrm.sudoku.Solver;
 import de.sfuhrm.sudoku.output.GameMatrixFormatter;
+import de.sfuhrm.sudoku.output.JsonArrayFormatter;
 import de.sfuhrm.sudoku.output.LatexTableFormatter;
 import de.sfuhrm.sudoku.output.MarkdownTableFormatter;
 import de.sfuhrm.sudoku.output.PlainTextFormatter;
@@ -68,7 +69,9 @@ public class Client {
         /** The {@link MarkdownTableFormatter}. */
         MarkDownTable(MarkdownTableFormatter.class),
         /** The {@link LatexTableFormatter}. */
-        LatexTable(LatexTableFormatter.class);
+        LatexTable(LatexTableFormatter.class),
+        /** The {@link JsonArrayFormatter}. */
+        JsonArray(JsonArrayFormatter.class);
 
         /** The class of the formatter to create an instance of. */
         private final Class<? extends GameMatrixFormatter> clazz;
