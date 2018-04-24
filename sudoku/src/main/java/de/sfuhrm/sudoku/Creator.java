@@ -261,9 +261,7 @@ public final class Creator {
      * @return {@code true} if the field with the coordinates can be
      * cleared without endangering the unique solvability of the Sudoku.
      */
-    private static boolean canClear(final Riddle riddle,
-            final int column,
-            final int row) {
+    private static boolean canClear(final Riddle riddle, final int row, final int column) {
         if (riddle.get(row, column) == Riddle.UNSET) {
             return false;
         }
@@ -319,7 +317,7 @@ public final class Creator {
                 continue;
             }
 
-            if (canClear(cur, i, j)) {
+            if (canClear(cur, j, i)) {
                 cur.set(j, i, Riddle.UNSET);
             } else {
                 multi++;
@@ -332,7 +330,7 @@ public final class Creator {
                     continue;
                 }
 
-                if (canClear(cur, i, j)) {
+                if (canClear(cur, j, i)) {
                     cur.set(j, i, Riddle.UNSET);
                 }
             }
