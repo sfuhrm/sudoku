@@ -314,26 +314,22 @@ public final class Creator {
             int i = random.nextInt(Riddle.SIZE);
             int j = random.nextInt(Riddle.SIZE);
 
-            if (cur.get(j, i) == Riddle.UNSET) {
-                continue;
-            }
-
-            if (canClear(cur, j, i)) {
-                cur.set(j, i, Riddle.UNSET);
-            } else {
-                multi++;
+            if (cur.get(j, i) != Riddle.UNSET) {
+                if (canClear(cur, j, i)) {
+                    cur.set(j, i, Riddle.UNSET);
+                } else {
+                    multi++;
+                }
             }
         }
 
         // deterministic loop
         for (int i = 0; i < Riddle.SIZE; i++) {
             for (int j = 0; j < Riddle.SIZE; j++) {
-                if (cur.get(j, i) == Riddle.UNSET) {
-                    continue;
-                }
-
-                if (canClear(cur, j, i)) {
-                    cur.set(j, i, Riddle.UNSET);
+                if (Riddle.UNSET != cur.get(j, i)) {
+                    if (canClear(cur, j, i)) {
+                        cur.set(j, i, Riddle.UNSET);
+                    }
                 }
             }
         }
