@@ -306,9 +306,11 @@ public final class Creator {
         cur.setAll(fullMatrix.getArray());
 
         int multi = 0;
-        // this could be improved:
-        // first the randomized loop can run
-        // second a loop over all cells can run
+        
+        // first the randomized loop runs
+        // second a deterministic loop over all cells runs
+
+        // random loop
         while (multi < CREATE_RIDDLE_RANDOM_CLEAR) {
             int i = random.nextInt(Riddle.SIZE);
             int j = random.nextInt(Riddle.SIZE);
@@ -324,6 +326,7 @@ public final class Creator {
             }
         }
 
+        // deterministic loop
         for (int i = 0; i < Riddle.SIZE; i++) {
             for (int j = 0; j < Riddle.SIZE; j++) {
                 if (cur.get(j, i) == Riddle.UNSET) {
