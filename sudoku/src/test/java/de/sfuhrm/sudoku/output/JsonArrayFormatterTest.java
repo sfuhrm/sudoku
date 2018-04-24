@@ -63,11 +63,18 @@ public class JsonArrayFormatterTest extends AbstractTextFormatterTest {
         JSONArray allMatrices = new JSONArray(actual);
         assertEquals(1, allMatrices.length());
         JSONArray firstMatrix = allMatrices.getJSONArray(0);
+        
         assertEquals(GameMatrix.SIZE, firstMatrix.length());
-        JSONArray firstRow = firstMatrix.getJSONArray(0);
-        assertEquals(GameMatrix.SIZE, firstRow.length());
-        int element = firstRow.getInt(0);
-        assertEquals(0, element);
+        
+        for (int row = 0; row < GameMatrix.SIZE; row++) {
+            JSONArray rowArray = firstMatrix.getJSONArray(0);
+            assertEquals(GameMatrix.SIZE, rowArray.length());
+            
+            for (int column = 0; column < GameMatrix.SIZE; column++) {
+                int element = rowArray.getInt(column);
+                assertEquals(0, element);
+            }
+        }
     }
     
     @Test
