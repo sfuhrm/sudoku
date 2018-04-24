@@ -22,7 +22,11 @@ package de.sfuhrm.sudoku.output;
 import de.sfuhrm.sudoku.GameMatrix;
 
 /**
- * Formats the game matrices to a 3-dimension JSON array.
+ * Formats the game matrices to a 3-dimensional JSON array.
+ * The outer dimension is the matrix itself.
+ * The next dimension is the row.
+ * The last dimension is the column containing numbers from
+ * 0 (for UNSET) over 1 to 9.
  * @author Stephan Fuhrmann
  */
 public final class JsonArrayFormatter extends AbstractTextFormatter {
