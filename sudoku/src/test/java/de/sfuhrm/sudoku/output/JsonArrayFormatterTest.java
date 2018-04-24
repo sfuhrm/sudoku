@@ -56,6 +56,10 @@ public class JsonArrayFormatterTest extends AbstractTextFormatterTest {
         AbstractTextFormatter formatter = newInstance();
         GameMatrix gameMatrix = new GameMatrix();
 
+        for (int i = 0; i < GameMatrix.SIZE; i++) {
+            gameMatrix.set(0, i, (byte)i);
+        }
+
         String actual = formatter.documentStart()
                 + formatter.format(gameMatrix)
                 + formatter.documentEnd();
@@ -67,12 +71,12 @@ public class JsonArrayFormatterTest extends AbstractTextFormatterTest {
         assertEquals(GameMatrix.SIZE, firstMatrix.length());
         
         for (int row = 0; row < GameMatrix.SIZE; row++) {
-            JSONArray rowArray = firstMatrix.getJSONArray(0);
+            JSONArray rowArray = firstMatrix.getJSONArray(row);
             assertEquals(GameMatrix.SIZE, rowArray.length());
             
             for (int column = 0; column < GameMatrix.SIZE; column++) {
                 int element = rowArray.getInt(column);
-                assertEquals(0, element);
+                assertEquals(gameMatrix.get(row, column), element);
             }
         }
     }
