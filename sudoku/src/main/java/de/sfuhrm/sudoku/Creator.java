@@ -260,7 +260,9 @@ public final class Creator {
      * @return {@code true} if the field with the coordinates can be
      * cleared without endangering the unique solvability of the Sudoku.
      */
-    private static boolean canClear(final Riddle riddle, final int row, final int column) {
+    private static boolean canClear(final Riddle riddle,
+            final int row,
+            final int column) {
         if (riddle.get(row, column) == Riddle.UNSET) {
             return false;
         }
@@ -305,7 +307,7 @@ public final class Creator {
         cur.setAll(fullMatrix.getArray());
 
         int multi = 0;
-        
+
         // first the randomized loop runs
         // second a deterministic loop over all cells runs
 
