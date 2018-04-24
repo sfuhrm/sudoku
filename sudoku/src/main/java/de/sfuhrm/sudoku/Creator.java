@@ -80,6 +80,7 @@ public final class Creator {
         int workingMask = mask; // the left unseen bits are set
         int low = Integer.numberOfTrailingZeros(workingMask);
         workingMask >>>= low;
+        assert (workingMask & 1) == 1 || workingMask == 0;
         for (int i = low; workingMask != 0; i++) {
             if ((workingMask & 1) != 0) {
                 if (count == bitIndex) {
@@ -99,32 +100,30 @@ public final class Creator {
      */
     public static GameMatrix createFull() {
         Creator c = new Creator();
-        while (true) {
-            // the number to distribute
 
-            c.riddle.clear();
+        // the number to distribute
+        c.riddle.clear();
 
-            // * 0 0
-            // 0 * 0
-            // 0 0 *
-            //
-            // The blocks on the diagonal can be filled independently in random
-            // because they can not collide.
-            // This way we fill 1/3 of the matrix 'for free'.
-            for (int i = 0; i < GameMatrix.BLOCK_COUNT; i++) {
-                c.fillBlock(
-                        i * GameMatrix.BLOCK_SIZE,
-                        i * GameMatrix.BLOCK_SIZE);
+        // * 0 0
+        // 0 * 0
+        // 0 0 *
+        //
+        // The blocks on the diagonal can be filled independently in random
+        // because they can not collide.
+        // This way we fill 1/3 of the matrix 'for free'.
+        for (int i = 0; i < GameMatrix.BLOCK_COUNT; i++) {
+            c.fillBlock(
+                    i * GameMatrix.BLOCK_SIZE,
+                    i * GameMatrix.BLOCK_SIZE);
 
-            }
-
-            boolean ok = c.backtrack(GameMatrix.TOTAL_FIELDS
-                    - c.riddle.getSetCount(),
-                    new int[2]);
-            if (ok) {
-                break;
-            }
         }
+
+        // this will always work because the code above
+        // creates a valid basis for everything
+        boolean ok = c.backtrack(GameMatrix.TOTAL_FIELDS
+                - c.riddle.getSetCount(),
+                new int[2]);
+        assert ok;
 
         return c.winner;
     }
@@ -354,6 +353,10 @@ public final class Creator {
      * @param column the start column of the block.
      */
     private void fillBlock(final int row, final int column) {
+        assert GameMatrix.validCoords(row, column);
+        assert row % GameMatrix.BLOCK_SIZE == 0;
+        assert column % GameMatrix.BLOCK_SIZE == 0;
+
         byte[] numbers = createNumbersToDistribute(random, 1);
         int k = 0;
         for (int i = 0; i < Riddle.BLOCK_SIZE; i++) {
