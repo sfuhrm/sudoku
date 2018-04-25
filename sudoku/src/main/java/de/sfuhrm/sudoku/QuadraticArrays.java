@@ -26,7 +26,7 @@ public final class QuadraticArrays {
      * @return a clone of the input array with same dimensions and content.
      */
     static int[][] cloneArray(final int[][] array) {
-        int[][] result = new int[SIZE][SIZE];
+        int[][] result = new int[array.length][];
         for (int i = 0; i < array.length; i++) {
             System.arraycopy(array[i], 0, result[i], 0, array[i].length);
         }
@@ -38,7 +38,7 @@ public final class QuadraticArrays {
      * @return a clone of the input array with same dimensions and content.
      */
     static byte[][] cloneArray(final byte[][] array) {
-        byte[][] result = new byte[SIZE][SIZE];
+        byte[][] result = new byte[array.length][];
         for (int i = 0; i < array.length; i++) {
             System.arraycopy(array[i], 0, result[i], 0, array[i].length);
         }
@@ -50,7 +50,7 @@ public final class QuadraticArrays {
      * @return a clone of the input array with same dimensions and content.
      */
     static boolean[][] cloneArray(final boolean[][] array) {
-        boolean[][] result = new boolean[SIZE][SIZE];
+        boolean[][] result = new boolean[array.length][];
         for (int i = 0; i < array.length; i++) {
             System.arraycopy(array[i], 0, result[i], 0, array[i].length);
         }
