@@ -135,7 +135,7 @@ public final class Solver {
             int resultCount = backtrack(freeCells - 1, minimumCell);
             result += resultCount;
         }
-        riddle.set(minimumRow, minimumColumn, Riddle.UNSET);
+        riddle.set(minimumRow, minimumColumn, GameMatrixInterface.UNSET);
 
         return result;
     }

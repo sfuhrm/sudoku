@@ -19,7 +19,6 @@ Boston, MA  02110-1301, USA.
 */
 package de.sfuhrm.sudoku.output;
 
-import de.sfuhrm.sudoku.GameMatrix;
 import de.sfuhrm.sudoku.GameMatrixInterface;
 
 /**
@@ -50,12 +49,12 @@ public final class JsonArrayFormatter extends AbstractTextFormatter {
             sb.append(",");
         }
         sb.append("[");
-        for (int row = 0; row < GameMatrix.SIZE; row++) {
+        for (int row = 0; row < GameMatrixInterface.SIZE; row++) {
             sb.append("[");
-            for (int column = 0; column < GameMatrix.SIZE; column++) {
+            for (int column = 0; column < GameMatrixInterface.SIZE; column++) {
                 byte val = matrix.get(row, column);
                 String str;
-                if (val == GameMatrix.UNSET) {
+                if (val == GameMatrixInterface.UNSET) {
                     str = getUnknownCellContentCharacter();
                 } else {
                     str = Integer.toString(val);
@@ -67,7 +66,7 @@ public final class JsonArrayFormatter extends AbstractTextFormatter {
                 sb.append(str);
             }
             sb.append("]");
-            if (row != GameMatrix.SIZE - 1) {
+            if (row != GameMatrixInterface.SIZE - 1) {
                 sb.append(",");
             }
             sb.append(getLineSeparator());

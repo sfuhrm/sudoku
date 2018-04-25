@@ -115,7 +115,7 @@ public final class Creator {
         }
         // this will always work because the code above
         // creates a valid basis for everything
-        boolean ok = c.backtrack(GameMatrix.TOTAL_FIELDS
+        boolean ok = c.backtrack(GameMatrixInterface.TOTAL_FIELDS
                 - c.riddle.getSetCount(),
                 new int[2]);
         assert ok;
@@ -256,10 +256,10 @@ public final class Creator {
      * @return {@code true} if the field with the coordinates can be
      * cleared without endangering the unique solvability of the Sudoku.
      */
-    private static boolean canClear(final Riddle riddle,
+    private static boolean canClear(final BitFreeMatrixInterface riddle,
             final int row,
             final int column) {
-        assert riddle.get(row, column) != Riddle.UNSET;
+        assert riddle.get(row, column) != GameMatrixInterface.UNSET;
 
         // if there's only one free val, it's unique
         int freeMask = riddle.getFreeMask(row, column);
@@ -269,7 +269,7 @@ public final class Creator {
         }
 
         int old = riddle.get(row, column);
-        riddle.set(row, column, Riddle.UNSET);
+        riddle.set(row, column, GameMatrixInterface.UNSET);
 
         Solver s = new Solver(riddle);
         s.setLimit(2);
@@ -322,7 +322,7 @@ public final class Creator {
         // deterministic loop
         for (int i = 0; i < GameMatrixInterface.SIZE; i++) {
             for (int j = 0; j < GameMatrixInterface.SIZE; j++) {
-                if (Riddle.UNSET != cur.get(j, i)) {
+                if (GameMatrixInterface.UNSET != cur.get(j, i)) {
                     if (canClear(cur, j, i)) {
                         cur.set(j, i, GameMatrixInterface.UNSET);
                     }
