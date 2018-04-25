@@ -20,7 +20,6 @@ Boston, MA  02110-1301, USA.
 package de.sfuhrm.sudoku.client;
 
 import de.sfuhrm.sudoku.Creator;
-import de.sfuhrm.sudoku.GameMatrixImpl;
 import de.sfuhrm.sudoku.Riddle;
 import de.sfuhrm.sudoku.Solver;
 import de.sfuhrm.sudoku.output.GameMatrixFormatter;
@@ -38,6 +37,7 @@ import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 import de.sfuhrm.sudoku.GameMatrix;
+import de.sfuhrm.sudoku.QuadraticArrays;
 
 /**
  * A Sudoku CLI client.
@@ -150,7 +150,7 @@ public class Client {
                 .map(l -> l.replaceAll("[_?.]", "0"))
                 .collect(Collectors.toList());
 
-        byte[][] data = GameMatrixImpl.parse(lines.toArray(new String[0]));
+        byte[][] data = QuadraticArrays.parse(lines.toArray(new String[0]));
 
         Riddle riddle = new Riddle();
         riddle.setAll(data);
