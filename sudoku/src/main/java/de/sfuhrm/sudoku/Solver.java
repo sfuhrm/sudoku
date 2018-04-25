@@ -35,12 +35,12 @@ public final class Solver {
     /**
      * Current working copy.
      */
-    private final Riddle riddle;
+    private final BitFreeMatrixInterface riddle;
 
     /**
      * The possible solutions for this riddle.
      */
-    private final List<Riddle> possibleSolutions;
+    private final List<GameMatrixInterface> possibleSolutions;
 
     /** The default limit.
      * @see #limit
@@ -57,10 +57,10 @@ public final class Solver {
      *
      * @param solveMe the riddle to solve.
      */
-    public Solver(final Riddle solveMe) {
+    public Solver(final GameMatrixInterface solveMe) {
         Objects.requireNonNull(solveMe, "solveMe is null");
         limit = LIMIT;
-        riddle = (Riddle) solveMe.clone();
+        riddle = (GameMatrixInterface) solveMe.clone();
         possibleSolutions = new ArrayList<>();
     }
 
@@ -76,7 +76,7 @@ public final class Solver {
      *
      * @return the found solutions. Should be only one.
      */
-    public List<Riddle> solve() {
+    public List<GameMatrixInterface> solve() {
         possibleSolutions.clear();
         int freeCells = GameMatrixInterface.TOTAL_FIELDS
                 - riddle.getSetCount();
@@ -104,7 +104,7 @@ public final class Solver {
         // just one result, we have no more to choose
         if (freeCells == 0) {
             if (possibleSolutions.size() < limit) {
-                possibleSolutions.add((Riddle) riddle.clone());
+                possibleSolutions.add((GameMatrixInterface) riddle.clone());
             }
 
             return 1;

@@ -43,7 +43,7 @@ public final class Creator {
     /**
      * Current work in progress.
      */
-    private final CachedGameMatrix riddle;
+    private final BitFreeMatrixInterface riddle;
 
     /**
      * Possibly found Sudoku.
@@ -273,7 +273,7 @@ public final class Creator {
 
         Solver s = new Solver(riddle);
         s.setLimit(2);
-        List<Riddle> results = s.solve();
+        List<GameMatrixInterface> results = s.solve();
         boolean result = (results.size() == 1);
 
         // rollback

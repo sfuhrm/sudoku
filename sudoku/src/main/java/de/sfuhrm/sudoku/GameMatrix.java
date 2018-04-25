@@ -26,7 +26,7 @@ import java.util.Arrays;
  * The quadratic matrix.
  * @author Stephan Fuhrmann
  */
-public class GameMatrix implements Cloneable, GameMatrixInterface {
+public class GameMatrix implements Cloneable, BitFreeMatrixInterface {
 
     /**
      * The game field. The first dimension is the row, the second the column.
@@ -413,7 +413,8 @@ public class GameMatrix implements Cloneable, GameMatrixInterface {
      * the bit 2 telling whether the number 2 is free, and so on. The bit 0
      * is not used.
      */
-    protected int getFreeMask(
+    @Override
+    public int getFreeMask(
             final int row,
             final int column) {
         int free = MASK_FOR_NINE_BITS;
@@ -455,36 +456,5 @@ public class GameMatrix implements Cloneable, GameMatrixInterface {
      */
     protected static int roundToBlock(final int in) {
         return in - in % BLOCK_SIZE;
-    }
-
-    /** Find the cell with the lest number of possible candidates.
-     * @param rowColumnResult a two-element int array receiving the
-     * row and column of the result. First element will be the row index,
-     * the second the column index.
-     * @return {@code true} if the minimum free cell could be found.
-     * Can be {@code false} in the case of a fully-filled matrix.
-     */
-    protected final boolean findLeastFreeCell(final int[] rowColumnResult) {
-        int minimumBits = -1;
-        int minimumRow = -1;
-        int minimumColumn = -1;
-        for (int row = 0; row < GameMatrixInterface.SIZE; row++) {
-            for (int column = 0; column < GameMatrixInterface.SIZE; column++) {
-                if (get(row, column) != GameMatrixInterface.UNSET) {
-                    continue;
-                }
-                int free = getFreeMask(row, column);
-                int bits = Integer.bitCount(free);
-
-                if (bits != 0 && (minimumBits == -1 || bits < minimumBits)) {
-                    minimumColumn = column;
-                    minimumRow = row;
-                    minimumBits = bits;
-                }
-            }
-        }
-        rowColumnResult[0] = minimumRow;
-        rowColumnResult[1] = minimumColumn;
-        return minimumBits != -1;
     }
 }
