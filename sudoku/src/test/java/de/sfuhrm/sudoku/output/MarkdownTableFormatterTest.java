@@ -86,7 +86,7 @@ public class MarkdownTableFormatterTest extends AbstractTextFormatterTest {
     @Test
     public void testFormatWithFullMatrix() {
         GameMatrix matrix = new GameMatrixImpl();
-        matrix.setAll(GameMatrixImpl.parse(
+        matrix.setAll(QuadraticArrays.parse(
                 "294731856",
                 "781465239",
                 "536829741",

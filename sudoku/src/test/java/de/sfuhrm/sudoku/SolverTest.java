@@ -66,7 +66,7 @@ public class SolverTest {
 
     @Test
     public void testSolveWithExampleProblem() {
-        byte[][] riddleBytes = GameMatrixImpl.parse(
+        byte[][] riddleBytes = QuadraticArrays.parse(
                 "......3..",
                 "9.3....2.",
                 ".....8.1.",
@@ -79,7 +79,7 @@ public class SolverTest {
         Riddle riddle = new Riddle();
         riddle.setAll(riddleBytes);
 
-        byte[][] solutionBytes = GameMatrixImpl.parse(
+        byte[][] solutionBytes = QuadraticArrays.parse(
                 "862419375",
                 "913675428",
                 "475238619",

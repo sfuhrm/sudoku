@@ -60,7 +60,7 @@ public class GameMatrixImplTest {
     @Test
     public void testGetArray() {
         byte data[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
             //   x
                 "100000000",
                 "020100000",
@@ -97,7 +97,7 @@ public class GameMatrixImplTest {
     @Test
     public void testParse() {
         byte data[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                 "000000000",
                 "111111111",
                 "222222222",
@@ -142,7 +142,7 @@ public class GameMatrixImplTest {
     @Test(expected = IllegalArgumentException.class)
     public void testParseWithWrongOuterLength() {
         byte data[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                 "000000000"
                 );
     }
@@ -150,7 +150,7 @@ public class GameMatrixImplTest {
     @Test(expected = IllegalArgumentException.class)
     public void testParseWithWrongInnerLength() {
         byte data[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                 "000000000",
                 "000000000",
                 "000000000",
@@ -184,7 +184,7 @@ public class GameMatrixImplTest {
     @Test
     public void testEqualsWithEqualMatrix() {
         byte[][] matrix =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                 "000000000",
                 "000000000",
                 "000000000",
@@ -207,7 +207,7 @@ public class GameMatrixImplTest {
     @Test
     public void testEqualsWithUnequalMatrix() {
         byte[][] matrix1 =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                 "000000000",
                 "000000000",
                 "000000000",
@@ -222,7 +222,7 @@ public class GameMatrixImplTest {
         instance1.setAll(matrix1);
 
         byte[][] matrix2 =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                 "123000000",
                 "000000000",
                 "000000000",
@@ -248,7 +248,7 @@ public class GameMatrixImplTest {
     @Test
     public void testParseWithWrongChars() {
         byte expected[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                 "000000000",
                 "000000000",
                 "000000000",
@@ -261,7 +261,7 @@ public class GameMatrixImplTest {
                 );
 
         byte actual[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                 "?00000000",
                 "000000000",
                 "000000000",
@@ -280,7 +280,7 @@ public class GameMatrixImplTest {
     @Test
     public void testSetAll() {
         byte data[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                 "000000000",
                 "111111111",
                 "222222222",
@@ -305,7 +305,7 @@ public class GameMatrixImplTest {
     @Test
     public void testRow() {
         byte data[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                 "000000000",
                 "111111111",
                 "222222222",
@@ -334,7 +334,7 @@ public class GameMatrixImplTest {
     @Test
     public void testColumn() {
         byte data[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                 "000000000",
                 "111111111",
                 "222222222",
@@ -363,7 +363,7 @@ public class GameMatrixImplTest {
     @Test
     public void testBlock() {
         byte data[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                 "000000000",
                 "111111111",
                 "222222222",
@@ -396,7 +396,7 @@ public class GameMatrixImplTest {
     @Test
     public void testToString() {
         byte data[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                 "000000000",
                 "111111111",
                 "222222222",
@@ -427,7 +427,7 @@ public class GameMatrixImplTest {
     @Test
     public void testClear() {
         byte data[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                 "000000000",
                 "111111111",
                 "222222222",
@@ -458,7 +458,7 @@ public class GameMatrixImplTest {
     @Test
     public void testClone() {
         byte data[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                 "000000000",
                 "111111111",
                 "222222222",
@@ -535,7 +535,7 @@ public class GameMatrixImplTest {
     @Test
     public void testIsValidWithInvalid() {
         byte data[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                 "000000000",
                 "111111111",
                 "222222222",
@@ -555,7 +555,7 @@ public class GameMatrixImplTest {
     @Test
     public void testIsValidWithEmptyValid() {
         byte data[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                 "000000000",
                 "000000000",
                 "000000000",
@@ -575,7 +575,7 @@ public class GameMatrixImplTest {
     @Test
     public void testIsValidWithPartlyFullValid() {
         byte data[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                 "100000000",
                 "000100000",
                 "000000100",
@@ -595,7 +595,7 @@ public class GameMatrixImplTest {
     @Test
     public void testIsValidWithBlockTopLeftCollision() {
         byte data[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                 "100000000",
                 "000000000",
                 "001000000",
@@ -615,7 +615,7 @@ public class GameMatrixImplTest {
     @Test
     public void testIsValidWithBlockTopRightCollision() {
         byte data[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                 "000000040",
                 "000000000",
                 "000000004",
@@ -635,7 +635,7 @@ public class GameMatrixImplTest {
     @Test
     public void testIsValidWithBlockBottomRightCollision() {
         byte data[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                 "000000000",
                 "000000000",
                 "000000000",
@@ -655,7 +655,7 @@ public class GameMatrixImplTest {
     @Test
     public void testIsValidWithBlockBottomLeftCollision() {
         byte data[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                 "000000000",
                 "000000000",
                 "000000000",
@@ -675,7 +675,7 @@ public class GameMatrixImplTest {
     @Test
     public void testIsValidWithBlockCenterLeftCollision() {
         byte data[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                 "000000000",
                 "000000000",
                 "000000000",
@@ -695,7 +695,7 @@ public class GameMatrixImplTest {
     @Test
     public void testIsValidWithBlockCenterRightCollision() {
         byte data[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                 "000000000",
                 "000000000",
                 "000000000",
@@ -715,7 +715,7 @@ public class GameMatrixImplTest {
     @Test
     public void testIsValidWithBlockCenterCenterCollision() {
         byte data[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                 "000000000",
                 "000000000",
                 "000000000",
@@ -735,7 +735,7 @@ public class GameMatrixImplTest {
     @Test
     public void testGetRowFreeMask() {
         byte data[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                 "100000000",
                 "020100000",
                 "000320100",
@@ -762,7 +762,7 @@ public class GameMatrixImplTest {
     @Test
     public void testGetColumnFreeMask() {
         byte data[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                 "100000000",
                 "020100000",
                 "000320100",
@@ -789,7 +789,7 @@ public class GameMatrixImplTest {
     @Test
     public void testGetBlockFreeMask() {
         byte data[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                 "100000000",
                 "020100000",
                 "000320100",
@@ -816,7 +816,7 @@ public class GameMatrixImplTest {
     @Test
     public void testGetFreeMask() {
         byte data[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                 "100000000",
                 "020100000",
                 "000320100",
@@ -843,7 +843,7 @@ public class GameMatrixImplTest {
     @Test
     public void testCanSet() {
         byte data[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
             //   x
                 "100000000",
                 "020100000",
@@ -888,7 +888,7 @@ public class GameMatrixImplTest {
     public void testFindLeastFreeCellWithAllFull() {
         // full matrix
         byte data[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                         "367915482",
                         "149268357",
                         "582473619",
@@ -912,7 +912,7 @@ public class GameMatrixImplTest {
     public void testFindLeastFreeCellWithAlmostFull() {
         // 0,0 free matrix
         byte data[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                         "067915482",
                         "149268357",
                         "582473619",
@@ -938,7 +938,7 @@ public class GameMatrixImplTest {
     public void testFindLeastFreeCell() {
         // a possible "full house" in the upper left block
         byte data[][] =
-        GameMatrixImpl.parse(
+        QuadraticArrays.parse(
                 "123000000",
                 "456000000",
                 "780000000",

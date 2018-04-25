@@ -7,5 +7,5 @@
 <suppressions>
     <suppress checks="DesignForExtension"
               files="GameMatrixImpl.java"
-              lines="160-530"/>
+              lines="100-530"/>
 </suppressions>

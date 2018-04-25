@@ -132,7 +132,7 @@ class CachedGameMatrixImpl extends GameMatrixImpl implements Cloneable {
     public Object clone() {
         CachedGameMatrixImpl clone;
         clone = (CachedGameMatrixImpl) super.clone();
-        clone.blockFree = cloneArray(blockFree);
+        clone.blockFree = QuadraticArrays.cloneArray(blockFree);
         clone.columnFree = Arrays.copyOf(columnFree, columnFree.length);
         clone.rowFree = Arrays.copyOf(rowFree, rowFree.length);
         return clone;

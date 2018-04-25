@@ -71,7 +71,7 @@ public class Riddle extends CachedGameMatrixImpl implements Cloneable {
     public final Object clone() {
         Riddle clone;
         clone = (Riddle) super.clone();
-        clone.writeable = cloneArray(writeable);
+        clone.writeable = QuadraticArrays.cloneArray(writeable);
         return clone;
     }
 }

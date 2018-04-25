@@ -20,8 +20,8 @@ Boston, MA  02110-1301, USA.
 package de.sfuhrm.sudoku.output;
 
 import de.sfuhrm.sudoku.*;
-import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
  * Test for {@link PlainTextFormatter}.
@@ -34,7 +34,7 @@ public class PlainTextFormatterTest {
         PlainTextFormatter formatter = new PlainTextFormatter();
         assertEquals("\n", formatter.getLineSeparator());
         assertEquals(".", formatter.getUnknownCellContentCharacter());
-    }    
+    }
     @Test
     public void testFormatWithEmpty() {
         GameMatrixImpl matrix = new GameMatrixImpl();
@@ -51,7 +51,7 @@ public class PlainTextFormatterTest {
                 ".........\n"
                 , actual);
     }
-    
+
     @Test
     public void testFormatWithEmptyAndOtherUnknownCharacter() {
         GameMatrixImpl matrix = new GameMatrixImpl();
@@ -70,11 +70,11 @@ public class PlainTextFormatterTest {
                 "?????????\n"
                 , actual);
     }
-    
+
     @Test
     public void testFormatWithFullMatrix() {
         GameMatrixImpl matrix = new GameMatrixImpl();
-        matrix.setAll(GameMatrixImpl.parse(
+        matrix.setAll(QuadraticArrays.parse(
                 "294731856",
                 "781465239",
                 "536829741",
@@ -98,5 +98,5 @@ public class PlainTextFormatterTest {
                 "942387615\n"+
                 "167594382\n"
                 , actual);
-    }    
+    }
 }

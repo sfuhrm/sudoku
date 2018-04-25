@@ -191,7 +191,7 @@ public class CreatorTest {
     @Test
     public void testSwapColumnWithFirstAndSecond() {
         GameMatrixImpl actual = new GameMatrixImpl();
-        actual.setAll(GameMatrixImpl.parse(
+        actual.setAll(QuadraticArrays.parse(
                 "100000000",
                 "020100000",
                 "000320100",
@@ -204,7 +204,7 @@ public class CreatorTest {
                 ));
 
         GameMatrixImpl expected = new GameMatrixImpl();
-        expected.setAll(GameMatrixImpl.parse(
+        expected.setAll(QuadraticArrays.parse(
                 "010000000",
                 "200100000",
                 "000320100",
@@ -224,7 +224,7 @@ public class CreatorTest {
     @Test
     public void testSwapColumnWithFirstAndLast() {
         GameMatrixImpl actual = new GameMatrixImpl();
-        actual.setAll(GameMatrixImpl.parse(
+        actual.setAll(QuadraticArrays.parse(
                 "100000000",
                 "020100000",
                 "000320100",
@@ -237,7 +237,7 @@ public class CreatorTest {
                 ));
 
         GameMatrixImpl expected = new GameMatrixImpl();
-        expected.setAll(GameMatrixImpl.parse(
+        expected.setAll(QuadraticArrays.parse(
                 "000000001",
                 "020100000",
                 "000320100",
@@ -257,7 +257,7 @@ public class CreatorTest {
     @Test
     public void testSwapRowWithFirstAndSecond() {
         GameMatrixImpl actual = new GameMatrixImpl();
-        actual.setAll(GameMatrixImpl.parse(
+        actual.setAll(QuadraticArrays.parse(
                 "100000000",
                 "020100000",
                 "000320100",
@@ -270,7 +270,7 @@ public class CreatorTest {
                 ));
 
         GameMatrixImpl expected = new GameMatrixImpl();
-        expected.setAll(GameMatrixImpl.parse(
+        expected.setAll(QuadraticArrays.parse(
                 "020100000",
                 "100000000",
                 "000320100",
@@ -290,7 +290,7 @@ public class CreatorTest {
     @Test
     public void testSwapRowWithFirstAndLast() {
         GameMatrixImpl actual = new GameMatrixImpl();
-        actual.setAll(GameMatrixImpl.parse(
+        actual.setAll(QuadraticArrays.parse(
                 "100000000",
                 "020100000",
                 "000320100",
@@ -303,7 +303,7 @@ public class CreatorTest {
                 ));
 
         GameMatrixImpl expected = new GameMatrixImpl();
-        expected.setAll(GameMatrixImpl.parse(
+        expected.setAll(QuadraticArrays.parse(
                 "000000001",
                 "020100000",
                 "000320100",
