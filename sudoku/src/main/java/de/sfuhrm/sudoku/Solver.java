@@ -42,10 +42,15 @@ public final class Solver {
      */
     private final List<Riddle> possibleSolutions;
 
+    /** The default limit.
+     * @see #limit
+     */
+    public static final int LIMIT = 20;
+
     /**
      * The maximum number of solutions to search.
      */
-    public static final int LIMIT = 20;
+    private int limit;
 
     /**
      * Creates a solver for the given riddle.
@@ -54,8 +59,16 @@ public final class Solver {
      */
     public Solver(final Riddle solveMe) {
         Objects.requireNonNull(solveMe, "solveMe is null");
+        limit = LIMIT;
         riddle = (Riddle) solveMe.clone();
         possibleSolutions = new ArrayList<>();
+    }
+
+    /** Set the limit for maximum results.
+     * @param set the new limit.
+     */
+    public void setLimit(final int set) {
+        this.limit = set;
     }
 
     /**
@@ -83,9 +96,14 @@ public final class Solver {
     private int backtrack(final int freeCells, final int[] minimumCell) {
         assert freeCells >= 0 : "freeCells is negative";
 
+        // don't recurse further if already at limit
+        if (possibleSolutions.size() >= limit) {
+            return 0;
+        }
+
         // just one result, we have no more to choose
         if (freeCells == 0) {
-            if (possibleSolutions.size() < LIMIT) {
+            if (possibleSolutions.size() < limit) {
                 possibleSolutions.add((Riddle) riddle.clone());
             }
 

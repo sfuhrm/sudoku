@@ -139,6 +139,12 @@ public class CreatorTest {
                 }
             }
         }
+
+        // there can be only one
+        Solver solver = new Solver(riddle);
+        solver.setLimit(3);
+        List<Riddle> results = solver.solve();
+        assertEquals(1, results.size());
     }
 
     @Test

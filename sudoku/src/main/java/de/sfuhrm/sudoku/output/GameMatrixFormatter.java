@@ -26,7 +26,7 @@ import de.sfuhrm.sudoku.GameMatrixInterface;
  * The text representation has a
  * <ul>
  * <li> document #{@link #documentStart() start}
- * <li> document #{@link #format(de.sfuhrm.sudoku.GameMatrixInterace)
+ * <li> document #{@link #format(de.sfuhrm.sudoku.GameMatrixInterface)
  * main part} and a
  * <li> document #{@link #documentEnd() end}.
  * </ul>

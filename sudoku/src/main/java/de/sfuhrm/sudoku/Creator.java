@@ -80,6 +80,7 @@ public final class Creator {
         int workingMask = mask; // the left unseen bits are set
         int low = Integer.numberOfTrailingZeros(workingMask);
         workingMask >>>= low;
+        assert (workingMask & 1) == 1 || workingMask == 0;
         for (int i = low; workingMask != 0; i++) {
             if ((workingMask & 1) != 0) {
                 if (count == bitIndex) {
@@ -99,31 +100,25 @@ public final class Creator {
      */
     public static GameMatrixInterface createFull() {
         Creator c = new Creator();
-        while (true) {
-            // the number to distribute
+        c.riddle.clear();
 
-            c.riddle.clear();
-
-            // * 0 0
-            // 0 * 0
-            // 0 0 *
-            //
-            // The blocks on the diagonal can be filled independently in random
-            // because they can not collide.
-            // This way we fill 1/3 of the matrix 'for free'.
-            for (int i = 0; i < GameMatrixInterface.BLOCK_COUNT; i++) {
-                c.fillBlock(i * GameMatrixInterface.BLOCK_SIZE,
-                        i * GameMatrixInterface.BLOCK_SIZE);
-
-            }
-
-            boolean ok = c.backtrack(GameMatrixInterface.TOTAL_FIELDS
-                    - c.riddle.getSetCount(),
-                    new int[2]);
-            if (ok) {
-                break;
-            }
+        // * 0 0
+        // 0 * 0
+        // 0 0 *
+        //
+        // The blocks on the diagonal can be filled independently in random
+        // because they can not collide.
+        // This way we fill 1/3 of the matrix 'for free'.
+        for (int i = 0; i < GameMatrixInterface.BLOCK_COUNT; i++) {
+            c.fillBlock(i * GameMatrixInterface.BLOCK_SIZE,
+                    i * GameMatrixInterface.BLOCK_SIZE);
         }
+        // this will always work because the code above
+        // creates a valid basis for everything
+        boolean ok = c.backtrack(GameMatrix.TOTAL_FIELDS
+                - c.riddle.getSetCount(),
+                new int[2]);
+        assert ok;
 
         return c.winner;
     }
@@ -262,16 +257,13 @@ public final class Creator {
      * cleared without endangering the unique solvability of the Sudoku.
      */
     private static boolean canClear(final Riddle riddle,
-            final int column,
-            final int row) {
-        if (riddle.get(row, column) == GameMatrixInterface.UNSET) {
-            return false;
-        }
+            final int row,
+            final int column) {
+        assert riddle.get(row, column) != Riddle.UNSET;
 
         // if there's only one free val, it's unique
         int freeMask = riddle.getFreeMask(row, column);
         int freeVals = Integer.bitCount(freeMask);
-
         if (freeVals == 0) {
             return true;
         }
@@ -280,6 +272,7 @@ public final class Creator {
         riddle.set(row, column, Riddle.UNSET);
 
         Solver s = new Solver(riddle);
+        s.setLimit(2);
         List<Riddle> results = s.solve();
         boolean result = (results.size() == 1);
 
@@ -293,13 +286,13 @@ public final class Creator {
      *
      * @param fullMatrix a fully set up (solved) and valid sudoku.
      * Can be created using {@link #createFull()} or
-     * {@link #createVariant(de.sfuhrm.sudoku.GameMatrixInterace)} of a full
+     * {@link #createVariant(de.sfuhrm.sudoku.GameMatrixInterface)} of a full
      * matrix.
      * @return a maximally cleared sudoku. Contains
      * {@link GameMatrixInterface#UNSET unset} value fields for places where
      * the user/player needs to guess values.
      * @see #createFull()
-     * @see #createVariant(de.sfuhrm.sudoku.GameMatrixInterace)
+     * @see #createVariant(de.sfuhrm.sudoku.GameMatrixInterface)
      */
     public static Riddle createRiddle(final GameMatrixInterface fullMatrix) {
         Random random = new Random();
@@ -308,32 +301,31 @@ public final class Creator {
         cur.setAll(fullMatrix.getArray());
 
         int multi = 0;
-        // this could be improved:
-        // first the randomized loop can run
-        // second a loop over all cells can run
+
+        // first the randomized loop runs
+        // second a deterministic loop over all cells runs
+
+        // random loop
         while (multi < CREATE_RIDDLE_RANDOM_CLEAR) {
             int i = random.nextInt(GameMatrixInterface.SIZE);
             int j = random.nextInt(GameMatrixInterface.SIZE);
 
-            if (cur.get(j, i) == GameMatrixInterface.UNSET) {
-                continue;
-            }
-
-            if (canClear(cur, i, j)) {
-                cur.set(j, i, GameMatrixInterface.UNSET);
-            } else {
-                multi++;
+            if (cur.get(j, i) != GameMatrixInterface.UNSET) {
+                if (canClear(cur, j, i)) {
+                    cur.set(j, i, GameMatrixInterface.UNSET);
+                } else {
+                    multi++;
+                }
             }
         }
 
+        // deterministic loop
         for (int i = 0; i < GameMatrixInterface.SIZE; i++) {
             for (int j = 0; j < GameMatrixInterface.SIZE; j++) {
-                if (cur.get(j, i) == GameMatrixInterface.UNSET) {
-                    continue;
-                }
-
-                if (canClear(cur, i, j)) {
-                    cur.set(j, i, GameMatrixInterface.UNSET);
+                if (Riddle.UNSET != cur.get(j, i)) {
+                    if (canClear(cur, j, i)) {
+                        cur.set(j, i, GameMatrixInterface.UNSET);
+                    }
                 }
             }
         }
@@ -354,6 +346,10 @@ public final class Creator {
      * @param column the start column of the block.
      */
     private void fillBlock(final int row, final int column) {
+        assert GameMatrix.validCoords(row, column);
+        assert row % GameMatrix.BLOCK_SIZE == 0;
+        assert column % GameMatrix.BLOCK_SIZE == 0;
+
         byte[] numbers = createNumbersToDistribute(random, 1);
         int k = 0;
         for (int i = 0; i < Riddle.BLOCK_SIZE; i++) {
