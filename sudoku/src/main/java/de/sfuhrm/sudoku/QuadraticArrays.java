@@ -10,8 +10,7 @@ import static de.sfuhrm.sudoku.GameMatrix.UNSET;
 import static de.sfuhrm.sudoku.GameMatrix.validValue;
 
 /**
- * Helper methods for cloning two-dimensional arrays of
- * a 9x9 dimension.
+ * Helper methods for working on two-dimensional arrays.
  * @author Stephan Fuhrmann
  */
 public final class QuadraticArrays {
