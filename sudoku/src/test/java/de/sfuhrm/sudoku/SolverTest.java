@@ -39,7 +39,7 @@ public class SolverTest {
         riddle.setAll(matrix.getArray());
 
         Solver solver = new Solver(riddle);
-        List<Riddle> solutions = solver.solve();
+        List<GameMatrixInterface> solutions = solver.solve();
         assertEquals(1, solutions.size());
         assertEquals(matrix, solutions.get(0));
     }
@@ -59,7 +59,7 @@ public class SolverTest {
         riddle.setWritable(row, column, true);
 
         Solver solver = new Solver(riddle);
-        List<Riddle> solutions = solver.solve();
+        List<GameMatrixInterface> solutions = solver.solve();
         assertEquals(1, solutions.size());
         assertEquals(matrix, solutions.get(0));
     }
@@ -93,7 +93,7 @@ public class SolverTest {
         solution.setAll(solutionBytes);
 
         Solver solver = new Solver(riddle);
-        List<Riddle> solutions = solver.solve();
+        List<GameMatrixInterface> solutions = solver.solve();
         assertEquals(1, solutions.size());
         assertEquals(solution, solutions.get(0));
     }

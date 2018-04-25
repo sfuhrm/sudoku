@@ -21,6 +21,7 @@ package de.sfuhrm.sudoku.client;
 
 import de.sfuhrm.sudoku.Creator;
 import de.sfuhrm.sudoku.GameMatrix;
+import de.sfuhrm.sudoku.GameMatrixInterface;
 import de.sfuhrm.sudoku.Riddle;
 import de.sfuhrm.sudoku.Solver;
 import de.sfuhrm.sudoku.output.GameMatrixFormatter;
@@ -37,7 +38,6 @@ import java.util.stream.Collectors;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
-import de.sfuhrm.sudoku.GameMatrixInterface;
 
 /**
  * A Sudoku CLI client.
@@ -155,9 +155,9 @@ public class Client {
         Riddle riddle = new Riddle();
         riddle.setAll(data);
         Solver solver = new Solver(riddle);
-        List<Riddle> sollutions = solver.solve();
+        List<GameMatrixInterface> sollutions = solver.solve();
         if (!quiet) {
-            for (Riddle r : sollutions) {
+            for (GameMatrixInterface r : sollutions) {
                 System.out.println(formatter.format(r));
             }
         }
