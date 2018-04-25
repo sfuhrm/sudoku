@@ -20,7 +20,8 @@ Boston, MA  02110-1301, USA.
 package de.sfuhrm.sudoku;
 
 import static de.sfuhrm.sudoku.GameMatrix.roundToBlock;
-import static de.sfuhrm.sudoku.GameMatrixInterface.*;
+import static de.sfuhrm.sudoku.GameMatrixInterface.validCoords;
+import static de.sfuhrm.sudoku.GameMatrixInterface.validValue;
 import java.util.Arrays;
 
 /**
