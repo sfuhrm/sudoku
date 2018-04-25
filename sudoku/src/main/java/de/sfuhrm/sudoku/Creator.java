@@ -346,14 +346,14 @@ public final class Creator {
      * @param column the start column of the block.
      */
     private void fillBlock(final int row, final int column) {
-        assert GameMatrix.validCoords(row, column);
-        assert row % GameMatrix.BLOCK_SIZE == 0;
-        assert column % GameMatrix.BLOCK_SIZE == 0;
+        assert GameMatrixInterface.validCoords(row, column);
+        assert row % GameMatrixInterface.BLOCK_SIZE == 0;
+        assert column % GameMatrixInterface.BLOCK_SIZE == 0;
 
         byte[] numbers = createNumbersToDistribute(random, 1);
         int k = 0;
-        for (int i = 0; i < Riddle.BLOCK_SIZE; i++) {
-            for (int j = 0; j < Riddle.BLOCK_SIZE; j++) {
+        for (int i = 0; i < GameMatrixInterface.BLOCK_SIZE; i++) {
+            for (int j = 0; j < GameMatrixInterface.BLOCK_SIZE; j++) {
                 riddle.set(row + j, column + i, numbers[k++]);
             }
         }

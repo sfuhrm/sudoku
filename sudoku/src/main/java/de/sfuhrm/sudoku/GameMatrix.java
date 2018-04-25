@@ -20,6 +20,7 @@ Boston, MA  02110-1301, USA.
 package de.sfuhrm.sudoku;
 
 import static de.sfuhrm.sudoku.GameMatrix.roundToBlock;
+import static de.sfuhrm.sudoku.GameMatrixInterface.*;
 import java.util.Arrays;
 
 /**
@@ -42,23 +43,6 @@ public class GameMatrix implements Cloneable, BitFreeMatrixInterface {
      */
     public GameMatrix() {
         data = new byte[SIZE][SIZE];
-    }
-
-    /** Is the value passed in valid for a field?
-     * @param b value to check.
-     * @return {@code true} if valid.
-     */
-    protected static boolean validValue(final byte b) {
-        return b == UNSET || (b >= MINIMUM_VALUE && b <= MAXIMUM_VALUE);
-    }
-
-    /** Is the coordinate pair passed valid?
-     * @param row the row index.
-     * @param column the column index.
-     * @return {@code true} if valid.
-     */
-    protected static boolean validCoords(final int row, final int column) {
-        return row >= 0 && row < SIZE && column >= 0 && column < SIZE;
     }
 
     /** Sets all cells to the given values.

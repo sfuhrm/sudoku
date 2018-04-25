@@ -19,6 +19,7 @@ Boston, MA  02110-1301, USA.
 */
 package de.sfuhrm.sudoku;
 
+import static de.sfuhrm.sudoku.GameMatrixInterface.*;
 import java.util.Arrays;
 
 /**
