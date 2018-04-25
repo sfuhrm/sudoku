@@ -19,7 +19,7 @@ Boston, MA  02110-1301, USA.
 */
 package de.sfuhrm.sudoku.output;
 
-import de.sfuhrm.sudoku.GameMatrix;
+import de.sfuhrm.sudoku.GameMatrixImpl;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -53,7 +53,7 @@ public class LatexTableFormatterTest extends AbstractTextFormatterTest {
     @Test
     public void testFormat() {
         AbstractTextFormatter formatter = newInstance();
-        GameMatrix gameMatrix = new GameMatrix();
+        GameMatrixImpl gameMatrix = new GameMatrixImpl();
 
         // this test sucks, but it's better than nothing
         String actual = formatter.format(gameMatrix);

@@ -25,10 +25,10 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
- * Test for {@link CachedGameMatrix}.
+ * Test for {@link CachedGameMatrixImpl}.
  * @author Stephan Fuhrmann
  */
-public class CachedGameMatrixTest {
+public class CachedGameMatrixImplTest {
 
     public final static String[] FULL_EXAMPLE
             = new String[]{
@@ -45,24 +45,24 @@ public class CachedGameMatrixTest {
 
     @Test
     public void testNew() {
-        CachedGameMatrix m = new CachedGameMatrix();
+        CachedGameMatrixImpl m = new CachedGameMatrixImpl();
         assertEquals(0, m.getSetCount());
     }
 
     @Test
     public void testGet() {
-        GameMatrixInterface matrix = new CachedGameMatrix();
+        GameMatrix matrix = new CachedGameMatrixImpl();
         byte value = matrix.get(0, 0);
-        assertEquals(GameMatrixInterface.UNSET, value);
+        assertEquals(GameMatrix.UNSET, value);
         value = matrix.get(8, 8);
-        assertEquals(GameMatrixInterface.UNSET, value);
+        assertEquals(GameMatrix.UNSET, value);
     }
 
     @Test
     public void testSet() {
-        GameMatrixInterface matrix = new CachedGameMatrix();
+        GameMatrix matrix = new CachedGameMatrixImpl();
         byte value = matrix.get(0, 0);
-        assertEquals(GameMatrixInterface.UNSET, value);
+        assertEquals(GameMatrix.UNSET, value);
         matrix.set(0,0,(byte)4);
         value = matrix.get(0, 0);
         assertEquals(4, value);
@@ -71,13 +71,13 @@ public class CachedGameMatrixTest {
     @Test
     public void testSetAll() {
         byte data[][] =
-        GameMatrix.parse(FULL_EXAMPLE);
+        GameMatrixImpl.parse(FULL_EXAMPLE);
 
-        GameMatrix matrix = new CachedGameMatrix();
+        GameMatrixImpl matrix = new CachedGameMatrixImpl();
         matrix.setAll(data);
 
-        for (int i=0; i < GameMatrixInterface.SIZE; i++) {
-           for (int j=0; j < GameMatrixInterface.SIZE; j++) {
+        for (int i=0; i < GameMatrix.SIZE; i++) {
+           for (int j=0; j < GameMatrix.SIZE; j++) {
                 assertEquals(data[i][j], matrix.get(i, j));
            }
         }
@@ -86,11 +86,11 @@ public class CachedGameMatrixTest {
     @Test
     public void testClone() {
         byte data[][] =
-        GameMatrix.parse(FULL_EXAMPLE);
+        GameMatrixImpl.parse(FULL_EXAMPLE);
 
-        CachedGameMatrix matrix = new CachedGameMatrix();
+        CachedGameMatrixImpl matrix = new CachedGameMatrixImpl();
         matrix.setAll(data);
-        CachedGameMatrix clone = (CachedGameMatrix) matrix.clone();
+        CachedGameMatrixImpl clone = (CachedGameMatrixImpl) matrix.clone();
 
         String out = clone.toString();
         String expected = Arrays.asList(FULL_EXAMPLE)
@@ -102,7 +102,7 @@ public class CachedGameMatrixTest {
     @Test
     public void testIsValidWithEmptyValid() {
         byte data[][] =
-        GameMatrix.parse(
+        GameMatrixImpl.parse(
                 "000000000",
                 "000000000",
                 "000000000",
@@ -114,7 +114,7 @@ public class CachedGameMatrixTest {
                 "000000000"
                 );
 
-        CachedGameMatrix matrix = new CachedGameMatrix();
+        CachedGameMatrixImpl matrix = new CachedGameMatrixImpl();
         matrix.setAll(data);
         assertEquals(true, matrix.isValid());
      }
@@ -122,7 +122,7 @@ public class CachedGameMatrixTest {
     @Test
     public void testIsValidWithPartlyFullValid() {
         byte data[][] =
-        GameMatrix.parse(
+        GameMatrixImpl.parse(
                 "100000000",
                 "000100000",
                 "000000100",
@@ -134,7 +134,7 @@ public class CachedGameMatrixTest {
                 "000000001"
                 );
 
-        CachedGameMatrix matrix = new CachedGameMatrix();
+        CachedGameMatrixImpl matrix = new CachedGameMatrixImpl();
         matrix.setAll(data);
         assertEquals(true, matrix.isValid());
      }
@@ -142,7 +142,7 @@ public class CachedGameMatrixTest {
     @Test
     public void testGetRowFreeMask() {
         byte data[][] =
-        GameMatrix.parse(
+        GameMatrixImpl.parse(
                 "100000000",
                 "020100000",
                 "000320100",
@@ -154,22 +154,22 @@ public class CachedGameMatrixTest {
                 "000000001"
                 );
 
-        CachedGameMatrix matrix = new CachedGameMatrix();
+        CachedGameMatrixImpl matrix = new CachedGameMatrixImpl();
         matrix.setAll(data);
         int mask = matrix.getRowFreeMask(0);
-        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~(1<<1)), mask);
+        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~(1<<1)), mask);
         mask = matrix.getRowFreeMask(1);
-        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
+        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
         mask = matrix.getRowFreeMask(2);
-        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2) | (1<<3))), mask);
+        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2) | (1<<3))), mask);
         mask = matrix.getRowFreeMask(3);
-        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
+        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
      }
 
     @Test
     public void testGetColumnFreeMask() {
         byte data[][] =
-        GameMatrix.parse(
+        GameMatrixImpl.parse(
                 "100000000",
                 "020100000",
                 "000320100",
@@ -181,22 +181,22 @@ public class CachedGameMatrixTest {
                 "000000001"
                 );
 
-        CachedGameMatrix matrix = new CachedGameMatrix();
+        CachedGameMatrixImpl matrix = new CachedGameMatrixImpl();
         matrix.setAll(data);
         int mask = matrix.getColumnFreeMask(0);
-        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~(1<<1)), mask);
+        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~(1<<1)), mask);
         mask = matrix.getColumnFreeMask(1);
-        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
+        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
         mask = matrix.getColumnFreeMask(2);
-        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1))), mask);
+        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1))), mask);
         mask = matrix.getColumnFreeMask(3);
-        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<3))), mask);
+        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<3))), mask);
      }
 
     @Test
     public void testGetBlockFreeMask() {
         byte data[][] =
-        GameMatrix.parse(
+        GameMatrixImpl.parse(
                 "100000000",
                 "020100000",
                 "000320100",
@@ -208,22 +208,22 @@ public class CachedGameMatrixTest {
                 "000000001"
                 );
 
-        CachedGameMatrix matrix = new CachedGameMatrix();
+        CachedGameMatrixImpl matrix = new CachedGameMatrixImpl();
         matrix.setAll(data);
         int mask = matrix.getBlockFreeMask(0,0);
-        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
+        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
         mask = matrix.getBlockFreeMask(0,3);
-        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2) | (1<<3))), mask);
+        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2) | (1<<3))), mask);
         mask = matrix.getBlockFreeMask(0,6);
-        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1))), mask);
+        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1))), mask);
         mask = matrix.getBlockFreeMask(3,6);
-        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
+        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
      }
 
     @Test
     public void testGetFreeMask() {
         byte data[][] =
-        GameMatrix.parse(
+        GameMatrixImpl.parse(
                 "100000000",
                 "020100000",
                 "000320100",
@@ -235,22 +235,22 @@ public class CachedGameMatrixTest {
                 "000000001"
                 );
 
-        CachedGameMatrix matrix = new CachedGameMatrix();
+        CachedGameMatrixImpl matrix = new CachedGameMatrixImpl();
         matrix.setAll(data);
         int mask = matrix.getFreeMask(0,0);
-        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
+        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
         mask = matrix.getFreeMask(0,3);
-        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2) | (1<<3))), mask);
+        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2) | (1<<3))), mask);
         mask = matrix.getFreeMask(0,6);
-        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4))), mask);
+        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4))), mask);
         mask = matrix.getFreeMask(3,6);
-        assertEquals(GameMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
+        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
      }
 
     @Test
     public void testCanSet() {
         byte data[][] =
-        GameMatrix.parse(
+        GameMatrixImpl.parse(
             //   x
                 "100000000",
                 "020100000",
@@ -264,7 +264,7 @@ public class CachedGameMatrixTest {
                 "000000001"
                 );
 
-        CachedGameMatrix matrix = new CachedGameMatrix();
+        CachedGameMatrixImpl matrix = new CachedGameMatrixImpl();
         matrix.setAll(data);
 
         // the "x" cell marked above
@@ -280,11 +280,11 @@ public class CachedGameMatrixTest {
 
     @Test
     public void testGetSetCount() {
-        CachedGameMatrix matrix = new CachedGameMatrix();
+        CachedGameMatrixImpl matrix = new CachedGameMatrixImpl();
 
-        for (int row = 0; row < GameMatrixInterface.SIZE; row++) {
-            for (int column = 0; column < GameMatrixInterface.SIZE; column++) {
-                matrix.set(row, column, GameMatrixInterface.UNSET);
+        for (int row = 0; row < GameMatrix.SIZE; row++) {
+            for (int column = 0; column < GameMatrix.SIZE; column++) {
+                matrix.set(row, column, GameMatrix.UNSET);
                 assertEquals(0,  matrix.getSetCount());
             }
         }
@@ -302,7 +302,7 @@ public class CachedGameMatrixTest {
         set++;
         assertEquals(set,  matrix.getSetCount());
 
-        matrix.set(1, 2, GameMatrixInterface.UNSET);
+        matrix.set(1, 2, GameMatrix.UNSET);
         set--;
         assertEquals(set,  matrix.getSetCount());
      }

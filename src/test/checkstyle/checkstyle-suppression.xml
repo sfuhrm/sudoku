@@ -6,6 +6,6 @@
  
 <suppressions>
     <suppress checks="DesignForExtension"
-              files="GameMatrix.java"
+              files="GameMatrixImpl.java"
               lines="160-530"/>
 </suppressions>

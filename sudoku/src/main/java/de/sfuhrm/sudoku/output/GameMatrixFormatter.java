@@ -19,14 +19,14 @@ Boston, MA  02110-1301, USA.
 */
 package de.sfuhrm.sudoku.output;
 
-import de.sfuhrm.sudoku.GameMatrixInterface;
+import de.sfuhrm.sudoku.GameMatrix;
 
 /**
  * Formats the game matrix to a text representation.
  * The text representation has a
  * <ul>
  * <li> document #{@link #documentStart() start}
- * <li> document #{@link #format(de.sfuhrm.sudoku.GameMatrixInterface)
+ * <li> document #{@link #format(de.sfuhrm.sudoku.GameMatrix)
  * main part} and a
  * <li> document #{@link #documentEnd() end}.
  * </ul>
@@ -39,7 +39,7 @@ public interface GameMatrixFormatter {
      * @param matrix the matrix to format to String format.
      * @return a String representation of the game matrix.
      */
-    String format(GameMatrixInterface matrix);
+    String format(GameMatrix matrix);
 
     /** Formats the document start part.
      * @return a String representation of the document start.

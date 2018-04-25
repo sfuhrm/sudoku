@@ -40,7 +40,7 @@ public final class Solver {
     /**
      * The possible solutions for this riddle.
      */
-    private final List<GameMatrixInterface> possibleSolutions;
+    private final List<GameMatrix> possibleSolutions;
 
     /** The default limit.
      * @see #limit
@@ -57,10 +57,10 @@ public final class Solver {
      *
      * @param solveMe the riddle to solve.
      */
-    public Solver(final GameMatrixInterface solveMe) {
+    public Solver(final GameMatrix solveMe) {
         Objects.requireNonNull(solveMe, "solveMe is null");
         limit = LIMIT;
-        riddle = new CachedGameMatrix();
+        riddle = new CachedGameMatrixImpl();
         riddle.setAll(solveMe.getArray());
         possibleSolutions = new ArrayList<>();
     }
@@ -77,9 +77,9 @@ public final class Solver {
      *
      * @return the found solutions. Should be only one.
      */
-    public List<GameMatrixInterface> solve() {
+    public List<GameMatrix> solve() {
         possibleSolutions.clear();
-        int freeCells = GameMatrixInterface.TOTAL_FIELDS
+        int freeCells = GameMatrix.TOTAL_FIELDS
                 - riddle.getSetCount();
 
         backtrack(freeCells, new int[2]);
@@ -105,7 +105,7 @@ public final class Solver {
         // just one result, we have no more to choose
         if (freeCells == 0) {
             if (possibleSolutions.size() < limit) {
-                GameMatrixInterface gmi = new GameMatrix();
+                GameMatrix gmi = new GameMatrixImpl();
                 gmi.setAll(riddle.getArray());
                 possibleSolutions.add(gmi);
             }
@@ -135,7 +135,7 @@ public final class Solver {
             int resultCount = backtrack(freeCells - 1, minimumCell);
             result += resultCount;
         }
-        riddle.set(minimumRow, minimumColumn, GameMatrixInterface.UNSET);
+        riddle.set(minimumRow, minimumColumn, GameMatrix.UNSET);
 
         return result;
     }

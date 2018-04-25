@@ -37,7 +37,7 @@ public class PlainTextFormatterTest {
     }    
     @Test
     public void testFormatWithEmpty() {
-        GameMatrix matrix = new GameMatrix();
+        GameMatrixImpl matrix = new GameMatrixImpl();
         String actual = new PlainTextFormatter().format(matrix);
         assertEquals(
                 ".........\n"+
@@ -54,7 +54,7 @@ public class PlainTextFormatterTest {
     
     @Test
     public void testFormatWithEmptyAndOtherUnknownCharacter() {
-        GameMatrix matrix = new GameMatrix();
+        GameMatrixImpl matrix = new GameMatrixImpl();
         PlainTextFormatter formatter = new PlainTextFormatter();
         formatter.setUnknownCellContentCharacter("?");
         String actual = formatter.format(matrix);
@@ -73,8 +73,8 @@ public class PlainTextFormatterTest {
     
     @Test
     public void testFormatWithFullMatrix() {
-        GameMatrix matrix = new GameMatrix();
-        matrix.setAll(GameMatrix.parse(
+        GameMatrixImpl matrix = new GameMatrixImpl();
+        matrix.setAll(GameMatrixImpl.parse(
                 "294731856",
                 "781465239",
                 "536829741",

@@ -33,13 +33,13 @@ public class SolverTest {
     @Test
     public void testSolveWithNoStep() {
         // create full matrix
-        GameMatrixInterface matrix = Creator.createFull();
+        GameMatrix matrix = Creator.createFull();
 
         Riddle riddle = new Riddle();
         riddle.setAll(matrix.getArray());
 
         Solver solver = new Solver(riddle);
-        List<GameMatrixInterface> solutions = solver.solve();
+        List<GameMatrix> solutions = solver.solve();
         assertEquals(1, solutions.size());
         assertEquals(matrix, solutions.get(0));
     }
@@ -47,7 +47,7 @@ public class SolverTest {
     @Test
     public void testSolveWithOneStep() {
         // create full matrix
-        GameMatrixInterface matrix = Creator.createFull();
+        GameMatrix matrix = Creator.createFull();
         Random random = new Random();
 
         int row = random.nextInt(9);
@@ -55,18 +55,18 @@ public class SolverTest {
 
         Riddle riddle = new Riddle();
         riddle.setAll(matrix.getArray());
-        riddle.set(row, column, GameMatrixInterface.UNSET);
+        riddle.set(row, column, GameMatrix.UNSET);
         riddle.setWritable(row, column, true);
 
         Solver solver = new Solver(riddle);
-        List<GameMatrixInterface> solutions = solver.solve();
+        List<GameMatrix> solutions = solver.solve();
         assertEquals(1, solutions.size());
         assertEquals(matrix, solutions.get(0));
     }
 
     @Test
     public void testSolveWithExampleProblem() {
-        byte[][] riddleBytes = GameMatrix.parse(
+        byte[][] riddleBytes = GameMatrixImpl.parse(
                 "......3..",
                 "9.3....2.",
                 ".....8.1.",
@@ -79,7 +79,7 @@ public class SolverTest {
         Riddle riddle = new Riddle();
         riddle.setAll(riddleBytes);
 
-        byte[][] solutionBytes = GameMatrix.parse(
+        byte[][] solutionBytes = GameMatrixImpl.parse(
                 "862419375",
                 "913675428",
                 "475238619",
@@ -89,11 +89,11 @@ public class SolverTest {
                 "731584962",
                 "586392147",
                 "294761583");
-        GameMatrix solution = new GameMatrix();
+        GameMatrixImpl solution = new GameMatrixImpl();
         solution.setAll(solutionBytes);
 
         Solver solver = new Solver(riddle);
-        List<GameMatrixInterface> solutions = solver.solve();
+        List<GameMatrix> solutions = solver.solve();
         assertEquals(1, solutions.size());
         assertEquals(solution, solutions.get(0));
     }

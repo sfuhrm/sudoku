@@ -19,7 +19,7 @@ Boston, MA  02110-1301, USA.
 */
 package de.sfuhrm.sudoku;
 
-import static de.sfuhrm.sudoku.GameMatrixInterface.validValue;
+import static de.sfuhrm.sudoku.GameMatrix.validValue;
 import java.util.Arrays;
 
 /**
@@ -29,7 +29,7 @@ import java.util.Arrays;
  * a human being.
  * @author Stephan Fuhrmann
  */
-class CachedGameMatrix extends GameMatrix implements Cloneable {
+class CachedGameMatrixImpl extends GameMatrixImpl implements Cloneable {
 
     /** Buffered free masks per row.
      * A set 1-bit means that the digit 1 is free for use.
@@ -56,7 +56,7 @@ class CachedGameMatrix extends GameMatrix implements Cloneable {
     /**
      * Creates an empty full-writable riddle.
      */
-    CachedGameMatrix() {
+    CachedGameMatrixImpl() {
         blockFree = new int[BLOCK_COUNT][BLOCK_COUNT];
         rowFree = new int[SIZE];
         columnFree = new int[SIZE];
@@ -130,8 +130,8 @@ class CachedGameMatrix extends GameMatrix implements Cloneable {
 
     @Override
     public Object clone() {
-        CachedGameMatrix clone;
-        clone = (CachedGameMatrix) super.clone();
+        CachedGameMatrixImpl clone;
+        clone = (CachedGameMatrixImpl) super.clone();
         clone.blockFree = cloneArray(blockFree);
         clone.columnFree = Arrays.copyOf(columnFree, columnFree.length);
         clone.rowFree = Arrays.copyOf(rowFree, rowFree.length);

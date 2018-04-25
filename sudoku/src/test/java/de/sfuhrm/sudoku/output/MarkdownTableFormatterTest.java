@@ -43,7 +43,7 @@ public class MarkdownTableFormatterTest extends AbstractTextFormatterTest {
 
     @Test
     public void testFormatWithEmpty() {
-        GameMatrixInterface matrix = new GameMatrix();
+        GameMatrix matrix = new GameMatrixImpl();
         String actual = newInstance().format(matrix);
         assertEquals(
 "|  |  |  |  |  |  |  |  |  |\n"+
@@ -63,7 +63,7 @@ public class MarkdownTableFormatterTest extends AbstractTextFormatterTest {
 
     @Test
     public void testFormatWithEmptyAndOtherUnknownCharacter() {
-        GameMatrixInterface matrix = new GameMatrix();
+        GameMatrix matrix = new GameMatrixImpl();
         AbstractTextFormatter formatter = newInstance();
         formatter.setUnknownCellContentCharacter("?");
         String actual = formatter.format(matrix);
@@ -85,8 +85,8 @@ public class MarkdownTableFormatterTest extends AbstractTextFormatterTest {
 
     @Test
     public void testFormatWithFullMatrix() {
-        GameMatrixInterface matrix = new GameMatrix();
-        matrix.setAll(GameMatrix.parse(
+        GameMatrix matrix = new GameMatrixImpl();
+        matrix.setAll(GameMatrixImpl.parse(
                 "294731856",
                 "781465239",
                 "536829741",

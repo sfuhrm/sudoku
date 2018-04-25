@@ -19,7 +19,7 @@ Boston, MA  02110-1301, USA.
 */
 package de.sfuhrm.sudoku.client.integration;
 
-import de.sfuhrm.sudoku.GameMatrix;
+import de.sfuhrm.sudoku.GameMatrixImpl;
 import de.sfuhrm.sudoku.client.Client;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -45,8 +45,8 @@ public class ClientTest {
         Client.main(new String[] {});
         String output = arrayOutputStream.toString("UTF-8");
         output = output.trim();
-        GameMatrix matrix = new GameMatrix();
-        matrix.setAll(GameMatrix.parse(output.split("\n")));
+        GameMatrixImpl matrix = new GameMatrixImpl();
+        matrix.setAll(GameMatrixImpl.parse(output.split("\n")));
         assertEquals(true, matrix.isValid());
         assertEquals(9*9, matrix.getSetCount());
     }
@@ -58,8 +58,8 @@ public class ClientTest {
         Client.main(new String[] {"-e", "Riddle"});
         String output = arrayOutputStream.toString("UTF-8");
         output = output.trim();
-        GameMatrix matrix = new GameMatrix();
-        matrix.setAll(GameMatrix.parse(output.split("\n")));
+        GameMatrixImpl matrix = new GameMatrixImpl();
+        matrix.setAll(GameMatrixImpl.parse(output.split("\n")));
         assertEquals(true, matrix.isValid());
     }
     
@@ -82,12 +82,12 @@ public class ClientTest {
         
         String output = arrayOutputStream.toString("UTF-8");
         output = output.trim();
-        GameMatrix actual = new GameMatrix();
-        actual.setAll(GameMatrix.parse(output.split("\n")));
+        GameMatrixImpl actual = new GameMatrixImpl();
+        actual.setAll(GameMatrixImpl.parse(output.split("\n")));
         assertEquals(true, actual.isValid());
         
-        GameMatrix expected = new GameMatrix();
-        expected.setAll(GameMatrix.parse(
+        GameMatrixImpl expected = new GameMatrixImpl();
+        expected.setAll(GameMatrixImpl.parse(
                 "294731856",
                 "781465239",
                 "536829741",

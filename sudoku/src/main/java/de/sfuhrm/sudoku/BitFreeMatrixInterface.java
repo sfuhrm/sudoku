@@ -24,7 +24,7 @@ package de.sfuhrm.sudoku;
  *
  * @author Stephan Fuhrmann
  */
-interface BitFreeMatrixInterface extends GameMatrixInterface, Cloneable {
+interface BitFreeMatrixInterface extends GameMatrix, Cloneable {
 
     /** Gets the free mask for the given cell.
      * @param row the row of the cell to get the free mask for.
@@ -48,9 +48,9 @@ interface BitFreeMatrixInterface extends GameMatrixInterface, Cloneable {
         int minimumBits = -1;
         int minimumRow = -1;
         int minimumColumn = -1;
-        for (int row = 0; row < GameMatrixInterface.SIZE; row++) {
-            for (int column = 0; column < GameMatrixInterface.SIZE; column++) {
-                if (get(row, column) != GameMatrixInterface.UNSET) {
+        for (int row = 0; row < GameMatrix.SIZE; row++) {
+            for (int column = 0; column < GameMatrix.SIZE; column++) {
+                if (get(row, column) != GameMatrix.UNSET) {
                     continue;
                 }
                 int free = getFreeMask(row, column);

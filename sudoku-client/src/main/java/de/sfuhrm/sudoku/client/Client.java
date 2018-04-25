@@ -20,8 +20,7 @@ Boston, MA  02110-1301, USA.
 package de.sfuhrm.sudoku.client;
 
 import de.sfuhrm.sudoku.Creator;
-import de.sfuhrm.sudoku.GameMatrix;
-import de.sfuhrm.sudoku.GameMatrixInterface;
+import de.sfuhrm.sudoku.GameMatrixImpl;
 import de.sfuhrm.sudoku.Riddle;
 import de.sfuhrm.sudoku.Solver;
 import de.sfuhrm.sudoku.output.GameMatrixFormatter;
@@ -38,6 +37,7 @@ import java.util.stream.Collectors;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
+import de.sfuhrm.sudoku.GameMatrix;
 
 /**
  * A Sudoku CLI client.
@@ -150,14 +150,14 @@ public class Client {
                 .map(l -> l.replaceAll("[_?.]", "0"))
                 .collect(Collectors.toList());
 
-        byte[][] data = GameMatrix.parse(lines.toArray(new String[0]));
+        byte[][] data = GameMatrixImpl.parse(lines.toArray(new String[0]));
 
         Riddle riddle = new Riddle();
         riddle.setAll(data);
         Solver solver = new Solver(riddle);
-        List<GameMatrixInterface> sollutions = solver.solve();
+        List<GameMatrix> sollutions = solver.solve();
         if (!quiet) {
-            for (GameMatrixInterface r : sollutions) {
+            for (GameMatrix r : sollutions) {
                 System.out.println(formatter.format(r));
             }
         }
@@ -180,7 +180,7 @@ public class Client {
             solve(formatter);
         } else {
             for (int i = 0; i < count; i++) {
-                GameMatrixInterface matrix;
+                GameMatrix matrix;
                 Riddle riddle;
                 switch (op) {
                     case Full:

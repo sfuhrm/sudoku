@@ -109,7 +109,7 @@ public class CreatorTest {
 
     @Test
     public void testCreateFull() {
-        GameMatrixInterface r = Creator.createFull();
+        GameMatrix r = Creator.createFull();
         assertEquals(9*9, r.getSetCount());
         assertEquals(true, r.isValid());
     }
@@ -118,7 +118,7 @@ public class CreatorTest {
     public void testCreateFullWithMultipleInvocations() {
 //        for (int i=0; i < 100000; i++) {
         for (int i=0; i < 1000; i++) {
-            GameMatrixInterface r = Creator.createFull();
+            GameMatrix r = Creator.createFull();
             assertEquals(9*9, r.getSetCount());
             assertEquals(true, r.isValid());
         }
@@ -126,11 +126,11 @@ public class CreatorTest {
 
     @Test
     public void testCreateRiddle() {
-        GameMatrixInterface matrix = Creator.createFull();
+        GameMatrix matrix = Creator.createFull();
         Riddle riddle = Creator.createRiddle(matrix);
-        for (int i=0; i < GameMatrix.SIZE; i++) {
-            for (int j=0; j < GameMatrix.SIZE; j++) {
-                if (riddle.get(i, j) != GameMatrix.UNSET) {
+        for (int i=0; i < GameMatrixImpl.SIZE; i++) {
+            for (int j=0; j < GameMatrixImpl.SIZE; j++) {
+                if (riddle.get(i, j) != GameMatrixImpl.UNSET) {
                     // all fields that are set are needed to be the same
                     assertEquals(matrix.get(i, j), riddle.get(i, j));
                     assertEquals(false, riddle.getWritable(i, j));
@@ -143,7 +143,7 @@ public class CreatorTest {
         // there can be only one
         Solver solver = new Solver(riddle);
         solver.setLimit(3);
-        List<GameMatrixInterface> results = solver.solve();
+        List<GameMatrix> results = solver.solve();
         assertEquals(1, results.size());
     }
 
@@ -167,16 +167,16 @@ public class CreatorTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testCreateVariantWithEmpty() {
-        GameMatrix original = new GameMatrix();
+        GameMatrixImpl original = new GameMatrixImpl();
         Creator.createVariant(original);
     }
 
     @Test
     public void testCreateVariant() {
-        GameMatrixInterface original = Creator.createFull();
-        GameMatrixInterface variant1 = Creator.createVariant(original);
-        GameMatrixInterface variant2 = Creator.createVariant(original);
-        GameMatrixInterface variant3 = Creator.createVariant(original);
+        GameMatrix original = Creator.createFull();
+        GameMatrix variant1 = Creator.createVariant(original);
+        GameMatrix variant2 = Creator.createVariant(original);
+        GameMatrix variant3 = Creator.createVariant(original);
 
         assertEquals(true, original.isValid());
         assertEquals(9*9, original.getSetCount());
@@ -190,8 +190,8 @@ public class CreatorTest {
 
     @Test
     public void testSwapColumnWithFirstAndSecond() {
-        GameMatrix actual = new GameMatrix();
-        actual.setAll(GameMatrix.parse(
+        GameMatrixImpl actual = new GameMatrixImpl();
+        actual.setAll(GameMatrixImpl.parse(
                 "100000000",
                 "020100000",
                 "000320100",
@@ -203,8 +203,8 @@ public class CreatorTest {
                 "000000001"
                 ));
 
-        GameMatrix expected = new GameMatrix();
-        expected.setAll(GameMatrix.parse(
+        GameMatrixImpl expected = new GameMatrixImpl();
+        expected.setAll(GameMatrixImpl.parse(
                 "010000000",
                 "200100000",
                 "000320100",
@@ -223,8 +223,8 @@ public class CreatorTest {
 
     @Test
     public void testSwapColumnWithFirstAndLast() {
-        GameMatrix actual = new GameMatrix();
-        actual.setAll(GameMatrix.parse(
+        GameMatrixImpl actual = new GameMatrixImpl();
+        actual.setAll(GameMatrixImpl.parse(
                 "100000000",
                 "020100000",
                 "000320100",
@@ -236,8 +236,8 @@ public class CreatorTest {
                 "000000001"
                 ));
 
-        GameMatrix expected = new GameMatrix();
-        expected.setAll(GameMatrix.parse(
+        GameMatrixImpl expected = new GameMatrixImpl();
+        expected.setAll(GameMatrixImpl.parse(
                 "000000001",
                 "020100000",
                 "000320100",
@@ -256,8 +256,8 @@ public class CreatorTest {
 
     @Test
     public void testSwapRowWithFirstAndSecond() {
-        GameMatrix actual = new GameMatrix();
-        actual.setAll(GameMatrix.parse(
+        GameMatrixImpl actual = new GameMatrixImpl();
+        actual.setAll(GameMatrixImpl.parse(
                 "100000000",
                 "020100000",
                 "000320100",
@@ -269,8 +269,8 @@ public class CreatorTest {
                 "000000001"
                 ));
 
-        GameMatrix expected = new GameMatrix();
-        expected.setAll(GameMatrix.parse(
+        GameMatrixImpl expected = new GameMatrixImpl();
+        expected.setAll(GameMatrixImpl.parse(
                 "020100000",
                 "100000000",
                 "000320100",
@@ -289,8 +289,8 @@ public class CreatorTest {
 
     @Test
     public void testSwapRowWithFirstAndLast() {
-        GameMatrix actual = new GameMatrix();
-        actual.setAll(GameMatrix.parse(
+        GameMatrixImpl actual = new GameMatrixImpl();
+        actual.setAll(GameMatrixImpl.parse(
                 "100000000",
                 "020100000",
                 "000320100",
@@ -302,8 +302,8 @@ public class CreatorTest {
                 "000000001"
                 ));
 
-        GameMatrix expected = new GameMatrix();
-        expected.setAll(GameMatrix.parse(
+        GameMatrixImpl expected = new GameMatrixImpl();
+        expected.setAll(GameMatrixImpl.parse(
                 "000000001",
                 "020100000",
                 "000320100",
