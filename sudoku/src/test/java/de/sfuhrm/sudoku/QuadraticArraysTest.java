@@ -28,7 +28,16 @@ import org.junit.Test;
  */
 public class QuadraticArraysTest {
     @Test
-    public void testCloneArrayWithBoolean() {
+    public void testCloneArrayWithBooleanAndSizeFour() {
+        boolean[][] actual = new boolean[4][4];
+        boolean[][] clone = QuadraticArrays.cloneArray(actual);
+        assertNotSame(clone, actual);
+        assertEquals(clone.length, actual.length);
+        assertEquals(clone[0].length, actual[0].length);
+    }
+
+    @Test
+    public void testCloneArrayWithBooleanAndSizeNine() {
         boolean[][] actual = new boolean[GameMatrix.SIZE][GameMatrix.SIZE];
         boolean[][] clone = QuadraticArrays.cloneArray(actual);
         assertNotSame(clone, actual);

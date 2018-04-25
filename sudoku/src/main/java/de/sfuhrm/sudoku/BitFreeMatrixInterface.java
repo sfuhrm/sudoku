@@ -20,7 +20,8 @@ Boston, MA  02110-1301, USA.
 package de.sfuhrm.sudoku;
 
 /**
- * The quadratic matrix.
+ * GameMatrix with additional free bit masking features.
+ * The free bit masks are usually not used by applications.
  *
  * @author Stephan Fuhrmann
  */
