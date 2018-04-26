@@ -71,10 +71,10 @@ And last but not least you can solve a riddle using
 
 ```java
     Riddle riddle = new Riddle();
-    riddle.setAll(GameMatrix.parse("000000000", ...));
+    riddle.setAll(QuadraticArrays.parse("000000000", ...));
 
     Solver solver = new Solver(riddle);
-    List<Riddle> solutions = solver.solve();
+    List<GameMatrix> solutions = solver.solve();
 ```
 
 ---------------------------------------
