@@ -52,8 +52,40 @@ public class JsonArrayFormatterTest extends AbstractTextFormatterTest {
     }
 
     @Test
-    public void testFormatWithOneMatrix() {
-        AbstractTextFormatter formatter = newInstance();
+    public void testFormatWithOneMatrixWithoutIndent() {
+        JsonArrayFormatter formatter = (JsonArrayFormatter) newInstance();
+        formatter.setIndent(false);
+        GameMatrix gameMatrix = gameMatrixFactory.newGameMatrix();
+
+        for (int i = 0; i < GameMatrix.SIZE; i++) {
+            gameMatrix.set(0, i, (byte)i);
+        }
+
+        String actual = formatter.documentStart()
+                + formatter.format(gameMatrix)
+                + formatter.documentEnd();
+
+        JSONArray allMatrices = new JSONArray(actual);
+        assertEquals(1, allMatrices.length());
+        JSONArray firstMatrix = allMatrices.getJSONArray(0);
+
+        assertEquals(GameMatrix.SIZE, firstMatrix.length());
+
+        for (int row = 0; row < GameMatrix.SIZE; row++) {
+            JSONArray rowArray = firstMatrix.getJSONArray(row);
+            assertEquals(GameMatrix.SIZE, rowArray.length());
+
+            for (int column = 0; column < GameMatrix.SIZE; column++) {
+                int element = rowArray.getInt(column);
+                assertEquals(gameMatrix.get(row, column), element);
+            }
+        }
+    }
+
+    @Test
+    public void testFormatWithOneMatrixWithtIndent() {
+        JsonArrayFormatter formatter = (JsonArrayFormatter) newInstance();
+        formatter.setIndent(true);
         GameMatrix gameMatrix = gameMatrixFactory.newGameMatrix();
 
         for (int i = 0; i < GameMatrix.SIZE; i++) {
@@ -83,7 +115,8 @@ public class JsonArrayFormatterTest extends AbstractTextFormatterTest {
 
     @Test
     public void testFormatWithTwoMatrices() {
-        AbstractTextFormatter formatter = newInstance();
+        JsonArrayFormatter formatter = (JsonArrayFormatter) newInstance();
+        formatter.setIndent(true);
         GameMatrix gameMatrix = gameMatrixFactory.newGameMatrix();
 
         String actual = formatter.documentStart()
