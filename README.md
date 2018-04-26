@@ -70,7 +70,7 @@ And last but not least you can solve a riddle using
 ---------------------------------------
 
 ```java
-    Riddle riddle = new Riddle();
+    Riddle riddle = new GameMatrixFactory().newRiddle();
     riddle.setAll(QuadraticArrays.parse("000000000", ...));
 
     Solver solver = new Solver(riddle);
