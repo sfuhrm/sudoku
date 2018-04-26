@@ -29,6 +29,7 @@ import org.junit.Test;
  */
 public class PlainTextFormatterTest extends AbstractTextFormatterTest {
 
+    @Override
     AbstractTextFormatter newInstance() {
         return new PlainTextFormatter();
     }
