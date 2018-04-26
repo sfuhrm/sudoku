@@ -32,7 +32,7 @@ import org.junit.Test;
 public class JsonArrayFormatterTest extends AbstractTextFormatterTest {
 
     @Override
-    protected AbstractTextFormatter newInstance() {
+    AbstractTextFormatter newInstance() {
         return new JsonArrayFormatter();
     }
 

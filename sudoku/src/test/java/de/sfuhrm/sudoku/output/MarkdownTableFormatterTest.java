@@ -30,7 +30,7 @@ import org.junit.Test;
 public class MarkdownTableFormatterTest extends AbstractTextFormatterTest {
 
     @Override
-    protected AbstractTextFormatter newInstance() {
+    AbstractTextFormatter newInstance() {
         return new MarkdownTableFormatter();
     }
 

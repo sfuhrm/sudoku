@@ -29,7 +29,7 @@ import org.junit.Test;
  */
 public class LatexTableFormatterTest extends AbstractTextFormatterTest {
     @Override
-    protected AbstractTextFormatter newInstance() {
+    AbstractTextFormatter newInstance() {
         return new LatexTableFormatter();
     }
 

@@ -37,7 +37,7 @@ public class AbstractTextFormatterTest {
         gameMatrixFactory = new GameMatrixFactory();
     }
 
-    protected AbstractTextFormatter newInstance() {
+    AbstractTextFormatter newInstance() {
         return new AbstractTextFormatter() {
             @Override
             public String format(GameMatrix matrix) {

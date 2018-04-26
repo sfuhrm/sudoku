@@ -29,17 +29,22 @@ import org.junit.Test;
  */
 public class PlainTextFormatterTest extends AbstractTextFormatterTest {
 
+    AbstractTextFormatter newInstance() {
+        return new PlainTextFormatter();
+    }
+
     @Test
     @Override
     public void testNew() {
-        PlainTextFormatter formatter = new PlainTextFormatter();
+        AbstractTextFormatter formatter = newInstance();
         assertEquals("\n", formatter.getLineSeparator());
         assertEquals(".", formatter.getUnknownCellContentCharacter());
     }
     @Test
     public void testFormatWithEmpty() {
         GameMatrix matrix = gameMatrixFactory.newGameMatrix();
-        String actual = new PlainTextFormatter().format(matrix);
+        AbstractTextFormatter formatter = newInstance();
+        String actual = formatter.format(matrix);
         assertEquals(
                 ".........\n"+
                 ".........\n"+
@@ -56,7 +61,7 @@ public class PlainTextFormatterTest extends AbstractTextFormatterTest {
     @Test
     public void testFormatWithEmptyAndOtherUnknownCharacter() {
         GameMatrix matrix = gameMatrixFactory.newGameMatrix();
-        PlainTextFormatter formatter = new PlainTextFormatter();
+        AbstractTextFormatter formatter = newInstance();
         formatter.setUnknownCellContentCharacter("?");
         String actual = formatter.format(matrix);
         assertEquals(
@@ -85,7 +90,7 @@ public class PlainTextFormatterTest extends AbstractTextFormatterTest {
                 "358612497",
                 "942387615",
                 "167594382"));
-        PlainTextFormatter formatter = new PlainTextFormatter();
+        AbstractTextFormatter formatter = newInstance();
         formatter.setUnknownCellContentCharacter("?");
         String actual = formatter.format(matrix);
         assertEquals(
