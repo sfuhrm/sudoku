@@ -61,10 +61,29 @@ public final class QuadraticArrays {
 
     /**
      * Parses a string based field descriptor.
+     * <br>Example usage:
+     * <br>
+     * <code>
+     *  byte data[][] =<br>
+        QuadraticArrays.parse(<br>
+                "100000000",<br>
+                "020100000",<br>
+                "000320100",<br>
+                "010000456",<br>
+                "000010000",<br>
+                "000000010",<br>
+                "001000000",<br>
+                "000001000",<br>
+                "000000001"<br>
+                );<br>
+        GameMatrix matrix = ...<br>
+        matrix.setAll(data);<br>
+     * </code>
+     *
      *
      * @param rows array of strings with each string describing a row. Digits
      * get converted to the element values, everything else gets converted to
-     * UNSET.
+     * UNSET. Example for one row: "126453780".
      * @return the parsed array.
      * @throws IllegalArgumentException if one of the rows has a wrong size.
      */
