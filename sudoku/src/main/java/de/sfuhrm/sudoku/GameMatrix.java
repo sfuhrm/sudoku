@@ -20,7 +20,7 @@ Boston, MA  02110-1301, USA.
 package de.sfuhrm.sudoku;
 
 /**
- * The quadratic matrix.
+ * The quadratic matrix of a game field.
  *
  * @author Stephan Fuhrmann
  */
