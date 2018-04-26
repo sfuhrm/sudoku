@@ -131,6 +131,13 @@ for field-dead-ends is that the surrounding fields have an illegal
 setup which leads to a rule-violation for each and every value of the
 field in question.
 
+## Versions
+
+The version numbers are chosen according to the
+[semantic versioning](https://semver.org/) schema.
+Especially major version changes come with breaking API
+changes.
+
 ## Author
 
 Written 2017-2018 by Stephan Fuhrmann. You can reach me via email to s (at) sfuhrm.de
