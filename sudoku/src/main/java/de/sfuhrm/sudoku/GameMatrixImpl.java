@@ -28,7 +28,7 @@ import java.util.Arrays;
  * The quadratic matrix.
  * @author Stephan Fuhrmann
  */
-public class GameMatrixImpl implements Cloneable, BitFreeMatrixInterface {
+class GameMatrixImpl implements Cloneable, BitFreeMatrixInterface {
 
     /**
      * The game field. The first dimension is the row, the second the column.
