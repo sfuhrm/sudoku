@@ -37,4 +37,12 @@ public final class GameMatrixFactory {
     public GameMatrix newGameMatrix() {
         return new GameMatrixImpl();
     }
+
+    /** Creates a new Riddle instance.
+     * @return a Riddle instance with all fields initialized
+     * to {@link GameMatrix#UNSET}.
+     */
+    public Riddle newRiddle() {
+        return new RiddleImpl();
+    }
 }

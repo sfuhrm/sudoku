@@ -750,13 +750,13 @@ public class GameMatrixImplTest {
         GameMatrixImpl matrix = new GameMatrixImpl();
         matrix.setAll(data);
         int mask = matrix.getRowFreeMask(0);
-        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~(1<<1)), mask);
+        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~(1<<1)), mask);
         mask = matrix.getRowFreeMask(1);
-        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
+        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
         mask = matrix.getRowFreeMask(2);
-        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2) | (1<<3))), mask);
+        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2) | (1<<3))), mask);
         mask = matrix.getRowFreeMask(3);
-        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
+        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
      }
 
     @Test
@@ -777,13 +777,13 @@ public class GameMatrixImplTest {
         GameMatrixImpl matrix = new GameMatrixImpl();
         matrix.setAll(data);
         int mask = matrix.getColumnFreeMask(0);
-        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~(1<<1)), mask);
+        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~(1<<1)), mask);
         mask = matrix.getColumnFreeMask(1);
-        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
+        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
         mask = matrix.getColumnFreeMask(2);
-        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1))), mask);
+        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1))), mask);
         mask = matrix.getColumnFreeMask(3);
-        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<3))), mask);
+        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<3))), mask);
      }
 
     @Test
@@ -804,13 +804,13 @@ public class GameMatrixImplTest {
         GameMatrixImpl matrix = new GameMatrixImpl();
         matrix.setAll(data);
         int mask = matrix.getBlockFreeMask(0,0);
-        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
+        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
         mask = matrix.getBlockFreeMask(0,3);
-        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2) | (1<<3))), mask);
+        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2) | (1<<3))), mask);
         mask = matrix.getBlockFreeMask(0,6);
-        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1))), mask);
+        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1))), mask);
         mask = matrix.getBlockFreeMask(3,6);
-        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
+        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
      }
 
     @Test
@@ -831,13 +831,13 @@ public class GameMatrixImplTest {
         GameMatrixImpl matrix = new GameMatrixImpl();
         matrix.setAll(data);
         int mask = matrix.getFreeMask(0,0);
-        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
+        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
         mask = matrix.getFreeMask(0,3);
-        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2) | (1<<3))), mask);
+        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2) | (1<<3))), mask);
         mask = matrix.getFreeMask(0,6);
-        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4))), mask);
+        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4))), mask);
         mask = matrix.getFreeMask(3,6);
-        assertEquals(GameMatrix.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
+        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
      }
 
     @Test

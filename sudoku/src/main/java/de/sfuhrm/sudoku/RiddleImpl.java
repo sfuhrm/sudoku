@@ -25,7 +25,7 @@ package de.sfuhrm.sudoku;
  * may be written to or not.
  * @author Stephan Fuhrmann
  */
-public class Riddle extends CachedGameMatrixImpl implements Cloneable {
+class RiddleImpl extends CachedGameMatrixImpl implements Cloneable, Riddle {
 
     /**
      * Whether the cell is writable. Pre-defined cells are only readable, use
@@ -36,7 +36,7 @@ public class Riddle extends CachedGameMatrixImpl implements Cloneable {
     /**
      * Creates an empty full-writable riddle.
      */
-    public Riddle() {
+    RiddleImpl() {
         writeable = new boolean[SIZE][SIZE];
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
@@ -51,6 +51,7 @@ public class Riddle extends CachedGameMatrixImpl implements Cloneable {
      * @param column the column of the cell to get the writability for.
      * @return {@code true} if the cell is writable.
      */
+    @Override
     public final boolean getWritable(final int row, final int column) {
         return writeable[row][column];
     }
@@ -61,6 +62,7 @@ public class Riddle extends CachedGameMatrixImpl implements Cloneable {
      * @param column the column of the cell to set the writability for.
      * @param set the value to set for the cell, {@code true} means writable.
      */
+    @Override
     public final void setWritable(final int row,
             final int column,
             final boolean set) {
@@ -69,8 +71,8 @@ public class Riddle extends CachedGameMatrixImpl implements Cloneable {
 
     @Override
     public final Object clone() {
-        Riddle clone;
-        clone = (Riddle) super.clone();
+        RiddleImpl clone;
+        clone = (RiddleImpl) super.clone();
         clone.writeable = QuadraticArrays.cloneArray(writeable);
         return clone;
     }

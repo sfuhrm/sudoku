@@ -35,4 +35,12 @@ public class GameMatrixFactoryTest {
         GameMatrix result = instance.newGameMatrix();
         assertEquals(expResult, result);
     }
+
+    @Test
+    public void testNewRiddle() {
+        GameMatrixFactory instance = new GameMatrixFactory();
+        RiddleImpl expResult = new RiddleImpl();
+        GameMatrix result = instance.newRiddle();
+        assertEquals(expResult, result);
+    }
 }

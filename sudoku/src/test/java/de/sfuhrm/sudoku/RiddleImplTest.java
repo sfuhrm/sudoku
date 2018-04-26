@@ -23,10 +23,10 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
- * Test for {@link Riddle}.
+ * Test for {@link RiddleImpl}.
  * @author Stephan Fuhrmann
  */
-public class RiddleTest {
+public class RiddleImplTest {
 
     public final static String[] FULL_EXAMPLE
             = new String[]{
@@ -43,16 +43,16 @@ public class RiddleTest {
 
     @Test
     public void testNew() {
-        Riddle m = new Riddle();
+        RiddleImpl m = new RiddleImpl();
         assertEquals(0, m.getSetCount());
     }
 
     @Test
     public void testClone() {
-        Riddle m = new Riddle();
+        RiddleImpl m = new RiddleImpl();
         m.setAll(QuadraticArrays.parse(FULL_EXAMPLE));
 
-        Riddle clone = (Riddle) m.clone();
+        RiddleImpl clone = (RiddleImpl) m.clone();
 
         assertNotSame(clone, m);
         assertEquals(clone, m);

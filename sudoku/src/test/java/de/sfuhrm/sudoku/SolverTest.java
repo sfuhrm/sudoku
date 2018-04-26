@@ -35,7 +35,7 @@ public class SolverTest {
         // create full matrix
         GameMatrix matrix = Creator.createFull();
 
-        Riddle riddle = new Riddle();
+        RiddleImpl riddle = new RiddleImpl();
         riddle.setAll(matrix.getArray());
 
         Solver solver = new Solver(riddle);
@@ -53,7 +53,7 @@ public class SolverTest {
         int row = random.nextInt(9);
         int column = random.nextInt(9);
 
-        Riddle riddle = new Riddle();
+        RiddleImpl riddle = new RiddleImpl();
         riddle.setAll(matrix.getArray());
         riddle.set(row, column, GameMatrix.UNSET);
         riddle.setWritable(row, column, true);
@@ -76,7 +76,7 @@ public class SolverTest {
                 "73.5..96.",
                 "5....2...",
                 "29.7.158.");
-        Riddle riddle = new Riddle();
+        RiddleImpl riddle = new RiddleImpl();
         riddle.setAll(riddleBytes);
 
         byte[][] solutionBytes = QuadraticArrays.parse(

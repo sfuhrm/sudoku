@@ -3,3 +3,4 @@
 /sudoku-client/target/
 *~
 *.versionsBackup
+/sudoku/nbproject/

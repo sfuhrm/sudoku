@@ -27,6 +27,11 @@ package de.sfuhrm.sudoku;
  */
 interface BitFreeMatrixInterface extends GameMatrix, Cloneable {
 
+    /**
+     * A mask that has bits 1 to 9 set (decimal 1022).
+     */
+    int MASK_FOR_NINE_BITS = 1022;
+
     /** Gets the free mask for the given cell.
      * @param row the row of the cell to get the free mask for.
      * @param column the column of the to get the free mask for.

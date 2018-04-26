@@ -297,7 +297,7 @@ public final class Creator {
     public static Riddle createRiddle(final GameMatrix fullMatrix) {
         Random random = new Random();
 
-        Riddle cur = new Riddle();
+        RiddleImpl cur = new RiddleImpl();
         cur.setAll(fullMatrix.getArray());
 
         int multi = 0;

@@ -27,11 +27,6 @@ package de.sfuhrm.sudoku;
 public interface GameMatrix {
 
     /**
-     * A mask that has bits 1 to 9 set (decimal 1022).
-     */
-    int MASK_FOR_NINE_BITS = 1022;
-
-    /**
      * The value that is assigned to unset fields.
      */
     byte UNSET = 0;
