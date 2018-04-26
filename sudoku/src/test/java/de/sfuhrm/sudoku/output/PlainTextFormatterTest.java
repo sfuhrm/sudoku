@@ -27,9 +27,10 @@ import org.junit.Test;
  * Test for {@link PlainTextFormatter}.
  * @author Stephan Fuhrmann
  */
-public class PlainTextFormatterTest {
+public class PlainTextFormatterTest extends AbstractTextFormatterTest {
 
     @Test
+    @Override
     public void testNew() {
         PlainTextFormatter formatter = new PlainTextFormatter();
         assertEquals("\n", formatter.getLineSeparator());
@@ -37,7 +38,7 @@ public class PlainTextFormatterTest {
     }
     @Test
     public void testFormatWithEmpty() {
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrix matrix = gameMatrixFactory.newGameMatrix();
         String actual = new PlainTextFormatter().format(matrix);
         assertEquals(
                 ".........\n"+
@@ -54,7 +55,7 @@ public class PlainTextFormatterTest {
 
     @Test
     public void testFormatWithEmptyAndOtherUnknownCharacter() {
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrix matrix = gameMatrixFactory.newGameMatrix();
         PlainTextFormatter formatter = new PlainTextFormatter();
         formatter.setUnknownCellContentCharacter("?");
         String actual = formatter.format(matrix);
@@ -73,7 +74,7 @@ public class PlainTextFormatterTest {
 
     @Test
     public void testFormatWithFullMatrix() {
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrix matrix = gameMatrixFactory.newGameMatrix();
         matrix.setAll(QuadraticArrays.parse(
                 "294731856",
                 "781465239",

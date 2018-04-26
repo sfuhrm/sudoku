@@ -19,7 +19,8 @@ Boston, MA  02110-1301, USA.
 */
 package de.sfuhrm.sudoku.client.integration;
 
-import de.sfuhrm.sudoku.GameMatrixImpl;
+import de.sfuhrm.sudoku.GameMatrix;
+import de.sfuhrm.sudoku.GameMatrixFactory;
 import de.sfuhrm.sudoku.QuadraticArrays;
 import de.sfuhrm.sudoku.client.Client;
 import java.io.ByteArrayOutputStream;
@@ -30,6 +31,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import static org.junit.Assert.*;
+import org.junit.Before;
 import org.junit.Test;
 import org.kohsuke.args4j.CmdLineException;
 
@@ -39,6 +41,14 @@ import org.kohsuke.args4j.CmdLineException;
  */
 public class ClientTest {
 
+    private GameMatrixFactory gameMatrixFactory;
+
+    @Before
+    public void before() {
+        gameMatrixFactory = new GameMatrixFactory();
+    }
+
+
     @Test
     public void testMain() throws CmdLineException, UnsupportedEncodingException, IOException {
         ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
@@ -46,7 +56,7 @@ public class ClientTest {
         Client.main(new String[] {});
         String output = arrayOutputStream.toString("UTF-8");
         output = output.trim();
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrix matrix = gameMatrixFactory.newGameMatrix();
         matrix.setAll(QuadraticArrays.parse(output.split("\n")));
         assertEquals(true, matrix.isValid());
         assertEquals(9*9, matrix.getSetCount());
@@ -59,7 +69,7 @@ public class ClientTest {
         Client.main(new String[] {"-e", "Riddle"});
         String output = arrayOutputStream.toString("UTF-8");
         output = output.trim();
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrix matrix = gameMatrixFactory.newGameMatrix();
         matrix.setAll(QuadraticArrays.parse(output.split("\n")));
         assertEquals(true, matrix.isValid());
     }
@@ -83,11 +93,11 @@ public class ClientTest {
 
         String output = arrayOutputStream.toString("UTF-8");
         output = output.trim();
-        GameMatrixImpl actual = new GameMatrixImpl();
+        GameMatrix actual = gameMatrixFactory.newGameMatrix();
         actual.setAll(QuadraticArrays.parse(output.split("\n")));
         assertEquals(true, actual.isValid());
 
-        GameMatrixImpl expected = new GameMatrixImpl();
+        GameMatrix expected = gameMatrixFactory.newGameMatrix();
         expected.setAll(QuadraticArrays.parse(
                 "294731856",
                 "781465239",

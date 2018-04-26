@@ -42,7 +42,7 @@ class GameMatrixImpl implements Cloneable, BitFreeMatrixInterface {
      * Creates an empty riddle.
      * @see #setAll(byte[][])
      */
-    public GameMatrixImpl() {
+    GameMatrixImpl() {
         data = new byte[SIZE][SIZE];
     }
 

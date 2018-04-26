@@ -21,6 +21,7 @@ package de.sfuhrm.sudoku.output;
 
 import de.sfuhrm.sudoku.*;
 import static org.junit.Assert.*;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -28,6 +29,13 @@ import org.junit.Test;
  * @author Stephan Fuhrmann
  */
 public class AbstractTextFormatterTest {
+
+    protected GameMatrixFactory gameMatrixFactory;
+
+    @Before
+    public void before() {
+        gameMatrixFactory = new GameMatrixFactory();
+    }
 
     protected AbstractTextFormatter newInstance() {
         return new AbstractTextFormatter() {
