@@ -54,6 +54,7 @@ interface BitFreeMatrixInterface extends GameMatrix, Cloneable {
         int minimumBits = -1;
         int minimumRow = -1;
         int minimumColumn = -1;
+        search:
         for (int row = 0; row < GameMatrix.SIZE; row++) {
             for (int column = 0; column < GameMatrix.SIZE; column++) {
                 if (get(row, column) != GameMatrix.UNSET) {
@@ -66,6 +67,11 @@ interface BitFreeMatrixInterface extends GameMatrix, Cloneable {
                     minimumColumn = column;
                     minimumRow = row;
                     minimumBits = bits;
+                    if (minimumBits == 1) {
+                        // there is nothing better than 1 bits
+                        // 0 bits means UNSET which is no valid solution
+                        break search;
+                    }
                 }
             }
         }
