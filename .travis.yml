@@ -1,9 +1,5 @@
 language: java
 
-# Get latest install-jdk.sh script
-before_install:
-  - wget -P ./target/ https://github.com/sormuras/bach/raw/master/install-jdk.sh
-
 matrix:
   include:
   - jdk: openjdk8
@@ -11,7 +7,6 @@ matrix:
   - jdk: oraclejdk9
   - jdk: oraclejdk10
   - jdk: openjdk10
-  - install: . ./target/install-jdk.sh -F 11 -L BCL
 
 install: mvn install -Dgpg.skip
 
