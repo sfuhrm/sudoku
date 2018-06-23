@@ -62,7 +62,7 @@ public class Client {
         Both,
         /** Solve a Sudoku. */
         Solve
-    };
+    }
 
     /** The possible formatters that can be used. */
     enum Formatter {
@@ -95,7 +95,7 @@ public class Client {
                 throw new IllegalStateException(ex);
             }
         }
-    };
+    }
 
     /** The output format to use. */
     @Option(name = "-f",
