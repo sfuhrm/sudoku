@@ -30,9 +30,9 @@ import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
-import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.kohsuke.args4j.CmdLineException;
 
 /**
@@ -43,7 +43,7 @@ public class ClientTest {
 
     private GameMatrixFactory gameMatrixFactory;
 
-    @Before
+    @BeforeEach
     public void before() {
         gameMatrixFactory = new GameMatrixFactory();
     }

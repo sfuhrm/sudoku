@@ -21,8 +21,8 @@ package de.sfuhrm.sudoku;
 
 import java.util.Arrays;
 import java.util.List;
-import static org.junit.Assert.*;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test for {@link GameMatrixImpl}.
@@ -139,28 +139,32 @@ public class GameMatrixImplTest {
         assertEquals(8, data[8][1]);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testParseWithWrongOuterLength() {
-        byte data[][] =
-        QuadraticArrays.parse(
-                "000000000"
-                );
+        assertThrows(IllegalArgumentException.class, () -> {
+            byte data[][] =
+                    QuadraticArrays.parse(
+                            "000000000"
+                    );
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testParseWithWrongInnerLength() {
-        byte data[][] =
-        QuadraticArrays.parse(
-                "000000000",
-                "000000000",
-                "000000000",
-                "000000000",
-                "000000000",
-                "000000000",
-                "000000000",
-                "000000000",
-                "00000000"
-                );
+        assertThrows(IllegalArgumentException.class, () -> {
+            byte data[][] =
+                    QuadraticArrays.parse(
+                            "000000000",
+                            "000000000",
+                            "000000000",
+                            "000000000",
+                            "000000000",
+                            "000000000",
+                            "000000000",
+                            "000000000",
+                            "00000000"
+                    );
+        });
     }
 
     @Test

@@ -21,8 +21,8 @@ package de.sfuhrm.sudoku.output;
 
 import de.sfuhrm.sudoku.GameMatrix;
 import org.json.JSONArray;
-import static org.junit.Assert.*;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test for {@link LatexTableFormatter}.

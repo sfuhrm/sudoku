@@ -21,8 +21,8 @@ package de.sfuhrm.sudoku;
 
 import java.util.List;
 import java.util.Random;
-import static org.junit.Assert.*;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test for {@link Solver}.
