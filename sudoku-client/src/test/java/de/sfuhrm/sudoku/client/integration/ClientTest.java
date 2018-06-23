@@ -58,7 +58,7 @@ public class ClientTest {
         output = output.trim();
         GameMatrix matrix = gameMatrixFactory.newGameMatrix();
         matrix.setAll(QuadraticArrays.parse(output.split("\n")));
-        assertEquals(true, matrix.isValid());
+        assertTrue(matrix.isValid());
         assertEquals(9*9, matrix.getSetCount());
     }
 

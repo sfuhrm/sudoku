@@ -111,7 +111,7 @@ public class CreatorTest {
     public void testCreateFull() {
         GameMatrix r = Creator.createFull();
         assertEquals(9*9, r.getSetCount());
-        assertEquals(true, r.isValid());
+        assertTrue(r.isValid());
     }
 
     @Test
@@ -120,7 +120,7 @@ public class CreatorTest {
         for (int i=0; i < 1000; i++) {
             GameMatrix r = Creator.createFull();
             assertEquals(9*9, r.getSetCount());
-            assertEquals(true, r.isValid());
+            assertTrue(r.isValid());
         }
     }
 
@@ -133,9 +133,9 @@ public class CreatorTest {
                 if (riddle.get(i, j) != GameMatrixImpl.UNSET) {
                     // all fields that are set are needed to be the same
                     assertEquals(matrix.get(i, j), riddle.get(i, j));
-                    assertEquals(false, riddle.getWritable(i, j));
+                    assertFalse(riddle.getWritable(i, j));
                 } else {
-                    assertEquals(true, riddle.getWritable(i, j));
+                    assertTrue(riddle.getWritable(i, j));
                 }
             }
         }
@@ -178,13 +178,13 @@ public class CreatorTest {
         GameMatrix variant2 = Creator.createVariant(original);
         GameMatrix variant3 = Creator.createVariant(original);
 
-        assertEquals(true, original.isValid());
+        assertTrue(original.isValid());
         assertEquals(9*9, original.getSetCount());
-        assertEquals(true, variant1.isValid());
+        assertTrue(variant1.isValid());
         assertEquals(9*9, variant1.getSetCount());
-        assertEquals(true, variant2.isValid());
+        assertTrue(variant2.isValid());
         assertEquals(9*9, variant2.getSetCount());
-        assertEquals(true, variant3.isValid());
+        assertTrue(variant3.isValid());
         assertEquals(9*9, variant3.getSetCount());
     }
 

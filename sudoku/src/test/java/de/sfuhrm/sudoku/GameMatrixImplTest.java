@@ -166,19 +166,19 @@ public class GameMatrixImplTest {
     @Test
     public void testEqualsWithSame() {
         GameMatrixImpl instance = new GameMatrixImpl();
-        assertEquals(true, instance.equals(instance));
+        assertTrue(instance.equals(instance));
     }
 
     @Test
     public void testEqualsWithNull() {
         GameMatrixImpl instance = new GameMatrixImpl();
-        assertEquals(false, instance.equals(null));
+        assertFalse(instance.equals(null));
     }
 
     @Test
     public void testEqualsWithOtherClass() {
         GameMatrixImpl instance = new GameMatrixImpl();
-        assertEquals(false, instance.equals("foobar"));
+        assertFalse(instance.equals("foobar"));
     }
 
     @Test
@@ -549,7 +549,7 @@ public class GameMatrixImplTest {
 
         GameMatrixImpl matrix = new GameMatrixImpl();
         matrix.setAll(data);
-        assertEquals(false, matrix.isValid());
+        assertFalse(matrix.isValid());
      }
 
     @Test
@@ -569,7 +569,7 @@ public class GameMatrixImplTest {
 
         GameMatrixImpl matrix = new GameMatrixImpl();
         matrix.setAll(data);
-        assertEquals(true, matrix.isValid());
+        assertTrue(matrix.isValid());
      }
 
     @Test
@@ -589,7 +589,7 @@ public class GameMatrixImplTest {
 
         GameMatrixImpl matrix = new GameMatrixImpl();
         matrix.setAll(data);
-        assertEquals(true, matrix.isValid());
+        assertTrue(matrix.isValid());
      }
 
     @Test
@@ -609,7 +609,7 @@ public class GameMatrixImplTest {
 
         GameMatrixImpl matrix = new GameMatrixImpl();
         matrix.setAll(data);
-        assertEquals(false, matrix.isValid());
+        assertFalse(matrix.isValid());
     }
 
     @Test
@@ -629,7 +629,7 @@ public class GameMatrixImplTest {
 
         GameMatrixImpl matrix = new GameMatrixImpl();
         matrix.setAll(data);
-        assertEquals(false, matrix.isValid());
+        assertFalse(matrix.isValid());
     }
 
     @Test
@@ -649,7 +649,7 @@ public class GameMatrixImplTest {
 
         GameMatrixImpl matrix = new GameMatrixImpl();
         matrix.setAll(data);
-        assertEquals(false, matrix.isValid());
+        assertFalse(matrix.isValid());
     }
 
     @Test
@@ -669,7 +669,7 @@ public class GameMatrixImplTest {
 
         GameMatrixImpl matrix = new GameMatrixImpl();
         matrix.setAll(data);
-        assertEquals(false, matrix.isValid());
+        assertFalse(matrix.isValid());
     }
 
     @Test
@@ -689,7 +689,7 @@ public class GameMatrixImplTest {
 
         GameMatrixImpl matrix = new GameMatrixImpl();
         matrix.setAll(data);
-        assertEquals(false, matrix.isValid());
+        assertFalse(matrix.isValid());
     }
 
     @Test
@@ -709,7 +709,7 @@ public class GameMatrixImplTest {
 
         GameMatrixImpl matrix = new GameMatrixImpl();
         matrix.setAll(data);
-        assertEquals(false, matrix.isValid());
+        assertFalse(matrix.isValid());
     }
 
     @Test
@@ -729,7 +729,7 @@ public class GameMatrixImplTest {
 
         GameMatrixImpl matrix = new GameMatrixImpl();
         matrix.setAll(data);
-        assertEquals(false, matrix.isValid());
+        assertFalse(matrix.isValid());
     }
 
     @Test
@@ -861,14 +861,14 @@ public class GameMatrixImplTest {
         matrix.setAll(data);
 
         // the "x" cell marked above
-        assertEquals(true,  matrix.canSet(0, 0, (byte)0)); // always works
-        assertEquals(false, matrix.canSet(0, 0, (byte)2)); // in block
-        assertEquals(true,  matrix.canSet(0, 0, (byte)3)); // not in block
+        assertTrue(matrix.canSet(0, 0, (byte) 0)); // always works
+        assertFalse(matrix.canSet(0, 0, (byte) 2)); // in block
+        assertTrue(matrix.canSet(0, 0, (byte) 3)); // not in block
 
         // the "y" cell marked above
-        assertEquals(true,  matrix.canSet(4, 8, (byte)0)); // always works
-        assertEquals(true,  matrix.canSet(4, 8, (byte)2)); // in block
-        assertEquals(true,  matrix.canSet(4, 8, (byte)3)); // not in block
+        assertTrue(matrix.canSet(4, 8, (byte) 0)); // always works
+        assertTrue(matrix.canSet(4, 8, (byte) 2)); // in block
+        assertTrue(matrix.canSet(4, 8, (byte) 3)); // not in block
      }
 
     @Test
@@ -905,7 +905,7 @@ public class GameMatrixImplTest {
 
         int[] min = new int[2];
         boolean found = matrix.findLeastFreeCell(min);
-        assertEquals(false, found);
+        assertFalse(found);
      }
 
     @Test
@@ -929,7 +929,7 @@ public class GameMatrixImplTest {
 
         int[] min = new int[2];
         boolean found = matrix.findLeastFreeCell(min);
-        assertEquals(true, found);
+        assertTrue(found);
         assertEquals(0, min[0]);
         assertEquals(0, min[1]);
      }
@@ -955,7 +955,7 @@ public class GameMatrixImplTest {
 
         int[] min = new int[2];
         boolean found = matrix.findLeastFreeCell(min);
-        assertEquals(true, found);
+        assertTrue(found);
         assertEquals(2, min[0]);
         assertEquals(2, min[1]);
      }

@@ -93,8 +93,7 @@ public class CachedGameMatrixImplTest {
         CachedGameMatrixImpl clone = (CachedGameMatrixImpl) matrix.clone();
 
         String out = clone.toString();
-        String expected = Arrays.asList(FULL_EXAMPLE)
-                .stream()
+        String expected = Arrays.stream(FULL_EXAMPLE)
                 .collect(Collectors.joining("\n"))+"\n";
         assertEquals(expected, out);
      }
@@ -116,7 +115,7 @@ public class CachedGameMatrixImplTest {
 
         CachedGameMatrixImpl matrix = new CachedGameMatrixImpl();
         matrix.setAll(data);
-        assertEquals(true, matrix.isValid());
+        assertTrue(matrix.isValid());
      }
 
     @Test
@@ -136,7 +135,7 @@ public class CachedGameMatrixImplTest {
 
         CachedGameMatrixImpl matrix = new CachedGameMatrixImpl();
         matrix.setAll(data);
-        assertEquals(true, matrix.isValid());
+        assertTrue(matrix.isValid());
      }
 
     @Test
@@ -268,14 +267,14 @@ public class CachedGameMatrixImplTest {
         matrix.setAll(data);
 
         // the "x" cell marked above
-        assertEquals(true,  matrix.canSet(0, 0, (byte)0)); // always works
-        assertEquals(false, matrix.canSet(0, 0, (byte)2)); // in block
-        assertEquals(true,  matrix.canSet(0, 0, (byte)3)); // not in block
+        assertTrue(matrix.canSet(0, 0, (byte) 0)); // always works
+        assertFalse(matrix.canSet(0, 0, (byte) 2)); // in block
+        assertTrue(matrix.canSet(0, 0, (byte) 3)); // not in block
 
         // the "y" cell marked above
-        assertEquals(true,  matrix.canSet(4, 8, (byte)0)); // always works
-        assertEquals(true,  matrix.canSet(4, 8, (byte)2)); // in block
-        assertEquals(true,  matrix.canSet(4, 8, (byte)3)); // not in block
+        assertTrue(matrix.canSet(4, 8, (byte) 0)); // always works
+        assertTrue(matrix.canSet(4, 8, (byte) 2)); // in block
+        assertTrue(matrix.canSet(4, 8, (byte) 3)); // not in block
      }
 
     @Test

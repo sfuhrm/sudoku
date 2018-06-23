@@ -32,10 +32,10 @@ public class Utility {
     private Utility() {
         // no instance allowed
     }
-    
+
     public static List<Integer> toIntList(byte[] array) {
         int[] iv = toIntArray(array);
-        return IntStream.of(iv).mapToObj((int b) -> b).sorted().collect(Collectors.toList());
+        return IntStream.of(iv).boxed().sorted().collect(Collectors.toList());
     }
 
     public static int[] toIntArray(byte[] array) {
