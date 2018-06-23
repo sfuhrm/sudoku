@@ -1,4 +1,9 @@
-# Sudoku Java Library ![Travis CI Status](https://travis-ci.org/sfuhrm/sudoku.svg?branch=master) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8b4f8ac857734c14954d792131b26c85)](https://www.codacy.com/app/sfuhrm/sudoku?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=sfuhrm/sudoku&amp;utm_campaign=Badge_Grade) [![Coverage Status](https://coveralls.io/repos/github/sfuhrm/sudoku/badge.svg)](https://coveralls.io/github/sfuhrm/sudoku) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.sfuhrm/sudoku/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.sfuhrm/sudoku) 
+Sudoku Java Library
+===================
+![Travis CI Status](https://travis-ci.org/sfuhrm/sudoku.svg?branch=master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8b4f8ac857734c14954d792131b26c85)](https://www.codacy.com/app/sfuhrm/sudoku?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=sfuhrm/sudoku&amp;utm_campaign=Badge_Grade)
+[![Coverage Status](https://coveralls.io/repos/github/sfuhrm/sudoku/badge.svg)](https://coveralls.io/github/sfuhrm/sudoku) 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.sfuhrm/sudoku/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.sfuhrm/sudoku) 
 
 A Java implementation of a very fast algorithm for creating [Sudoku](https://en.wikipedia.org/wiki/Sudoku) riddles.
 Has also the functionality to solve Sudoku riddles.
