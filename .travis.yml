@@ -8,7 +8,7 @@ matrix:
   - jdk: oraclejdk10
   - jdk: openjdk10
 
-install: mvn install -Dgpg.skip
+install: mvn install clirr:check -Dgpg.skip
 
 after_success:
   - mvn -DrepoToken=${coveralls_token} clean test jacoco:report coveralls:report --projects=sudoku
