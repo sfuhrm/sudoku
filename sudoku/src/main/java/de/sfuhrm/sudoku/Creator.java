@@ -322,10 +322,9 @@ public final class Creator {
         // deterministic loop
         for (int i = 0; i < GameMatrix.SIZE; i++) {
             for (int j = 0; j < GameMatrix.SIZE; j++) {
-                if (GameMatrix.UNSET != cur.get(j, i)) {
-                    if (canClear(cur, j, i)) {
-                        cur.set(j, i, GameMatrix.UNSET);
-                    }
+                if (GameMatrix.UNSET != cur.get(j, i)
+                    && canClear(cur, j, i)) {
+                    cur.set(j, i, GameMatrix.UNSET);
                 }
             }
         }
