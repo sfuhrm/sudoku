@@ -274,7 +274,7 @@ public final class Creator {
         Solver s = new Solver(riddle);
         s.setLimit(2);
         List<GameMatrix> results = s.solve();
-        boolean result = (results.size() == 1);
+        boolean result = results.size() == 1;
 
         // rollback
         riddle.set(row, column, (byte) old);
