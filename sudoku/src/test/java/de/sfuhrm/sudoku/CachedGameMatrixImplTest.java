@@ -70,8 +70,8 @@ public class CachedGameMatrixImplTest {
 
     @Test
     public void testSetAll() {
-        byte data[][] =
-        QuadraticArrays.parse(FULL_EXAMPLE);
+        byte[][] data =
+                QuadraticArrays.parse(FULL_EXAMPLE);
 
         GameMatrixImpl matrix = new CachedGameMatrixImpl();
         matrix.setAll(data);
@@ -85,8 +85,8 @@ public class CachedGameMatrixImplTest {
 
     @Test
     public void testClone() {
-        byte data[][] =
-        QuadraticArrays.parse(FULL_EXAMPLE);
+        byte[][] data =
+                QuadraticArrays.parse(FULL_EXAMPLE);
 
         CachedGameMatrixImpl matrix = new CachedGameMatrixImpl();
         matrix.setAll(data);
@@ -100,17 +100,17 @@ public class CachedGameMatrixImplTest {
 
     @Test
     public void testIsValidWithEmptyValid() {
-        byte data[][] =
-        QuadraticArrays.parse(
-                "000000000",
-                "000000000",
-                "000000000",
-                "000000000",
-                "000000000",
-                "000000000",
-                "000000000",
-                "000000000",
-                "000000000"
+        byte[][] data =
+                QuadraticArrays.parse(
+                        "000000000",
+                        "000000000",
+                        "000000000",
+                        "000000000",
+                        "000000000",
+                        "000000000",
+                        "000000000",
+                        "000000000",
+                        "000000000"
                 );
 
         CachedGameMatrixImpl matrix = new CachedGameMatrixImpl();
@@ -120,17 +120,17 @@ public class CachedGameMatrixImplTest {
 
     @Test
     public void testIsValidWithPartlyFullValid() {
-        byte data[][] =
-        QuadraticArrays.parse(
-                "100000000",
-                "000100000",
-                "000000100",
-                "010000000",
-                "000010000",
-                "000000010",
-                "001000000",
-                "000001000",
-                "000000001"
+        byte[][] data =
+                QuadraticArrays.parse(
+                        "100000000",
+                        "000100000",
+                        "000000100",
+                        "010000000",
+                        "000010000",
+                        "000000010",
+                        "001000000",
+                        "000001000",
+                        "000000001"
                 );
 
         CachedGameMatrixImpl matrix = new CachedGameMatrixImpl();
@@ -140,17 +140,17 @@ public class CachedGameMatrixImplTest {
 
     @Test
     public void testGetRowFreeMask() {
-        byte data[][] =
-        QuadraticArrays.parse(
-                "100000000",
-                "020100000",
-                "000320100",
-                "010000456",
-                "000010000",
-                "000000010",
-                "001000000",
-                "000001000",
-                "000000001"
+        byte[][] data =
+                QuadraticArrays.parse(
+                        "100000000",
+                        "020100000",
+                        "000320100",
+                        "010000456",
+                        "000010000",
+                        "000000010",
+                        "001000000",
+                        "000001000",
+                        "000000001"
                 );
 
         CachedGameMatrixImpl matrix = new CachedGameMatrixImpl();
@@ -167,17 +167,17 @@ public class CachedGameMatrixImplTest {
 
     @Test
     public void testGetColumnFreeMask() {
-        byte data[][] =
-        QuadraticArrays.parse(
-                "100000000",
-                "020100000",
-                "000320100",
-                "010000456",
-                "000010000",
-                "000000010",
-                "001000000",
-                "000001000",
-                "000000001"
+        byte[][] data =
+                QuadraticArrays.parse(
+                        "100000000",
+                        "020100000",
+                        "000320100",
+                        "010000456",
+                        "000010000",
+                        "000000010",
+                        "001000000",
+                        "000001000",
+                        "000000001"
                 );
 
         CachedGameMatrixImpl matrix = new CachedGameMatrixImpl();
@@ -194,17 +194,17 @@ public class CachedGameMatrixImplTest {
 
     @Test
     public void testGetBlockFreeMask() {
-        byte data[][] =
-        QuadraticArrays.parse(
-                "100000000",
-                "020100000",
-                "000320100",
-                "010000456",
-                "000010000",
-                "000000010",
-                "001000000",
-                "000001000",
-                "000000001"
+        byte[][] data =
+                QuadraticArrays.parse(
+                        "100000000",
+                        "020100000",
+                        "000320100",
+                        "010000456",
+                        "000010000",
+                        "000000010",
+                        "001000000",
+                        "000001000",
+                        "000000001"
                 );
 
         CachedGameMatrixImpl matrix = new CachedGameMatrixImpl();
@@ -221,17 +221,17 @@ public class CachedGameMatrixImplTest {
 
     @Test
     public void testGetFreeMask() {
-        byte data[][] =
-        QuadraticArrays.parse(
-                "100000000",
-                "020100000",
-                "000320100",
-                "010000456",
-                "000010000",
-                "000000010",
-                "001000000",
-                "000001000",
-                "000000001"
+        byte[][] data =
+                QuadraticArrays.parse(
+                        "100000000",
+                        "020100000",
+                        "000320100",
+                        "010000456",
+                        "000010000",
+                        "000000010",
+                        "001000000",
+                        "000001000",
+                        "000000001"
                 );
 
         CachedGameMatrixImpl matrix = new CachedGameMatrixImpl();
@@ -248,19 +248,19 @@ public class CachedGameMatrixImplTest {
 
     @Test
     public void testCanSet() {
-        byte data[][] =
-        QuadraticArrays.parse(
-            //   x
-                "100000000",
-                "020100000",
-                "000320100",
-                "010000456",
-            //           y
-                "000010000",
-                "000000010",
-                "001000000",
-                "000001000",
-                "000000001"
+        byte[][] data =
+                QuadraticArrays.parse(
+                        //   x
+                        "100000000",
+                        "020100000",
+                        "000320100",
+                        "010000456",
+                        //           y
+                        "000010000",
+                        "000000010",
+                        "001000000",
+                        "000001000",
+                        "000000001"
                 );
 
         CachedGameMatrixImpl matrix = new CachedGameMatrixImpl();

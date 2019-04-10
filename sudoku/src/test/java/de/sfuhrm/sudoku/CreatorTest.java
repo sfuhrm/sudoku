@@ -149,7 +149,7 @@ public class CreatorTest {
 
     @Test
     public void testCreateNumbersToDistributeWithOnce() {
-        byte v[] = Creator.createNumbersToDistribute(new Random(), 1);
+        byte[] v = Creator.createNumbersToDistribute(new Random(), 1);
         List<Integer> intList = Utility.toIntList(v);
 
         assertEquals(9, intList.size());
@@ -158,7 +158,7 @@ public class CreatorTest {
 
     @Test
     public void testCreateNumbersToDistributeWithTwice() {
-        byte v[] = Creator.createNumbersToDistribute(new Random(), 2);
+        byte[] v = Creator.createNumbersToDistribute(new Random(), 2);
         List<Integer> intList = Utility.toIntList(v);
 
         assertEquals(2*9, intList.size());
