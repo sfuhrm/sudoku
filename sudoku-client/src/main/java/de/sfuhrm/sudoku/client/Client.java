@@ -92,7 +92,8 @@ public class Client {
         public GameMatrixFormatter newInstance() {
             try {
                 return clazz.getDeclaredConstructor().newInstance();
-            } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException ex) {
+            } catch (NoSuchMethodException | InvocationTargetException
+                    | IllegalAccessException | InstantiationException ex) {
                 throw new IllegalStateException(ex);
             }
         }
