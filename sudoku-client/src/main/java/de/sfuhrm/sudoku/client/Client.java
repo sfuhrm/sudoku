@@ -147,7 +147,8 @@ public class Client {
         }
 
         List<String> lines = Files.readAllLines(input);
-        lines.stream()
+        // remove empty lines, replace funny chars with 0
+        lines = lines.stream()
                 .filter(l -> !l.isEmpty())
                 .map(l -> l.replaceAll("[_?.]", "0"))
                 .collect(Collectors.toList());
@@ -157,9 +158,9 @@ public class Client {
         GameMatrix gameMatrix = new GameMatrixFactory().newGameMatrix();
         gameMatrix.setAll(data);
         Solver solver = new Solver(gameMatrix);
-        List<GameMatrix> sollutions = solver.solve();
+        List<GameMatrix> solutions = solver.solve();
         if (!quiet) {
-            for (GameMatrix r : sollutions) {
+            for (GameMatrix r : solutions) {
                 System.out.println(formatter.format(r));
             }
         }
