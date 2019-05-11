@@ -32,6 +32,7 @@ import de.sfuhrm.sudoku.output.MarkdownTableFormatter;
 import de.sfuhrm.sudoku.output.PlainTextFormatter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -90,8 +91,8 @@ public class Client {
          */
         public GameMatrixFormatter newInstance() {
             try {
-                return clazz.newInstance();
-            } catch (IllegalAccessException | InstantiationException ex) {
+                return clazz.getDeclaredConstructor().newInstance();
+            } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException ex) {
                 throw new IllegalStateException(ex);
             }
         }
