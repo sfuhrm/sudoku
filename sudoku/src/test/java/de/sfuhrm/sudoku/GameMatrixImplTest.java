@@ -170,19 +170,19 @@ public class GameMatrixImplTest {
     @Test
     public void testEqualsWithSame() {
         GameMatrixImpl instance = new GameMatrixImpl();
-        assertTrue(instance.equals(instance));
+        assertEquals(instance, instance);
     }
 
     @Test
     public void testEqualsWithNull() {
         GameMatrixImpl instance = new GameMatrixImpl();
-        assertFalse(instance.equals(null));
+        assertNotEquals(null, instance);
     }
 
     @Test
     public void testEqualsWithOtherClass() {
         GameMatrixImpl instance = new GameMatrixImpl();
-        assertFalse(instance.equals("foobar"));
+        assertNotEquals("foobar", instance);
     }
 
     @Test
