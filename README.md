@@ -3,7 +3,7 @@ Sudoku Java Library
 ![Travis CI Status](https://travis-ci.org/sfuhrm/sudoku.svg?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8b4f8ac857734c14954d792131b26c85)](https://www.codacy.com/app/sfuhrm/sudoku?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=sfuhrm/sudoku&amp;utm_campaign=Badge_Grade)
 [![Coverage Status](https://coveralls.io/repos/github/sfuhrm/sudoku/badge.svg)](https://coveralls.io/github/sfuhrm/sudoku) 
-[![Javadoc](https://javadoc-badge.appspot.com/de.sfuhrm/sudoku.svg?label=javadoc)](http://api.sfuhrm.de/sudoku/)
+[![javadoc](https://javadoc.io/badge2/de.sfuhrm/sudoku/javadoc.svg)](https://javadoc.io/doc/de.sfuhrm/sudoku)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.sfuhrm/sudoku/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.sfuhrm/sudoku) 
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
 
@@ -31,7 +31,7 @@ In the following list I want to give an overview of the features:
 
 ## Usage
 
-You can review the [Javadoc API docs](http://api.sfuhrm.de/sudoku/) for
+You can review the [![javadoc](https://javadoc.io/badge2/de.sfuhrm/sudoku/javadoc.svg)](https://javadoc.io/doc/de.sfuhrm/sudoku) for
 detailed information.
 
 The usage for fully set Sudoku boards (no empty fields) is as following:
