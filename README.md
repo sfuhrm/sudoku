@@ -1,6 +1,6 @@
 Sudoku Java Library
 ===================
-![Travis CI Status](https://travis-ci.org/sfuhrm/sudoku.svg?branch=master)
+[![Circle CI Status](https://img.shields.io/circleci/build/github/sfuhrm/sudoku?style=plastic)](https://app.circleci.com/pipelines/github/sfuhrm/sudoku)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8b4f8ac857734c14954d792131b26c85)](https://www.codacy.com/app/sfuhrm/sudoku?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=sfuhrm/sudoku&amp;utm_campaign=Badge_Grade)
 [![Coverage Status](https://coveralls.io/repos/github/sfuhrm/sudoku/badge.svg)](https://coveralls.io/github/sfuhrm/sudoku) 
 [![javadoc](https://javadoc.io/badge2/de.sfuhrm/sudoku/javadoc.svg)](https://javadoc.io/doc/de.sfuhrm/sudoku)
