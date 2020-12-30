@@ -5,7 +5,7 @@ Sudoku Java Library
 [![Coverage Status](https://coveralls.io/repos/github/sfuhrm/sudoku/badge.svg)](https://coveralls.io/github/sfuhrm/sudoku) 
 [![javadoc](https://javadoc.io/badge2/de.sfuhrm/sudoku/javadoc.svg)](https://javadoc.io/doc/de.sfuhrm/sudoku)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.sfuhrm/sudoku/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.sfuhrm/sudoku) 
-[![ReleaseDate](https://img.shields.io/github/release-date/sfuhrm/sudoku)](https://github.com/1and1/go-maven-poller/releases)
+[![ReleaseDate](https://img.shields.io/github/release-date/sfuhrm/sudoku)](https://github.com/sfuhrm/sudoku/releases)
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
 
 A Java implementation of a very fast algorithm for creating [Sudoku](https://en.wikipedia.org/wiki/Sudoku) riddles.
