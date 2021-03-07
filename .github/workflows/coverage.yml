@@ -19,7 +19,7 @@ jobs:
       with:
         java-version: ${{ matrix.java }}
     - name: Create Jacoco Report
-      run: mvn clean test jacoco:report
+      run: mvn clean test jacoco:report -pl sudoku
     - name: Upload first Jacoco Report
       env:
         CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
