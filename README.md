@@ -106,7 +106,7 @@ The recommended way of including the library into your project is using maven:
 <dependency>
     <groupId>de.sfuhrm</groupId>
     <artifactId>sudoku</artifactId>
-    <version>3.0.2</version>
+    <version>3.1.0</version>
 </dependency>
 ```
 
@@ -148,7 +148,7 @@ changes.
 
 ## Author
 
-Written 2017-2018 by Stephan Fuhrmann. You can reach me via email to s (at) sfuhrm.de
+Written 2017-2021 by Stephan Fuhrmann. You can reach me via email to s (at) sfuhrm.de
 
 ## License
 
