@@ -3,14 +3,14 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.sfuhrm</groupId>
   <artifactId>sudoku-parent</artifactId>
-  <version>3.1.0</version>
+  <version>3.1.1-SNAPSHOT</version>
   <name>Sudoku Parent</name>
   <description>Sudoku Parent POM</description>
   <url>https://github.com/sfuhrm/sudoku</url>
   <scm>
     <url>https://github.com/sfuhrm/sudoku</url>
     <connection>scm:git:https://github.com/sfuhrm/sudoku.git</connection>
-    <tag>sudoku-parent-3.1.0</tag>
+    <tag>HEAD</tag>
   </scm>
   <licenses>
     <license>
