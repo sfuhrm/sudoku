@@ -40,8 +40,8 @@ interface BitFreeMatrixInterface extends GameMatrix, Cloneable {
      * is not used.
      */
     int getFreeMask(
-            final int row,
-            final int column);
+            int row,
+            int column);
 
     /** Find the cell with the lest number of possible candidates.
      * @param rowColumnResult a two-element int array receiving the

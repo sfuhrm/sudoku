@@ -31,7 +31,7 @@ public interface Riddle extends GameMatrix {
      * @param column the column of the cell to get the writability for.
      * @return {@code true} if the cell is writable.
      */
-    boolean getWritable(final int row, final int column);
+    boolean getWritable(int row, int column);
 
     /**
      * Set a certain field writable.
@@ -39,6 +39,6 @@ public interface Riddle extends GameMatrix {
      * @param column the column of the cell to set the writability for.
      * @param set the value to set for the cell, {@code true} means writable.
      */
-    void setWritable(final int row, final int column, final boolean set);
+    void setWritable(int row, int column, boolean set);
 
 }

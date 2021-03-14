@@ -74,7 +74,7 @@ public interface GameMatrix {
      * @param column the column of the cell to get the value for.
      * @return the cell value ranging from 0 to 9.
      */
-    byte get(final int row, final int column);
+    byte get(int row, int column);
 
     /**
      * Set the value of a field.
@@ -83,7 +83,7 @@ public interface GameMatrix {
      * @param row the row of the field.
      * @param value the value of the field.
      */
-    void set(final int row, final int column, final byte value);
+    void set(int row, int column, byte value);
 
     /**
      * Sets all cells to the given values.
@@ -128,9 +128,9 @@ public interface GameMatrix {
      * without violating the game rules.
      */
     boolean canSet(
-            final int row,
-            final int column,
-            final byte value);
+            int row,
+            int column,
+            byte value);
 
     /** Is the value passed in valid for a field?
      * @param b value to check.

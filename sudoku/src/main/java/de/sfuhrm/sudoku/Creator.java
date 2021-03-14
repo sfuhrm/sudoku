@@ -218,8 +218,8 @@ public final class Creator {
     }
 
     /** Create a random array with numbers to distribute.
-    ** @param r the random number generator to use.
-    ** @param multiplicity the number of times to add the numbers 1 to 9.
+    * @param r the random number generator to use.
+    * @param multiplicity the number of times to add the numbers 1 to 9.
     * 1 means adding 1 to 9 only once. 2 means adding 1 to 9 twice.
     * @return an array with randomly ordered numbers from 1 to 9
     * with each number occuring {@code multiplicity} times.
