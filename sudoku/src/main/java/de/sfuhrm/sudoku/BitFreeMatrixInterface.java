@@ -43,6 +43,31 @@ interface BitFreeMatrixInterface extends GameMatrix, Cloneable {
             int row,
             int column);
 
+    /** Gets the free mask for the given block.
+     * @param row the row of the block start to get the free mask for.
+     * @param column the column of the block start to get the free mask for.
+     * @return bit mask with the bit 1 telling whether the number 1 is free,
+     * the bit 2 telling whether the number 2 is free, and so on. The bit 0
+     * is not used.
+     */
+    int getBlockFreeMask(int row, int column);
+
+    /** Gets the free mask for the given column.
+     * @param column the column to get the free mask for.
+     * @return bit mask with the bit 1 telling whether the number 1 is free,
+     * the bit 2 telling whether the number 2 is free, and so on. The bit 0
+     * is not used.
+     */
+    int getColumnFreeMask(int column);
+
+    /** Gets the free mask for the given row.
+     * @param row the row to get the free mask for.
+     * @return bit mask with the bit 1 telling whether the number 1 is free,
+     * the bit 2 telling whether the number 2 is free, and so on. The bit 0
+     * is not used.
+     */
+    int getRowFreeMask(int row);
+
     /** Find the cell with the lest number of possible candidates.
      * @param rowColumnResult a two-element int array receiving the
      * row and column of the result. First element will be the row index,
@@ -54,8 +79,13 @@ interface BitFreeMatrixInterface extends GameMatrix, Cloneable {
         int minimumBits = -1;
         int minimumRow = -1;
         int minimumColumn = -1;
+
         search:
         for (int row = 0; row < GameMatrix.SIZE; row++) {
+            int rowMask = getRowFreeMask(row);
+            if (rowMask == 0) {
+                continue;
+            }
             for (int column = 0; column < GameMatrix.SIZE; column++) {
                 if (get(row, column) != GameMatrix.UNSET) {
                     continue;
