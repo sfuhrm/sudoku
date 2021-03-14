@@ -83,6 +83,7 @@ interface BitFreeMatrixInterface extends GameMatrix, Cloneable {
         search:
         for (int row = 0; row < GameMatrix.SIZE; row++) {
             int rowMask = getRowFreeMask(row);
+            // skip if the row has no free cells
             if (rowMask == 0) {
                 continue;
             }
