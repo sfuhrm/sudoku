@@ -32,7 +32,7 @@ In the following list I want to give an overview of the features:
 
 ## Usage
 
-You can review the [![javadoc](https://javadoc.io/badge2/de.sfuhrm/sudoku/javadoc.svg)](https://javadoc.io/doc/de.sfuhrm/sudoku) for
+You can review the [javadoc](https://javadoc.io/doc/de.sfuhrm/sudoku) for
 detailed information.
 
 The usage for fully set Sudoku boards (no empty fields) is as following:
