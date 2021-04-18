@@ -2,7 +2,7 @@ Sudoku Java Library
 ===================
 [![Java CI with Maven](https://github.com/sfuhrm/sudoku/actions/workflows/maven.yml/badge.svg)](https://github.com/sfuhrm/sudoku/actions/workflows/maven.yml)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8b4f8ac857734c14954d792131b26c85)](https://www.codacy.com/app/sfuhrm/sudoku?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=sfuhrm/sudoku&amp;utm_campaign=Badge_Grade)
-[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/8b4f8ac857734c14954d792131b26c85)](https://www.codacy.com/gh/sfuhrm/sudoku/dashboard?utm_source=github.com&utm_medium=referral&utm_content=sfuhrm/sudoku&utm_campaign=Badge_Coverage)
+[![Coverage](https://raw.githubusercontent.com/sfuhrm/sudoku/master/.github/badges/jacoco.svg)](https://github.com/sfuhrm/sudoku/actions)
 [![javadoc](https://javadoc.io/badge2/de.sfuhrm/sudoku/javadoc.svg)](https://javadoc.io/doc/de.sfuhrm/sudoku)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.sfuhrm/sudoku/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.sfuhrm/sudoku)
 [![ReleaseDate](https://img.shields.io/github/release-date/sfuhrm/sudoku)](https://github.com/sfuhrm/sudoku/releases)
