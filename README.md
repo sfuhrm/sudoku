@@ -27,12 +27,12 @@ In the following list I want to give an overview of the features:
 
 * **Performance**: Very fast algorithm that is using backtracking, but terminates in some fractions of a second. For fully filled boards this is usually less than 1ms on current hardware. For partly-filled riddles this is usually less than 20ms.
 * **Pureness**: Pure Java implementation without any runtime dependencies to other libraries. Runs on Java 8+.
-* **Quality**: High test coverage of >98%. Many (optional) runtime assertions to assure correct operation.
+* **Quality**: High test coverage of >94%. Many (optional) runtime assertions to assure correct operation.
 * **Output**: Plain text, Markdown, LaTeX and JSON output formats. For an example, see [2000-sudokus.pdf](https://github.com/sfuhrm/sudoku/releases/download/v0.1.3/2000-sudokus.pdf), a collection of 2000 Sudokus.
 
 ## Usage
 
-You can review the [![javadoc](https://javadoc.io/badge2/de.sfuhrm/sudoku/javadoc.svg)](https://javadoc.io/doc/de.sfuhrm/sudoku) for
+You can review the [javadoc](https://javadoc.io/doc/de.sfuhrm/sudoku) for
 detailed information.
 
 The usage for fully set Sudoku boards (no empty fields) is as following:
