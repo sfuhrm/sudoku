@@ -68,7 +68,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: sudoku/target/sudoku-${{ steps.version.outputs.version }}-soures.jar
+        asset_path: sudoku/target/sudoku-${{ steps.version.outputs.version }}-sources.jar
         asset_name: sudoku-${{ steps.version.outputs.version }}-sources.jar
         asset_content_type: application/java-archive
     - uses: actions/upload-release-asset@v1
