@@ -106,7 +106,7 @@ The recommended way of including the library into your project is using maven:
 <dependency>
     <groupId>de.sfuhrm</groupId>
     <artifactId>sudoku</artifactId>
-    <version>3.1.0</version>
+    <version>3.1.1</version>
 </dependency>
 ```
 
