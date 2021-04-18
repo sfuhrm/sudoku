@@ -154,22 +154,6 @@
         <version>3.0.0-M4</version>
       </plugin>
       <plugin>
-        <groupId>org.owasp</groupId>
-        <artifactId>dependency-check-maven</artifactId>
-        <version>6.0.3</version>
-        <configuration>
-          <cveValidForHours>12</cveValidForHours>
-          <failBuildOnCVSS>4</failBuildOnCVSS>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>check</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
         <version>3.0.0-M1</version>
