@@ -8,8 +8,8 @@
   <description>Sudoku Parent POM</description>
   <url>https://github.com/sfuhrm/sudoku</url>
   <scm>
-    <url>https://github.com/sfuhrm/sudoku</url>
-    <connection>scm:git:https://github.com/sfuhrm/sudoku.git</connection>
+    <url>git@github.com:sfuhrm/sudoku.git</url>
+    <connection>scm:git:git@github.com:sfuhrm/sudoku.git</connection>
     <tag>HEAD</tag>
   </scm>
   <licenses>
