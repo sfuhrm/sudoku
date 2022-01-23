@@ -15,7 +15,7 @@
     <dependency>
       <groupId>org.json</groupId>
       <artifactId>json</artifactId>
-      <version>20201115</version>
+      <version>20211205</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
