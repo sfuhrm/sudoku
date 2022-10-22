@@ -148,4 +148,12 @@ public interface GameMatrix {
     static boolean validCoords(final int row, final int column) {
         return row >= 0 && row < SIZE && column >= 0 && column < SIZE;
     }
+
+    /** Is the value passed in valid for a bit mask?
+     * @param mask bit mask to check.
+     * @return {@code true} if valid.
+     */
+    static boolean validBitMask(final int mask) {
+        return (mask & (~BitFreeMatrixInterface.MASK_FOR_NINE_BITS)) == 0;
+    }
 }

@@ -94,6 +94,8 @@ interface BitFreeMatrixInterface extends GameMatrix, Cloneable {
                 int free = getFreeMask(row, column);
                 int bits = Integer.bitCount(free);
 
+                assert bits <= GameMatrix.SIZE;
+
                 if (bits != 0 && (minimumBits == -1 || bits < minimumBits)) {
                     minimumColumn = column;
                     minimumRow = row;

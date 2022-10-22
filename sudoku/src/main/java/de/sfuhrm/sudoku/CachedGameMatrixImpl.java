@@ -110,7 +110,7 @@ class CachedGameMatrixImpl extends GameMatrixImpl implements Cloneable {
             assert setCount >= 0;
         }
         if (value != UNSET) {
-            assert (getFreeMask(row, column) & (1 << value)) != 0
+            assert (getFreeMask(row, column) & (1 << value)) != 0 // NOSONAR
                     : "Passed value " + value
                     + " is already used, would destroy class invariant";
             int bitMask = ~(1 << value);
@@ -120,6 +120,14 @@ class CachedGameMatrixImpl extends GameMatrixImpl implements Cloneable {
             setCount++;
             assert setCount <= TOTAL_FIELDS;
         }
+        assert GameMatrix.validBitMask(rowFree[row]) // NOSONAR
+                : "Row free mask is invalid: " + rowFree[row];
+        assert GameMatrix.validBitMask(columnFree[column]) // NOSONAR
+                : "Column free mask is invalid: " + columnFree[column];
+        assert GameMatrix.validBitMask(// NOSONAR
+                blockFree[row / BLOCK_SIZE][column / BLOCK_SIZE])
+                : "Block free mask is invalid: "
+                    + blockFree[row / BLOCK_SIZE][column / BLOCK_SIZE];
         super.set(row, column, value);
     }
 
