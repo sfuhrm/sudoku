@@ -19,7 +19,6 @@ Boston, MA  02110-1301, USA.
 */
 package de.sfuhrm.sudoku;
 
-import static de.sfuhrm.sudoku.GameMatrix.validValue;
 import java.util.Arrays;
 
 /**
@@ -48,34 +47,40 @@ class CachedGameMatrixImpl extends GameMatrixImpl implements Cloneable {
      */
     private int[][] blockFree;
 
-    /** The count of non-{@link #UNSET} cells.
+    /** The count of non-{@link GameSchema#getUnsetValue() unset} cells.
      * @see #getSetCount()
      */
     private int setCount;
 
     /**
      * Creates an empty full-writable riddle.
+     * @param schema the game schema that defines the dimensions.
      */
-    CachedGameMatrixImpl() {
-        blockFree = new int[BLOCK_COUNT][BLOCK_COUNT];
-        rowFree = new int[SIZE];
-        columnFree = new int[SIZE];
+    CachedGameMatrixImpl(final GameSchema schema) {
+        super(schema);
+        final int blockCount = schema.getBlockCount();
+        final int width = schema.getWidth();
 
-        for (int i = 0; i < SIZE; i++) {
-            rowFree[i] = MASK_FOR_NINE_BITS;
-            columnFree[i] = MASK_FOR_NINE_BITS;
+        blockFree = new int[blockCount][blockCount];
+        rowFree = new int[width];
+        columnFree = new int[width];
+
+        for (int i = 0; i < width; i++) {
+            rowFree[i] = schema.getBitMask();
+            columnFree[i] = schema.getBitMask();
         }
 
-        for (int i = 0; i < BLOCK_COUNT; i++) {
-            for (int j = 0; j < BLOCK_COUNT; j++) {
-                blockFree[i][j] = MASK_FOR_NINE_BITS;
+        for (int i = 0; i < blockCount; i++) {
+            for (int j = 0; j < blockCount; j++) {
+                blockFree[i][j] = schema.getBitMask();
             }
         }
     }
 
     @Override
     public int getBlockFreeMask(final int row, final int column) {
-        return blockFree[row / BLOCK_SIZE][column / BLOCK_SIZE];
+        final int blockWidth = getSchema().getBlockWidth();
+        return blockFree[row / blockWidth][column / blockWidth];
     }
 
     @Override
@@ -90,44 +95,50 @@ class CachedGameMatrixImpl extends GameMatrixImpl implements Cloneable {
 
     @Override
     public int getFreeMask(final int row, final int column) {
+        final int blockWidth = getSchema().getBlockWidth();
         return rowFree[row]
                 & columnFree[column]
-                & blockFree[row / BLOCK_SIZE][column / BLOCK_SIZE];
+                & blockFree[row / blockWidth][column / blockWidth];
     }
 
     @Override
     public void set(final int row, final int column, final byte value) {
-        assert validValue(value);
+        GameSchema schema = getSchema();
+        assert schema.validValue(value);
         byte oldValue = super.get(row, column);
-        assert validValue(oldValue);
+        assert schema.validValue(oldValue);
 
-        if (oldValue != UNSET) {
+        final byte unset = schema.getUnsetValue();
+        final int blockWidth = schema.getBlockWidth();
+
+        if (oldValue != unset) {
             int bitMask = 1 << oldValue;
             rowFree[row] |= bitMask;
             columnFree[column] |= bitMask;
-            blockFree[row / BLOCK_SIZE][column / BLOCK_SIZE] |= bitMask;
+            blockFree[row / blockWidth][column / blockWidth] |= bitMask;
             setCount--;
             assert setCount >= 0;
         }
-        if (value != UNSET) {
-            assert (getFreeMask(row, column) & (1 << value)) != 0 // NOSONAR
+        if (value != unset) {
+            assert (getFreeMask(row, column)
+                    & (1 << value)) != 0 // NOSONAR
                     : "Passed value " + value
                     + " is already used, would destroy class invariant";
             int bitMask = ~(1 << value);
             rowFree[row] &= bitMask;
             columnFree[column] &= bitMask;
-            blockFree[row / BLOCK_SIZE][column / BLOCK_SIZE] &= bitMask;
+            blockFree[row / blockWidth][column / blockWidth] &= bitMask;
             setCount++;
-            assert setCount <= TOTAL_FIELDS;
+            assert setCount <= getSchema().getTotalFields();
         }
-        assert GameMatrix.validBitMask(rowFree[row]) // NOSONAR
+        assert getSchema().validBitMask(rowFree[row]) // NOSONAR
                 : "Row free mask is invalid: " + rowFree[row];
-        assert GameMatrix.validBitMask(columnFree[column]) // NOSONAR
+        assert getSchema().validBitMask(columnFree[column]) // NOSONAR
                 : "Column free mask is invalid: " + columnFree[column];
-        assert GameMatrix.validBitMask(// NOSONAR
-                blockFree[row / BLOCK_SIZE][column / BLOCK_SIZE])
+        assert getSchema().validBitMask(// NOSONAR
+                blockFree[row / blockWidth][column / blockWidth])
                 : "Block free mask is invalid: "
-                    + blockFree[row / BLOCK_SIZE][column / BLOCK_SIZE];
+                    + blockFree[row / blockWidth][column / blockWidth];
         super.set(row, column, value);
     }
 

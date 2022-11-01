@@ -28,39 +28,59 @@ public interface GameMatrix {
 
     /**
      * The value that is assigned to unset fields.
+     * @deprecated use {@linkplain GameSchema} instead
+     * @see GameSchema#getUnsetValue()
      */
-    byte UNSET = 0;
+    byte UNSET = GameSchemas.SCHEMA_9X9.getUnsetValue();
 
     /**
      * The valid value that is the minimum (1).
+     * @deprecated use {@linkplain GameSchema} instead
+     * @see GameSchema#getMinimumValue()
      */
-    byte MINIMUM_VALUE = 1;
+    byte MINIMUM_VALUE = GameSchemas.SCHEMA_9X9.getMinimumValue();
 
     /**
      * The valid value that is the maximum (9).
+     * @deprecated use {@linkplain GameSchema} instead
+     * @see GameSchema#getMaximumValue()
      */
-    byte MAXIMUM_VALUE = 9;
+    byte MAXIMUM_VALUE = GameSchemas.SCHEMA_9X9.getMaximumValue();
 
     /**
      * The size in one dimension.
+     * @deprecated use {@linkplain GameSchema} instead
+     * @see GameSchema#getWidth()
      */
-    int SIZE = 9;
+    int SIZE = GameSchemas.SCHEMA_9X9.getWidth();
 
     /**
      * The total number of fields.
+     * @deprecated use {@linkplain GameSchema} instead
+     * @see GameSchema#getTotalFields()
      */
     int TOTAL_FIELDS = SIZE * SIZE;
 
     /**
      * The edge dimension of a 3x3 block.
-     *
+     * @deprecated use {@linkplain GameSchema} instead
+     * @see GameSchema#getBlockWidth()
      */
     int BLOCK_SIZE = 3;
 
     /**
      * The total number of blocks in one dimension.
+     * @deprecated use {@linkplain GameSchema} instead
+     * @see GameSchema#getBlockCount()
      */
     int BLOCK_COUNT = SIZE / BLOCK_SIZE;
+
+    /** Get the game schema that defines the dimensions of this
+     * matrix.
+     * @return the game schema that was used to initialize this
+     * matrix.
+     * */
+    GameSchema getSchema();
 
     /**
      * Clear the cells.
@@ -135,6 +155,7 @@ public interface GameMatrix {
     /** Is the value passed in valid for a field?
      * @param b value to check.
      * @return {@code true} if valid.
+     * @deprecated use GameSchema
      */
     static boolean validValue(final byte b) {
         return b == UNSET || (b >= MINIMUM_VALUE && b <= MAXIMUM_VALUE);
@@ -144,6 +165,7 @@ public interface GameMatrix {
      * @param row the row index.
      * @param column the column index.
      * @return {@code true} if valid.
+     * @deprecated use GameSchema
      */
     static boolean validCoords(final int row, final int column) {
         return row >= 0 && row < SIZE && column >= 0 && column < SIZE;
@@ -152,8 +174,9 @@ public interface GameMatrix {
     /** Is the value passed in valid for a bit mask?
      * @param mask bit mask to check.
      * @return {@code true} if valid.
+     * @deprecated use GameSchema
      */
     static boolean validBitMask(final int mask) {
-        return (mask & (~BitFreeMatrixInterface.MASK_FOR_NINE_BITS)) == 0;
+        return (mask & (~GameSchemas.SCHEMA_9X9.getBitMask())) == 0;
     }
 }

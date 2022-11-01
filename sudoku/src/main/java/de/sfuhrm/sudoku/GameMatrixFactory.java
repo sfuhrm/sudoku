@@ -30,19 +30,37 @@ public final class GameMatrixFactory {
     public GameMatrixFactory() {
     }
 
-    /** Creates a new GameMatrix instance.
+    /** Creates a new 9x9 GameMatrix instance.
      * @return a GameMatrix instance with all fields initialized
-     * to {@link GameMatrix#UNSET}.
+     * to {@link GameSchema#getUnsetValue() unset}.
      */
     public GameMatrix newGameMatrix() {
-        return new GameMatrixImpl();
+        return newGameMatrix(GameSchemas.SCHEMA_9X9);
+    }
+
+    /** Creates a new GameMatrix instance.
+     * @param gameSchema the dimensions of the game matrix to create.
+     * @return a GameMatrix instance with all fields initialized
+     * to {@link GameSchema#getUnsetValue() unset}.
+     */
+    public GameMatrix newGameMatrix(final GameSchema gameSchema) {
+        return new GameMatrixImpl(gameSchema);
+    }
+
+    /** Creates a new 9x9 Riddle instance.
+     * @return a Riddle instance with all fields initialized
+     * to {@link GameSchema#getUnsetValue() unset}.
+     */
+    public Riddle newRiddle() {
+        return newRiddle(GameSchemas.SCHEMA_9X9);
     }
 
     /** Creates a new Riddle instance.
+     * @param gameSchema the dimensions of the riddle to create.
      * @return a Riddle instance with all fields initialized
-     * to {@link GameMatrix#UNSET}.
+     * to {@link GameSchema#getUnsetValue() unset}.
      */
-    public Riddle newRiddle() {
-        return new RiddleImpl();
+    public Riddle newRiddle(final GameSchema gameSchema) {
+        return new RiddleImpl(gameSchema);
     }
 }

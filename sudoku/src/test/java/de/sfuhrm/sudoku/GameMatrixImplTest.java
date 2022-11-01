@@ -30,24 +30,27 @@ import org.junit.jupiter.api.Test;
  */
 public class GameMatrixImplTest {
 
+    private GameSchema schema = GameSchemas.SCHEMA_9X9;
+
     @Test
     public void testNew() {
-        GameMatrixImpl m = new GameMatrixImpl();
+        GameMatrixImpl m = new GameMatrixImpl(schema);
         assertEquals(0, m.getSetCount());
     }
 
     @Test
     public void testGet() {
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrixImpl matrix = new GameMatrixImpl(schema);
+        GameSchema schema = matrix.getSchema();
         byte value = matrix.get(0, 0);
-        assertEquals(GameMatrix.UNSET, value);
+        assertEquals(schema.getUnsetValue(), value);
         value = matrix.get(8, 8);
-        assertEquals(GameMatrix.UNSET, value);
+        assertEquals(schema.getUnsetValue(), value);
     }
 
     @Test
     public void testGetSetCount() {
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrixImpl matrix = new GameMatrixImpl(schema);
         assertEquals(0, matrix.getSetCount());
         matrix.set(0, 0, (byte)1);
         assertEquals(1, matrix.getSetCount());
@@ -73,7 +76,7 @@ public class GameMatrixImplTest {
                         "000001000",
                         "000000001"
                 );
-        GameMatrixImpl first = new GameMatrixImpl();
+        GameMatrixImpl first = new GameMatrixImpl(schema);
         first.setAll(data);
 
         byte[][] a = first.getArray();
@@ -86,9 +89,10 @@ public class GameMatrixImplTest {
 
     @Test
     public void testSet() {
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrixImpl matrix = new GameMatrixImpl(schema);
+        GameSchema schema = matrix.getSchema();
         byte value = matrix.get(0, 0);
-        assertEquals(GameMatrix.UNSET, value);
+        assertEquals(schema.getUnsetValue(), value);
         matrix.set(0,0,(byte)4);
         value = matrix.get(0, 0);
         assertEquals(4, value);
@@ -169,19 +173,19 @@ public class GameMatrixImplTest {
 
     @Test
     public void testEqualsWithSame() {
-        GameMatrixImpl instance = new GameMatrixImpl();
+        GameMatrixImpl instance = new GameMatrixImpl(schema);
         assertEquals(instance, instance);
     }
 
     @Test
     public void testEqualsWithNull() {
-        GameMatrixImpl instance = new GameMatrixImpl();
+        GameMatrixImpl instance = new GameMatrixImpl(schema);
         assertNotEquals(null, instance);
     }
 
     @Test
     public void testEqualsWithOtherClass() {
-        GameMatrixImpl instance = new GameMatrixImpl();
+        GameMatrixImpl instance = new GameMatrixImpl(schema);
         assertNotEquals("foobar", instance);
     }
 
@@ -199,10 +203,10 @@ public class GameMatrixImplTest {
                 "000000000",
                 "000000000"
                 );
-        GameMatrixImpl instance1 = new GameMatrixImpl();
+        GameMatrixImpl instance1 = new GameMatrixImpl(schema);
         instance1.setAll(matrix);
 
-        GameMatrixImpl instance2 = new GameMatrixImpl();
+        GameMatrixImpl instance2 = new GameMatrixImpl(schema);
         instance1.setAll(matrix);
 
         assertEquals(instance1, instance2);
@@ -222,7 +226,7 @@ public class GameMatrixImplTest {
                 "000000000",
                 "000000000"
                 );
-        GameMatrixImpl instance1 = new GameMatrixImpl();
+        GameMatrixImpl instance1 = new GameMatrixImpl(schema);
         instance1.setAll(matrix1);
 
         byte[][] matrix2 =
@@ -237,7 +241,7 @@ public class GameMatrixImplTest {
                 "000000000",
                 "000000000"
                 );
-        GameMatrixImpl instance2 = new GameMatrixImpl();
+        GameMatrixImpl instance2 = new GameMatrixImpl(schema);
         instance2.setAll(matrix2);
 
         assertNotEquals(instance1, instance2);
@@ -245,7 +249,7 @@ public class GameMatrixImplTest {
 
     @Test
     public void testHashCode() {
-        GameMatrixImpl instance = new GameMatrixImpl();
+        GameMatrixImpl instance = new GameMatrixImpl(schema);
         instance.hashCode();
     }
 
@@ -296,11 +300,11 @@ public class GameMatrixImplTest {
                         "888888888"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrixImpl matrix = new GameMatrixImpl(schema);
         matrix.setAll(data);
 
-        for (int i=0; i < GameMatrix.SIZE; i++) {
-           for (int j=0; j < GameMatrix.SIZE; j++) {
+        for (int i=0; i < schema.getWidth(); i++) {
+           for (int j=0; j < schema.getWidth(); j++) {
                 assertEquals(i, matrix.get(i, j));
            }
         }
@@ -321,13 +325,13 @@ public class GameMatrixImplTest {
                         "888888888"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrixImpl matrix = new GameMatrixImpl(schema);
         matrix.setAll(data);
 
         byte[] target = new byte[9];
 
-        for (int i=0; i < GameMatrix.SIZE; i++) {
-           for (int j=0; j < GameMatrix.SIZE; j++) {
+        for (int i=0; i < schema.getWidth(); i++) {
+           for (int j=0; j < schema.getWidth(); j++) {
                 matrix.row(i, target);
                 List<Integer> vals = Utility.toIntList(target);
                 assertEquals(Arrays.asList(i,i,i,i,i,i,i,i,i), vals);
@@ -350,13 +354,13 @@ public class GameMatrixImplTest {
                         "888888888"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrixImpl matrix = new GameMatrixImpl(schema);
         matrix.setAll(data);
 
         byte[] target = new byte[9];
 
-        for (int i=0; i < GameMatrix.SIZE; i++) {
-           for (int j=0; j < GameMatrix.SIZE; j++) {
+        for (int i=0; i < schema.getWidth(); i++) {
+           for (int j=0; j < schema.getWidth(); j++) {
                 matrix.column(i, target);
                 List<Integer> vals = Utility.toIntList(target);
                 assertEquals(Arrays.asList(0,1,2,3,4,5,6,7,8), vals);
@@ -379,7 +383,7 @@ public class GameMatrixImplTest {
                         "888888888"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrixImpl matrix = new GameMatrixImpl(schema);
         matrix.setAll(data);
 
         byte[] target = new byte[9];
@@ -412,7 +416,7 @@ public class GameMatrixImplTest {
                         "888888888"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrixImpl matrix = new GameMatrixImpl(schema);
         matrix.setAll(data);
 
         String out = matrix.toString();
@@ -443,7 +447,7 @@ public class GameMatrixImplTest {
                         "888888888"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrixImpl matrix = new GameMatrixImpl(schema);
         matrix.setAll(data);
         matrix.clear();
         String out = matrix.toString();
@@ -474,7 +478,7 @@ public class GameMatrixImplTest {
                         "888888888"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrixImpl matrix = new GameMatrixImpl(schema);
         matrix.setAll(data);
         GameMatrixImpl clone = (GameMatrixImpl) matrix.clone();
 
@@ -498,19 +502,19 @@ public class GameMatrixImplTest {
         byte[] array;
 
         array = new byte[] {1,2,3,4,5};
-        mask = GameMatrixImpl.findDuplicateBits(array);
+        mask = GameMatrixImpl.findDuplicateBits(schema, array);
         assertEquals(0, mask);
 
         array = new byte[] {1,1,3,4,5};
-        mask = GameMatrixImpl.findDuplicateBits(array);
+        mask = GameMatrixImpl.findDuplicateBits(schema, array);
         assertEquals(2, mask);
 
         array = new byte[] {1,1,1,4,5};
-        mask = GameMatrixImpl.findDuplicateBits(array);
+        mask = GameMatrixImpl.findDuplicateBits(schema, array);
         assertEquals(2, mask);
 
         array = new byte[] {0,0,0,4,5};
-        mask = GameMatrixImpl.findDuplicateBits(array);
+        mask = GameMatrixImpl.findDuplicateBits(schema, array);
         assertEquals(0, mask);
     }
 
@@ -520,19 +524,19 @@ public class GameMatrixImplTest {
         byte[] array;
 
         array = new byte[] {1,2,3,4,5};
-        mask = GameMatrixImpl.getNumberMask(array);
+        mask = GameMatrixImpl.getNumberMask(schema, array);
         assertEquals(2+4+8+16+32, mask);
 
         array = new byte[] {1,1,3,4,5};
-        mask = GameMatrixImpl.getNumberMask(array);
+        mask = GameMatrixImpl.getNumberMask(schema, array);
         assertEquals(2+8+16+32, mask);
 
         array = new byte[] {1,1,1,4,5};
-        mask = GameMatrixImpl.getNumberMask(array);
+        mask = GameMatrixImpl.getNumberMask(schema, array);
         assertEquals(2+16+32, mask);
 
         array = new byte[] {0,0,0,4,5};
-        mask = GameMatrixImpl.getNumberMask(array);
+        mask = GameMatrixImpl.getNumberMask(schema, array);
         assertEquals(16+32, mask);
     }
 
@@ -551,7 +555,7 @@ public class GameMatrixImplTest {
                         "888888888"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrixImpl matrix = new GameMatrixImpl(schema);
         matrix.setAll(data);
         assertFalse(matrix.isValid());
      }
@@ -571,7 +575,7 @@ public class GameMatrixImplTest {
                         "000000000"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrixImpl matrix = new GameMatrixImpl(schema);
         matrix.setAll(data);
         assertTrue(matrix.isValid());
      }
@@ -591,7 +595,7 @@ public class GameMatrixImplTest {
                         "000000001"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrixImpl matrix = new GameMatrixImpl(schema);
         matrix.setAll(data);
         assertTrue(matrix.isValid());
      }
@@ -611,7 +615,7 @@ public class GameMatrixImplTest {
                         "000000000"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrixImpl matrix = new GameMatrixImpl(schema);
         matrix.setAll(data);
         assertFalse(matrix.isValid());
     }
@@ -631,7 +635,7 @@ public class GameMatrixImplTest {
                         "000000000"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrixImpl matrix = new GameMatrixImpl(schema);
         matrix.setAll(data);
         assertFalse(matrix.isValid());
     }
@@ -651,7 +655,7 @@ public class GameMatrixImplTest {
                         "000000005"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrixImpl matrix = new GameMatrixImpl(schema);
         matrix.setAll(data);
         assertFalse(matrix.isValid());
     }
@@ -671,7 +675,7 @@ public class GameMatrixImplTest {
                         "800000000"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrixImpl matrix = new GameMatrixImpl(schema);
         matrix.setAll(data);
         assertFalse(matrix.isValid());
     }
@@ -691,7 +695,7 @@ public class GameMatrixImplTest {
                         "000000000"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrixImpl matrix = new GameMatrixImpl(schema);
         matrix.setAll(data);
         assertFalse(matrix.isValid());
     }
@@ -711,7 +715,7 @@ public class GameMatrixImplTest {
                         "000000000"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrixImpl matrix = new GameMatrixImpl(schema);
         matrix.setAll(data);
         assertFalse(matrix.isValid());
     }
@@ -731,7 +735,7 @@ public class GameMatrixImplTest {
                         "000000000"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrixImpl matrix = new GameMatrixImpl(schema);
         matrix.setAll(data);
         assertFalse(matrix.isValid());
     }
@@ -751,16 +755,16 @@ public class GameMatrixImplTest {
                         "000000001"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrixImpl matrix = new GameMatrixImpl(schema);
         matrix.setAll(data);
         int mask = matrix.getRowFreeMask(0);
-        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~(1<<1)), mask);
+        assertEquals(schema.getBitMask() & (~(1<<1)), mask);
         mask = matrix.getRowFreeMask(1);
-        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
+        assertEquals(schema.getBitMask() & (~((1<<1) | (1<<2))), mask);
         mask = matrix.getRowFreeMask(2);
-        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2) | (1<<3))), mask);
+        assertEquals(schema.getBitMask() & (~((1<<1) | (1<<2) | (1<<3))), mask);
         mask = matrix.getRowFreeMask(3);
-        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
+        assertEquals(schema.getBitMask() & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
      }
 
     @Test
@@ -778,16 +782,16 @@ public class GameMatrixImplTest {
                         "000000001"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrixImpl matrix = new GameMatrixImpl(schema);
         matrix.setAll(data);
         int mask = matrix.getColumnFreeMask(0);
-        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~(1<<1)), mask);
+        assertEquals(schema.getBitMask() & (~(1<<1)), mask);
         mask = matrix.getColumnFreeMask(1);
-        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
+        assertEquals(schema.getBitMask() & (~((1<<1) | (1<<2))), mask);
         mask = matrix.getColumnFreeMask(2);
-        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1))), mask);
+        assertEquals(schema.getBitMask() & (~((1<<1))), mask);
         mask = matrix.getColumnFreeMask(3);
-        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<3))), mask);
+        assertEquals(schema.getBitMask() & (~((1<<1) | (1<<3))), mask);
      }
 
     @Test
@@ -805,16 +809,17 @@ public class GameMatrixImplTest {
                         "000000001"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameSchema schema = GameSchemas.SCHEMA_9X9;
+        GameMatrixImpl matrix = new GameMatrixImpl(schema);
         matrix.setAll(data);
         int mask = matrix.getBlockFreeMask(0,0);
-        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
+        assertEquals(schema.getBitMask() & (~((1<<1) | (1<<2))), mask);
         mask = matrix.getBlockFreeMask(0,3);
-        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2) | (1<<3))), mask);
+        assertEquals(schema.getBitMask() & (~((1<<1) | (1<<2) | (1<<3))), mask);
         mask = matrix.getBlockFreeMask(0,6);
-        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1))), mask);
+        assertEquals(schema.getBitMask() & (~((1<<1))), mask);
         mask = matrix.getBlockFreeMask(3,6);
-        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
+        assertEquals(schema.getBitMask() & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
      }
 
     @Test
@@ -832,16 +837,16 @@ public class GameMatrixImplTest {
                         "000000001"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrixImpl matrix = new GameMatrixImpl(schema);
         matrix.setAll(data);
         int mask = matrix.getFreeMask(0,0);
-        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2))), mask);
+        assertEquals(schema.getBitMask() & (~((1<<1) | (1<<2))), mask);
         mask = matrix.getFreeMask(0,3);
-        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<2) | (1<<3))), mask);
+        assertEquals(schema.getBitMask() & (~((1<<1) | (1<<2) | (1<<3))), mask);
         mask = matrix.getFreeMask(0,6);
-        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4))), mask);
+        assertEquals(schema.getBitMask() & (~((1<<1) | (1<<4))), mask);
         mask = matrix.getFreeMask(3,6);
-        assertEquals(BitFreeMatrixInterface.MASK_FOR_NINE_BITS & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
+        assertEquals(schema.getBitMask() & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
      }
 
     @Test
@@ -861,7 +866,7 @@ public class GameMatrixImplTest {
                         "000000001"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrixImpl matrix = new GameMatrixImpl(schema);
         matrix.setAll(data);
 
         // the "x" cell marked above
@@ -877,15 +882,16 @@ public class GameMatrixImplTest {
 
     @Test
     public void testRoundToBlock() {
-        assertEquals(0, GameMatrixImpl.roundToBlock(0));
-        assertEquals(0, GameMatrixImpl.roundToBlock(1));
-        assertEquals(0, GameMatrixImpl.roundToBlock(2));
-        assertEquals(3, GameMatrixImpl.roundToBlock(3));
-        assertEquals(3, GameMatrixImpl.roundToBlock(4));
-        assertEquals(3, GameMatrixImpl.roundToBlock(5));
-        assertEquals(6, GameMatrixImpl.roundToBlock(6));
-        assertEquals(6, GameMatrixImpl.roundToBlock(7));
-        assertEquals(6, GameMatrixImpl.roundToBlock(8));
+        GameMatrixImpl nineMatrix = new GameMatrixImpl(schema);
+        assertEquals(0, nineMatrix.roundToBlock( 0));
+        assertEquals(0, nineMatrix.roundToBlock( 1));
+        assertEquals(0, nineMatrix.roundToBlock( 2));
+        assertEquals(3, nineMatrix.roundToBlock( 3));
+        assertEquals(3, nineMatrix.roundToBlock( 4));
+        assertEquals(3, nineMatrix.roundToBlock( 5));
+        assertEquals(6, nineMatrix.roundToBlock( 6));
+        assertEquals(6, nineMatrix.roundToBlock( 7));
+        assertEquals(6, nineMatrix.roundToBlock( 8));
     }
 
     @Test
@@ -904,12 +910,12 @@ public class GameMatrixImplTest {
                         "891546273"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrixImpl matrix = new GameMatrixImpl(schema);
         matrix.setAll(data);
 
         int[] min = new int[2];
-        boolean found = matrix.findLeastFreeCell(min);
-        assertFalse(found);
+        BitFreeMatrixInterface.FreeCellResult result = matrix.findLeastFreeCell(min);
+        assertEquals(BitFreeMatrixInterface.FreeCellResult.NONE_FREE, result);
      }
 
     @Test
@@ -928,12 +934,12 @@ public class GameMatrixImplTest {
                         "891546273"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrixImpl matrix = new GameMatrixImpl(schema);
         matrix.setAll(data);
 
         int[] min = new int[2];
-        boolean found = matrix.findLeastFreeCell(min);
-        assertTrue(found);
+        BitFreeMatrixInterface.FreeCellResult result = matrix.findLeastFreeCell(min);
+        assertEquals(BitFreeMatrixInterface.FreeCellResult.FOUND, result);
         assertEquals(0, min[0]);
         assertEquals(0, min[1]);
      }
@@ -954,12 +960,12 @@ public class GameMatrixImplTest {
                         "000000000"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl();
+        GameMatrixImpl matrix = new GameMatrixImpl(schema);
         matrix.setAll(data);
 
         int[] min = new int[2];
-        boolean found = matrix.findLeastFreeCell(min);
-        assertTrue(found);
+        BitFreeMatrixInterface.FreeCellResult result = matrix.findLeastFreeCell(min);
+        assertEquals(BitFreeMatrixInterface.FreeCellResult.FOUND, result);
         assertEquals(2, min[0]);
         assertEquals(2, min[1]);
      }

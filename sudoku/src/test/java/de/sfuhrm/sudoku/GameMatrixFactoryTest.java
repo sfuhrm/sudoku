@@ -31,16 +31,32 @@ public class GameMatrixFactoryTest {
     @Test
     public void testNewGameMatrix() {
         GameMatrixFactory instance = new GameMatrixFactory();
-        GameMatrix expResult = new GameMatrixImpl();
+        GameMatrix expResult = new GameMatrixImpl(GameSchemas.SCHEMA_9X9);
         GameMatrix result = instance.newGameMatrix();
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testNewGameMatrixWithSchema() {
+        GameMatrixFactory instance = new GameMatrixFactory();
+        GameMatrix expResult = new GameMatrixImpl(GameSchemas.SCHEMA_4X4);
+        GameMatrix result = instance.newGameMatrix(GameSchemas.SCHEMA_4X4);
         assertEquals(expResult, result);
     }
 
     @Test
     public void testNewRiddle() {
         GameMatrixFactory instance = new GameMatrixFactory();
-        RiddleImpl expResult = new RiddleImpl();
+        RiddleImpl expResult = new RiddleImpl(GameSchemas.SCHEMA_9X9);
         GameMatrix result = instance.newRiddle();
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testNewRiddleWithSchema() {
+        GameMatrixFactory instance = new GameMatrixFactory();
+        RiddleImpl expResult = new RiddleImpl(GameSchemas.SCHEMA_4X4);
+        GameMatrix result = instance.newRiddle(GameSchemas.SCHEMA_4X4);
         assertEquals(expResult, result);
     }
 }

@@ -35,11 +35,15 @@ class RiddleImpl extends GameMatrixImpl implements Cloneable, Riddle {
 
     /**
      * Creates an empty full-writable riddle.
+     * @param inGameSchema the dimensions of the game to
+     *                     create.
      */
-    RiddleImpl() {
-        writeable = new boolean[SIZE][SIZE];
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
+    RiddleImpl(final GameSchema inGameSchema) {
+        super(inGameSchema);
+        int width = inGameSchema.getWidth();
+        writeable = new boolean[width][width];
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < width; j++) {
                 setWritable(i, j, true);
             }
         }

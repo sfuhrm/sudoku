@@ -30,12 +30,14 @@ import org.junit.jupiter.api.Test;
  */
 public class SolverTest {
 
+    private GameSchema schema = GameSchemas.SCHEMA_9X9;
+
     @Test
     public void testSolveWithNoStep() {
         // create full matrix
-        GameMatrix matrix = Creator.createFull();
+        GameMatrix matrix = Creator.createFull(schema);
 
-        RiddleImpl riddle = new RiddleImpl();
+        RiddleImpl riddle = new RiddleImpl(schema);
         riddle.setAll(matrix.getArray());
 
         Solver solver = new Solver(riddle);
@@ -47,15 +49,15 @@ public class SolverTest {
     @Test
     public void testSolveWithOneStep() {
         // create full matrix
-        GameMatrix matrix = Creator.createFull();
+        GameMatrix matrix = Creator.createFull(schema);
         Random random = new Random();
 
         int row = random.nextInt(9);
         int column = random.nextInt(9);
 
-        RiddleImpl riddle = new RiddleImpl();
+        RiddleImpl riddle = new RiddleImpl(schema);
         riddle.setAll(matrix.getArray());
-        riddle.set(row, column, GameMatrix.UNSET);
+        riddle.set(row, column, schema.getUnsetValue());
         riddle.setWritable(row, column, true);
 
         Solver solver = new Solver(riddle);
@@ -76,7 +78,7 @@ public class SolverTest {
                 "73.5..96.",
                 "5....2...",
                 "29.7.158.");
-        RiddleImpl riddle = new RiddleImpl();
+        RiddleImpl riddle = new RiddleImpl(schema);
         riddle.setAll(riddleBytes);
 
         byte[][] solutionBytes = QuadraticArrays.parse(
@@ -89,7 +91,7 @@ public class SolverTest {
                 "731584962",
                 "586392147",
                 "294761583");
-        GameMatrixImpl solution = new GameMatrixImpl();
+        GameMatrixImpl solution = new GameMatrixImpl(schema);
         solution.setAll(solutionBytes);
 
         Solver solver = new Solver(riddle);

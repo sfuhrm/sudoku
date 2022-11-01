@@ -28,6 +28,8 @@ import org.junit.jupiter.api.Test;
  */
 public class RiddleImplTest {
 
+    private GameSchema schema = GameSchemas.SCHEMA_9X9;
+
     public final static String[] FULL_EXAMPLE
             = new String[]{
                 "359162487",
@@ -43,13 +45,13 @@ public class RiddleImplTest {
 
     @Test
     public void testNew() {
-        RiddleImpl m = new RiddleImpl();
+        RiddleImpl m = new RiddleImpl(schema);
         assertEquals(0, m.getSetCount());
     }
 
     @Test
     public void testClone() {
-        RiddleImpl m = new RiddleImpl();
+        RiddleImpl m = new RiddleImpl(schema);
         m.setAll(QuadraticArrays.parse(FULL_EXAMPLE));
 
         RiddleImpl clone = (RiddleImpl) m.clone();

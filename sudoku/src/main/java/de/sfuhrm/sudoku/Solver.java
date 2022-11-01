@@ -45,7 +45,7 @@ public final class Solver {
     /** The default limit.
      * @see #limit
      */
-    public static final int LIMIT = 20;
+    public static final int DEFAULT_LIMIT = 20;
 
     /**
      * The maximum number of solutions to search.
@@ -59,8 +59,8 @@ public final class Solver {
      */
     public Solver(final GameMatrix solveMe) {
         Objects.requireNonNull(solveMe, "solveMe is null");
-        limit = LIMIT;
-        riddle = new CachedGameMatrixImpl();
+        limit = DEFAULT_LIMIT;
+        riddle = new CachedGameMatrixImpl(solveMe.getSchema());
         riddle.setAll(solveMe.getArray());
         possibleSolutions = new ArrayList<>();
     }
@@ -79,7 +79,7 @@ public final class Solver {
      */
     public List<GameMatrix> solve() {
         possibleSolutions.clear();
-        int freeCells = GameMatrix.TOTAL_FIELDS
+        int freeCells = riddle.getSchema().getTotalFields()
                 - riddle.getSetCount();
 
         backtrack(freeCells, new int[2]);
@@ -105,7 +105,7 @@ public final class Solver {
         // just one result, we have no more to choose
         if (freeCells == 0) {
             if (possibleSolutions.size() < limit) {
-                GameMatrix gmi = new GameMatrixImpl();
+                GameMatrix gmi = new GameMatrixImpl(riddle.getSchema());
                 gmi.setAll(riddle.getArray());
                 possibleSolutions.add(gmi);
             }
@@ -113,8 +113,9 @@ public final class Solver {
             return 1;
         }
 
-        boolean hasMin = riddle.findLeastFreeCell(minimumCell);
-        if (!hasMin) {
+        BitFreeMatrixInterface.FreeCellResult freeCellResult =
+                riddle.findLeastFreeCell(minimumCell);
+        if (freeCellResult != BitFreeMatrixInterface.FreeCellResult.FOUND) {
             // no solution
             return 0;
         }
@@ -135,7 +136,9 @@ public final class Solver {
             int resultCount = backtrack(freeCells - 1, minimumCell);
             result += resultCount;
         }
-        riddle.set(minimumRow, minimumColumn, GameMatrix.UNSET);
+        riddle.set(minimumRow,
+                minimumColumn,
+                riddle.getSchema().getUnsetValue());
 
         return result;
     }

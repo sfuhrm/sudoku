@@ -19,9 +19,6 @@ Boston, MA  02110-1301, USA.
 */
 package de.sfuhrm.sudoku;
 
-import static de.sfuhrm.sudoku.GameMatrix.validCoords;
-import static de.sfuhrm.sudoku.GameMatrix.validValue;
-import static de.sfuhrm.sudoku.GameMatrixImpl.roundToBlock;
 import java.util.Arrays;
 
 /**
@@ -30,9 +27,15 @@ import java.util.Arrays;
  */
 class GameMatrixImpl implements Cloneable, BitFreeMatrixInterface {
 
+    /** The game schema that is used to calculate the dimensions
+     * of this matrix.
+     * */
+    private final GameSchema gameSchema;
+
     /**
      * The game field. The first dimension is the row, the second the column.
-     * The value 0 means unallocated (see {@link #UNSET}).
+     * The value 0 means unallocated
+     * (see {@link GameSchema#getUnsetValue() unset}).
      * The values 1-9 mean the corresponding cell
      * value.
      */
@@ -40,10 +43,13 @@ class GameMatrixImpl implements Cloneable, BitFreeMatrixInterface {
 
     /**
      * Creates an empty riddle.
+     * @param inGameSchema the game schema that defines the dimensions of this
+     *                   matrix.
      * @see #setAll(byte[][])
      */
-    GameMatrixImpl() {
-        data = new byte[SIZE][SIZE];
+    GameMatrixImpl(final GameSchema inGameSchema) {
+        this.gameSchema = inGameSchema;
+        data = new byte[inGameSchema.getWidth()][inGameSchema.getWidth()];
     }
 
     /** Sets all cells to the given values.
@@ -52,11 +58,18 @@ class GameMatrixImpl implements Cloneable, BitFreeMatrixInterface {
      */
     @Override
     public final void setAll(final byte[][] initializationData) {
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
+        for (int i = 0; i < gameSchema.getWidth(); i++) {
+            for (int j = 0; j < gameSchema.getWidth(); j++) {
                 set(j, i, initializationData[j][i]);
             }
         }
+    }
+
+    /** Get the game schema this matrix was generated with.
+     * @return the game schema that defines the matrix dimensions.
+     * */
+    public GameSchema getSchema() {
+        return gameSchema;
     }
 
     /** Gets a copy of the given row.
@@ -64,8 +77,8 @@ class GameMatrixImpl implements Cloneable, BitFreeMatrixInterface {
      * @param target a 9-element array to receive the row data.
      */
     protected final void row(final int index, final byte[] target) {
-        assert target.length == SIZE;
-        System.arraycopy(data[index], 0, target, 0, SIZE);
+        assert target.length == gameSchema.getWidth();
+        System.arraycopy(data[index], 0, target, 0, gameSchema.getWidth());
     }
 
     /** Gets a copy of the given column.
@@ -73,8 +86,8 @@ class GameMatrixImpl implements Cloneable, BitFreeMatrixInterface {
      * @param target a 9-element array to receive the column data.
      */
     protected final void column(final int index, final byte[] target) {
-        assert target.length == SIZE;
-        for (int i = 0; i < SIZE; i++) {
+        assert target.length == gameSchema.getWidth();
+        for (int i = 0; i < gameSchema.getWidth(); i++) {
             target[i] = data[i][index];
         }
     }
@@ -87,13 +100,13 @@ class GameMatrixImpl implements Cloneable, BitFreeMatrixInterface {
     protected final void block(final int row,
             final int column,
             final byte[] target) {
-        assert target.length == SIZE;
-        assert validCoords(row, column);
+        assert target.length == gameSchema.getWidth();
+        assert getSchema().validCoords(row, column);
         int k = 0; // target index
         int roundRow = roundToBlock(row);
         int roundColumn = roundToBlock(column);
-        for (int i = 0; i < BLOCK_SIZE; i++) {
-            for (int j = 0; j < BLOCK_SIZE; j++) {
+        for (int i = 0; i < gameSchema.getBlockWidth(); i++) {
+            for (int j = 0; j < gameSchema.getBlockWidth(); j++) {
                 target[k++] = data[roundRow + i][roundColumn + j];
             }
         }
@@ -104,9 +117,10 @@ class GameMatrixImpl implements Cloneable, BitFreeMatrixInterface {
      */
     @Override
     public final void clear() {
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                set(j, i, UNSET);
+        byte unsetValue = gameSchema.getUnsetValue();
+        for (int i = 0; i < gameSchema.getWidth(); i++) {
+            for (int j = 0; j < gameSchema.getWidth(); j++) {
+                set(j, i, unsetValue);
             }
         }
     }
@@ -119,7 +133,7 @@ class GameMatrixImpl implements Cloneable, BitFreeMatrixInterface {
      */
     @Override
     public final byte get(final int row, final int column) {
-        assert validCoords(row, column);
+        assert getSchema().validCoords(row, column);
         return data[row][column];
     }
 
@@ -131,8 +145,8 @@ class GameMatrixImpl implements Cloneable, BitFreeMatrixInterface {
      */
     @Override
     public void set(final int row, final int column, final byte value) {
-        assert validCoords(row, column);
-        assert validValue(value)
+        assert getSchema().validCoords(row, column);
+        assert getSchema().validValue(value)
                 : "Value out of range: " + value;
         data[row][column] = value;
     }
@@ -145,15 +159,15 @@ class GameMatrixImpl implements Cloneable, BitFreeMatrixInterface {
     @Override
     public int getSetCount() {
         int count = 0;
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                assert validValue(data[i][j]);
-                if (data[i][j] != UNSET) {
+        for (int i = 0; i < gameSchema.getWidth(); i++) {
+            for (int j = 0; j < gameSchema.getWidth(); j++) {
+                assert getSchema().validValue(data[i][j]);
+                if (data[i][j] != gameSchema.getUnsetValue()) {
                     count++;
                 }
             }
         }
-        assert count >= 0 && count <= TOTAL_FIELDS;
+        assert count >= 0 && count <= gameSchema.getTotalFields();
         return count;
     }
 
@@ -206,28 +220,41 @@ class GameMatrixImpl implements Cloneable, BitFreeMatrixInterface {
     }
 
     /** Finds the duplicate bits.
-     * @param data the cell data from 0-9.
-     * @return a mask with bits 1-9 set if the numbers 1-9 occur multiple times.
+     * @param gameSchema the game dimensions.
+     * @param cellData the cell data from 0-9.
+     * @return a mask with bits 1-9 set if the
+     * numbers 1-9 occur multiple times.
      */
-    protected static int findDuplicateBits(final byte[] data) {
+    protected static int findDuplicateBits(
+            final GameSchema gameSchema,
+                                    final byte[] cellData) {
         int currentMask = 0;
         int duplicates = 0;
-        for (int i = 0; i < data.length; i++) {
-            final int shifted = 1 << data[i];
-            duplicates |= currentMask & shifted;
-            currentMask |= shifted;
+        byte unset = gameSchema.getUnsetValue();
+        for (int i = 0; i < cellData.length; i++) {
+            final byte cellValue = cellData[i];
+            if (cellValue != unset) {
+                final int shifted = 1 << cellData[i];
+                duplicates |= currentMask & shifted;
+                currentMask |= shifted;
+            }
         }
         return duplicates & (~1);
     }
 
     /** Finds the used numbers.
-     * @param data the cell data from 0-9.
+     * @param schema the game dimensions.
+     * @param cellData the cell data from 0-9.
      * @return a mask with bits 1-9 set if the numbers 1-9 occur.
      */
-    protected static int getNumberMask(final byte[] data) {
+    protected static int getNumberMask(final GameSchema schema,
+                                       final byte[] cellData) {
         int currentMask = 0;
-        for (int i = 0; i < data.length; i++) {
-            currentMask |= 1 << data[i];
+        final byte unset = schema.getUnsetValue();
+        for (int i = 0; i < cellData.length; i++) {
+            if (cellData[i] != unset) {
+                currentMask |= 1 << cellData[i];
+            }
         }
         // mask out UNSET (1 == 1<<0)
         return currentMask & (~1);
@@ -242,22 +269,26 @@ class GameMatrixImpl implements Cloneable, BitFreeMatrixInterface {
     public final boolean isValid() {
         boolean result = true;
 
-        byte[] tmpData = new byte[GameMatrix.SIZE];
+        byte[] tmpData = new byte[gameSchema.getWidth()];
 
-        for (int i = 0; i < SIZE && result; i++) {
+        for (int i = 0; i < gameSchema.getWidth() && result; i++) {
             row(i, tmpData);
-            result &= findDuplicateBits(tmpData) == 0;
+            result &= findDuplicateBits(gameSchema, tmpData) == 0;
         }
 
-        for (int i = 0; i < SIZE && result; i++) {
+        for (int i = 0; i < gameSchema.getWidth() && result; i++) {
             column(i, tmpData);
-            result &= findDuplicateBits(tmpData) == 0;
+            result &= findDuplicateBits(gameSchema, tmpData) == 0;
         }
 
-        for (int i = 0; i < SIZE && result; i += BLOCK_SIZE) {
-            for (int j = 0; j < SIZE && result; j += BLOCK_SIZE) {
+        for (int i = 0;
+             i < gameSchema.getWidth() && result;
+             i += gameSchema.getBlockWidth()) {
+            for (int j = 0;
+                 j < gameSchema.getWidth() && result;
+                 j += gameSchema.getBlockWidth()) {
                 block(i, j, tmpData);
-                result &= findDuplicateBits(tmpData) == 0;
+                result &= findDuplicateBits(gameSchema, tmpData) == 0;
             }
         }
 
@@ -271,9 +302,9 @@ class GameMatrixImpl implements Cloneable, BitFreeMatrixInterface {
      * is not used.
      */
     public int getRowFreeMask(final int row) {
-        byte[] tmpData = new byte[GameMatrix.SIZE];
+        byte[] tmpData = new byte[gameSchema.getWidth()];
         row(row, tmpData);
-        return (~getNumberMask(tmpData)) & MASK_FOR_NINE_BITS;
+        return (~getNumberMask(gameSchema, tmpData)) & getSchema().getBitMask();
     }
 
     /** Gets the free mask for the given column.
@@ -283,9 +314,9 @@ class GameMatrixImpl implements Cloneable, BitFreeMatrixInterface {
      * is not used.
      */
     public int getColumnFreeMask(final int column) {
-        byte[] tmpData = new byte[GameMatrix.SIZE];
+        byte[] tmpData = new byte[gameSchema.getWidth()];
         column(column, tmpData);
-        return (~getNumberMask(tmpData)) & MASK_FOR_NINE_BITS;
+        return (~getNumberMask(gameSchema, tmpData)) & getSchema().getBitMask();
     }
 
     /** Gets the free mask for the given block.
@@ -296,10 +327,10 @@ class GameMatrixImpl implements Cloneable, BitFreeMatrixInterface {
      * is not used.
      */
     public int getBlockFreeMask(final int row, final int column) {
-        byte[] tmpData = new byte[GameMatrix.BLOCK_SIZE
-                * GameMatrix.BLOCK_SIZE];
+        byte[] tmpData = new byte[getSchema().getBlockWidth()
+                * getSchema().getBlockWidth()];
         block(row, column, tmpData);
-        return (~getNumberMask(tmpData)) & MASK_FOR_NINE_BITS;
+        return (~getNumberMask(gameSchema, tmpData)) & getSchema().getBitMask();
     }
 
     /** Gets the free mask for the given cell.
@@ -313,8 +344,8 @@ class GameMatrixImpl implements Cloneable, BitFreeMatrixInterface {
     public int getFreeMask(
             final int row,
             final int column) {
-        int free = MASK_FOR_NINE_BITS;
-        assert validCoords(row, column);
+        int free = gameSchema.getBitMask();
+        assert gameSchema.validCoords(row, column);
         free &= getRowFreeMask(row);
         free &= getColumnFreeMask(column);
         free &= getBlockFreeMask(row, column);
@@ -337,9 +368,10 @@ class GameMatrixImpl implements Cloneable, BitFreeMatrixInterface {
             final int row,
             final int column,
             final byte value) {
-        assert validCoords(row, column);
-        assert validValue(value);
-        if (value == UNSET) {
+        assert gameSchema.validCoords(row, column);
+        assert gameSchema.validValue(value);
+        // can always be set
+        if (value == gameSchema.getUnsetValue()) {
             return true;
         }
         int free = getFreeMask(row, column);
@@ -350,7 +382,7 @@ class GameMatrixImpl implements Cloneable, BitFreeMatrixInterface {
      * @param in the column/row index to round.
      * @return a row/column index at a block boundary.
      */
-    protected static int roundToBlock(final int in) {
-        return in - in % BLOCK_SIZE;
+    protected int roundToBlock(final int in) {
+        return in - in % gameSchema.getBlockWidth();
     }
 }

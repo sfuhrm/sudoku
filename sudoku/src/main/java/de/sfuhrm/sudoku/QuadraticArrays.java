@@ -19,8 +19,6 @@ Boston, MA  02110-1301, USA.
 */
 package de.sfuhrm.sudoku;
 
-import static de.sfuhrm.sudoku.GameMatrix.SIZE;
-import static de.sfuhrm.sudoku.GameMatrix.UNSET;
 import static de.sfuhrm.sudoku.GameMatrix.validValue;
 
 /**
@@ -79,6 +77,70 @@ public final class QuadraticArrays {
      * <br>
      * <code>
      *  byte data[][] =<br>
+     QuadraticArrays.parse(<br>
+     "100000000",<br>
+     "020100000",<br>
+     "000320100",<br>
+     "010000456",<br>
+     "000010000",<br>
+     "000000010",<br>
+     "001000000",<br>
+     "000001000",<br>
+     "000000001"<br>
+     );<br>
+     GameMatrix matrix = ...<br>
+     matrix.setAll(data);<br>
+     * </code>
+     *
+     * @param gameSchema the game schema that defines the input data
+     *                   dimensions.
+     * @param rows array of strings with each string describing a row. Digits
+     * get converted to the element values, everything else gets converted to
+     * UNSET. Example for one row: "126453780".
+     * @return the parsed array.
+     * @throws IllegalArgumentException if one of the rows has a wrong size.
+     */
+    public static byte[][] parse(final GameSchema gameSchema,
+                                 final String... rows) {
+        if (rows.length != gameSchema.getWidth()) {
+            throw new IllegalArgumentException("Array must have "
+                    + gameSchema.getWidth() + " elements");
+        }
+
+        byte[][] result = new byte
+                [gameSchema.getWidth()]
+                [gameSchema.getWidth()];
+
+        for (int r = 0; r < rows.length; r++) {
+            if (rows[r].length() != gameSchema.getWidth()) {
+                throw new IllegalArgumentException(
+                        "Row " + r
+                                + " must have "
+                                + gameSchema.getWidth() + " elements: "
+                                + rows[r]);
+            }
+
+            for (int c = 0; c < gameSchema.getWidth(); c++) {
+                char v = rows[r].charAt(c);
+
+                if (v >= '1' && v <= '9') {
+                    result[r][c] = (byte) (v
+                            - '1'
+                            + gameSchema.getMinimumValue());
+                } else {
+                    result[r][c] = gameSchema.getUnsetValue();
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Parses a string based field descriptor.
+     * <br>Example usage:
+     * <br>
+     * <code>
+     *  byte data[][] =<br>
         QuadraticArrays.parse(<br>
                 "100000000",<br>
                 "020100000",<br>
@@ -102,33 +164,15 @@ public final class QuadraticArrays {
      * @throws IllegalArgumentException if one of the rows has a wrong size.
      */
     public static byte[][] parse(final String... rows) {
-        if (rows.length != SIZE) {
-            throw new IllegalArgumentException("Array must have "
-                    + SIZE + " elements");
-        }
 
-        byte[][] result = new byte[SIZE][SIZE];
-
-        for (int r = 0; r < rows.length; r++) {
-            if (rows[r].length() != SIZE) {
-                throw new IllegalArgumentException(
-                        "Row " + r
-                                + " must have "
-                                + SIZE + " elements: "
-                                + rows[r]);
-            }
-
-            for (int c = 0; c < SIZE; c++) {
-                char v = rows[r].charAt(c);
-
-                if (v >= '0' && v <= '9') {
-                    result[r][c] = (byte) (v - '0');
-                } else {
-                    result[r][c] = UNSET;
-                }
+        for (GameSchema schema : GameSchemas.getSupportedGameSchemas()) {
+            if (rows.length == schema.getWidth()) {
+                return parse(schema, rows);
             }
         }
-        return result;
+
+        throw new IllegalArgumentException(
+                "Input arrays has unknown dimension");
     }
 
     /** Format a game matrix to a String.
@@ -141,12 +185,13 @@ public final class QuadraticArrays {
     static String toString(final GameMatrix gameMatrix) {
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
+        for (int i = 0; i < gameMatrix.getSchema().getWidth(); i++) {
+            for (int j = 0; j < gameMatrix.getSchema().getWidth(); j++) {
                 byte v = gameMatrix.get(i, j);
                 assert validValue(v);
-                if (v != UNSET) {
-                    sb.append(Integer.toString(v));
+                if (v != gameMatrix.getSchema().getUnsetValue()) {
+                    sb.append(Integer.toString(
+                            v - gameMatrix.getSchema().getMinimumValue() + 1));
                 } else {
                     sb.append('_');
                 }

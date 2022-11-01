@@ -29,6 +29,7 @@ interface BitFreeMatrixInterface extends GameMatrix, Cloneable {
 
     /**
      * A mask that has bits 1 to 9 set (decimal 1022).
+     * @deprecated use GameSchema
      */
     int MASK_FOR_NINE_BITS = 1022;
 
@@ -68,33 +69,51 @@ interface BitFreeMatrixInterface extends GameMatrix, Cloneable {
      */
     int getRowFreeMask(int row);
 
+    /** Result for {@linkplain #findLeastFreeCell(int[])}. */
+    enum FreeCellResult {
+        /** A free cell was found. */
+        FOUND,
+        /** No free cell was found. */
+        NONE_FREE,
+        /** There's a contradiction in the matrix that can't be solved.
+         * */
+        CONTRADICTION;
+    }
+
     /** Find the cell with the lest number of possible candidates.
      * @param rowColumnResult a two-element int array receiving the
      * row and column of the result. First element will be the row index,
      * the second the column index.
-     * @return {@code true} if the minimum free cell could be found.
-     * Can be {@code false} in the case of a fully-filled matrix.
+     * @return {@linkplain FreeCellResult#FOUND} if a free cell was found,
+     * {@linkplain FreeCellResult#NONE_FREE} if all cells are occupied,
+     * {@linkplain FreeCellResult#CONTRADICTION} if cells were free but
+     * could not be occupied.
      */
-    default boolean findLeastFreeCell(final int[] rowColumnResult) {
+    default FreeCellResult findLeastFreeCell(final int[] rowColumnResult) {
         int minimumBits = -1;
         int minimumRow = -1;
         int minimumColumn = -1;
 
+        final int width = getSchema().getWidth();
+        final byte unset = getSchema().getUnsetValue();
         search:
-        for (int row = 0; row < GameMatrix.SIZE; row++) {
+        for (int row = 0; row < width; row++) {
             int rowMask = getRowFreeMask(row);
             // skip if the row has no free cells
             if (rowMask == 0) {
                 continue;
             }
-            for (int column = 0; column < GameMatrix.SIZE; column++) {
-                if (get(row, column) != GameMatrix.UNSET) {
+            for (int column = 0; column < width; column++) {
+                if (get(row, column) != unset) {
                     continue;
                 }
                 int free = getFreeMask(row, column);
+                if (free == 0) {
+                    return FreeCellResult.CONTRADICTION;
+                }
                 int bits = Integer.bitCount(free);
 
-                assert bits <= GameMatrix.SIZE;
+                assert bits <= width;
 
                 if (bits != 0 && (minimumBits == -1 || bits < minimumBits)) {
                     minimumColumn = column;
@@ -110,7 +129,9 @@ interface BitFreeMatrixInterface extends GameMatrix, Cloneable {
         }
         rowColumnResult[0] = minimumRow;
         rowColumnResult[1] = minimumColumn;
-        return minimumBits != -1;
+        return minimumBits != -1
+                ? FreeCellResult.FOUND
+                : FreeCellResult.NONE_FREE;
     }
 
 }

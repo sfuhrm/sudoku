@@ -22,6 +22,8 @@ package de.sfuhrm.sudoku.client;
 import de.sfuhrm.sudoku.Creator;
 import de.sfuhrm.sudoku.GameMatrix;
 import de.sfuhrm.sudoku.GameMatrixFactory;
+import de.sfuhrm.sudoku.GameSchema;
+import de.sfuhrm.sudoku.GameSchemas;
 import de.sfuhrm.sudoku.QuadraticArrays;
 import de.sfuhrm.sudoku.Riddle;
 import de.sfuhrm.sudoku.Solver;
@@ -129,11 +131,50 @@ public class Client {
             usage = "Input file to read for solving")
     private Path input;
 
+    /** Game schema.
+     * @see de.sfuhrm.sudoku.GameSchemas
+     * */
+    @Option(name = "-s",
+            aliases = {"-schema"},
+            usage = "Game matrix size for the generated game."
+                    + "A 9x9 sudoku has 9. There are"
+                    + "4x4, 9x9, 16x16 and 25x25 sudokus supported.")
+    private SchemaEnum schema = SchemaEnum.S9X9;
+
     /** Show this command line help. */
     @Option(name = "-h",
             aliases = {"-help"},
             usage = "Show this command line help")
     private boolean help;
+
+    /** The GameSchema to use. */
+    private enum SchemaEnum {
+        /** The 4x4 schema. */
+        S4X4(GameSchemas.SCHEMA_4X4),
+        /** The 9x9 schema. */
+        S9X9(GameSchemas.SCHEMA_9X9),
+        /** The 16x16 schema. */
+        S16X16(GameSchemas.SCHEMA_16X16),
+        /** The 25x25 schema. */
+        S25X25(GameSchemas.SCHEMA_16X16);
+
+        /** Reference of the game schema object of the game. */
+        private final GameSchema schema;
+
+        /** Constructor.
+         * @param inSchema the game schema used in the game.
+         * */
+        SchemaEnum(final GameSchema inSchema) {
+            this.schema = inSchema;
+        }
+    }
+
+    /** Get the game schema requested in the command line.
+     * @return a game schema to use for the game.
+     * */
+    private GameSchema getSchema() {
+        return schema.schema;
+    }
 
     /** Solves a Sudoku.
      * @param formatter the formatter to print the solved Sudoku with.
@@ -156,7 +197,8 @@ public class Client {
 
         byte[][] data = QuadraticArrays.parse(lines.toArray(new String[0]));
 
-        GameMatrix gameMatrix = new GameMatrixFactory().newGameMatrix();
+        GameMatrix gameMatrix = new GameMatrixFactory()
+                .newGameMatrix(getSchema());
         gameMatrix.setAll(data);
         Solver solver = new Solver(gameMatrix);
         List<GameMatrix> solutions = solver.solve();
@@ -188,20 +230,20 @@ public class Client {
                 Riddle riddle;
                 switch (op) {
                     case Full:
-                        matrix = Creator.createFull();
+                        matrix = Creator.createFull(getSchema());
                         if (!quiet) {
                             System.out.print(formatter.format(matrix));
                         }
                         break;
                     case Riddle:
-                        matrix = Creator.createFull();
+                        matrix = Creator.createFull(getSchema());
                         riddle = Creator.createRiddle(matrix);
                         if (!quiet) {
                             System.out.print(formatter.format(riddle));
                         }
                         break;
                     case Both:
-                        matrix = Creator.createFull();
+                        matrix = Creator.createFull(getSchema());
                         riddle = Creator.createRiddle(matrix);
                         if (!quiet) {
                             System.out.print(formatter.format(riddle));

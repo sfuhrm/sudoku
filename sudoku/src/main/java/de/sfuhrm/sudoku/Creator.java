@@ -45,6 +45,9 @@ public final class Creator {
      */
     private final BitFreeMatrixInterface riddle;
 
+    /** The game schema the riddle is for. */
+    private final GameSchema schema;
+
     /**
      * Possibly found Sudoku.
      */
@@ -56,10 +59,12 @@ public final class Creator {
     private final Random random;
 
     /** Private constructor. Use the static methods instead.
+     * @param gameSchema the dimensions of the game.
      */
-    private Creator() {
-        riddle = new CachedGameMatrixImpl();
-        random = new Random();
+    private Creator(final GameSchema gameSchema) {
+        this.schema = gameSchema;
+        this.riddle = new CachedGameMatrixImpl(gameSchema);
+        this.random = new Random();
 
         resultConsumer = t -> {
             winner = t;
@@ -96,29 +101,42 @@ public final class Creator {
     /**
      * Creates a valid fully setup sudoku.
      * @return a fully filled sudoku board.
-     * No fields are {@link GameMatrix#UNSET unset}.
+     * No fields are {@link GameSchema#getUnsetValue() unset}.
      */
     public static GameMatrix createFull() {
-        Creator c = new Creator();
+        return createFull(GameSchemas.SCHEMA_9X9);
+    }
+
+    /**
+     * Creates a valid fully setup sudoku.
+     * @param schema the dimensions of the game to create.
+     * @return a fully filled sudoku board.
+     * No fields are {@link GameSchema#getUnsetValue() unset}.
+     */
+    public static GameMatrix createFull(final GameSchema schema) {
+        Creator c = new Creator(schema);
         c.riddle.clear();
 
-        // * 0 0
-        // 0 * 0
-        // 0 0 *
-        //
-        // The blocks on the diagonal can be filled independently in random
-        // because they can not collide.
-        // This way we fill 1/3 of the matrix 'for free'.
-        for (int i = 0; i < GameMatrix.BLOCK_COUNT; i++) {
-            c.fillBlock(i * GameMatrix.BLOCK_SIZE,
-                    i * GameMatrix.BLOCK_SIZE);
-        }
-        // this will always work because the code above
-        // creates a valid basis for everything
-        boolean ok = c.backtrack(GameMatrix.TOTAL_FIELDS
-                - c.riddle.getSetCount(),
-                new int[2]);
-        assert ok;
+        BacktrackingResult backtrackingResult;
+        do {
+            // * 0 0
+            // 0 * 0
+            // 0 0 *
+            //
+            // The blocks on the diagonal can be filled independently in random
+            // because they can not collide.
+            // There can be a contradiction later on anyway.
+            for (int i = 0; i < c.riddle.getSchema().getBlockCount(); i++) {
+                c.fillBlock(
+                        i * schema.getBlockWidth(),
+                        i * schema.getBlockWidth());
+            }
+            // this will always work because the code above
+            // creates a valid basis for everything
+            backtrackingResult = c.backtrack(schema.getTotalFields()
+                            - c.riddle.getSetCount(),
+                    new int[2]);
+        } while (backtrackingResult != BacktrackingResult.FOUND);
 
         return c.winner;
     }
@@ -134,14 +152,15 @@ public final class Creator {
      */
     public static GameMatrix createVariant(
             final GameMatrix fullyFilled) {
-        GameMatrix target = new GameMatrixImpl();
+        GameSchema schema = fullyFilled.getSchema();
+        GameMatrix target = new GameMatrixImpl(schema);
         Random random = new Random();
 
-        byte[] substitution = createNumbersToDistribute(random, 1);
-        for (int row = 0; row < GameMatrix.SIZE; row++) {
-            for (int column = 0; column < GameMatrix.SIZE; column++) {
+        byte[] substitution = createNumbersToDistribute(schema, random, 1);
+        for (int row = 0; row < schema.getWidth(); row++) {
+            for (int column = 0; column < schema.getWidth(); column++) {
                 byte original = fullyFilled.get(row, column);
-                if (original == GameMatrix.UNSET) {
+                if (original == schema.getUnsetValue()) {
                     throw new IllegalArgumentException(
                             "There are unset fields in the given GameMatrix");
                 }
@@ -151,7 +170,7 @@ public final class Creator {
         }
 
         // row swapping within blocks
-        for (int i = 0; i < GameMatrix.BLOCK_COUNT; i++) {
+        for (int i = 0; i < schema.getBlockCount(); i++) {
             boolean swap = random.nextBoolean();
             if (swap) {
                 // swapped row distance: 1 or 2
@@ -161,13 +180,13 @@ public final class Creator {
                     offset = random.nextInt(2);
                 }
                 swapRow(target,
-                        i * GameMatrix.BLOCK_SIZE + offset,
-                        i * GameMatrix.BLOCK_SIZE + offset + distance);
+                        i * schema.getBlockWidth() + offset,
+                        i * schema.getBlockWidth() + offset + distance);
             }
         }
 
         // column swapping within blocks
-        for (int i = 0; i < GameMatrix.BLOCK_COUNT; i++) {
+        for (int i = 0; i < schema.getBlockCount(); i++) {
             boolean swap = random.nextBoolean();
             if (swap) {
                 // swapped column distance: 1 or 2
@@ -177,8 +196,8 @@ public final class Creator {
                     offset = random.nextInt(2);
                 }
                 swapColumn(target,
-                        i * GameMatrix.BLOCK_SIZE + offset,
-                        i * GameMatrix.BLOCK_SIZE + offset + distance);
+                        i * schema.getBlockWidth() + offset,
+                        i * schema.getBlockWidth() + offset + distance);
             }
         }
 
@@ -193,7 +212,8 @@ public final class Creator {
     protected static void swapRow(final GameMatrix matrix,
             final int rowA,
             final int rowB) {
-        for (int column = 0; column < GameMatrix.SIZE; column++) {
+        int width = matrix.getSchema().getWidth();
+        for (int column = 0; column < width; column++) {
             byte av = matrix.get(rowA, column);
             byte bv = matrix.get(rowB, column);
             matrix.set(rowB, column, av);
@@ -209,7 +229,7 @@ public final class Creator {
     protected static void swapColumn(final GameMatrix matrix,
             final int columnA,
             final int columnB) {
-        for (int row = 0; row < GameMatrix.SIZE; row++) {
+        for (int row = 0; row < matrix.getSchema().getWidth(); row++) {
             byte av = matrix.get(row, columnA);
             byte bv = matrix.get(row, columnB);
             matrix.set(row, columnB, av);
@@ -218,6 +238,7 @@ public final class Creator {
     }
 
     /** Create a random array with numbers to distribute.
+     * @param schema the dimensions of the game.
     * @param r the random number generator to use.
     * @param multiplicity the number of times to add the numbers 1 to 9.
     * 1 means adding 1 to 9 only once. 2 means adding 1 to 9 twice.
@@ -225,14 +246,15 @@ public final class Creator {
     * with each number occuring {@code multiplicity} times.
     */
     protected static byte[] createNumbersToDistribute(
+            final GameSchema schema,
             final Random r,
             final int multiplicity) {
-        int totalNumbers = GameMatrix.MAXIMUM_VALUE
-                - GameMatrix.MINIMUM_VALUE + 1;
+        int totalNumbers = schema.getMaximumValue()
+                - schema.getMinimumValue() + 1;
         List<Integer> numbersToDistribute = new ArrayList<>(totalNumbers
                 * multiplicity);
-        for (int number = GameMatrix.MINIMUM_VALUE;
-                number <= GameMatrix.MAXIMUM_VALUE;
+        for (int number = schema.getMinimumValue();
+                number <= schema.getMaximumValue();
                 number++) {
             for (int j = 0; j < multiplicity; j++) {
                 numbersToDistribute.add(number);
@@ -259,7 +281,8 @@ public final class Creator {
     private static boolean canClear(final BitFreeMatrixInterface riddle,
             final int row,
             final int column) {
-        assert riddle.get(row, column) != GameMatrix.UNSET;
+        GameSchema schema = riddle.getSchema();
+        assert riddle.get(row, column) != schema.getUnsetValue();
 
         // if there's only one free val, it's unique
         int freeMask = riddle.getFreeMask(row, column);
@@ -269,7 +292,7 @@ public final class Creator {
         }
 
         int old = riddle.get(row, column);
-        riddle.set(row, column, GameMatrix.UNSET);
+        riddle.set(row, column, schema.getUnsetValue());
 
         Solver s = new Solver(riddle);
         s.setLimit(2);
@@ -289,7 +312,7 @@ public final class Creator {
      * {@link #createVariant(de.sfuhrm.sudoku.GameMatrix)} of a full
      * matrix.
      * @return a maximally cleared sudoku. Contains
-     * {@link GameMatrix#UNSET unset} value fields for places where
+     * {@link GameSchema#getUnsetValue() unset} value fields for places where
      * the user/player needs to guess values.
      * @see #createFull()
      * @see #createVariant(de.sfuhrm.sudoku.GameMatrix)
@@ -297,7 +320,11 @@ public final class Creator {
     public static Riddle createRiddle(final GameMatrix fullMatrix) {
         Random random = new Random();
 
-        RiddleImpl cur = new RiddleImpl();
+        final GameSchema schema = fullMatrix.getSchema();
+        final int width = schema.getWidth();
+        final byte unset = schema.getUnsetValue();
+
+        RiddleImpl cur = new RiddleImpl(schema);
         cur.setAll(fullMatrix.getArray());
 
         int multi = 0;
@@ -307,12 +334,12 @@ public final class Creator {
 
         // random loop
         while (multi < CREATE_RIDDLE_RANDOM_CLEAR) {
-            int i = random.nextInt(GameMatrix.SIZE);
-            int j = random.nextInt(GameMatrix.SIZE);
+            int i = random.nextInt(schema.getWidth());
+            int j = random.nextInt(schema.getWidth());
 
-            if (cur.get(j, i) != GameMatrix.UNSET) {
+            if (cur.get(j, i) != schema.getUnsetValue()) {
                 if (canClear(cur, j, i)) {
-                    cur.set(j, i, GameMatrix.UNSET);
+                    cur.set(j, i, schema.getUnsetValue());
                 } else {
                     multi++;
                 }
@@ -320,20 +347,20 @@ public final class Creator {
         }
 
         // deterministic loop
-        for (int i = 0; i < GameMatrix.SIZE; i++) {
-            for (int j = 0; j < GameMatrix.SIZE; j++) {
-                if (GameMatrix.UNSET != cur.get(j, i)
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < width; j++) {
+                if (unset != cur.get(j, i)
                     && canClear(cur, j, i)) {
-                    cur.set(j, i, GameMatrix.UNSET);
+                    cur.set(j, i, unset);
                 }
             }
         }
 
         // set the preset fields non-writable
-        for (int i = 0; i < GameMatrix.SIZE; i++) {
-            for (int j = 0; j < GameMatrix.SIZE; j++) {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < width; j++) {
                 cur.setWritable(j, i, cur.get(j, i)
-                        == GameMatrix.UNSET);
+                        == unset);
             }
         }
 
@@ -345,17 +372,30 @@ public final class Creator {
      * @param column the start column of the block.
      */
     private void fillBlock(final int row, final int column) {
-        assert GameMatrix.validCoords(row, column);
-        assert row % GameMatrix.BLOCK_SIZE == 0;
-        assert column % GameMatrix.BLOCK_SIZE == 0;
+        final int blockSize = schema.getBlockWidth();
 
-        byte[] numbers = createNumbersToDistribute(random, 1);
+        assert schema.validCoords(row, column);
+        assert row % blockSize == 0;
+        assert column % blockSize == 0;
+
+        byte[] numbers = createNumbersToDistribute(schema, random, 1);
         int k = 0;
-        for (int i = 0; i < GameMatrix.BLOCK_SIZE; i++) {
-            for (int j = 0; j < GameMatrix.BLOCK_SIZE; j++) {
+        for (int i = 0; i < blockSize; i++) {
+            for (int j = 0; j < blockSize; j++) {
                 riddle.set(row + j, column + i, numbers[k++]);
             }
         }
+    }
+
+    /** Result for {@linkplain #backtrack(int, int[])}. */
+    enum BacktrackingResult {
+        /** A result was found, abort. */
+        FOUND,
+        /** No result found, continue search. */
+        CONTINUE,
+        /** There's a contradiction in the matrix that can't be solved.
+         * */
+        CONTRADICTION;
     }
 
     /**
@@ -365,20 +405,30 @@ public final class Creator {
      * @return {@code true} if the search shall be aborted by the
      * call hierarchy or {@code false} if search shall continue.
      */
-    private boolean backtrack(
+    private BacktrackingResult backtrack(
             final int numbersToDistribute,
             final int[] minimumCell) {
         if (numbersToDistribute == 0) {
             assert riddle.isValid()
                     : "Riddle went non-valid while backtracking";
-            return resultConsumer.apply(riddle);
+            if (resultConsumer.apply(riddle)) {
+                return BacktrackingResult.FOUND;
+            } else {
+                return BacktrackingResult.CONTINUE;
+            }
         }
 
         // determine rows + cols that are possible candidates
         // (reduce random trying)
-        boolean hasMinimum = riddle.findLeastFreeCell(minimumCell);
-        if (!hasMinimum) {
-            return false;
+        BitFreeMatrixInterface.FreeCellResult result =
+                riddle.findLeastFreeCell(minimumCell);
+        switch (result) {
+            case CONTRADICTION:
+            case NONE_FREE:
+                // we have non-free cells, but not numbersToDistribute == 0
+                return BacktrackingResult.CONTRADICTION;
+            default:
+                break;
         }
 
         int minimumRow = minimumCell[0];
@@ -388,16 +438,18 @@ public final class Creator {
 
         for (int bit = 0; bit < minimumBits; bit++) {
             int number = getSetBitOffset(minimumFree, bit);
-            assert number >= GameMatrix.MINIMUM_VALUE
-                    && number <= GameMatrix.MAXIMUM_VALUE;
+            assert number >= schema.getMinimumValue()
+                    && number <= schema.getMaximumValue();
             riddle.set(minimumRow, minimumColumn, (byte) (number));
-            boolean ok = backtrack(numbersToDistribute - 1, minimumCell);
-            if (ok) {
-                return true;
+            BacktrackingResult subResult = backtrack(
+                    numbersToDistribute - 1,
+                    minimumCell);
+            if (subResult == BacktrackingResult.FOUND) {
+                return subResult;
             }
         }
-        riddle.set(minimumRow, minimumColumn, GameMatrix.UNSET);
+        riddle.set(minimumRow, minimumColumn, schema.getUnsetValue());
 
-        return false;
+        return BacktrackingResult.CONTINUE;
     }
 }

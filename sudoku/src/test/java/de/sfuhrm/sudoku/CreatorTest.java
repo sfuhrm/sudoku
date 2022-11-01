@@ -30,6 +30,9 @@ import org.junit.jupiter.api.Test;
  * @author Stephan Fuhrmann
  */
 public class CreatorTest {
+
+    private GameSchema schema = GameSchemas.SCHEMA_9X9;
+
     @Test
     public void testGetSetBitOffsetWithNothingSet1() {
         int v = Creator.getSetBitOffset(0, 0);
@@ -109,7 +112,7 @@ public class CreatorTest {
 
     @Test
     public void testCreateFull() {
-        GameMatrix r = Creator.createFull();
+        GameMatrix r = Creator.createFull(schema);
         assertEquals(9*9, r.getSetCount());
         assertTrue(r.isValid());
     }
@@ -127,10 +130,11 @@ public class CreatorTest {
     @Test
     public void testCreateRiddle() {
         GameMatrix matrix = Creator.createFull();
+        GameSchema schema = matrix.getSchema();
         Riddle riddle = Creator.createRiddle(matrix);
-        for (int i=0; i < GameMatrixImpl.SIZE; i++) {
-            for (int j=0; j < GameMatrixImpl.SIZE; j++) {
-                if (riddle.get(i, j) != GameMatrixImpl.UNSET) {
+        for (int i=0; i < schema.getWidth(); i++) {
+            for (int j=0; j < schema.getWidth(); j++) {
+                if (riddle.get(i, j) != schema.getUnsetValue()) {
                     // all fields that are set are needed to be the same
                     assertEquals(matrix.get(i, j), riddle.get(i, j));
                     assertFalse(riddle.getWritable(i, j));
@@ -149,7 +153,8 @@ public class CreatorTest {
 
     @Test
     public void testCreateNumbersToDistributeWithOnce() {
-        byte[] v = Creator.createNumbersToDistribute(new Random(), 1);
+        GameSchema schema = GameSchemas.SCHEMA_9X9;
+        byte[] v = Creator.createNumbersToDistribute(schema, new Random(), 1);
         List<Integer> intList = Utility.toIntList(v);
 
         assertEquals(9, intList.size());
@@ -158,7 +163,8 @@ public class CreatorTest {
 
     @Test
     public void testCreateNumbersToDistributeWithTwice() {
-        byte[] v = Creator.createNumbersToDistribute(new Random(), 2);
+        GameSchema schema = GameSchemas.SCHEMA_9X9;
+        byte[] v = Creator.createNumbersToDistribute(schema, new Random(), 2);
         List<Integer> intList = Utility.toIntList(v);
 
         assertEquals(2*9, intList.size());
@@ -167,7 +173,7 @@ public class CreatorTest {
 
     @Test
     public void testCreateVariantWithEmpty() {
-        GameMatrixImpl original = new GameMatrixImpl();
+        GameMatrixImpl original = new GameMatrixImpl(schema);
         assertThrows(IllegalArgumentException.class, () -> {
             Creator.createVariant(original);
         });
@@ -175,7 +181,7 @@ public class CreatorTest {
 
     @Test
     public void testCreateVariant() {
-        GameMatrix original = Creator.createFull();
+        GameMatrix original = Creator.createFull(schema);
         GameMatrix variant1 = Creator.createVariant(original);
         GameMatrix variant2 = Creator.createVariant(original);
         GameMatrix variant3 = Creator.createVariant(original);
@@ -192,7 +198,7 @@ public class CreatorTest {
 
     @Test
     public void testSwapColumnWithFirstAndSecond() {
-        GameMatrixImpl actual = new GameMatrixImpl();
+        GameMatrixImpl actual = new GameMatrixImpl(schema);
         actual.setAll(QuadraticArrays.parse(
                 "100000000",
                 "020100000",
@@ -205,7 +211,7 @@ public class CreatorTest {
                 "000000001"
                 ));
 
-        GameMatrixImpl expected = new GameMatrixImpl();
+        GameMatrixImpl expected = new GameMatrixImpl(schema);
         expected.setAll(QuadraticArrays.parse(
                 "010000000",
                 "200100000",
@@ -225,7 +231,7 @@ public class CreatorTest {
 
     @Test
     public void testSwapColumnWithFirstAndLast() {
-        GameMatrixImpl actual = new GameMatrixImpl();
+        GameMatrixImpl actual = new GameMatrixImpl(schema);
         actual.setAll(QuadraticArrays.parse(
                 "100000000",
                 "020100000",
@@ -238,7 +244,7 @@ public class CreatorTest {
                 "000000001"
                 ));
 
-        GameMatrixImpl expected = new GameMatrixImpl();
+        GameMatrixImpl expected = new GameMatrixImpl(schema);
         expected.setAll(QuadraticArrays.parse(
                 "000000001",
                 "020100000",
@@ -258,7 +264,7 @@ public class CreatorTest {
 
     @Test
     public void testSwapRowWithFirstAndSecond() {
-        GameMatrixImpl actual = new GameMatrixImpl();
+        GameMatrixImpl actual = new GameMatrixImpl(schema);
         actual.setAll(QuadraticArrays.parse(
                 "100000000",
                 "020100000",
@@ -271,7 +277,7 @@ public class CreatorTest {
                 "000000001"
                 ));
 
-        GameMatrixImpl expected = new GameMatrixImpl();
+        GameMatrixImpl expected = new GameMatrixImpl(schema);
         expected.setAll(QuadraticArrays.parse(
                 "020100000",
                 "100000000",
@@ -291,7 +297,7 @@ public class CreatorTest {
 
     @Test
     public void testSwapRowWithFirstAndLast() {
-        GameMatrixImpl actual = new GameMatrixImpl();
+        GameMatrixImpl actual = new GameMatrixImpl(schema);
         actual.setAll(QuadraticArrays.parse(
                 "100000000",
                 "020100000",
@@ -304,7 +310,7 @@ public class CreatorTest {
                 "000000001"
                 ));
 
-        GameMatrixImpl expected = new GameMatrixImpl();
+        GameMatrixImpl expected = new GameMatrixImpl(schema);
         expected.setAll(QuadraticArrays.parse(
                 "000000001",
                 "020100000",

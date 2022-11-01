@@ -20,6 +20,7 @@ Boston, MA  02110-1301, USA.
 package de.sfuhrm.sudoku.output;
 
 import de.sfuhrm.sudoku.GameMatrix;
+import de.sfuhrm.sudoku.GameSchema;
 
 /**
  * Formats the game matrix to a LaTeX document.
@@ -40,12 +41,14 @@ public final class LatexTableFormatter extends AbstractTextFormatter {
     public String format(final GameMatrix matrix) {
         StringBuilder sb = new StringBuilder();
 
+        GameSchema schema = matrix.getSchema();
+
         sb.append("\\begin{center}");
         sb.append("\\huge");
         sb.append(getLineSeparator());
         sb.append("\\begin{tabular}{");
-        for (int i = 0; i < GameMatrix.SIZE; i++) {
-            if (i % GameMatrix.BLOCK_SIZE == 0 && i != 0) {
+        for (int i = 0; i < schema.getWidth(); i++) {
+            if (i % schema.getBlockWidth() == 0 && i != 0) {
                 sb.append("|");
             }
             sb.append("|C{1.1em}");
@@ -54,15 +57,15 @@ public final class LatexTableFormatter extends AbstractTextFormatter {
         sb.append("}");
         sb.append(getLineSeparator());
 
-        for (int row = 0; row < GameMatrix.SIZE; row++) {
-            if (row % GameMatrix.BLOCK_SIZE == 0) {
+        for (int row = 0; row < schema.getWidth(); row++) {
+            if (row % schema.getBlockWidth() == 0) {
                 sb.append("\\hline");
                 sb.append(getLineSeparator());
             }
-            for (int column = 0; column < GameMatrix.SIZE; column++) {
+            for (int column = 0; column < schema.getWidth(); column++) {
                 byte val = matrix.get(row, column);
                 String str;
-                if (val == GameMatrix.UNSET) {
+                if (val == schema.getUnsetValue()) {
                     str = getUnknownCellContentCharacter();
                 } else {
                     str = Integer.toString(val);
