@@ -156,7 +156,7 @@ public class Client {
         /** The 16x16 schema. */
         S16X16(GameSchemas.SCHEMA_16X16),
         /** The 25x25 schema. */
-        S25X25(GameSchemas.SCHEMA_16X16);
+        S25X25(GameSchemas.SCHEMA_25X25);
 
         /** Reference of the game schema object of the game. */
         private final GameSchema schema;
