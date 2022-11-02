@@ -17,6 +17,8 @@ The riddles can be of the schema dimensions:
 * 16x16 (too slow at the moment)
 * 25x25 (too slow at the moment)
 
+The following animation shows how quick the provided command line client can create Sudokus:
+
 ![Creating a riddle](http://sfuhrm.de/wp-content/uploads/2017/11/Sudoku-Create-Riddle-SF-1.gif
  "Creating a riddle")
 
