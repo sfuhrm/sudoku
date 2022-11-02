@@ -11,8 +11,16 @@ Sudoku Java Library
 A Java implementation of a very fast algorithm for creating [Sudoku](https://en.wikipedia.org/wiki/Sudoku) riddles.
 Has also the functionality to solve Sudoku riddles.
 
+The following animation shows how quick the provided command line client can create Sudokus:
+
 ![Creating a riddle](http://sfuhrm.de/wp-content/uploads/2017/11/Sudoku-Create-Riddle-SF-1.gif
  "Creating a riddle")
+ 
+ The riddles can be of the schema dimensions:
+* 4x4
+* 9x9 (standard size)
+* 16x16 (too slow at the moment)
+* 25x25 (too slow at the moment)
 
 ## Building it
 
@@ -50,7 +58,7 @@ You can create a solvable riddle (with empty fields) using
 ---------------------------------------
 
 ```java
-GameMatrix matrix = Creator.createFull();
+GameMatrix matrix = Creator.createFull(GameSchemas.SCHEMA_9X9);
 Riddle riddle = Creator.createRiddle(matrix);
 ```
 
@@ -78,7 +86,7 @@ And last but not least you can solve a riddle using
 ---------------------------------------
 
 ```java
-    Riddle riddle = new GameMatrixFactory().newRiddle();
+    Riddle riddle = new GameMatrixFactory().newRiddle(GameSchemas.SCHEMA_9X9);
     riddle.setAll(QuadraticArrays.parse("000000000", ...));
 
     Solver solver = new Solver(riddle);
@@ -106,7 +114,7 @@ The recommended way of including the library into your project is using maven:
 <dependency>
     <groupId>de.sfuhrm</groupId>
     <artifactId>sudoku</artifactId>
-    <version>3.1.1</version>
+    <version>4.0.0</version>
 </dependency>
 ```
 
@@ -148,7 +156,7 @@ changes.
 
 ## Author
 
-Written 2017-2021 by Stephan Fuhrmann. You can reach me via email to s (at) sfuhrm.de
+Written 2017-2022 by Stephan Fuhrmann. You can reach me via email to s (at) sfuhrm.de
 
 ## License
 
