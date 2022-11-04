@@ -32,6 +32,10 @@ abstract class AbstractTextFormatter implements GameMatrixFormatter {
      */
     private String rowSeparator = "\n";
 
+    /** The column separator used.
+     */
+    private String columnSeparator = " ";
+
     /** Gets the String to use for unknown/unset cells.
      * @return the unknown cell content String.
      */
@@ -59,6 +63,20 @@ abstract class AbstractTextFormatter implements GameMatrixFormatter {
      */
     public final void setRowSeparator(final String newRowSeparator) {
         this.rowSeparator = newRowSeparator;
+    }
+
+    /** Gets the column separator String to use.
+     * @return the column separator String.
+     */
+    public final String getColumnSeparator() {
+        return columnSeparator;
+    }
+
+    /** Sets the column separator String to use.
+     * @param newColumnSeparator the new String to use as column separator.
+     */
+    public final void setColumnSeparator(final String newColumnSeparator) {
+        this.columnSeparator = newColumnSeparator;
     }
 
     @Override
