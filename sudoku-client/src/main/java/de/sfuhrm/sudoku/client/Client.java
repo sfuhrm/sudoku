@@ -131,6 +131,14 @@ public class Client {
             usage = "Input file to read for solving")
     private Path input;
 
+    /**
+     * Maximum amount of Numbers to clear
+     */
+    @Option(name = "-c",
+            aliases = {"-numberstoclear"},
+            usage = "Amount of Numbers to clear.")
+    private int maxNumbersToClear = -1;
+
     /** Game schema.
      * @see de.sfuhrm.sudoku.GameSchemas
      * */
@@ -232,24 +240,30 @@ public class Client {
                     case Full:
                         matrix = Creator.createFull(getSchema());
                         if (!quiet) {
-                            System.out.print(formatter.format(matrix));
+                            System.out.println(formatter.format(matrix));
                         }
                         break;
                     case Riddle:
                         matrix = Creator.createFull(getSchema());
-                        riddle = Creator.createRiddle(matrix);
+                        if (maxNumbersToClear > 0) {
+                            riddle = Creator.createRiddle(matrix, maxNumbersToClear);
+                        } else {
+                            riddle = Creator.createRiddle(matrix);
+                        }
                         if (!quiet) {
-                            System.out.print(formatter.format(riddle));
+                            System.out.println(formatter.format(riddle));
                         }
                         break;
                     case Both:
                         matrix = Creator.createFull(getSchema());
-                        riddle = Creator.createRiddle(matrix);
-                        if (!quiet) {
-                            System.out.print(formatter.format(riddle));
+                        if (maxNumbersToClear > 0) {
+                            riddle = Creator.createRiddle(matrix, maxNumbersToClear);
+                        } else {
+                            riddle = Creator.createRiddle(matrix);
                         }
                         if (!quiet) {
-                            System.out.print(formatter.format(matrix));
+                            System.out.println(formatter.format(matrix));
+                            System.out.println(formatter.format(riddle));
                         }
                         break;
                     default:
@@ -262,8 +276,7 @@ public class Client {
         if (!quiet) {
             System.out.print(formatter.documentEnd());
         }
-
-
+        
         if (timing) {
             System.err.println("Took total of " + (end - start) + "ms");
             System.err.println("Each iteration took "
