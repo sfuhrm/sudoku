@@ -38,7 +38,7 @@ public class PlainTextFormatterTest extends AbstractTextFormatterTest {
     @Override
     public void testNew() {
         AbstractTextFormatter formatter = newInstance();
-        assertEquals("\n", formatter.getLineSeparator());
+        assertEquals("\n", formatter.getRowSeparator());
         assertEquals(".", formatter.getUnknownCellContentCharacter());
     }
     @Test

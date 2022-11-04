@@ -37,7 +37,7 @@ public class LatexTableFormatterTest extends AbstractTextFormatterTest {
     @Override
     public void testNew() {
         AbstractTextFormatter formatter = newInstance();
-        assertEquals("\n", formatter.getLineSeparator());
+        assertEquals("\n", formatter.getRowSeparator());
         assertEquals(" ", formatter.getUnknownCellContentCharacter());
         assertNotEquals("", formatter.documentStart());
         assertNotEquals("", formatter.documentEnd());

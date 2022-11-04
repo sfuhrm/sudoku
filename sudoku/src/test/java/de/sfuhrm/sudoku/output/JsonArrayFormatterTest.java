@@ -40,7 +40,7 @@ public class JsonArrayFormatterTest extends AbstractTextFormatterTest {
     @Override
     public void testNew() {
         AbstractTextFormatter formatter = newInstance();
-        assertEquals("\n", formatter.getLineSeparator());
+        assertEquals("\n", formatter.getRowSeparator());
         assertEquals("0", formatter.getUnknownCellContentCharacter());
     }
 

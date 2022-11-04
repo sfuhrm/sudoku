@@ -45,7 +45,7 @@ public final class MarkdownTableFormatter extends AbstractTextFormatter {
             sb.append(" ");
             sb.append(TABLE_SEPARATOR);
         }
-        sb.append(getLineSeparator());
+        sb.append(getRowSeparator());
 
         for (int column = 0; column < schema.getWidth(); column++) {
             if (column == 0) {
@@ -54,7 +54,7 @@ public final class MarkdownTableFormatter extends AbstractTextFormatter {
             sb.append("---");
             sb.append(TABLE_SEPARATOR);
         }
-        sb.append(getLineSeparator());
+        sb.append(getRowSeparator());
 
         for (int row = 0; row < schema.getWidth(); row++) {
             for (int column = 0; column < schema.getWidth(); column++) {
@@ -74,7 +74,7 @@ public final class MarkdownTableFormatter extends AbstractTextFormatter {
                 sb.append(" ");
                 sb.append(TABLE_SEPARATOR);
             }
-            sb.append(getLineSeparator());
+            sb.append(getRowSeparator());
         }
 
         for (int column = 0; column < schema.getWidth(); column++) {
@@ -85,7 +85,7 @@ public final class MarkdownTableFormatter extends AbstractTextFormatter {
             sb.append(" ");
             sb.append(TABLE_SEPARATOR);
         }
-        sb.append(getLineSeparator());
+        sb.append(getRowSeparator());
 
         return sb.toString();
     }

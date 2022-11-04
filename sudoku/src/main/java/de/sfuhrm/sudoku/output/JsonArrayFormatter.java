@@ -69,7 +69,7 @@ public final class JsonArrayFormatter extends AbstractTextFormatter {
         if (count != 0) {
             sb.append(",");
             if (indent) {
-                sb.append(getLineSeparator());
+                sb.append(getRowSeparator());
             }
         }
 
@@ -78,7 +78,7 @@ public final class JsonArrayFormatter extends AbstractTextFormatter {
         }
         sb.append("[");
         if (indent) {
-            sb.append(getLineSeparator());
+            sb.append(getRowSeparator());
         }
         for (int row = 0; row < schema.getWidth(); row++) {
             if (indent) {
@@ -108,7 +108,7 @@ public final class JsonArrayFormatter extends AbstractTextFormatter {
                 sb.append(",");
             }
             if (indent) {
-                sb.append(getLineSeparator());
+                sb.append(getRowSeparator());
             }
         }
 
@@ -117,7 +117,7 @@ public final class JsonArrayFormatter extends AbstractTextFormatter {
         }
         sb.append("]");
         if (indent) {
-            sb.append(getLineSeparator());
+            sb.append(getRowSeparator());
         }
         count++;
 
@@ -136,7 +136,7 @@ public final class JsonArrayFormatter extends AbstractTextFormatter {
         StringBuilder sb = new StringBuilder();
         sb.append("[");
         if (indent) {
-            sb.append(getLineSeparator());
+            sb.append(getRowSeparator());
         }
         count = 0;
         return sb.toString();
@@ -147,7 +147,7 @@ public final class JsonArrayFormatter extends AbstractTextFormatter {
         StringBuilder sb = new StringBuilder();
         sb.append("]");
         if (indent) {
-            sb.append(getLineSeparator());
+            sb.append(getRowSeparator());
         }
         count = 0;
         return sb.toString();

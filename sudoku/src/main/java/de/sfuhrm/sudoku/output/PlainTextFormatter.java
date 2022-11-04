@@ -44,7 +44,7 @@ public final class PlainTextFormatter extends AbstractTextFormatter {
                 }
                 sb.append(str);
             }
-            sb.append(getLineSeparator());
+            sb.append(getRowSeparator());
         }
         return sb.toString();
     }

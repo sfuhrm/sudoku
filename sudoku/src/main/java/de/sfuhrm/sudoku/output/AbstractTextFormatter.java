@@ -28,9 +28,9 @@ abstract class AbstractTextFormatter implements GameMatrixFormatter {
      */
     private String unknownCellContentCharacter = ".";
 
-    /** The line separator used.
+    /** The row separator used.
      */
-    private String lineSeparator = "\n";
+    private String rowSeparator = "\n";
 
     /** Gets the String to use for unknown/unset cells.
      * @return the unknown cell content String.
@@ -47,18 +47,18 @@ abstract class AbstractTextFormatter implements GameMatrixFormatter {
         this.unknownCellContentCharacter = newUnknownCellContentCharacter;
     }
 
-    /** Gets the line separator String to use.
-     * @return the line separator String.
+    /** Gets the row separator String to use.
+     * @return the row separator String.
      */
-    public final String getLineSeparator() {
-        return lineSeparator;
+    public final String getRowSeparator() {
+        return rowSeparator;
     }
 
-    /** Sets the line separator String to use.
-     * @param newLineSeparator the new String to use as line separator.
+    /** Sets the row separator String to use.
+     * @param newRowSeparator the new String to use as row separator.
      */
-    public final void setLineSeparator(final String newLineSeparator) {
-        this.lineSeparator = newLineSeparator;
+    public final void setRowSeparator(final String newRowSeparator) {
+        this.rowSeparator = newRowSeparator;
     }
 
     @Override
