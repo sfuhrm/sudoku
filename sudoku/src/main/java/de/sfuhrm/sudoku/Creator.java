@@ -334,12 +334,12 @@ public final class Creator {
 
         // random loop
         while (multi < CREATE_RIDDLE_RANDOM_CLEAR) {
-            int i = random.nextInt(schema.getWidth());
-            int j = random.nextInt(schema.getWidth());
+            int column = random.nextInt(schema.getWidth());
+            int row = random.nextInt(schema.getWidth());
 
-            if (cur.get(j, i) != schema.getUnsetValue()) {
-                if (canClear(cur, j, i)) {
-                    cur.set(j, i, schema.getUnsetValue());
+            if (cur.get(row, column) != schema.getUnsetValue()) {
+                if (canClear(cur, row, column)) {
+                    cur.set(row, column, schema.getUnsetValue());
                 } else {
                     multi++;
                 }
@@ -347,19 +347,19 @@ public final class Creator {
         }
 
         // deterministic loop
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < width; j++) {
-                if (unset != cur.get(j, i)
-                    && canClear(cur, j, i)) {
-                    cur.set(j, i, unset);
+        for (int column = 0; column < width; column++) {
+            for (int row = 0; row < width; row++) {
+                if (unset != cur.get(row, column)
+                    && canClear(cur, row, column)) {
+                    cur.set(row, column, unset);
                 }
             }
         }
 
         // set the preset fields non-writable
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < width; j++) {
-                cur.setWritable(j, i, cur.get(j, i)
+        for (int column = 0; column < width; column++) {
+            for (int row = 0; row < width; row++) {
+                cur.setWritable(row, column, cur.get(row, column)
                         == unset);
             }
         }
@@ -380,9 +380,9 @@ public final class Creator {
 
         byte[] numbers = createNumbersToDistribute(schema, random, 1);
         int k = 0;
-        for (int i = 0; i < blockSize; i++) {
-            for (int j = 0; j < blockSize; j++) {
-                riddle.set(row + j, column + i, numbers[k++]);
+        for (int colOfs = 0; colOfs < blockSize; colOfs++) {
+            for (int rowOfs = 0; rowOfs < blockSize; rowOfs++) {
+                riddle.set(row + rowOfs, column + colOfs, numbers[k++]);
             }
         }
     }
