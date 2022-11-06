@@ -200,6 +200,7 @@
   </reporting>
   <modules>
     <module>sudoku</module>
+    <module>sudoku-output</module>
     <module>sudoku-client</module>
   </modules>
 </project>

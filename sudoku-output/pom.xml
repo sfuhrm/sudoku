@@ -6,11 +6,24 @@
     <artifactId>sudoku-parent</artifactId>
     <version>4.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>sudoku</artifactId>
-  <name>Sudoku</name>
-  <description>Sudoku implementation for inclusion as a library</description>
+  <artifactId>sudoku-output</artifactId>
+  <name>Sudoku Output</name>
+  <description>Sudoku output formatting related classes</description>
   <url>https://github.com/sfuhrm/sudoku</url>
   <packaging>jar</packaging>
+  <dependencies>
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20220924</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>sudoku</artifactId>
+      <version>${project.version}</version>
+    </dependency>    
+  </dependencies>
   <build>
     <plugins>
       <plugin>
