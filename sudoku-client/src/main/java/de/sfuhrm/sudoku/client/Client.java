@@ -265,9 +265,9 @@ public class Client {
 
 
         if (timing) {
-            System.err.println("Took total of " + (end - start) + "ms");
-            System.err.println("Each iteration took "
-                    + (end - start) / count + "ms");
+            System.err.printf("Took total of %dms%n", (end - start));
+            System.err.printf("Each iteration took %fms%n",
+                    ((double) end - start) / count);
         }
     }
 
