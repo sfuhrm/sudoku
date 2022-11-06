@@ -1,6 +1,0 @@
-de/sfuhrm/sudoku/output/AbstractTextFormatter.class
-de/sfuhrm/sudoku/output/GameMatrixFormatter.class
-de/sfuhrm/sudoku/output/PlainTextFormatter.class
-de/sfuhrm/sudoku/output/MarkdownTableFormatter.class
-de/sfuhrm/sudoku/output/JsonArrayFormatter.class
-de/sfuhrm/sudoku/output/LatexTableFormatter.class
