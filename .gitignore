@@ -1,9 +1,7 @@
-/target/
-/sudoku/target/
-/sudoku-client/target/
+//target/
 *~
 *.versionsBackup
-/sudoku/nbproject/
+//nbproject/
 
 # Intellij
 .idea/
