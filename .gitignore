@@ -4,3 +4,8 @@
 *~
 *.versionsBackup
 /sudoku/nbproject/
+
+# Intellij
+.idea/
+*.iml
+*.iws

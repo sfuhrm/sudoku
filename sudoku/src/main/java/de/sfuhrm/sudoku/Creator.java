@@ -35,6 +35,89 @@ public final class Creator {
     private static final int CREATE_RIDDLE_RANDOM_CLEAR = 10;
 
     /**
+     * Sample value for 4x4 and difficulty very easy.
+     */
+    public static final int RIDDLE_4X4_EMPTY_FIELDS_VERY_EASY = 6;
+    /**
+     * Sample value for 4x4 and difficulty easy.
+     */
+    public static final int RIDDLE_4X4_EMPTY_FIELDS_EASY = 7;
+    /**
+     * Sample value for 4x4 and difficulty medium.
+     */
+    public static final int RIDDLE_4X4_EMPTY_FIELDS_MEDIUM = 9;
+    /**
+     * Sample value for 4x4 and difficulty hard.
+     */
+    public static final int RIDDLE_4X4_EMPTY_FIELDS_HARD = 10;
+    /**
+     * Sample value for 4x4 and difficulty very hard.
+     */
+    public static final int RIDDLE_4X4_EMPTY_FIELDS_VERY_HARD = 12;
+    /**
+     * Sample value for 9x9 and difficulty very easy.
+     */
+    public static final int RIDDLE_9X9_EMPTY_FIELDS_VERY_EASY = 31;
+    /**
+     * Sample value for 9x9 and difficulty easy.
+     */
+    public static final int RIDDLE_9X9_EMPTY_FIELDS_EASY = 45;
+    /**
+     * Sample value for 9x9 and difficulty medium.
+     */
+    public static final int RIDDLE_9X9_EMPTY_FIELDS_MEDIUM = 49;
+    /**
+     * Sample value for 9x9 and difficulty hard.
+     */
+    public static final int RIDDLE_9X9_EMPTY_FIELDS_HARD = 53;
+    /**
+     * Sample value for 9x9 and difficulty very hard.
+     */
+    public static final int RIDDLE_9X9_EMPTY_FIELDS_VERY_HARD = 58;
+    /*  (Source: http://zhangroup.aporc.org/images/files/Paper_3485.pdf */
+
+    /**
+     * Sample value for 16x16 and difficulty very easy. (needs to be adjusted)
+     */
+    public static final int RIDDLE_16X16_EMPTY_FIELDS_VERY_EASY = 90;
+    /**
+     * Sample value for 16x16 and difficulty easy. (needs to be adjusted)
+     */
+    public static final int RIDDLE_16X16_EMPTY_FIELDS_EASY = 100;
+    /**
+     * Sample value for 16x16 and difficulty medium. (needs to be adjusted)
+     */
+    public static final int RIDDLE_16X16_EMPTY_FIELDS_MEDIUM = 120;
+    /**
+     * Sample value for 16x16 and difficulty hard. (needs to be adjusted)
+     */
+    public static final int RIDDLE_16X16_EMPTY_FIELDS_HARD = 130;
+    /**
+     * Sample value for 16x16 and difficulty very hard. (needs to be adjusted)
+     */
+    public static final int RIDDLE_16X16_EMPTY_FIELDS_VERY_HARD = 140;
+    /**
+     * Sample value for 25x25 and difficulty very easy. (needs to be adjusted)
+     */
+    public static final int RIDDLE_25X25_EMPTY_FIELDS_VERY_EASY = 200;
+    /**
+     * Sample value for 25x25 and difficulty easy. (needs to be adjusted)
+     */
+    public static final int RIDDLE_25X25_EMPTY_FIELDS_EASY = 220;
+    /**
+     * Sample value for 25x25 and difficulty medium. (needs to be adjusted)
+     */
+    public static final int RIDDLE_25X25_EMPTY_FIELDS_MEDIUM = 240;
+    /**
+     * Sample value for 25x25 and difficulty hard. (needs to be adjusted)
+     */
+    public static final int RIDDLE_25X25_EMPTY_FIELDS_HARD = 260;
+    /**
+     * Sample value for 25x25 and difficulty very hard. (needs to be adjusted)
+     */
+    public static final int RIDDLE_25X25_EMPTY_FIELDS_VERY_HARD = 280;
+
+    /**
      * The result consumer. Consumes a valid sudoku
      * and returns whether to abort (true) or continue (false).
      */
@@ -314,6 +397,7 @@ public final class Creator {
      * @return a maximally cleared sudoku. Contains
      * {@link GameSchema#getUnsetValue() unset} value fields for places where
      * the user/player needs to guess values.
+     * @see #createRiddle(GameMatrix, int)
      * @see #createFull()
      * @see #createVariant(de.sfuhrm.sudoku.GameMatrix)
      */
@@ -361,6 +445,108 @@ public final class Creator {
             for (int row = 0; row < width; row++) {
                 cur.setWritable(row, column, cur.get(row, column)
                         == unset);
+            }
+        }
+
+        return cur;
+    }
+
+    /**
+     * Creates a riddle setup sudoku.
+     *
+     * @param fullMatrix        a fully set up (solved) and valid sudoku.
+     *                          Can be created using {@link #createFull()} or
+     *                          {@link
+     *                          #createVariant(de.sfuhrm.sudoku.GameMatrix)}
+     *                          of a full matrix.
+     * @param maxNumbersToClear maximum amount of numbers to clear.
+     *                          9x9 Sudoku: <p>
+     *                          Total number of valid 9x9 Sudoku grids is
+     *                          6,670,903,752,021,072,936,960. <p>
+     *                          Minimal amount of givens in an initial
+     *                          Sudoku puzzle that can yield a unique
+     *                          solution is 17 (64 empty cells). <p>
+     *                          Sample difficulty levels:
+     *                           <ul>
+     *                           <li>VERY_EASY: more than 50 given numbers,
+     *                           remove less than 31 numbers</li>
+     *                           <li>EASY: 36-49 given numbers,
+     *                           remove 32-45 numbers</li>
+     *                           <li>MEDIUM: 32-35 given numbers,
+     *                           remove 46-49 numbers</li>
+     *                           <li>HARD: 28-31 given numbers,
+     *                           remove 50-53 numbers</li>
+     *                           <li>EXPERT: 22-27 given numbers,
+     *                           remove 54-59 numbers</li>
+     *                           </ul>
+     *                          The average maximum amount of numbers to clear
+     *                          with the current algorithm and
+     *                           9x9 Sudoku is 56. <br> <br>
+     *                           16x16 Sudoku: <p>
+     *                           The maximum amount of numbers to remove with
+     *                           the current algorithm
+     *                           in a reasonably good time is ~140. <br> <br>
+     *                           25x25 Sudoku: <p>
+     *                           The maximum amount of numbers to remove with
+     *                           the current algorithm
+     *                           in a reasonably good time is ~280. <p>
+     * @return a sudoku with the given amount of cleared fields (or less if
+     * clearing more cells would endanger the unique solvability of the sudoku)
+     * Contains {@link GameSchema#getUnsetValue() unset} value fields for
+     * places where the user/player needs to guess values.
+     * @see #createRiddle(GameMatrix)
+     * @see #createFull()
+     * @see #createVariant(de.sfuhrm.sudoku.GameMatrix)
+     */
+    public static Riddle createRiddle(
+            final GameMatrix fullMatrix,
+            final int maxNumbersToClear
+    ) {
+        Random random = new Random();
+
+        final GameSchema schema = fullMatrix.getSchema();
+        final int width = schema.getWidth();
+        final byte unset = schema.getUnsetValue();
+
+        RiddleImpl cur = new RiddleImpl(schema);
+        cur.setAll(fullMatrix.getArray());
+
+        int numbersToClear = maxNumbersToClear;
+        int multi = 0;
+
+        // first the randomized loop runs
+        // second a deterministic loop over all cells runs
+
+        // random loop
+        while (numbersToClear > 0 && multi < CREATE_RIDDLE_RANDOM_CLEAR) {
+            int i = random.nextInt(width);
+            int j = random.nextInt(width);
+            if (cur.get(j, i) != schema.getUnsetValue()) {
+                if (canClear(cur, j, i)) {
+                    cur.set(j, i, schema.getUnsetValue());
+                    numbersToClear--;
+                } else {
+                    multi++;
+                }
+            }
+        }
+
+        //deterministic loop
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < width; j++) {
+                if (numbersToClear > 0
+                    && unset != cur.get(j, i)
+                    && canClear(cur, j, i)) {
+                    cur.set(j, i, unset);
+                    numbersToClear--;
+                }
+            }
+        }
+
+        // set the preset fields non-writable
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < width; j++) {
+                cur.setWritable(j, i, cur.get(j, i) == unset);
             }
         }
 

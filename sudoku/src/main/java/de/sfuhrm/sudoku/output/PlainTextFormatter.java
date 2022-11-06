@@ -43,8 +43,11 @@ public final class PlainTextFormatter extends AbstractTextFormatter {
                     str = Integer.toString(val + 1 - schema.getMinimumValue());
                 }
                 sb.append(str);
+                if (column < schema.getWidth() - 1) {
+                    sb.append(getColumnSeparator());
+                }
             }
-            sb.append(getLineSeparator());
+            sb.append(getRowSeparator());
         }
         return sb.toString();
     }

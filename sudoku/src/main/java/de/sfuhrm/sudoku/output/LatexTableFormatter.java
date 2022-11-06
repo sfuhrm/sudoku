@@ -45,7 +45,7 @@ public final class LatexTableFormatter extends AbstractTextFormatter {
 
         sb.append("\\begin{center}");
         sb.append("\\huge");
-        sb.append(getLineSeparator());
+        sb.append(getRowSeparator());
         sb.append("\\begin{tabular}{");
         for (int i = 0; i < schema.getWidth(); i++) {
             if (i % schema.getBlockWidth() == 0 && i != 0) {
@@ -55,12 +55,12 @@ public final class LatexTableFormatter extends AbstractTextFormatter {
         }
         sb.append("|");
         sb.append("}");
-        sb.append(getLineSeparator());
+        sb.append(getRowSeparator());
 
         for (int row = 0; row < schema.getWidth(); row++) {
             if (row % schema.getBlockWidth() == 0) {
                 sb.append("\\hline");
-                sb.append(getLineSeparator());
+                sb.append(getRowSeparator());
             }
             for (int column = 0; column < schema.getWidth(); column++) {
                 byte val = matrix.get(row, column);
@@ -79,18 +79,18 @@ public final class LatexTableFormatter extends AbstractTextFormatter {
                 sb.append(" ");
             }
             sb.append("\\\\");
-            sb.append(getLineSeparator());
+            sb.append(getRowSeparator());
             sb.append("\\hline");
-            sb.append(getLineSeparator());
+            sb.append(getRowSeparator());
         }
 
         sb.append("\\end{tabular}");
-        sb.append(getLineSeparator());
+        sb.append(getRowSeparator());
         sb.append("\\end{center}");
-        sb.append(getLineSeparator());
+        sb.append(getRowSeparator());
 
         sb.append("\\vspace{25 mm}");
-        sb.append(getLineSeparator());
+        sb.append(getRowSeparator());
 
         return sb.toString();
     }
@@ -99,23 +99,23 @@ public final class LatexTableFormatter extends AbstractTextFormatter {
     public String documentStart() {
         StringBuilder sb = new StringBuilder();
         sb.append("\\documentclass[a4paper,11pt]{article}");
-        sb.append(getLineSeparator());
+        sb.append(getRowSeparator());
         sb.append("\\usepackage{array}");
-        sb.append(getLineSeparator());
+        sb.append(getRowSeparator());
         sb.append("\\newcolumntype{L}[1]"
                 + "{>{\\raggedright\\let\\newline\\\\\\arraybackslash"
                 + "\\hspace{0pt}}m{#1}}");
-        sb.append(getLineSeparator());
+        sb.append(getRowSeparator());
         sb.append("\\newcolumntype{C}[1]"
                 + "{>{\\centering\\let\\newline\\\\\\arraybackslash"
                 + "\\hspace{0pt}}m{#1}}");
-        sb.append(getLineSeparator());
+        sb.append(getRowSeparator());
         sb.append("\\newcolumntype{R}[1]"
                 + "{>{\\raggedleft\\let\\newline\\\\\\arraybackslash"
                 + "\\hspace{0pt}}m{#1}}");
-        sb.append(getLineSeparator());
+        sb.append(getRowSeparator());
         sb.append("\\begin{document}");
-        sb.append(getLineSeparator());
+        sb.append(getRowSeparator());
         return sb.toString();
     }
 
@@ -123,7 +123,7 @@ public final class LatexTableFormatter extends AbstractTextFormatter {
     public String documentEnd() {
         StringBuilder sb = new StringBuilder();
         sb.append("\\end{document}");
-        sb.append(getLineSeparator());
+        sb.append(getRowSeparator());
         return sb.toString();
     }
 }
