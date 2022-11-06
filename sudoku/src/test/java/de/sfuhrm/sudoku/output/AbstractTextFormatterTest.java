@@ -51,7 +51,7 @@ public class AbstractTextFormatterTest {
     public void testNew() {
         AbstractTextFormatter formatter = newInstance();
         assertEquals("\n", formatter.getRowSeparator());
-        assertEquals(" ", formatter.getColumnSeparator());
+        assertEquals("", formatter.getColumnSeparator());
         assertEquals(".", formatter.getUnknownCellContentCharacter());
         assertEquals("", formatter.documentStart());
         assertEquals("", formatter.documentEnd());
@@ -73,7 +73,7 @@ public class AbstractTextFormatterTest {
     @Test
     public void testGetColumnSeparator() {
         AbstractTextFormatter formatter = newInstance();
-        assertEquals(" ", formatter.getColumnSeparator());
+        assertEquals("", formatter.getColumnSeparator());
     }
 
     @Test

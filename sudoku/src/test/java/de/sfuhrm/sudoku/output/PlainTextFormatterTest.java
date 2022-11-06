@@ -39,7 +39,7 @@ public class PlainTextFormatterTest extends AbstractTextFormatterTest {
     public void testNew() {
         AbstractTextFormatter formatter = newInstance();
         assertEquals("\n", formatter.getRowSeparator());
-        assertEquals(" ", formatter.getColumnSeparator());
+        assertEquals("", formatter.getColumnSeparator());
         assertEquals(".", formatter.getUnknownCellContentCharacter());
     }
     @Test
@@ -48,15 +48,15 @@ public class PlainTextFormatterTest extends AbstractTextFormatterTest {
         AbstractTextFormatter formatter = newInstance();
         String actual = formatter.format(matrix);
         assertEquals(
-                ". . . . . . . . .\n"+
-                ". . . . . . . . .\n"+
-                ". . . . . . . . .\n"+
-                ". . . . . . . . .\n"+
-                ". . . . . . . . .\n"+
-                ". . . . . . . . .\n"+
-                ". . . . . . . . .\n"+
-                ". . . . . . . . .\n"+
-                ". . . . . . . . .\n"
+                ".........\n"+
+                ".........\n"+
+                ".........\n"+
+                ".........\n"+
+                ".........\n"+
+                ".........\n"+
+                ".........\n"+
+                ".........\n"+
+                ".........\n"
                 , actual);
     }
 
@@ -65,7 +65,6 @@ public class PlainTextFormatterTest extends AbstractTextFormatterTest {
         GameMatrix matrix = gameMatrixFactory.newGameMatrix();
         AbstractTextFormatter formatter = newInstance();
         formatter.setUnknownCellContentCharacter("?");
-        formatter.setColumnSeparator("");
         String actual = formatter.format(matrix);
         assertEquals(
                 "?????????\n"+
@@ -95,7 +94,6 @@ public class PlainTextFormatterTest extends AbstractTextFormatterTest {
                 "167594382"));
         AbstractTextFormatter formatter = newInstance();
         formatter.setUnknownCellContentCharacter("?");
-        formatter.setColumnSeparator("");
         String actual = formatter.format(matrix);
         assertEquals(
                 "294731856\n"+

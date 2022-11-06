@@ -34,7 +34,7 @@ abstract class AbstractTextFormatter implements GameMatrixFormatter {
 
     /** The column separator used.
      */
-    private String columnSeparator = " ";
+    private String columnSeparator = "";
 
     /** Gets the String to use for unknown/unset cells.
      * @return the unknown cell content String.
