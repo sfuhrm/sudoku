@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractTextFormatter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Sudoku Output</a> &gt; <a href="index.source.html" class="el_package">de.sfuhrm.sudoku.output</a> &gt; <span class="el_source">AbstractTextFormatter.java</span></div><h1>AbstractTextFormatter.java</h1><pre class="source lang-java linenums">/*
+Sudoku - a fast Java Sudoku game creation library.
+Copyright (C) 2017-2018  Stephan Fuhrmann
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Library General Public
+License as published by the Free Software Foundation; either
+version 2 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Library General Public License for more details.
+
+You should have received a copy of the GNU Library General Public
+License along with this library; if not, write to the
+Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+Boston, MA  02110-1301, USA.
+*/
+package de.sfuhrm.sudoku.output;
+
+/**
+ * Basic functionality for most text formatters.
+ * @author Stephan Fuhrmann
+ */
+<span class="fc" id="L26">abstract class AbstractTextFormatter implements GameMatrixFormatter {</span>
+    /** The String used to display an empty or not filled cell.
+     */
+<span class="fc" id="L29">    private String unknownCellContentCharacter = &quot;.&quot;;</span>
+
+    /** The row separator used.
+     */
+<span class="fc" id="L33">    private String rowSeparator = &quot;\n&quot;;</span>
+
+    /** The column separator used.
+     */
+<span class="fc" id="L37">    private String columnSeparator = &quot;&quot;;</span>
+
+    /** Gets the String to use for unknown/unset cells.
+     * @return the unknown cell content String.
+     */
+    public final String getUnknownCellContentCharacter() {
+<span class="fc" id="L43">        return unknownCellContentCharacter;</span>
+    }
+
+    /** Sets the String to use for unknown/unset cells.
+     * @param newUnknownCellContentCharacter the new value for unknown cells.
+     */
+    public final void setUnknownCellContentCharacter(
+            final String newUnknownCellContentCharacter) {
+<span class="fc" id="L51">        this.unknownCellContentCharacter = newUnknownCellContentCharacter;</span>
+<span class="fc" id="L52">    }</span>
+
+    /** Gets the row separator String to use.
+     * @return the row separator String.
+     */
+    public final String getRowSeparator() {
+<span class="fc" id="L58">        return rowSeparator;</span>
+    }
+
+    /** Sets the row separator String to use.
+     * @param newRowSeparator the new String to use as row separator.
+     */
+    public final void setRowSeparator(final String newRowSeparator) {
+<span class="fc" id="L65">        this.rowSeparator = newRowSeparator;</span>
+<span class="fc" id="L66">    }</span>
+
+    /** Gets the column separator String to use.
+     * @return the column separator String.
+     */
+    public final String getColumnSeparator() {
+<span class="fc" id="L72">        return columnSeparator;</span>
+    }
+
+    /** Sets the column separator String to use.
+     * @param newColumnSeparator the new String to use as column separator.
+     */
+    public final void setColumnSeparator(final String newColumnSeparator) {
+<span class="fc" id="L79">        this.columnSeparator = newColumnSeparator;</span>
+<span class="fc" id="L80">    }</span>
+
+    @Override
+    public String documentStart() {
+<span class="fc" id="L84">        return &quot;&quot;;</span>
+    }
+
+    @Override
+    public String documentEnd() {
+<span class="fc" id="L89">        return &quot;&quot;;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
