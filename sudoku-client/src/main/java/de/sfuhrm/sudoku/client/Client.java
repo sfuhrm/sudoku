@@ -132,7 +132,7 @@ public class Client {
     private Path input;
 
     /**
-     * Maximum amount of Numbers to clear
+     * Maximum amount of Numbers to clear.
      */
     @Option(name = "-c",
             aliases = {"-numberstoclear"},
@@ -246,7 +246,8 @@ public class Client {
                     case Riddle:
                         matrix = Creator.createFull(getSchema());
                         if (maxNumbersToClear > 0) {
-                            riddle = Creator.createRiddle(matrix, maxNumbersToClear);
+                            riddle = Creator
+                                    .createRiddle(matrix, maxNumbersToClear);
                         } else {
                             riddle = Creator.createRiddle(matrix);
                         }
@@ -257,7 +258,8 @@ public class Client {
                     case Both:
                         matrix = Creator.createFull(getSchema());
                         if (maxNumbersToClear > 0) {
-                            riddle = Creator.createRiddle(matrix, maxNumbersToClear);
+                            riddle = Creator
+                                    .createRiddle(matrix, maxNumbersToClear);
                         } else {
                             riddle = Creator.createRiddle(matrix);
                         }
@@ -276,7 +278,7 @@ public class Client {
         if (!quiet) {
             System.out.print(formatter.documentEnd());
         }
-        
+
         if (timing) {
             System.err.println("Took total of " + (end - start) + "ms");
             System.err.println("Each iteration took "
