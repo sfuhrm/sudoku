@@ -1,0 +1,6 @@
+de/sfuhrm/sudoku/output/LatexTableFormatterTest.class
+de/sfuhrm/sudoku/output/PlainTextFormatterTest.class
+de/sfuhrm/sudoku/output/JsonArrayFormatterTest.class
+de/sfuhrm/sudoku/output/AbstractTextFormatterTest.class
+de/sfuhrm/sudoku/output/AbstractTextFormatterTest$1.class
+de/sfuhrm/sudoku/output/MarkdownTableFormatterTest.class

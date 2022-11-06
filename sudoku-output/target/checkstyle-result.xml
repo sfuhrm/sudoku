@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="8.29">
+<file name="/home/runner/work/sudoku/sudoku/sudoku-output/src/main/java/de/sfuhrm/sudoku/output/GameMatrixFormatter.java">
+</file>
+<file name="/home/runner/work/sudoku/sudoku/sudoku-output/src/main/java/de/sfuhrm/sudoku/output/PlainTextFormatter.java">
+</file>
+<file name="/home/runner/work/sudoku/sudoku/sudoku-output/src/main/java/de/sfuhrm/sudoku/output/package-info.java">
+</file>
+<file name="/home/runner/work/sudoku/sudoku/sudoku-output/src/main/java/de/sfuhrm/sudoku/output/JsonArrayFormatter.java">
+</file>
+<file name="/home/runner/work/sudoku/sudoku/sudoku-output/src/main/java/de/sfuhrm/sudoku/output/AbstractTextFormatter.java">
+</file>
+<file name="/home/runner/work/sudoku/sudoku/sudoku-output/src/main/java/de/sfuhrm/sudoku/output/LatexTableFormatter.java">
+</file>
+<file name="/home/runner/work/sudoku/sudoku/sudoku-output/src/main/java/de/sfuhrm/sudoku/output/MarkdownTableFormatter.java">
+</file>
+</checkstyle>

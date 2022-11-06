@@ -1,0 +1,6 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Sudoku Output,de.sfuhrm.sudoku.output,AbstractTextFormatter,0,37,0,0,0,15,0,9,0,9
+Sudoku Output,de.sfuhrm.sudoku.output,PlainTextFormatter,0,70,0,8,0,14,0,6,0,2
+Sudoku Output,de.sfuhrm.sudoku.output,MarkdownTableFormatter,0,166,0,20,0,37,0,12,0,2
+Sudoku Output,de.sfuhrm.sudoku.output,JsonArrayFormatter,8,233,3,35,0,62,3,23,0,7
+Sudoku Output,de.sfuhrm.sudoku.output,LatexTableFormatter,3,252,1,15,1,58,1,11,0,4
