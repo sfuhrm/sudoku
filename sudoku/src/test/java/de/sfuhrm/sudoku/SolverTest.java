@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
  */
 public class SolverTest {
 
-    private GameSchema schema = GameSchemas.SCHEMA_9X9;
+    private final GameSchema schema = GameSchemas.SCHEMA_9X9;
 
     @Test
     public void testSolveWithNoStep() {

@@ -582,7 +582,7 @@ public final class Creator {
         CONTINUE,
         /** There's a contradiction in the matrix that can't be solved.
          * */
-        CONTRADICTION;
+        CONTRADICTION
     }
 
     /**

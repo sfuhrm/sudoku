@@ -26,7 +26,6 @@ import de.sfuhrm.sudoku.client.Client;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -50,7 +49,7 @@ public class ClientTest {
 
 
     @Test
-    public void testMain() throws CmdLineException, UnsupportedEncodingException, IOException {
+    public void testMain() throws CmdLineException, IOException {
         ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(arrayOutputStream));
         Client.main(new String[] {});
@@ -63,7 +62,7 @@ public class ClientTest {
     }
 
     @Test
-    public void testMainWithRiddle() throws CmdLineException, UnsupportedEncodingException, IOException {
+    public void testMainWithRiddle() throws CmdLineException, IOException {
         ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(arrayOutputStream));
         Client.main(new String[] {"-e", "Riddle"});
@@ -75,7 +74,7 @@ public class ClientTest {
     }
 
     @Test
-    public void testMainWithSolve() throws CmdLineException, UnsupportedEncodingException, IOException, IOException {
+    public void testMainWithSolve() throws CmdLineException, IOException, IOException {
         ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
         Path tmpFile = Files.createTempFile("sudoku", ".txt");
         Files.write(tmpFile, Arrays.asList("__4_3_8_6",

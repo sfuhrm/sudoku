@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
  */
 public class RiddleImplTest {
 
-    private GameSchema schema = GameSchemas.SCHEMA_9X9;
+    private final GameSchema schema = GameSchemas.SCHEMA_9X9;
 
     public final static String[] FULL_EXAMPLE
             = new String[]{

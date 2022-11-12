@@ -393,7 +393,7 @@ class GameMatrixImpl implements Cloneable, GameMatrix {
         NONE_FREE,
         /** There's a contradiction in the matrix that can't be solved.
          * */
-        CONTRADICTION;
+        CONTRADICTION
     }
 
     /** Find the cell with the lest number of possible candidates.

@@ -19,11 +19,9 @@ Boston, MA  02110-1301, USA.
 */
 package de.sfuhrm.sudoku;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.Stream;
 
@@ -37,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class GameSchemaImplTest {
 
     private static Stream<Arguments> allGameSchemas() {
-        return GameSchemas.getSupportedGameSchemas().stream().map(t -> Arguments.of(t));
+        return GameSchemas.getSupportedGameSchemas().stream().map(Arguments::of);
     }
 
     @ParameterizedTest
