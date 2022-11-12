@@ -162,7 +162,7 @@ public final class Creator {
      * @return the index of the relative bitIndex set bit counted from 0, or -1
      * if there are no more set bits.
      */
-    protected static int getSetBitOffset(final int mask,
+    static int getSetBitOffset(final int mask,
             final int bitIndex) {
         int count = 0; // index of the next bit seen being set
         int workingMask = mask; // the left unseen bits are set
@@ -292,7 +292,7 @@ public final class Creator {
      * @param rowA the first row to swap.
      * @param rowB the second row to swap.
      */
-    protected static void swapRow(final GameMatrix matrix,
+    static void swapRow(final GameMatrix matrix,
             final int rowA,
             final int rowB) {
         int width = matrix.getSchema().getWidth();
@@ -309,7 +309,7 @@ public final class Creator {
      * @param columnA the first column to swap.
      * @param columnB the second column to swap.
      */
-    protected static void swapColumn(final GameMatrix matrix,
+    static void swapColumn(final GameMatrix matrix,
             final int columnA,
             final int columnB) {
         for (int row = 0; row < matrix.getSchema().getWidth(); row++) {
@@ -328,7 +328,7 @@ public final class Creator {
     * @return an array with randomly ordered numbers from 1 to 9
     * with each number occuring {@code multiplicity} times.
     */
-    protected static byte[] createNumbersToDistribute(
+    static byte[] createNumbersToDistribute(
             final GameSchema schema,
             final Random r,
             final int multiplicity) {
