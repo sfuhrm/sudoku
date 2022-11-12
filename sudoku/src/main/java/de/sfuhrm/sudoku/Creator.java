@@ -411,13 +411,13 @@ public final class Creator {
         RiddleImpl cur = new RiddleImpl(schema);
         cur.setAll(fullMatrix.getArray());
 
-        int multi = 0;
+        int randomClearCount = 0;
 
         // first the randomized loop runs
         // second a deterministic loop over all cells runs
 
         // random loop
-        while (multi < CREATE_RIDDLE_RANDOM_CLEAR) {
+        while (randomClearCount < CREATE_RIDDLE_RANDOM_CLEAR) {
             int column = random.nextInt(schema.getWidth());
             int row = random.nextInt(schema.getWidth());
 
@@ -425,7 +425,7 @@ public final class Creator {
                 if (canClear(cur, row, column)) {
                     cur.set(row, column, schema.getUnsetValue());
                 } else {
-                    multi++;
+                    randomClearCount++;
                 }
             }
         }
@@ -512,13 +512,13 @@ public final class Creator {
         cur.setAll(fullMatrix.getArray());
 
         int numbersToClear = maxNumbersToClear;
-        int multi = 0;
+        int randomClearCount = 0;
 
         // first the randomized loop runs
         // second a deterministic loop over all cells runs
 
         // random loop
-        while (numbersToClear > 0 && multi < CREATE_RIDDLE_RANDOM_CLEAR) {
+        while (numbersToClear > 0 && randomClearCount < CREATE_RIDDLE_RANDOM_CLEAR) {
             int i = random.nextInt(width);
             int j = random.nextInt(width);
             if (cur.get(j, i) != schema.getUnsetValue()) {
@@ -526,7 +526,7 @@ public final class Creator {
                     cur.set(j, i, schema.getUnsetValue());
                     numbersToClear--;
                 } else {
-                    multi++;
+                    randomClearCount++;
                 }
             }
         }
