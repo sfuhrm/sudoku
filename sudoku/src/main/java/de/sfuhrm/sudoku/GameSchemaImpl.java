@@ -125,7 +125,6 @@ class GameSchemaImpl implements GameSchema {
     /** Is the value passed in valid for a field?
      * @param b value to check.
      * @return {@code true} if valid.
-     * @deprecated use GameSchema
      */
     public boolean validValue(final byte b) {
         return b == unsetValue || (b >= minimumValue && b <= maximumValue);
@@ -135,7 +134,6 @@ class GameSchemaImpl implements GameSchema {
      * @param row the row index.
      * @param column the column index.
      * @return {@code true} if valid.
-     * @deprecated use GameSchema
      */
     public boolean validCoords(final int row, final int column) {
         return row >= 0 && row < width  && column >= 0 && column < width;
@@ -144,7 +142,6 @@ class GameSchemaImpl implements GameSchema {
     /** Is the value passed in valid for a bit mask?
      * @param mask bit mask to check.
      * @return {@code true} if valid.
-     * @deprecated use GameSchema
      */
     public boolean validBitMask(final int mask) {
         return (mask & (~bitMask)) == 0;
