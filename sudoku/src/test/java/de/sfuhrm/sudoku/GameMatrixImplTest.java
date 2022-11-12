@@ -914,8 +914,8 @@ public class GameMatrixImplTest {
         matrix.setAll(data);
 
         int[] min = new int[2];
-        BitFreeMatrixInterface.FreeCellResult result = matrix.findLeastFreeCell(min);
-        assertEquals(BitFreeMatrixInterface.FreeCellResult.NONE_FREE, result);
+        GameMatrixImpl.FreeCellResult result = matrix.findLeastFreeCell(min);
+        assertEquals(GameMatrixImpl.FreeCellResult.NONE_FREE, result);
      }
 
     @Test
@@ -938,8 +938,8 @@ public class GameMatrixImplTest {
         matrix.setAll(data);
 
         int[] min = new int[2];
-        BitFreeMatrixInterface.FreeCellResult result = matrix.findLeastFreeCell(min);
-        assertEquals(BitFreeMatrixInterface.FreeCellResult.FOUND, result);
+        GameMatrixImpl.FreeCellResult result = matrix.findLeastFreeCell(min);
+        assertEquals(GameMatrixImpl.FreeCellResult.FOUND, result);
         assertEquals(0, min[0]);
         assertEquals(0, min[1]);
      }
@@ -964,8 +964,8 @@ public class GameMatrixImplTest {
         matrix.setAll(data);
 
         int[] min = new int[2];
-        BitFreeMatrixInterface.FreeCellResult result = matrix.findLeastFreeCell(min);
-        assertEquals(BitFreeMatrixInterface.FreeCellResult.FOUND, result);
+        GameMatrixImpl.FreeCellResult result = matrix.findLeastFreeCell(min);
+        assertEquals(GameMatrixImpl.FreeCellResult.FOUND, result);
         assertEquals(2, min[0]);
         assertEquals(2, min[1]);
      }

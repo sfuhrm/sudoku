@@ -57,7 +57,7 @@ public class JsonArrayFormatterTest extends AbstractTextFormatterTest {
         formatter.setIndent(false);
         GameMatrix gameMatrix = gameMatrixFactory.newGameMatrix();
 
-        for (int i = 0; i < GameMatrix.SIZE; i++) {
+        for (int i = 0; i < gameMatrix.getSchema().getWidth(); i++) {
             gameMatrix.set(0, i, (byte)i);
         }
 
@@ -69,13 +69,13 @@ public class JsonArrayFormatterTest extends AbstractTextFormatterTest {
         assertEquals(1, allMatrices.length());
         JSONArray firstMatrix = allMatrices.getJSONArray(0);
 
-        assertEquals(GameMatrix.SIZE, firstMatrix.length());
+        assertEquals(gameMatrix.getSchema().getWidth(), firstMatrix.length());
 
-        for (int row = 0; row < GameMatrix.SIZE; row++) {
+        for (int row = 0; row < gameMatrix.getSchema().getWidth(); row++) {
             JSONArray rowArray = firstMatrix.getJSONArray(row);
-            assertEquals(GameMatrix.SIZE, rowArray.length());
+            assertEquals(gameMatrix.getSchema().getWidth(), rowArray.length());
 
-            for (int column = 0; column < GameMatrix.SIZE; column++) {
+            for (int column = 0; column < gameMatrix.getSchema().getWidth(); column++) {
                 int element = rowArray.getInt(column);
                 assertEquals(gameMatrix.get(row, column), element);
             }
@@ -88,7 +88,7 @@ public class JsonArrayFormatterTest extends AbstractTextFormatterTest {
         formatter.setIndent(true);
         GameMatrix gameMatrix = gameMatrixFactory.newGameMatrix();
 
-        for (int i = 0; i < GameMatrix.SIZE; i++) {
+        for (int i = 0; i < gameMatrix.getSchema().getWidth(); i++) {
             gameMatrix.set(0, i, (byte)i);
         }
 
@@ -100,13 +100,13 @@ public class JsonArrayFormatterTest extends AbstractTextFormatterTest {
         assertEquals(1, allMatrices.length());
         JSONArray firstMatrix = allMatrices.getJSONArray(0);
 
-        assertEquals(GameMatrix.SIZE, firstMatrix.length());
+        assertEquals(gameMatrix.getSchema().getWidth(), firstMatrix.length());
 
-        for (int row = 0; row < GameMatrix.SIZE; row++) {
+        for (int row = 0; row < gameMatrix.getSchema().getWidth(); row++) {
             JSONArray rowArray = firstMatrix.getJSONArray(row);
-            assertEquals(GameMatrix.SIZE, rowArray.length());
+            assertEquals(gameMatrix.getSchema().getWidth(), rowArray.length());
 
-            for (int column = 0; column < GameMatrix.SIZE; column++) {
+            for (int column = 0; column < gameMatrix.getSchema().getWidth(); column++) {
                 int element = rowArray.getInt(column);
                 assertEquals(gameMatrix.get(row, column), element);
             }
@@ -127,9 +127,9 @@ public class JsonArrayFormatterTest extends AbstractTextFormatterTest {
         JSONArray allMatrices = new JSONArray(actual);
         assertEquals(2, allMatrices.length());
         JSONArray secondMatrix = allMatrices.getJSONArray(1);
-        assertEquals(GameMatrix.SIZE, secondMatrix.length());
+        assertEquals(gameMatrix.getSchema().getWidth(), secondMatrix.length());
         JSONArray firstRow = secondMatrix.getJSONArray(0);
-        assertEquals(GameMatrix.SIZE, firstRow.length());
+        assertEquals(gameMatrix.getSchema().getWidth(), firstRow.length());
         int element = firstRow.getInt(0);
         assertEquals(0, element);
     }

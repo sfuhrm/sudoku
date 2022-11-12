@@ -126,7 +126,7 @@ public final class Creator {
     /**
      * Current work in progress.
      */
-    private final BitFreeMatrixInterface riddle;
+    private final CachedGameMatrixImpl riddle;
 
     /** The game schema the riddle is for. */
     private final GameSchema schema;
@@ -361,7 +361,7 @@ public final class Creator {
      * @return {@code true} if the field with the coordinates can be
      * cleared without endangering the unique solvability of the Sudoku.
      */
-    private static boolean canClear(final BitFreeMatrixInterface riddle,
+    private static boolean canClear(final RiddleImpl riddle,
             final int row,
             final int column) {
         GameSchema schema = riddle.getSchema();
@@ -518,7 +518,8 @@ public final class Creator {
         // second a deterministic loop over all cells runs
 
         // random loop
-        while (numbersToClear > 0 && randomClearCount < CREATE_RIDDLE_RANDOM_CLEAR) {
+        while (numbersToClear > 0
+                && randomClearCount < CREATE_RIDDLE_RANDOM_CLEAR) {
             int i = random.nextInt(width);
             int j = random.nextInt(width);
             if (cur.get(j, i) != schema.getUnsetValue()) {
@@ -606,7 +607,7 @@ public final class Creator {
 
         // determine rows + cols that are possible candidates
         // (reduce random trying)
-        BitFreeMatrixInterface.FreeCellResult result =
+        GameMatrixImpl.FreeCellResult result =
                 riddle.findLeastFreeCell(minimumCell);
         switch (result) {
             case CONTRADICTION:

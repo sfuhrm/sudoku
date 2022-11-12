@@ -27,6 +27,10 @@ import org.junit.jupiter.api.Test;
  * @author Stephan Fuhrmann
  */
 public class QuadraticArraysTest {
+
+    /** Array size for tests. */
+    private static final int TEST_SIZE = 9;
+
     @Test
     public void testCloneArrayWithBooleanAndSizeFour() {
         boolean[][] actual = new boolean[4][4];
@@ -38,7 +42,7 @@ public class QuadraticArraysTest {
 
     @Test
     public void testCloneArrayWithBooleanAndSizeNine() {
-        boolean[][] actual = new boolean[GameMatrix.SIZE][GameMatrix.SIZE];
+        boolean[][] actual = new boolean[TEST_SIZE][TEST_SIZE];
         boolean[][] clone = QuadraticArrays.cloneArray(actual);
         assertNotSame(clone, actual);
         assertEquals(clone.length, actual.length);
@@ -47,7 +51,7 @@ public class QuadraticArraysTest {
 
     @Test
     public void testCloneArrayWithByte() {
-        byte[][] actual = new byte[GameMatrix.SIZE][GameMatrix.SIZE];
+        byte[][] actual = new byte[TEST_SIZE][TEST_SIZE];
         byte[][] clone = QuadraticArrays.cloneArray(actual);
         assertNotSame(clone, actual);
         assertEquals(clone.length, actual.length);
@@ -56,7 +60,7 @@ public class QuadraticArraysTest {
 
     @Test
     public void testCloneArrayWithInt() {
-        int[][] actual = new int[GameMatrix.SIZE][GameMatrix.SIZE];
+        int[][] actual = new int[TEST_SIZE][TEST_SIZE];
         int[][] clone = QuadraticArrays.cloneArray(actual);
         assertNotSame(clone, actual);
         assertEquals(clone.length, actual.length);

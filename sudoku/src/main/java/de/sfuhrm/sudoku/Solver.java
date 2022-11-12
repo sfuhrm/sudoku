@@ -35,7 +35,7 @@ public final class Solver {
     /**
      * Current working copy.
      */
-    private final BitFreeMatrixInterface riddle;
+    private final CachedGameMatrixImpl riddle;
 
     /**
      * The possible solutions for this riddle.
@@ -113,9 +113,9 @@ public final class Solver {
             return 1;
         }
 
-        BitFreeMatrixInterface.FreeCellResult freeCellResult =
+        GameMatrixImpl.FreeCellResult freeCellResult =
                 riddle.findLeastFreeCell(minimumCell);
-        if (freeCellResult != BitFreeMatrixInterface.FreeCellResult.FOUND) {
+        if (freeCellResult != GameMatrixImpl.FreeCellResult.FOUND) {
             // no solution
             return 0;
         }

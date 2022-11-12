@@ -104,7 +104,7 @@ public final class JsonArrayFormatter extends AbstractTextFormatter {
                 sb.append(str);
             }
             sb.append("]");
-            if (row != GameMatrix.SIZE - 1) {
+            if (row != schema.getWidth() - 1) {
                 sb.append(",");
             }
             if (indent) {

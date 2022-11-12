@@ -19,8 +19,6 @@ Boston, MA  02110-1301, USA.
 */
 package de.sfuhrm.sudoku;
 
-import static de.sfuhrm.sudoku.GameMatrix.validValue;
-
 /**
  * Helper methods for working on two-dimensional arrays.
  * @author Stephan Fuhrmann
@@ -188,7 +186,6 @@ public final class QuadraticArrays {
         for (int i = 0; i < gameMatrix.getSchema().getWidth(); i++) {
             for (int j = 0; j < gameMatrix.getSchema().getWidth(); j++) {
                 byte v = gameMatrix.get(i, j);
-                assert validValue(v);
                 if (v != gameMatrix.getSchema().getUnsetValue()) {
                     sb.append(Integer.toString(
                             v - gameMatrix.getSchema().getMinimumValue() + 1));
