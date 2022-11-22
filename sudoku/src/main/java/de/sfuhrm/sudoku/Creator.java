@@ -198,10 +198,11 @@ public final class Creator {
      */
     public static GameMatrix createFull(final GameSchema schema) {
         Creator c = new Creator(schema);
-        c.riddle.clear();
 
         BacktrackingResult backtrackingResult;
         do {
+            c.riddle.clear();
+
             // * 0 0
             // 0 * 0
             // 0 0 *

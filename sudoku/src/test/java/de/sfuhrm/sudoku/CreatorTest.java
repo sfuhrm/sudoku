@@ -328,4 +328,11 @@ public class CreatorTest {
         assertEquals(expected, actual);
      }
 
+     @Test
+     public void createFullInLoop() {
+        GameSchema four = GameSchemas.SCHEMA_4X4;
+        for (int i = 0; i < 100; i++) {
+            Creator.createFull(four);
+        }
+     }
 }
