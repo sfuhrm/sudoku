@@ -152,6 +152,27 @@ public class CreatorTest {
     }
 
     @Test
+    public void testCreateRiddleWithOne() {
+        GameMatrix matrix = Creator.createFull();
+        GameSchema schema = matrix.getSchema();
+        Riddle riddle = Creator.createRiddle(matrix, 1);
+        int unsetCount = 0;
+        for (int i=0; i < schema.getWidth(); i++) {
+            for (int j=0; j < schema.getWidth(); j++) {
+                if (riddle.get(i, j) == schema.getUnsetValue()) {
+                    unsetCount++;
+                }
+            }
+        }
+        assertEquals(1, unsetCount);
+
+        Solver solver = new Solver(riddle);
+        solver.setLimit(3);
+        List<GameMatrix> results = solver.solve();
+        assertEquals(1, results.size());
+    }
+
+    @Test
     public void testCreateNumbersToDistributeWithOnce() {
         GameSchema schema = GameSchemas.SCHEMA_9X9;
         byte[] v = Creator.createNumbersToDistribute(schema, new Random(), 1);
