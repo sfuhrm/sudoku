@@ -183,14 +183,30 @@ public final class QuadraticArrays {
     static String toString(final GameMatrix gameMatrix) {
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < gameMatrix.getSchema().getWidth(); i++) {
-            for (int j = 0; j < gameMatrix.getSchema().getWidth(); j++) {
-                byte v = gameMatrix.get(i, j);
+        int maxWidth = Integer.toString(gameMatrix.getSchema().getMaximumValue()).length();
+        char fillChar = '_';
+        char space = ' ';
+        StringBuilder fill = new StringBuilder();
+        for (int i = 0; i < maxWidth; i++) {
+            fill.append(fillChar);
+        }
+
+        for (int row = 0; row < gameMatrix.getSchema().getWidth(); row++) {
+            for (int column = 0; column < gameMatrix.getSchema().getWidth(); column++) {
+                if (column != 0) {
+                    sb.append(space);
+                }
+
+                byte v = gameMatrix.get(row, column);
                 if (v != gameMatrix.getSchema().getUnsetValue()) {
-                    sb.append(Integer.toString(
-                            v - gameMatrix.getSchema().getMinimumValue() + 1));
+                    String value = Integer.toString(
+                            v - gameMatrix.getSchema().getMinimumValue() + 1);
+                    for (int f = value.length(); f < maxWidth; f++) {
+                        sb.append(fillChar);
+                    }
+                    sb.append(value);
                 } else {
-                    sb.append('_');
+                    sb.append(fill);
                 }
             }
             sb.append('\n');
