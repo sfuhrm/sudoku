@@ -126,7 +126,7 @@ public final class Creator {
     /**
      * Current work in progress.
      */
-    private final CachedGameMatrixImpl riddle;
+    private final GameMatrixImpl riddle;
 
     /** The game schema the riddle is for. */
     private final GameSchema schema;
@@ -628,7 +628,9 @@ public final class Creator {
             int number = getSetBitOffset(minimumFree, bit);
             assert number >= schema.getMinimumValue()
                     && number <= schema.getMaximumValue();
+            assert (riddle.getFreeMask(minimumRow, minimumColumn) & (1 << number)) == 1 << number;
             riddle.set(minimumRow, minimumColumn, (byte) (number));
+            assert (riddle.getFreeMask(minimumRow, minimumColumn) & (1 << number)) == 0;
             BacktrackingResult subResult = backtrack(
                     numbersToDistribute - 1,
                     minimumCell);
