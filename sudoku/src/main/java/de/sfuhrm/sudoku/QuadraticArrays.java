@@ -110,25 +110,71 @@ public final class QuadraticArrays {
                 [gameSchema.getWidth()];
 
         for (int r = 0; r < rows.length; r++) {
-            if (rows[r].length() != gameSchema.getWidth()) {
-                throw new IllegalArgumentException(
-                        "Row " + r
-                                + " must have "
-                                + gameSchema.getWidth() + " elements: "
-                                + rows[r]);
-            }
+            String row = rows[r];
 
-            for (int c = 0; c < gameSchema.getWidth(); c++) {
-                char v = rows[r].charAt(c);
+            if (row.contains(" ")) {
+                String[] parts = row.split(" ");
+                if (parts.length != gameSchema.getWidth()) {
+                    throw new IllegalArgumentException(
+                            "Row " + r
+                                    + " must have "
+                                    + gameSchema.getWidth() + " elements, "
+                                    + "but has " + parts.length);
+                }
 
-                if (v >= '1' && v <= '9') {
-                    result[r][c] = (byte) (v
-                            - '1'
-                            + gameSchema.getMinimumValue());
-                } else {
-                    result[r][c] = gameSchema.getUnsetValue();
+                for (int c = 0; c < gameSchema.getWidth(); c++) {
+                    String v = parts[c];
+                    result[r][c] = stringToValue(gameSchema, v);
+                }
+            } else {
+                if (rows[r].length() != gameSchema.getWidth()) {
+                    throw new IllegalArgumentException(
+                            "Row " + r
+                                    + " must have "
+                                    + gameSchema.getWidth() + " elements: "
+                                    + rows[r]);
+                }
+
+                for (int c = 0; c < gameSchema.getWidth(); c++) {
+                    char v = rows[r].charAt(c);
+                    result[r][c] = charToValue(gameSchema, v);
                 }
             }
+        }
+        return result;
+    }
+
+    /** Decimal system multiplier for
+     * {@linkplain #stringToValue(GameSchema, String)}.
+     * */
+    private static final int DECIMAL = 10;
+    private static byte stringToValue(final GameSchema gameSchema,
+                                      final String value) {
+        byte result = 0;
+        for (char c : value.toCharArray()) {
+            result *= DECIMAL;
+            if (c >= '1' && c <= '9') {
+                result = (byte) (c
+                        - '1'
+                        + gameSchema.getMinimumValue());
+            }
+        }
+
+        if (result == 0) {
+            result = gameSchema.getUnsetValue();
+        }
+        return result;
+    }
+
+    private static byte charToValue(final GameSchema gameSchema,
+                                    final char value) {
+        byte result;
+        if (value >= '1' && value <= '9') {
+            result = (byte) (value
+                    - '1'
+                    + gameSchema.getMinimumValue());
+        } else {
+            result = gameSchema.getUnsetValue();
         }
         return result;
     }
@@ -183,7 +229,10 @@ public final class QuadraticArrays {
     static String toString(final GameMatrix gameMatrix) {
         StringBuilder sb = new StringBuilder();
 
-        int maxWidth = Integer.toString(gameMatrix.getSchema().getMaximumValue()).length();
+        int maxWidth = Integer.toString(
+                gameMatrix.getSchema()
+                        .getMaximumValue())
+                .length();
         char fillChar = '_';
         char space = ' ';
         StringBuilder fill = new StringBuilder();
@@ -192,7 +241,8 @@ public final class QuadraticArrays {
         }
 
         for (int row = 0; row < gameMatrix.getSchema().getWidth(); row++) {
-            for (int column = 0; column < gameMatrix.getSchema().getWidth(); column++) {
+            for (int column = 0;
+                 column < gameMatrix.getSchema().getWidth(); column++) {
                 if (column != 0) {
                     sb.append(space);
                 }

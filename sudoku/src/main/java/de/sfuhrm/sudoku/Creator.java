@@ -628,9 +628,11 @@ public final class Creator {
             int number = getSetBitOffset(minimumFree, bit);
             assert number >= schema.getMinimumValue()
                     && number <= schema.getMaximumValue();
-            assert (riddle.getFreeMask(minimumRow, minimumColumn) & (1 << number)) == 1 << number;
+            assert (riddle.getFreeMask(minimumRow, minimumColumn)
+                    & (1 << number)) == 1 << number;
             riddle.set(minimumRow, minimumColumn, (byte) (number));
-            assert (riddle.getFreeMask(minimumRow, minimumColumn) & (1 << number)) == 0;
+            assert (riddle.getFreeMask(minimumRow, minimumColumn)
+                    & (1 << number)) == 0;
             BacktrackingResult subResult = backtrack(
                     numbersToDistribute - 1,
                     minimumCell);

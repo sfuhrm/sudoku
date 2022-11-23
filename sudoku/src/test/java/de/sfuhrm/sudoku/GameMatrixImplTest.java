@@ -420,15 +420,15 @@ public class GameMatrixImplTest {
         matrix.setAll(data);
 
         String out = matrix.toString();
-        assertEquals("_________\n"+
-                "111111111\n"+
-                "222222222\n"+
-                "333333333\n"+
-                "444444444\n"+
-                "555555555\n"+
-                "666666666\n"+
-                "777777777\n"+
-                "888888888\n"
+        assertEquals("_ _ _ _ _ _ _ _ _\n"+
+                "1 1 1 1 1 1 1 1 1\n"+
+                "2 2 2 2 2 2 2 2 2\n"+
+                "3 3 3 3 3 3 3 3 3\n"+
+                "4 4 4 4 4 4 4 4 4\n"+
+                "5 5 5 5 5 5 5 5 5\n"+
+                "6 6 6 6 6 6 6 6 6\n"+
+                "7 7 7 7 7 7 7 7 7\n"+
+                "8 8 8 8 8 8 8 8 8\n"
                 , out);
      }
 
@@ -451,15 +451,11 @@ public class GameMatrixImplTest {
         matrix.setAll(data);
         matrix.clear();
         String out = matrix.toString();
-        assertEquals("_________\n"+
-                "_________\n"+
-                "_________\n"+
-                "_________\n"+
-                "_________\n"+
-                "_________\n"+
-                "_________\n"+
-                "_________\n"+
-                "_________\n"
+        String empty = "";
+        for (int i = 0; i < 9; i++) {
+            empty += "_ _ _ _ _ _ _ _ _\n";
+        }
+        assertEquals(empty
                 , out);
      }
 
@@ -483,15 +479,15 @@ public class GameMatrixImplTest {
         GameMatrixImpl clone = (GameMatrixImpl) matrix.clone();
 
         String out = clone.toString();
-        assertEquals("_________\n"+
-                "111111111\n"+
-                "222222222\n"+
-                "333333333\n"+
-                "444444444\n"+
-                "555555555\n"+
-                "666666666\n"+
-                "777777777\n"+
-                "888888888\n"
+        assertEquals("_ _ _ _ _ _ _ _ _\n"+
+                "1 1 1 1 1 1 1 1 1\n"+
+                "2 2 2 2 2 2 2 2 2\n"+
+                "3 3 3 3 3 3 3 3 3\n"+
+                "4 4 4 4 4 4 4 4 4\n"+
+                "5 5 5 5 5 5 5 5 5\n"+
+                "6 6 6 6 6 6 6 6 6\n"+
+                "7 7 7 7 7 7 7 7 7\n"+
+                "8 8 8 8 8 8 8 8 8\n"
                 , out);
      }
 
