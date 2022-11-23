@@ -222,9 +222,10 @@ public final class QuadraticArrays {
     /** Format a game matrix to a String.
      * @param gameMatrix the input game matrix whose values to use
      * to format the String with.
-     * @return a String with 9 lines and 9 chars per line.
-     * '1'-'9' denotes the digit filled in the field. '_'
-     * denotes a free field.
+     * @return a String with $n lines and 2*$n chars per line.
+     * '1'-'9' denotes the digit(s) filled in the field. '_'
+     * denotes a free field. Fields are separated by a
+     * space.
      */
     static String toString(final GameMatrix gameMatrix) {
         StringBuilder sb = new StringBuilder();
