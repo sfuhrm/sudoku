@@ -12,5 +12,5 @@ jobs:
   call-workflow-passing-data:
     uses: sfuhrm/github_workflows/.github/workflows/spotbugs.yml@main
     with:
-      java_version: "[\"8\", \"11\", \"17\", \"21\"]"
+      java_version: "[\"21\"]"
       artifact_name: spotbugs
