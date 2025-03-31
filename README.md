@@ -1,7 +1,7 @@
 Sudoku Java Library
 ===================
-[![Java CI with Maven](https://github.com/sfuhrm/sudoku/actions/workflows/maven.yml/badge.svg)](https://github.com/sfuhrm/sudoku/actions/workflows/maven.yml)
-[![Coverage](https://raw.githubusercontent.com/sfuhrm/sudoku/master/.github/badges/jacoco.svg)](https://github.com/sfuhrm/sudoku/actions)
+[![Java CI with Maven](https://github.com/sfuhrm/sudoku/actions/workflows/maven-ref.yml/badge.svg)](https://github.com/sfuhrm/sudoku/actions/workflows/maven-ref.yml)
+[![Coverage](https://raw.githubusercontent.com/sfuhrm/sudoku/refs/heads/gh-pages/jacoco.svg)](https://github.com/sfuhrm/sudoku/actions)
 [![javadoc](https://javadoc.io/badge2/de.sfuhrm/sudoku/javadoc.svg)](https://javadoc.io/doc/de.sfuhrm/sudoku)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.sfuhrm/sudoku/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.sfuhrm/sudoku)
 [![ReleaseDate](https://img.shields.io/github/release-date/sfuhrm/sudoku)](https://github.com/sfuhrm/sudoku/releases)
