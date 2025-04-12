@@ -104,11 +104,9 @@ public final class Solver {
 
         // just one result, we have no more to choose
         if (freeCells == 0) {
-            if (possibleSolutions.size() < limit) {
-                GameMatrix gmi = new GameMatrixImpl(riddle.getSchema());
-                gmi.setAll(riddle.getArray());
-                possibleSolutions.add(gmi);
-            }
+            GameMatrix gmi = new GameMatrixImpl(riddle.getSchema());
+            gmi.setAll(riddle.getArray());
+            possibleSolutions.add(gmi);
 
             return 1;
         }
