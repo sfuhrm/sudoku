@@ -54,7 +54,7 @@ public class RiddleImplTest {
         RiddleImpl m = new RiddleImpl(schema);
         m.setAll(QuadraticArrays.parse(FULL_EXAMPLE));
 
-        RiddleImpl clone = (RiddleImpl) m.clone();
+        RiddleImpl clone = m.clone();
 
         assertNotSame(clone, m);
         assertEquals(clone, m);

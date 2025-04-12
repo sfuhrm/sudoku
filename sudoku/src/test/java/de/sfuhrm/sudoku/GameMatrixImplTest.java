@@ -476,7 +476,7 @@ public class GameMatrixImplTest {
 
         GameMatrixImpl matrix = new GameMatrixImpl(schema);
         matrix.setAll(data);
-        GameMatrixImpl clone = (GameMatrixImpl) matrix.clone();
+        GameMatrixImpl clone = matrix.clone();
 
         String out = clone.toString();
         assertEquals("_ _ _ _ _ _ _ _ _\n"+

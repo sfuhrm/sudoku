@@ -90,7 +90,7 @@ public class CachedGameMatrixImplTest {
 
         CachedGameMatrixImpl matrix = new CachedGameMatrixImpl(GameSchemas.SCHEMA_9X9);
         matrix.setAll(data);
-        CachedGameMatrixImpl clone = (CachedGameMatrixImpl) matrix.clone();
+        CachedGameMatrixImpl clone = matrix.clone();
 
         String out = clone.toString();
         String expected = Arrays.stream(FULL_EXAMPLE)

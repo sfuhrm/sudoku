@@ -70,7 +70,7 @@ public class ClientTest {
         output = output.trim();
         GameMatrix matrix = gameMatrixFactory.newGameMatrix();
         matrix.setAll(QuadraticArrays.parse(output.split("\n")));
-        assertEquals(true, matrix.isValid());
+        assertTrue(matrix.isValid());
     }
 
     @Test
@@ -94,7 +94,7 @@ public class ClientTest {
         output = output.trim();
         GameMatrix actual = gameMatrixFactory.newGameMatrix();
         actual.setAll(QuadraticArrays.parse(output.split("\n")));
-        assertEquals(true, actual.isValid());
+        assertTrue(actual.isValid());
 
         GameMatrix expected = gameMatrixFactory.newGameMatrix();
         expected.setAll(QuadraticArrays.parse(
