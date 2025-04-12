@@ -78,23 +78,23 @@ class CachedGameMatrixImpl extends GameMatrixImpl {
     }
 
     @Override
-    public int getBlockFreeMask(final int row, final int column) {
+    int getBlockFreeMask(final int row, final int column) {
         final int blockWidth = getSchema().getBlockWidth();
         return blockFree[row / blockWidth][column / blockWidth];
     }
 
     @Override
-    public int getColumnFreeMask(final int column) {
+    int getColumnFreeMask(final int column) {
         return columnFree[column];
     }
 
     @Override
-    public int getRowFreeMask(final int row) {
+    int getRowFreeMask(final int row) {
         return rowFree[row];
     }
 
     @Override
-    public int getFreeMask(final int row, final int column) {
+    int getFreeMask(final int row, final int column) {
         final int blockWidth = getSchema().getBlockWidth();
         return rowFree[row]
                 & columnFree[column]

@@ -301,7 +301,7 @@ class GameMatrixImpl implements Cloneable, GameMatrix {
      * the bit 2 telling whether the number 2 is free, and so on. The bit 0
      * is not used.
      */
-    public int getRowFreeMask(final int row) {
+    int getRowFreeMask(final int row) {
         byte[] tmpData = new byte[gameSchema.getWidth()];
         row(row, tmpData);
         return (~getNumberMask(gameSchema, tmpData)) & getSchema().getBitMask();
@@ -313,7 +313,7 @@ class GameMatrixImpl implements Cloneable, GameMatrix {
      * the bit 2 telling whether the number 2 is free, and so on. The bit 0
      * is not used.
      */
-    public int getColumnFreeMask(final int column) {
+    int getColumnFreeMask(final int column) {
         byte[] tmpData = new byte[gameSchema.getWidth()];
         column(column, tmpData);
         return (~getNumberMask(gameSchema, tmpData)) & getSchema().getBitMask();
@@ -326,7 +326,7 @@ class GameMatrixImpl implements Cloneable, GameMatrix {
      * the bit 2 telling whether the number 2 is free, and so on. The bit 0
      * is not used.
      */
-    public int getBlockFreeMask(final int row, final int column) {
+    int getBlockFreeMask(final int row, final int column) {
         byte[] tmpData = new byte[getSchema().getBlockWidth()
                 * getSchema().getBlockWidth()];
         block(row, column, tmpData);
@@ -340,7 +340,7 @@ class GameMatrixImpl implements Cloneable, GameMatrix {
      * the bit 2 telling whether the number 2 is free, and so on. The bit 0
      * is not used.
      */
-    public int getFreeMask(
+    int getFreeMask(
             final int row,
             final int column) {
         int free = gameSchema.getBitMask();
