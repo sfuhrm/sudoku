@@ -271,21 +271,21 @@ class GameMatrixImpl implements Cloneable, GameMatrix {
 
         byte[] tmpData = new byte[gameSchema.getWidth()];
 
-        for (int i = 0; i < gameSchema.getWidth() && result; i++) {
+        for (int i = 0; result && i < gameSchema.getWidth(); i++) {
             row(i, tmpData);
             result &= findDuplicateBits(gameSchema, tmpData) == 0;
         }
 
-        for (int i = 0; i < gameSchema.getWidth() && result; i++) {
+        for (int i = 0; result && i < gameSchema.getWidth(); i++) {
             column(i, tmpData);
             result &= findDuplicateBits(gameSchema, tmpData) == 0;
         }
 
         for (int i = 0;
-             i < gameSchema.getWidth() && result;
+             result && i < gameSchema.getWidth();
              i += gameSchema.getBlockWidth()) {
             for (int j = 0;
-                 j < gameSchema.getWidth() && result;
+                 result && j < gameSchema.getWidth();
                  j += gameSchema.getBlockWidth()) {
                 block(i, j, tmpData);
                 result &= findDuplicateBits(gameSchema, tmpData) == 0;
