@@ -219,7 +219,7 @@ public final class Creator {
             // creates a valid basis for everything
             backtrackingResult = c.backtrack(schema.getTotalFields()
                             - c.riddle.getSetCount(),
-                    new int[2]);
+                    new CellIndex());
         } while (backtrackingResult != BacktrackingResult.FOUND);
 
         return c.winner;
@@ -589,13 +589,13 @@ public final class Creator {
     /**
      * Do the backtracking job.
      * @param numbersToDistribute the count of fields left to fill.
-     * @param minimumCell two-int array for use within the algorithm.
+     * @param minimumCell coordinates of the so-far minimum cell.
      * @return {@code true} if the search shall be aborted by the
      * call hierarchy or {@code false} if search shall continue.
      */
     private BacktrackingResult backtrack(
             final int numbersToDistribute,
-            final int[] minimumCell) {
+            final CellIndex minimumCell) {
         if (numbersToDistribute == 0) {
             assert riddle.isValid()
                     : "Riddle went non-valid while backtracking";
@@ -619,8 +619,8 @@ public final class Creator {
                 break;
         }
 
-        int minimumRow = minimumCell[0];
-        int minimumColumn = minimumCell[1];
+        int minimumRow = minimumCell.row;
+        int minimumColumn = minimumCell.column;
         int minimumFree = riddle.getFreeMask(minimumRow, minimumColumn);
         int minimumBits = Integer.bitCount(minimumFree);
 

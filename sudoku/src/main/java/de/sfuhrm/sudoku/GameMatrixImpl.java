@@ -385,7 +385,7 @@ class GameMatrixImpl implements Cloneable, GameMatrix {
         return in - in % gameSchema.getBlockWidth();
     }
 
-    /** Result for {@linkplain #findLeastFreeCell(int[])}. */
+    /** Result for {@linkplain #findLeastFreeCell(CellIndex)}. */
     enum FreeCellResult {
         /** A free cell was found. */
         FOUND,
@@ -405,7 +405,7 @@ class GameMatrixImpl implements Cloneable, GameMatrix {
      * {@linkplain FreeCellResult#CONTRADICTION} if cells were free but
      * could not be occupied.
      */
-    FreeCellResult findLeastFreeCell(final int[] rowColumnResult) {
+    FreeCellResult findLeastFreeCell(final CellIndex rowColumnResult) {
         int minimumBits = -1;
         int minimumRow = -1;
         int minimumColumn = -1;
@@ -443,8 +443,8 @@ class GameMatrixImpl implements Cloneable, GameMatrix {
                 }
             }
         }
-        rowColumnResult[0] = minimumRow;
-        rowColumnResult[1] = minimumColumn;
+        rowColumnResult.row = minimumRow;
+        rowColumnResult.column = minimumColumn;
         return minimumBits != -1
                 ? FreeCellResult.FOUND
                 : FreeCellResult.NONE_FREE;

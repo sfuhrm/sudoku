@@ -82,7 +82,7 @@ public final class Solver {
         int freeCells = riddle.getSchema().getTotalFields()
                 - riddle.getSetCount();
 
-        backtrack(freeCells, new int[2]);
+        backtrack(freeCells, new CellIndex());
 
         return Collections.unmodifiableList(possibleSolutions);
     }
@@ -91,10 +91,10 @@ public final class Solver {
      * Solves a Sudoku using backtracking.
      *
      * @param freeCells number of free cells, abort criterion.
-     * @param minimumCell two-int array for use within the algorithm.
+     * @param minimumCell coordinates to the so-far found minimum cell.
      * @return the total number of solutions.
      */
-    private int backtrack(final int freeCells, final int[] minimumCell) {
+    private int backtrack(final int freeCells, final CellIndex minimumCell) {
         assert freeCells >= 0 : "freeCells is negative";
 
         // don't recurse further if already at limit
@@ -121,8 +121,8 @@ public final class Solver {
         }
 
         int result = 0;
-        int minimumRow = minimumCell[0];
-        int minimumColumn = minimumCell[1];
+        int minimumRow = minimumCell.row;
+        int minimumColumn = minimumCell.column;
         int minimumFree = riddle.getFreeMask(minimumRow, minimumColumn);
         int minimumBits = Integer.bitCount(minimumFree);
 

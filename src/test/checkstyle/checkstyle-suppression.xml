@@ -8,4 +8,6 @@
     <suppress checks="DesignForExtension"
               files="GameMatrixImpl.java"
               lines="100-530"/>
+     <suppress checks="VisibilityModifier"
+               files="CellIndex"/>
 </suppressions>
