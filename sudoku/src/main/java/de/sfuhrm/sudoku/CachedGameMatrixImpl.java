@@ -28,7 +28,7 @@ import java.util.Arrays;
  * a human being.
  * @author Stephan Fuhrmann
  */
-class CachedGameMatrixImpl extends GameMatrixImpl implements Cloneable {
+class CachedGameMatrixImpl extends GameMatrixImpl {
 
     /** Buffered free masks per row.
      * A set 1-bit means that the digit 1 is free for use.
@@ -148,7 +148,7 @@ class CachedGameMatrixImpl extends GameMatrixImpl implements Cloneable {
     }
 
     @Override
-    public Object clone() {
+    public CachedGameMatrixImpl clone() {
         CachedGameMatrixImpl clone;
         clone = (CachedGameMatrixImpl) super.clone();
         clone.blockFree = QuadraticArrays.cloneArray(blockFree);

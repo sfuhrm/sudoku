@@ -74,7 +74,7 @@ class RiddleImpl extends GameMatrixImpl implements Cloneable, Riddle {
     }
 
     @Override
-    public final Object clone() {
+    public final RiddleImpl clone() {
         RiddleImpl clone;
         clone = (RiddleImpl) super.clone();
         clone.writeable = QuadraticArrays.cloneArray(writeable);

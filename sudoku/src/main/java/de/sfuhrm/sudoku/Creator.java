@@ -151,7 +151,7 @@ public final class Creator {
 
         resultConsumer = t -> {
             winner = t;
-            return true;
+            return Boolean.TRUE;
         };
     }
 

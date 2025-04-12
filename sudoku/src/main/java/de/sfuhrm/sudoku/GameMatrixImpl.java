@@ -207,13 +207,13 @@ class GameMatrixImpl implements Cloneable, GameMatrix {
     }
 
     @Override
-    public Object clone() {
+    public GameMatrixImpl clone() {
         GameMatrixImpl clone;
         try {
             clone = (GameMatrixImpl) super.clone();
             clone.data = QuadraticArrays.cloneArray(data);
         } catch (CloneNotSupportedException ex) {
-            throw new IllegalStateException();
+            throw new IllegalStateException(ex);
         }
 
         return clone;
