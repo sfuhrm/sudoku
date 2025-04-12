@@ -575,7 +575,7 @@ public final class Creator {
         }
     }
 
-    /** Result for {@linkplain #backtrack(int, int[])}. */
+    /** Result for {@linkplain #backtrack(int, CellIndex)}. */
     enum BacktrackingResult {
         /** A result was found, abort. */
         FOUND,
