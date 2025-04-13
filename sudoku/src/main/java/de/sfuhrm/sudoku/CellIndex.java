@@ -28,9 +28,9 @@ class CellIndex {
 
     @Override
     public String toString() {
-        return "CellIndex{" +
-                "row=" + row +
-                ", column=" + column +
-                '}';
+        return "CellIndex{"
+                + "row=" + row
+                + ", column=" + column
+                + '}';
     }
 }

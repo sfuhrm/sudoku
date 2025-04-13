@@ -50,8 +50,9 @@ class GameSchemaImpl implements GameSchema {
         if (inMinimumValue <= inUnsetValue && inUnsetValue <= inMaximumValue) {
             throw new IllegalArgumentException(
                     "unsetValue " + inUnsetValue + " must be outside of "
-                            + "minimumValue "+ inMinimumValue +
-                            " and maximumValue " + inMaximumValue);
+                            + "minimumValue " + inMinimumValue
+                            + " and maximumValue "
+                            + inMaximumValue);
         }
         if (inMaximumValue - inMinimumValue + 1 != inWidth) {
             throw new IllegalArgumentException(
@@ -66,11 +67,14 @@ class GameSchemaImpl implements GameSchema {
         this.maximumValue = inMaximumValue;
         if (inWidth != inBlockWidth * inBlockWidth) {
             throw new IllegalArgumentException(
-                    "Width (" + inWidth + ") must be blockWidth * blockWidth " +
-                            "(" + inBlockWidth + " * " + inBlockWidth + ")");
+                    "Width (" + inWidth
+                            + ") must be blockWidth * blockWidth "
+                            + "(" + inBlockWidth
+                            + " * " + inBlockWidth + ")");
         }
         if (inWidth <= 0) {
-            throw new IllegalArgumentException("Width (" + inWidth + ") must be >= 0");
+            throw new IllegalArgumentException(
+                    "Width (" + inWidth + ") must be >= 0");
         }
         this.width = inWidth;
         this.blockWidth = inBlockWidth;
@@ -78,7 +82,8 @@ class GameSchemaImpl implements GameSchema {
         this.totalFields = inWidth * inWidth;
 
         if (inWidth % inBlockWidth != 0) {
-            throw new IllegalArgumentException("Width (" + inWidth + ") can not be divided "
+            throw new IllegalArgumentException(
+                    "Width (" + inWidth + ") can not be divided "
                     + "by block width (" + inBlockWidth + ")");
         }
         this.blockCount = inWidth / inBlockWidth;
@@ -160,15 +165,34 @@ class GameSchemaImpl implements GameSchema {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         GameSchemaImpl that = (GameSchemaImpl) o;
-        return unsetValue == that.unsetValue && minimumValue == that.minimumValue && maximumValue == that.maximumValue && width == that.width && totalFields == that.totalFields && blockWidth == that.blockWidth && blockCount == that.blockCount && bitMask == that.bitMask;
+        return unsetValue == that.unsetValue
+                && minimumValue == that.minimumValue
+                && maximumValue == that.maximumValue
+                && width == that.width
+                && totalFields == that.totalFields
+                && blockWidth == that.blockWidth
+                && blockCount == that.blockCount
+                && bitMask == that.bitMask;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(unsetValue, minimumValue, maximumValue, width, totalFields, blockWidth, blockCount, bitMask);
+        return Objects.hash(
+                unsetValue,
+                minimumValue,
+                maximumValue,
+                width,
+                totalFields,
+                blockWidth,
+                blockCount,
+                bitMask);
     }
 }
