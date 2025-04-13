@@ -246,7 +246,7 @@ public final class Creator {
                 byte original = fullyFilled.get(row, column);
                 if (original == schema.getUnsetValue()) {
                     throw new IllegalArgumentException(
-                            "There are unset fields in the given GameMatrix");
+                            "There are unset fields in the given GameMatrix, sample row " + row + ", column " + column);
                 }
                 byte substitute = substitution[original - 1];
                 target.set(row, column, substitute);

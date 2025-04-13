@@ -216,7 +216,7 @@ public final class QuadraticArrays {
         }
 
         throw new IllegalArgumentException(
-                "Input arrays has unknown dimension");
+                "Input arrays has unknown dimension " + rows.length);
     }
 
     /** Format a game matrix to a String.

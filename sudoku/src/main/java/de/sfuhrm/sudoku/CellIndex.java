@@ -25,4 +25,12 @@ class CellIndex {
     int row;
     /** The column index. */
     int column;
+
+    @Override
+    public String toString() {
+        return "CellIndex{" +
+                "row=" + row +
+                ", column=" + column +
+                '}';
+    }
 }
