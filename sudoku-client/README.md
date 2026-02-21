@@ -22,12 +22,20 @@ The command line options for the client are as follows:
      -i (-input) PATH                       : Input file to read for solving
      -n (-count) N                          : The number of outputs to create
                                               (default: 1)
+     -d (-difficulty) [VERY_EASY | EASY |   : Requested difficulty for
+     MEDIUM | HARD | VERY_HARD]               generated riddles
      -q (-quiet)                            : No output (default: false)
      -t (-time)                             : Show timing information (default:
                                               false)
 
 
 One example session is given here which creates 3 full boards:
+
+
+You can also target a specific difficulty when creating riddles:
+
+    java -jar target/sudoku-client-0.1.3-SNAPSHOT-jar-with-dependencies.jar \
+      -e Riddle -d HARD -f MarkDownTable
 
     java -jar target/sudoku-client-0.1.3-SNAPSHOT-jar-with-dependencies.jar -e Riddle  -f MarkDownTable -n 3
     |  |  |  |  |  |  |  |  |  |

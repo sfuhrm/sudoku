@@ -62,6 +62,31 @@ Riddle riddle = Creator.createRiddle(matrix);
 
 ---------------------------------------
 
+You can also request a target difficulty directly:
+
+---------------------------------------
+
+```java
+GameMatrix matrix = Creator.createFull(GameSchemas.SCHEMA_9X9);
+Riddle easy = Creator.createRiddle(matrix, Difficulty.EASY);
+```
+
+---------------------------------------
+
+You can also request a target difficulty directly:
+
+---------------------------------------
+
+```java
+GameMatrix matrix = Creator.createFull(GameSchemas.SCHEMA_9X9);
+Riddle medium = Creator.createRiddle(matrix, Difficulty.MEDIUM);
+```
+
+---------------------------------------
+
+A proposal for scoring-based difficulty classification is available in
+[`docs/difficulty-proposal.md`](docs/difficulty-proposal.md).
+
 A solvable riddle looks like this:
 
 ---------------------------------------
