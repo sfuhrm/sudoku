@@ -623,10 +623,11 @@ public final class Creator {
         int minimumRow = minimumCell.row;
         int minimumColumn = minimumCell.column;
         int minimumFree = riddle.getFreeMask(minimumRow, minimumColumn);
-        int minimumBits = Integer.bitCount(minimumFree);
 
-        for (int bit = 0; bit < minimumBits; bit++) {
-            int number = getSetBitOffset(minimumFree, bit);
+        int remainingChoices = minimumFree;
+        while (remainingChoices != 0) {
+            int selectedBit = remainingChoices & -remainingChoices;
+            int number = Integer.numberOfTrailingZeros(selectedBit);
             assert number >= schema.getMinimumValue()
                     && number <= schema.getMaximumValue();
             assert (riddle.getFreeMask(minimumRow, minimumColumn)
@@ -640,6 +641,8 @@ public final class Creator {
             if (subResult == BacktrackingResult.FOUND) {
                 return subResult;
             }
+
+            remainingChoices ^= selectedBit;
         }
         riddle.set(minimumRow, minimumColumn, schema.getUnsetValue());
 
