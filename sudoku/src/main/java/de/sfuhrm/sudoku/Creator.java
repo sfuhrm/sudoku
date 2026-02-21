@@ -33,6 +33,12 @@ public final class Creator {
 
     /** Number of random cleared fields before systematic clearing. */
     private static final int CREATE_RIDDLE_RANDOM_CLEAR = 10;
+    /** Step size for clear count search around target difficulty. */
+    private static final int CLEAR_COUNT_SEARCH_STEP = 2;
+    /** Maximum recursion depth for difficulty backtracking. */
+    private static final int DIFFICULTY_SEARCH_MAX_DEPTH = 8;
+    /** Number of candidates to evaluate per search node. */
+    private static final int DIFFICULTY_SEARCH_RETRIES = 3;
 
     /**
      * Sample value for 4x4 and difficulty very easy.
@@ -389,116 +395,68 @@ public final class Creator {
         return result;
     }
 
+
     /**
-     * Creates a riddle setup sudoku.
+     * Creates a maximally cleared riddle setup sudoku.
      *
      * @param fullMatrix a fully set up (solved) and valid sudoku.
-     * Can be created using {@link #createFull()} or
-     * {@link #createVariant(de.sfuhrm.sudoku.GameMatrix)} of a full
-     * matrix.
-     * @return a maximally cleared sudoku. Contains
-     * {@link GameSchema#getUnsetValue() unset} value fields for places where
-     * the user/player needs to guess values.
-     * @see #createRiddle(GameMatrix, int)
-     * @see #createFull()
-     * @see #createVariant(de.sfuhrm.sudoku.GameMatrix)
+     * @return a maximally cleared sudoku.
      */
     public static Riddle createRiddle(final GameMatrix fullMatrix) {
-        Random random = new Random();
-
-        final GameSchema schema = fullMatrix.getSchema();
-        final int width = schema.getWidth();
-        final byte unset = schema.getUnsetValue();
-
-        RiddleImpl cur = new RiddleImpl(schema);
-        cur.setAll(fullMatrix.getArray());
-
-        int randomClearCount = 0;
-
-        // first the randomized loop runs
-        // second a deterministic loop over all cells runs
-
-        // random loop
-        while (randomClearCount < CREATE_RIDDLE_RANDOM_CLEAR) {
-            int column = random.nextInt(schema.getWidth());
-            int row = random.nextInt(schema.getWidth());
-
-            if (cur.get(row, column) != schema.getUnsetValue()) {
-                if (canClear(cur, row, column)) {
-                    cur.set(row, column, schema.getUnsetValue());
-                } else {
-                    randomClearCount++;
-                }
-            }
-        }
-
-        // deterministic loop
-        for (int column = 0; column < width; column++) {
-            for (int row = 0; row < width; row++) {
-                if (unset != cur.get(row, column)
-                    && canClear(cur, row, column)) {
-                    cur.set(row, column, unset);
-                }
-            }
-        }
-
-        // set the preset fields non-writable
-        for (int column = 0; column < width; column++) {
-            for (int row = 0; row < width; row++) {
-                cur.setWritable(row, column, cur.get(row, column)
-                        == unset);
-            }
-        }
-
-        return cur;
+        return createRiddle(fullMatrix,
+                fullMatrix.getSchema().getTotalFields());
     }
 
     /**
-     * Creates a riddle setup sudoku.
+     * Creates a riddle setup sudoku with selectable difficulty.
      *
-     * @param fullMatrix        a fully set up (solved) and valid sudoku.
-     *                          Can be created using {@link #createFull()} or
-     *                          {@link
-     *                          #createVariant(de.sfuhrm.sudoku.GameMatrix)}
-     *                          of a full matrix.
+     * @param fullMatrix a fully set up (solved) and valid sudoku.
+     * @param difficulty requested difficulty level.
+     * @return a sudoku where the number of empty fields is derived from the
+     * difficulty and schema.
+     */
+    public static Riddle createRiddle(
+            final GameMatrix fullMatrix,
+            final Difficulty difficulty
+    ) {
+        return createRiddleResult(fullMatrix, difficulty).getRiddle();
+    }
+
+    /**
+     * Creates a riddle setup sudoku with selectable difficulty and
+     * analysis details.
+     *
+     * @param fullMatrix a fully set up (solved) and valid sudoku.
+     * @param difficulty requested difficulty level.
+     * @return creation result containing riddle, solve path and score.
+     */
+    public static CreationResult createRiddleResult(
+            final GameMatrix fullMatrix,
+            final Difficulty difficulty
+    ) {
+        if (difficulty == null) {
+            throw new IllegalArgumentException("difficulty must not be null");
+        }
+
+        final int target = difficulty.getMaxNumbersToClear(
+                fullMatrix.getSchema());
+        final int[] corridor = calculateClearCountCorridor(fullMatrix,
+                difficulty);
+
+        return searchDifficultyBacktracking(fullMatrix,
+                difficulty,
+                target,
+                corridor[0],
+                corridor[1],
+                DIFFICULTY_SEARCH_MAX_DEPTH);
+    }
+
+    /**
+     * Creates a riddle setup sudoku with a maximum amount of cleared fields.
+     *
+     * @param fullMatrix a fully set up (solved) and valid sudoku.
      * @param maxNumbersToClear maximum amount of numbers to clear.
-     *                          9x9 Sudoku: <p>
-     *                          Total number of valid 9x9 Sudoku grids is
-     *                          6,670,903,752,021,072,936,960. <p>
-     *                          Minimal amount of givens in an initial
-     *                          Sudoku puzzle that can yield a unique
-     *                          solution is 17 (64 empty cells). <p>
-     *                          Sample difficulty levels:
-     *                           <ul>
-     *                           <li>VERY_EASY: more than 50 given numbers,
-     *                           remove less than 31 numbers</li>
-     *                           <li>EASY: 36-49 given numbers,
-     *                           remove 32-45 numbers</li>
-     *                           <li>MEDIUM: 32-35 given numbers,
-     *                           remove 46-49 numbers</li>
-     *                           <li>HARD: 28-31 given numbers,
-     *                           remove 50-53 numbers</li>
-     *                           <li>EXPERT: 22-27 given numbers,
-     *                           remove 54-59 numbers</li>
-     *                           </ul>
-     *                          The average maximum amount of numbers to clear
-     *                          with the current algorithm and
-     *                           9x9 Sudoku is 56. <br> <br>
-     *                           16x16 Sudoku: <p>
-     *                           The maximum amount of numbers to remove with
-     *                           the current algorithm
-     *                           in a reasonably good time is ~140. <br> <br>
-     *                           25x25 Sudoku: <p>
-     *                           The maximum amount of numbers to remove with
-     *                           the current algorithm
-     *                           in a reasonably good time is ~280. <p>
-     * @return a sudoku with the given amount of cleared fields (or less if
-     * clearing more cells would endanger the unique solvability of the sudoku)
-     * Contains {@link GameSchema#getUnsetValue() unset} value fields for
-     * places where the user/player needs to guess values.
-     * @see #createRiddle(GameMatrix)
-     * @see #createFull()
-     * @see #createVariant(de.sfuhrm.sudoku.GameMatrix)
+     * @return a sudoku with up to the given amount of cleared fields.
      */
     public static Riddle createRiddle(
             final GameMatrix fullMatrix,
@@ -554,6 +512,213 @@ public final class Creator {
         }
 
         return cur;
+    }
+
+    /**
+     * Searches a riddle in a clear-count corridor by backtracking.
+     *
+     * @param fullMatrix solved matrix to derive riddles from.
+     * @param targetDifficulty requested target difficulty.
+     * @param targetClearCount configured clear-count target.
+     * @param minimumClearCount lower clear-count boundary.
+     * @param maximumClearCount upper clear-count boundary.
+     * @param depth recursion depth limit.
+     * @return best found creation result.
+     */
+    private static CreationResult searchDifficultyBacktracking(
+            final GameMatrix fullMatrix,
+            final Difficulty targetDifficulty,
+            final int targetClearCount,
+            final int minimumClearCount,
+            final int maximumClearCount,
+            final int depth) {
+        int pivot = (minimumClearCount + maximumClearCount) / 2;
+        CreationResult best = evaluateClearCount(fullMatrix,
+                targetDifficulty,
+                targetClearCount,
+                pivot,
+                null);
+
+        if (best.getClassifiedDifficulty() == targetDifficulty || depth <= 0
+                || minimumClearCount >= maximumClearCount) {
+            return best;
+        }
+
+        boolean tooEasy = best.getClassifiedDifficulty().ordinal()
+                < targetDifficulty.ordinal();
+        int preferredMin = tooEasy
+                ? Math.min(maximumClearCount,
+                pivot + CLEAR_COUNT_SEARCH_STEP)
+                : minimumClearCount;
+        int preferredMax = tooEasy
+                ? maximumClearCount
+                : Math.max(minimumClearCount,
+                pivot - CLEAR_COUNT_SEARCH_STEP);
+
+        if (preferredMin <= preferredMax) {
+            CreationResult preferred = searchDifficultyBacktracking(fullMatrix,
+                    targetDifficulty,
+                    targetClearCount,
+                    preferredMin,
+                    preferredMax,
+                    depth - 1);
+            best = pickBetterResult(targetDifficulty,
+                    targetClearCount,
+                    best,
+                    preferred);
+            if (best.getClassifiedDifficulty() == targetDifficulty) {
+                return best;
+            }
+        }
+
+        int secondaryMin = tooEasy
+                ? minimumClearCount
+                : Math.min(maximumClearCount,
+                pivot + CLEAR_COUNT_SEARCH_STEP);
+        int secondaryMax = tooEasy
+                ? Math.max(minimumClearCount,
+                pivot - CLEAR_COUNT_SEARCH_STEP)
+                : maximumClearCount;
+        if (secondaryMin <= secondaryMax) {
+            CreationResult secondary = searchDifficultyBacktracking(fullMatrix,
+                    targetDifficulty,
+                    targetClearCount,
+                    secondaryMin,
+                    secondaryMax,
+                    depth - 1);
+            best = pickBetterResult(targetDifficulty,
+                    targetClearCount,
+                    best,
+                    secondary);
+        }
+
+        return best;
+    }
+
+    /**
+     * Evaluates one clear-count point multiple times and keeps the best result.
+     *
+     * @param fullMatrix solved matrix.
+     * @param targetDifficulty requested difficulty.
+     * @param targetClearCount configured clear-count target.
+     * @param clearCount count to clear.
+     * @param best seed best result.
+     * @return best result for this clear count.
+     */
+    private static CreationResult evaluateClearCount(
+            final GameMatrix fullMatrix,
+            final Difficulty targetDifficulty,
+            final int targetClearCount,
+            final int clearCount,
+            final CreationResult best) {
+        CreationResult localBest = best;
+        for (int retry = 0; retry < DIFFICULTY_SEARCH_RETRIES; retry++) {
+            Riddle riddle = createRiddle(fullMatrix, clearCount);
+            RiddleAnalysis analysis = RiddleAnalyzer.analyze(riddle);
+            CreationResult candidate = new CreationResult(riddle, analysis);
+            localBest = pickBetterResult(targetDifficulty,
+                    targetClearCount,
+                    localBest,
+                    candidate);
+            if (candidate.getClassifiedDifficulty() == targetDifficulty) {
+                return candidate;
+            }
+        }
+        return localBest;
+    }
+
+    /**
+     * Calculates a difficulty-specific clear-count corridor.
+     *
+     * @param fullMatrix solved matrix.
+     * @param difficulty requested difficulty.
+     * @return array with minimum and maximum clear count.
+     */
+    private static int[] calculateClearCountCorridor(
+            final GameMatrix fullMatrix,
+            final Difficulty difficulty) {
+        int totalFields = fullMatrix.getSchema().getTotalFields();
+        int target = difficulty.getMaxNumbersToClear(fullMatrix.getSchema());
+
+        int min;
+        int max;
+        if (difficulty == Difficulty.VERY_EASY) {
+            min = 0;
+            max = midpoint(target,
+                    Difficulty.EASY.getMaxNumbersToClear(
+                            fullMatrix.getSchema()));
+        } else if (difficulty == Difficulty.VERY_HARD) {
+            min = midpoint(Difficulty.HARD.getMaxNumbersToClear(
+                    fullMatrix.getSchema()), target);
+            max = totalFields - 1;
+        } else {
+            Difficulty previous = Difficulty.values()[difficulty.ordinal() - 1];
+            Difficulty next = Difficulty.values()[difficulty.ordinal() + 1];
+            min = midpoint(previous.getMaxNumbersToClear(
+                    fullMatrix.getSchema()), target);
+            max = midpoint(target,
+                    next.getMaxNumbersToClear(fullMatrix.getSchema()));
+        }
+
+        return new int[] {
+                Math.max(0, min),
+                Math.min(totalFields - 1, max)
+        };
+    }
+
+    /**
+     * Returns the midpoint of two numbers.
+     *
+     * @param left first value.
+     * @param right second value.
+     * @return midpoint.
+     */
+    private static int midpoint(final int left, final int right) {
+        return (left + right) / 2;
+    }
+
+    /**
+     * Compares two creation results and returns the better one.
+     *
+     * @param targetDifficulty requested target difficulty.
+     * @param targetClearCount target clear count.
+     * @param best current best result.
+     * @param candidate candidate result.
+     * @return better result.
+     */
+    private static CreationResult pickBetterResult(
+            final Difficulty targetDifficulty,
+            final int targetClearCount,
+            final CreationResult best,
+            final CreationResult candidate) {
+        if (best == null) {
+            return candidate;
+        }
+
+        int candidateDistance = Math.abs(targetDifficulty.ordinal()
+                - candidate.getClassifiedDifficulty().ordinal());
+        int bestDistance = Math.abs(targetDifficulty.ordinal()
+                - best.getClassifiedDifficulty().ordinal());
+
+        if (candidateDistance < bestDistance) {
+            return candidate;
+        }
+        if (candidateDistance > bestDistance) {
+            return best;
+        }
+
+        int candidateCleared = candidate.getRiddle().getSchema()
+                .getTotalFields()
+                - candidate.getRiddle().getSetCount();
+        int bestCleared = best.getRiddle().getSchema().getTotalFields()
+                - best.getRiddle().getSetCount();
+        int candidateClearDistance = Math.abs(candidateCleared
+                - targetClearCount);
+        int bestClearDistance = Math.abs(bestCleared - targetClearCount);
+        if (candidateClearDistance < bestClearDistance) {
+            return candidate;
+        }
+        return best;
     }
 
     /** Fills a block with randomly ordered numbers from 1 to 9.
