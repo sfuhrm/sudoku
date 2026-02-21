@@ -122,17 +122,20 @@ public final class Solver {
         int minimumRow = minimumCell.row;
         int minimumColumn = minimumCell.column;
         int minimumFree = riddle.getFreeMask(minimumRow, minimumColumn);
-        int minimumBits = Integer.bitCount(minimumFree);
 
         // else we are done
         // now try each number
-        for (int bit = 0; bit < minimumBits; bit++) {
-            int index = Creator.getSetBitOffset(minimumFree, bit);
+        int remainingChoices = minimumFree;
+        while (remainingChoices != 0) {
+            int selectedBit = remainingChoices & -remainingChoices;
+            int index = Integer.numberOfTrailingZeros(selectedBit);
             assert index > 0;
 
             riddle.set(minimumRow, minimumColumn, (byte) index);
             int resultCount = backtrack(freeCells - 1, minimumCell);
             result += resultCount;
+
+            remainingChoices ^= selectedBit;
         }
         riddle.set(minimumRow,
                 minimumColumn,
