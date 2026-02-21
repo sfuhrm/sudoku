@@ -36,15 +36,17 @@ public final class Creator {
     /** Step size for clear count search around target difficulty. */
     private static final int CLEAR_COUNT_SEARCH_STEP = 2;
     /** Search radius for most difficulty levels. */
-    private static final int CLEAR_COUNT_SEARCH_RADIUS = 10;
+    private static final int CLEAR_COUNT_SEARCH_RADIUS = 8;
     /** Extended search radius for VERY_HARD difficulty. */
-    private static final int VERY_HARD_SEARCH_RADIUS = 30;
+    private static final int VERY_HARD_SEARCH_RADIUS = 14;
     /** Maximum retries for one clear-count target. */
-    private static final int CREATE_RIDDLE_RETRIES_PER_TARGET = 3;
+    private static final int CREATE_RIDDLE_RETRIES_PER_TARGET = 2;
     /** Extra retries for VERY_HARD difficulty search. */
-    private static final int VERY_HARD_RETRIES_PER_TARGET = 8;
+    private static final int VERY_HARD_RETRIES_PER_TARGET = 3;
     /** Marker for unknown measured difficulty ordinal. */
     private static final int INVALID_ORDINAL = -1;
+    /** Upper bound for number of analyzed candidates. */
+    private static final int MAX_CANDIDATES_TO_EVALUATE = 40;
 
     /**
      * Sample value for 4x4 and difficulty very easy.
@@ -455,6 +457,7 @@ public final class Creator {
         int bestDistance = Integer.MAX_VALUE;
         int bestClearDistance = Integer.MAX_VALUE;
         int bestMeasuredOrdinal = INVALID_ORDINAL;
+        int evaluated = 0;
         int retries = difficulty == Difficulty.VERY_HARD
                 ? VERY_HARD_RETRIES_PER_TARGET
                 : CREATE_RIDDLE_RETRIES_PER_TARGET;
@@ -469,10 +472,14 @@ public final class Creator {
                         target + signedDelta));
 
                 for (int retry = 0; retry < retries; retry++) {
+                    if (evaluated >= MAX_CANDIDATES_TO_EVALUATE) {
+                        return best;
+                    }
                     Riddle riddle = createRiddle(fullMatrix, clearCount);
                     RiddleAnalysis analysis = RiddleAnalyzer.analyze(riddle);
                     CreationResult candidate = new CreationResult(riddle,
                             analysis);
+                    evaluated++;
                     int measuredOrdinal = analysis.getClassifiedDifficulty()
                             .ordinal();
                     int distance = difficultyDistance(difficulty,
@@ -480,6 +487,11 @@ public final class Creator {
                     int clearDistance = Math.abs(clearCount - target);
 
                     if (distance == 0) {
+                        return candidate;
+                    }
+                    if (difficulty.ordinal() >= Difficulty.HARD.ordinal()
+                            && distance <= 1
+                            && evaluated >= retries) {
                         return candidate;
                     }
 

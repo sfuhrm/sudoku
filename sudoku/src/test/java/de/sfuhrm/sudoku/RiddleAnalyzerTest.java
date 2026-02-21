@@ -42,23 +42,32 @@ public class RiddleAnalyzerTest {
     }
 
     @Test
-    public void testCreateRiddleResultContainsAnalysis() {
-        GameMatrix full = Creator.createFull(GameSchemas.SCHEMA_9X9);
-
-        CreationResult result = Creator.createRiddleResult(full,
-                Difficulty.EASY);
-
-        assertNotNull(result.getRiddle());
-        assertNotNull(result.getPath());
-        assertFalse(result.getPath().isEmpty());
-        assertTrue(result.getScore().getPoints() > 0);
+    public void testCreationResultContainsAnalysis() {
+        assertCreationResultContainsAnalysis(Difficulty.EASY);
+        assertCreationResultContainsAnalysis(Difficulty.HARD);
+        assertCreationResultContainsAnalysis(Difficulty.VERY_HARD);
     }
+
     @Test
     public void testVeryHardCreationTerminates() {
         GameMatrix full = Creator.createFull(GameSchemas.SCHEMA_9X9);
 
         assertTimeoutPreemptively(Duration.ofSeconds(20),
                 () -> Creator.createRiddleResult(full, Difficulty.VERY_HARD));
+    }
+
+    private static void assertCreationResultContainsAnalysis(
+            final Difficulty difficulty) {
+        GameMatrix full = Creator.createFull(GameSchemas.SCHEMA_9X9);
+
+        CreationResult result = assertTimeoutPreemptively(
+                Duration.ofSeconds(20),
+                () -> Creator.createRiddleResult(full, difficulty));
+
+        assertNotNull(result.getRiddle());
+        assertNotNull(result.getPath());
+        assertFalse(result.getPath().isEmpty());
+        assertTrue(result.getScore().getPoints() > 0);
     }
 
 }
