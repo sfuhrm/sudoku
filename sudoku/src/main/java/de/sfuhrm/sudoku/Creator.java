@@ -170,6 +170,7 @@ public final class Creator {
      */
     static int getSetBitOffset(final int mask,
             final int bitIndex) {
+        assert bitIndex >= 0;
         int count = 0; // index of the next bit seen being set
         int workingMask = mask; // the left unseen bits are set
         int low = Integer.numberOfTrailingZeros(workingMask);
@@ -320,6 +321,7 @@ public final class Creator {
     static void swapColumn(final GameMatrix matrix,
             final int columnA,
             final int columnB) {
+        assert columnA != columnB;
         for (int row = 0; row < matrix.getSchema().getWidth(); row++) {
             byte av = matrix.get(row, columnA);
             byte bv = matrix.get(row, columnB);
@@ -691,6 +693,9 @@ public final class Creator {
             final int targetClearCount,
             final CreationResult best,
             final CreationResult candidate) {
+
+        assert best != null || candidate != null;
+        assert targetClearCount > 0;
         if (best == null) {
             return candidate;
         }
@@ -788,10 +793,12 @@ public final class Creator {
         int minimumRow = minimumCell.row;
         int minimumColumn = minimumCell.column;
         int minimumFree = riddle.getFreeMask(minimumRow, minimumColumn);
-
+        assert minimumRow >= 0 && minimumRow < schema.getWidth();
+        assert minimumColumn >= 0 && minimumColumn < schema.getWidth();
         int remainingChoices = minimumFree;
         while (remainingChoices != 0) {
             int selectedBit = remainingChoices & -remainingChoices;
+            assert Integer.bitCount(selectedBit) == 1;
             int number = Integer.numberOfTrailingZeros(selectedBit);
             assert number >= schema.getMinimumValue()
                     && number <= schema.getMaximumValue();
