@@ -437,21 +437,18 @@ public final class Creator {
                 fullMatrix.getSchema());
         final int[] adjustments = new int[] {0, -2, 2, -4, 4, -6, 6, -8, 8};
 
-        CreationResult fallback = null;
-        for (int adjustment : adjustments) {
-            int clearCount = Math.max(0, Math.min(totalFields - 1,
-                    target + adjustment));
-            Riddle riddle = createRiddle(fullMatrix, clearCount);
-            RiddleAnalysis analysis = RiddleAnalyzer.analyze(riddle);
-            CreationResult candidate = new CreationResult(riddle, analysis);
-            if (fallback == null) {
-                fallback = candidate;
-            }
-            if (analysis.getClassifiedDifficulty() == difficulty) {
-                return candidate;
+        while(true) {
+            for (int adjustment : adjustments) {
+                int clearCount = Math.max(0, Math.min(totalFields - 1,
+                        target + adjustment));
+                Riddle riddle = createRiddle(fullMatrix, clearCount);
+                RiddleAnalysis analysis = RiddleAnalyzer.analyze(riddle);
+                CreationResult candidate = new CreationResult(riddle, analysis);
+                if (analysis.getClassifiedDifficulty() == difficulty) {
+                    return candidate;
+                }
             }
         }
-        return fallback;
     }
 
     /**

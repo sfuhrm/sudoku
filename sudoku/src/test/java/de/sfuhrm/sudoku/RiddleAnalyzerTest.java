@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 /**
  * Tests for {@link RiddleAnalyzer} and result API.
@@ -39,16 +41,18 @@ public class RiddleAnalyzerTest {
         assertTrue(analysis.getScore().getPoints() >= 100);
     }
 
-    @Test
-    public void testCreateRiddleResultContainsAnalysis() {
+    @ParameterizedTest
+    @EnumSource
+    public void testCreateRiddleResultContainsAnalysis(Difficulty difficulty) {
         GameMatrix full = Creator.createFull(GameSchemas.SCHEMA_9X9);
 
         CreationResult result = Creator.createRiddleResult(full,
-                Difficulty.EASY);
+                difficulty);
 
         assertNotNull(result.getRiddle());
         assertNotNull(result.getPath());
         assertFalse(result.getPath().isEmpty());
         assertTrue(result.getScore().getPoints() > 0);
+        assertEquals(difficulty, result.getClassifiedDifficulty());
     }
 }
