@@ -17,7 +17,7 @@ final class DifficultyScore {
      * Build score from a path.
      * @param steps solving path.
      */
-    public DifficultyScore(final List<SolveStep> steps) {
+    DifficultyScore(final List<SolveStep> steps) {
         int sum = 0;
         int max = 0;
         for (SolveStep step : steps) {

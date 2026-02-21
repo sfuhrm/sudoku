@@ -21,7 +21,7 @@ final class RiddleAnalysis {
      * @param solvePath solving path.
      * @param difficulty classified difficulty.
      */
-    public RiddleAnalysis(final List<SolveStep> solvePath,
+    RiddleAnalysis(final List<SolveStep> solvePath,
             final Difficulty difficulty) {
         Objects.requireNonNull(solvePath, "solvePath is null");
         this.path = Collections.unmodifiableList(new ArrayList<>(solvePath));

@@ -17,7 +17,7 @@ final class CreationResult {
      * @param createdRiddle generated riddle.
      * @param riddleAnalysis analysis details.
      */
-    public CreationResult(final Riddle createdRiddle,
+    CreationResult(final Riddle createdRiddle,
             final RiddleAnalysis riddleAnalysis) {
         this.riddle = Objects.requireNonNull(createdRiddle,
                 "createdRiddle is null");

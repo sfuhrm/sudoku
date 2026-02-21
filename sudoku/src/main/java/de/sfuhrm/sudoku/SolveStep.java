@@ -22,7 +22,7 @@ final class SolveStep {
      * @param inColumn column index.
      * @param setValue value set.
      */
-    public SolveStep(final SolveTechnique useTechnique,
+    SolveStep(final SolveTechnique useTechnique,
             final int inRow,
             final int inColumn,
             final byte setValue) {
