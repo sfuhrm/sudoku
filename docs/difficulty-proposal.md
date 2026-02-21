@@ -1,68 +1,80 @@
-# Vorschlag: Wählbare Sudoku-Schwierigkeit + Schwierigkeitspunkte
+# Proposal: Selectable Sudoku Difficulty + Difficulty Points
 
-## Zielbild
+## Target vision
 
-1. **Schwierigkeit bei Erstellung auswählen** (z. B. VERY_EASY bis VERY_HARD).
-2. **Lösungswege bewerten** statt nur über Anzahl leerer Felder zu klassifizieren.
-3. **Stabile Erzeugung**: Generator erzeugt ein Rätsel, Solver analysiert die notwendigen Techniken, danach wird in die Zielklasse einsortiert.
+1. **Select difficulty during puzzle creation** (e.g., VERY_EASY to
+   VERY_HARD).
+2. **Rate required solving techniques** instead of classifying only by the
+   number of empty cells.
+3. **Stable generation flow**: generator creates a puzzle, solver analyzes the
+   required techniques, then the puzzle is assigned to the target class.
 
-## Bereits umgesetzt (Basis)
+## Already implemented (baseline)
 
-- Neue API für die Erzeugung mit Schwierigkeit:
+- New creation API with difficulty:
   - `Creator.createRiddle(fullMatrix, Difficulty)`
-- Neue Enum `Difficulty` mit Schema-abhängigen Richtwerten für zu leerende Felder.
+- New `Difficulty` enum with schema-dependent guidance values for the number
+  of cells to clear.
 
-Damit kann bereits eine gewünschte Schwierigkeitsstufe beim Erzeugen angegeben werden.
+This already allows callers to request a desired difficulty level when
+creating puzzles.
 
-## Vorschlag für Punkte-Modell
+## Proposed points model
 
-Die Schwierigkeit wird als Summe der im Solver benötigten Schritte berechnet.
+Difficulty is calculated as the sum of steps needed by the solver.
 
-### Einfache Techniken
+### Basic techniques
 
-- **Single in Zelle (Naked Single)**: 1 Punkt
-- **Single in Einheit (Hidden Single in Zeile/Spalte/Block; „1 aus 9“) **: 2 Punkte
+- **Naked Single**: 1 point
+- **Hidden Single in row/column/block ("1 out of 9")**: 2 points
 
-### Mittlere Techniken
+### Intermediate techniques
 
-- **Naked Pair/Triple**: 4 / 6 Punkte
-- **Pointing Pair / Box-Line Reduction**: 5 Punkte
+- **Naked Pair/Triple**: 4 / 6 points
+- **Pointing Pair / Box-Line Reduction**: 5 points
 
-### Fortgeschritten
+### Advanced techniques
 
-- **X-Wing**: 12 Punkte
-- **Swordfish**: 18 Punkte
-- **XY-Wing**: 15 Punkte
+- **X-Wing**: 12 points
+- **Swordfish**: 18 points
+- **XY-Wing**: 15 points
 
-### Optional (Experte)
+### Optional (expert)
 
-- **Färbung / Chains**: 20+ Punkte
-- **Backtracking-Hinweis**: hoher Strafwert (z. B. +100), damit solche Rätsel in „Expert/Very Hard“ landen.
+- **Coloring / Chains**: 20+ points
+- **Backtracking hint**: high penalty (e.g., +100) so such puzzles land in
+  "Expert/Very Hard".
 
-## Einstufungsvorschlag für 9x9
+## Suggested classes for 9x9
 
-- **VERY_EASY**: 0–40 Punkte
-- **EASY**: 41–90 Punkte
-- **MEDIUM**: 91–160 Punkte
-- **HARD**: 161–260 Punkte
+- **VERY_EASY**: 0–40 points
+- **EASY**: 41–90 points
+- **MEDIUM**: 91–160 points
+- **HARD**: 161–260 points
 - **VERY_HARD**: 261+
 
-> Die Grenzwerte sollten mit einer Stichprobe (z. B. 1.000 Rätsel je Klasse) kalibriert werden.
+> Thresholds should be calibrated using a sample set (e.g., 1,000 puzzles per
+> class).
 
-## Technischer Ansatz zur Umsetzung
+## Technical implementation approach
 
-1. **Solver instrumentieren**
-   - Jede angewendete Technik als `SolveStep` mit Typ, Position, Kandidaten und Punkten protokollieren.
-2. **Score aggregieren**
-   - `DifficultyScore = Summe(step.points)`
-   - plus sekundäre Kennzahlen (Anzahl Schritte, maximale Technikstufe).
-3. **Generator mit Feedback-Schleife**
-   - Rätsel erzeugen → analysieren → bei Abweichung von Zielklasse weiter mutieren (mehr/weniger Felder leeren, gezielt Strukturen ändern).
-4. **API-Erweiterung**
-   - `CreationResult { Riddle riddle; DifficultyScore score; List<SolveStep> path; }`
+1. **Instrument the solver**
+   - Log each applied technique as a `SolveStep` with type, position,
+     candidates, and points.
+2. **Aggregate score**
+   - `DifficultyScore = sum(step.points)`
+   - plus secondary metrics (step count, maximum technique level).
+3. **Generator with feedback loop**
+   - Generate puzzle → analyze → if it misses the target class, continue
+     mutating (clear more/fewer cells, optionally reshape structures).
+4. **API extension**
+   - `CreationResult { Riddle riddle; DifficultyScore score;
+     List<SolveStep> path; }`
 
-## Nutzen
+## Benefits
 
-- Bessere Spielerwartung: „schwer“ bedeutet dann tatsächlich schwierigere Deduktion, nicht nur weniger Vorgaben.
-- Erklärbarkeit: Für jedes Rätsel kann angezeigt werden, **welche** Techniken nötig waren.
-- Gute Grundlage für „Hint“-Systeme, Lernmodus und Progression.
+- Better player expectations: "hard" then reflects harder deduction instead of
+  only fewer givens.
+- Explainability: for each puzzle you can show **which** techniques are
+  required.
+- Strong foundation for hint systems, learning mode, and progression.
