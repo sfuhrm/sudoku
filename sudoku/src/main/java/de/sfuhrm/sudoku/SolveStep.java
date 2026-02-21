@@ -37,7 +37,7 @@ final class SolveStep {
      * The solving technique used for this step.
      * @return solve technique.
      */
-    public SolveTechnique getTechnique() {
+    SolveTechnique getTechnique() {
         return technique;
     }
 
@@ -45,7 +45,7 @@ final class SolveStep {
      * Row index affected by this step.
      * @return row index.
      */
-    public int getRow() {
+    int getRow() {
         return row;
     }
 
@@ -53,7 +53,7 @@ final class SolveStep {
      * Column index affected by this step.
      * @return column index.
      */
-    public int getColumn() {
+    int getColumn() {
         return column;
     }
 
@@ -61,7 +61,7 @@ final class SolveStep {
      * Value set by this step.
      * @return value.
      */
-    public byte getValue() {
+    byte getValue() {
         return value;
     }
 
@@ -69,7 +69,7 @@ final class SolveStep {
      * Points awarded for this step.
      * @return step points.
      */
-    public int getPoints() {
+    int getPoints() {
         return technique.getPoints();
     }
 }

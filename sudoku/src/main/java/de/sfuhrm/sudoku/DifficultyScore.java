@@ -33,7 +33,7 @@ final class DifficultyScore {
      * Sum of points over the whole path.
      * @return total points.
      */
-    public int getPoints() {
+    int getPoints() {
         return points;
     }
 
@@ -41,7 +41,7 @@ final class DifficultyScore {
      * Number of recorded solve steps.
      * @return step count.
      */
-    public int getStepCount() {
+    int getStepCount() {
         return stepCount;
     }
 
@@ -49,7 +49,7 @@ final class DifficultyScore {
      * Highest points value of one step.
      * @return maximum single-step points.
      */
-    public int getMaximumStepPoints() {
+    int getMaximumStepPoints() {
         return maximumStepPoints;
     }
 }

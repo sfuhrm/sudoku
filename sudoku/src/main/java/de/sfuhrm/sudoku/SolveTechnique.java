@@ -23,7 +23,7 @@ enum SolveTechnique {
      *
      * @return points.
      */
-    public int getPoints() {
+    int getPoints() {
         return points;
     }
 }

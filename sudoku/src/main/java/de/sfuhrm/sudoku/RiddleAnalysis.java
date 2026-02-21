@@ -34,7 +34,7 @@ final class RiddleAnalysis {
      * Path of logged solving steps.
      * @return immutable solve path.
      */
-    public List<SolveStep> getPath() {
+    List<SolveStep> getPath() {
         return path;
     }
 
@@ -42,7 +42,7 @@ final class RiddleAnalysis {
      * Aggregated score over the solve path.
      * @return score details.
      */
-    public DifficultyScore getScore() {
+    DifficultyScore getScore() {
         return score;
     }
 
@@ -50,7 +50,7 @@ final class RiddleAnalysis {
      * Difficulty class derived from the score.
      * @return classified difficulty.
      */
-    public Difficulty getClassifiedDifficulty() {
+    Difficulty getClassifiedDifficulty() {
         return classifiedDifficulty;
     }
 }
