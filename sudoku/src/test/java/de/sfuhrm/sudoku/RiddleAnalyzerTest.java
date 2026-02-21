@@ -3,8 +3,10 @@ package de.sfuhrm.sudoku;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.Duration;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -51,4 +53,12 @@ public class RiddleAnalyzerTest {
         assertFalse(result.getPath().isEmpty());
         assertTrue(result.getScore().getPoints() > 0);
     }
+    @Test
+    public void testVeryHardCreationTerminates() {
+        GameMatrix full = Creator.createFull(GameSchemas.SCHEMA_9X9);
+
+        assertTimeoutPreemptively(Duration.ofSeconds(20),
+                () -> Creator.createRiddleResult(full, Difficulty.VERY_HARD));
+    }
+
 }

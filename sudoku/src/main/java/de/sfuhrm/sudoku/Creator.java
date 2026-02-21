@@ -33,6 +33,18 @@ public final class Creator {
 
     /** Number of random cleared fields before systematic clearing. */
     private static final int CREATE_RIDDLE_RANDOM_CLEAR = 10;
+    /** Step size for clear count search around target difficulty. */
+    private static final int CLEAR_COUNT_SEARCH_STEP = 2;
+    /** Search radius for most difficulty levels. */
+    private static final int CLEAR_COUNT_SEARCH_RADIUS = 10;
+    /** Extended search radius for VERY_HARD difficulty. */
+    private static final int VERY_HARD_SEARCH_RADIUS = 30;
+    /** Maximum retries for one clear-count target. */
+    private static final int CREATE_RIDDLE_RETRIES_PER_TARGET = 3;
+    /** Extra retries for VERY_HARD difficulty search. */
+    private static final int VERY_HARD_RETRIES_PER_TARGET = 8;
+    /** Marker for unknown measured difficulty ordinal. */
+    private static final int INVALID_ORDINAL = -1;
 
     /**
      * Sample value for 4x4 and difficulty very easy.
@@ -435,23 +447,58 @@ public final class Creator {
         final int totalFields = fullMatrix.getSchema().getTotalFields();
         final int target = difficulty.getMaxNumbersToClear(
                 fullMatrix.getSchema());
-        final int[] adjustments = new int[] {0, -2, 2, -4, 4, -6, 6, -8, 8};
+        final int searchRadius = difficulty == Difficulty.VERY_HARD
+                ? VERY_HARD_SEARCH_RADIUS
+                : CLEAR_COUNT_SEARCH_RADIUS;
 
-        CreationResult fallback = null;
-        for (int adjustment : adjustments) {
-            int clearCount = Math.max(0, Math.min(totalFields - 1,
-                    target + adjustment));
-            Riddle riddle = createRiddle(fullMatrix, clearCount);
-            RiddleAnalysis analysis = RiddleAnalyzer.analyze(riddle);
-            CreationResult candidate = new CreationResult(riddle, analysis);
-            if (fallback == null) {
-                fallback = candidate;
-            }
-            if (analysis.getClassifiedDifficulty() == difficulty) {
-                return candidate;
+        CreationResult best = null;
+        int bestDistance = Integer.MAX_VALUE;
+        int bestClearDistance = Integer.MAX_VALUE;
+        int bestMeasuredOrdinal = INVALID_ORDINAL;
+        int retries = difficulty == Difficulty.VERY_HARD
+                ? VERY_HARD_RETRIES_PER_TARGET
+                : CREATE_RIDDLE_RETRIES_PER_TARGET;
+
+        for (int delta = 0;
+                delta <= searchRadius;
+                delta += CLEAR_COUNT_SEARCH_STEP) {
+            int variants = delta == 0 ? 1 : 2;
+            for (int variant = 0; variant < variants; variant++) {
+                int signedDelta = variant == 0 ? delta : -delta;
+                int clearCount = Math.max(0, Math.min(totalFields - 1,
+                        target + signedDelta));
+
+                for (int retry = 0; retry < retries; retry++) {
+                    Riddle riddle = createRiddle(fullMatrix, clearCount);
+                    RiddleAnalysis analysis = RiddleAnalyzer.analyze(riddle);
+                    CreationResult candidate = new CreationResult(riddle,
+                            analysis);
+                    int measuredOrdinal = analysis.getClassifiedDifficulty()
+                            .ordinal();
+                    int distance = difficultyDistance(difficulty,
+                            analysis.getClassifiedDifficulty());
+                    int clearDistance = Math.abs(clearCount - target);
+
+                    if (distance == 0) {
+                        return candidate;
+                    }
+
+                    if (isBetterCandidate(difficulty,
+                            distance,
+                            clearDistance,
+                            measuredOrdinal,
+                            bestDistance,
+                            bestClearDistance,
+                            bestMeasuredOrdinal)) {
+                        best = candidate;
+                        bestDistance = distance;
+                        bestClearDistance = clearDistance;
+                        bestMeasuredOrdinal = measuredOrdinal;
+                    }
+                }
             }
         }
-        return fallback;
+        return best;
     }
 
     /**
@@ -515,6 +562,57 @@ public final class Creator {
         }
 
         return cur;
+    }
+
+    /**
+     * Distance between two difficulty levels.
+     *
+     * @param requested requested difficulty.
+     * @param measured measured difficulty.
+     * @return absolute ordinal distance.
+     */
+    private static int difficultyDistance(final Difficulty requested,
+            final Difficulty measured) {
+        return Math.abs(requested.ordinal() - measured.ordinal());
+    }
+
+    /**
+     * Compares a candidate difficulty result with the current best candidate.
+     *
+     * @param requested requested target difficulty.
+     * @param distance candidate distance to requested difficulty.
+     * @param clearDistance candidate clear-count distance to target.
+     * @param measuredOrdinal candidate measured difficulty ordinal.
+     * @param bestDistance current best distance.
+     * @param bestClearDistance current best clear-count distance.
+     * @param bestMeasuredOrdinal current best measured difficulty ordinal.
+     * @return {@code true} when candidate is better than current best.
+     */
+    private static boolean isBetterCandidate(final Difficulty requested,
+            final int distance,
+            final int clearDistance,
+            final int measuredOrdinal,
+            final int bestDistance,
+            final int bestClearDistance,
+            final int bestMeasuredOrdinal) {
+        if (bestMeasuredOrdinal == INVALID_ORDINAL
+                || distance < bestDistance) {
+            return true;
+        }
+        if (distance > bestDistance) {
+            return false;
+        }
+        if (clearDistance < bestClearDistance) {
+            return true;
+        }
+        if (clearDistance > bestClearDistance) {
+            return false;
+        }
+
+        if (requested.ordinal() >= Difficulty.MEDIUM.ordinal()) {
+            return measuredOrdinal > bestMeasuredOrdinal;
+        }
+        return measuredOrdinal < bestMeasuredOrdinal;
     }
 
     /** Fills a block with randomly ordered numbers from 1 to 9.
