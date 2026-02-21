@@ -29,7 +29,7 @@ final class CreationResult {
      * Generated riddle.
      * @return generated riddle.
      */
-    public Riddle getRiddle() {
+    Riddle getRiddle() {
         return riddle;
     }
 
@@ -37,7 +37,7 @@ final class CreationResult {
      * Aggregated difficulty score.
      * @return score details.
      */
-    public DifficultyScore getScore() {
+    DifficultyScore getScore() {
         return analysis.getScore();
     }
 
@@ -45,7 +45,7 @@ final class CreationResult {
      * Recorded solving steps.
      * @return immutable solving path.
      */
-    public List<SolveStep> getPath() {
+    List<SolveStep> getPath() {
         return analysis.getPath();
     }
 
@@ -53,7 +53,7 @@ final class CreationResult {
      * Difficulty class measured from the path score.
      * @return classified difficulty.
      */
-    public Difficulty getClassifiedDifficulty() {
+    Difficulty getClassifiedDifficulty() {
         return analysis.getClassifiedDifficulty();
     }
 }
