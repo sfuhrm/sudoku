@@ -75,6 +75,13 @@ final class RiddleAnalyzer {
         return new RiddleAnalysis(path, difficulty);
     }
 
+    /**
+     * Fills one naked single if available.
+     *
+     * @param work mutable working matrix.
+     * @param path collected solve steps.
+     * @return {@code true} if one cell was filled.
+     */
     private static boolean fillNakedSingles(final CachedGameMatrixImpl work,
             final List<SolveStep> path) {
         final int width = work.getSchema().getWidth();
@@ -98,6 +105,13 @@ final class RiddleAnalyzer {
         return false;
     }
 
+    /**
+     * Tries to fill one hidden single in rows, columns, or blocks.
+     *
+     * @param work mutable working matrix.
+     * @param path collected solve steps.
+     * @return {@code true} if one cell was filled.
+     */
     private static boolean fillHiddenSingles(final CachedGameMatrixImpl work,
             final List<SolveStep> path) {
         return fillHiddenSingleInRows(work, path)
@@ -105,6 +119,13 @@ final class RiddleAnalyzer {
                 || fillHiddenSingleInBlocks(work, path);
     }
 
+    /**
+     * Fills one hidden single in any row.
+     *
+     * @param work mutable working matrix.
+     * @param path collected solve steps.
+     * @return {@code true} if one cell was filled.
+     */
     private static boolean fillHiddenSingleInRows(
             final CachedGameMatrixImpl work,
             final List<SolveStep> path) {
@@ -139,6 +160,13 @@ final class RiddleAnalyzer {
         return false;
     }
 
+    /**
+     * Fills one hidden single in any column.
+     *
+     * @param work mutable working matrix.
+     * @param path collected solve steps.
+     * @return {@code true} if one cell was filled.
+     */
     private static boolean fillHiddenSingleInColumns(
             final CachedGameMatrixImpl work,
             final List<SolveStep> path) {
@@ -173,6 +201,13 @@ final class RiddleAnalyzer {
         return false;
     }
 
+    /**
+     * Fills one hidden single in any block.
+     *
+     * @param work mutable working matrix.
+     * @param path collected solve steps.
+     * @return {@code true} if one cell was filled.
+     */
     private static boolean fillHiddenSingleInBlocks(
             final CachedGameMatrixImpl work,
             final List<SolveStep> path) {
@@ -224,6 +259,13 @@ final class RiddleAnalyzer {
         return false;
     }
 
+    /**
+     * Classifies a score into a difficulty level.
+     *
+     * @param schema sudoku schema.
+     * @param points aggregated score points.
+     * @return classified difficulty.
+     */
     private static Difficulty classify(final GameSchema schema,
             final int points) {
         if (schema.getWidth() == WIDTH_9X9) {
