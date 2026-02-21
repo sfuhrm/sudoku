@@ -47,7 +47,7 @@ final class RiddleAnalyzer {
      * @param riddle input riddle.
      * @return analysis with path and score.
      */
-    public static RiddleAnalysis analyze(final GameMatrix riddle) {
+    static RiddleAnalysis analyze(final GameMatrix riddle) {
         CachedGameMatrixImpl work =
                 new CachedGameMatrixImpl(riddle.getSchema());
         work.setAll(riddle.getArray());
