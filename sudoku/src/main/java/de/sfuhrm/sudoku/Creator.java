@@ -390,118 +390,6 @@ public final class Creator {
     }
 
     /**
-     * Creates a riddle setup sudoku.
-     *
-     * @param fullMatrix a fully set up (solved) and valid sudoku.
-     * Can be created using {@link #createFull()} or
-     * {@link #createVariant(de.sfuhrm.sudoku.GameMatrix)} of a full
-     * matrix.
-     * @return a maximally cleared sudoku. Contains
-     * {@link GameSchema#getUnsetValue() unset} value fields for places where
-     * the user/player needs to guess values.
-     * @see #createRiddle(GameMatrix, int)
-     * @see #createFull()
-     * @see #createVariant(de.sfuhrm.sudoku.GameMatrix)
-     */
-    public static Riddle createRiddle(final GameMatrix fullMatrix) {
-        Random random = new Random();
-
-        final GameSchema schema = fullMatrix.getSchema();
-        final int width = schema.getWidth();
-        final byte unset = schema.getUnsetValue();
-
-        RiddleImpl cur = new RiddleImpl(schema);
-        cur.setAll(fullMatrix.getArray());
-
-        int randomClearCount = 0;
-
-        // first the randomized loop runs
-        // second a deterministic loop over all cells runs
-
-        // random loop
-        while (randomClearCount < CREATE_RIDDLE_RANDOM_CLEAR) {
-            int column = random.nextInt(schema.getWidth());
-            int row = random.nextInt(schema.getWidth());
-
-            if (cur.get(row, column) != schema.getUnsetValue()) {
-                if (canClear(cur, row, column)) {
-                    cur.set(row, column, schema.getUnsetValue());
-                } else {
-                    randomClearCount++;
-                }
-            }
-        }
-
-        // deterministic loop
-        for (int column = 0; column < width; column++) {
-            for (int row = 0; row < width; row++) {
-                if (unset != cur.get(row, column)
-                    && canClear(cur, row, column)) {
-                    cur.set(row, column, unset);
-                }
-            }
-        }
-
-        // set the preset fields non-writable
-        for (int column = 0; column < width; column++) {
-            for (int row = 0; row < width; row++) {
-                cur.setWritable(row, column, cur.get(row, column)
-                        == unset);
-            }
-        }
-
-        return cur;
-    }
-
-    /**
-     * Creates a riddle setup sudoku.
-     *
-     * @param fullMatrix        a fully set up (solved) and valid sudoku.
-     *                          Can be created using {@link #createFull()} or
-     *                          {@link
-     *                          #createVariant(de.sfuhrm.sudoku.GameMatrix)}
-     *                          of a full matrix.
-     * @param maxNumbersToClear maximum amount of numbers to clear.
-     *                          9x9 Sudoku: <p>
-     *                          Total number of valid 9x9 Sudoku grids is
-     *                          6,670,903,752,021,072,936,960. <p>
-     *                          Minimal amount of givens in an initial
-     *                          Sudoku puzzle that can yield a unique
-     *                          solution is 17 (64 empty cells). <p>
-     *                          Sample difficulty levels:
-     *                           <ul>
-     *                           <li>VERY_EASY: more than 50 given numbers,
-     *                           remove less than 31 numbers</li>
-     *                           <li>EASY: 36-49 given numbers,
-     *                           remove 32-45 numbers</li>
-     *                           <li>MEDIUM: 32-35 given numbers,
-     *                           remove 46-49 numbers</li>
-     *                           <li>HARD: 28-31 given numbers,
-     *                           remove 50-53 numbers</li>
-     *                           <li>EXPERT: 22-27 given numbers,
-     *                           remove 54-59 numbers</li>
-     *                           </ul>
-     *                          The average maximum amount of numbers to clear
-     *                          with the current algorithm and
-     *                           9x9 Sudoku is 56. <br> <br>
-     *                           16x16 Sudoku: <p>
-     *                           The maximum amount of numbers to remove with
-     *                           the current algorithm
-     *                           in a reasonably good time is ~140. <br> <br>
-     *                           25x25 Sudoku: <p>
-     *                           The maximum amount of numbers to remove with
-     *                           the current algorithm
-     *                           in a reasonably good time is ~280. <p>
-     * @return a sudoku with the given amount of cleared fields (or less if
-     * clearing more cells would endanger the unique solvability of the sudoku)
-     * Contains {@link GameSchema#getUnsetValue() unset} value fields for
-     * places where the user/player needs to guess values.
-     * @see #createRiddle(GameMatrix)
-     * @see #createFull()
-     * @see #createVariant(de.sfuhrm.sudoku.GameMatrix)
-     */
-
-    /**
      * Creates a riddle setup sudoku with selectable difficulty.
      *
      * @param fullMatrix a fully set up (solved) and valid sudoku.
@@ -533,7 +421,8 @@ public final class Creator {
         }
 
         final int totalFields = fullMatrix.getSchema().getTotalFields();
-        final int target = difficulty.getMaxNumbersToClear(fullMatrix.getSchema());
+        final int target = difficulty.getMaxNumbersToClear(
+                fullMatrix.getSchema());
         final int[] adjustments = new int[] {0, -2, 2, -4, 4, -6, 6, -8, 8};
 
         CreationResult fallback = null;
@@ -553,6 +442,13 @@ public final class Creator {
         return fallback;
     }
 
+    /**
+     * Creates a riddle setup sudoku with a maximum amount of cleared fields.
+     *
+     * @param fullMatrix a fully set up (solved) and valid sudoku.
+     * @param maxNumbersToClear maximum amount of numbers to clear.
+     * @return a sudoku with up to the given amount of cleared fields.
+     */
     public static Riddle createRiddle(
             final GameMatrix fullMatrix,
             final int maxNumbersToClear

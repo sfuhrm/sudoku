@@ -15,6 +15,30 @@ public enum Difficulty {
     /** Very hard puzzle, close to expert level. */
     VERY_HARD;
 
+    /** Supported schema width 4. */
+    private static final int WIDTH_4 = 4;
+    /** Supported schema width 9. */
+    private static final int WIDTH_9 = 9;
+    /** Supported schema width 16. */
+    private static final int WIDTH_16 = 16;
+    /** Supported schema width 25. */
+    private static final int WIDTH_25 = 25;
+
+    /** Ratio denominator for one third fallback. */
+    private static final int RATIO_THIRD = 3;
+    /** Ratio denominator for one half fallback. */
+    private static final int RATIO_HALF = 2;
+    /** Ratio numerator for three-fifth fallback. */
+    private static final int RATIO_THREE = 3;
+    /** Ratio denominator for three-fifth fallback. */
+    private static final int RATIO_FIVE = 5;
+    /** Ratio numerator for two-third fallback. */
+    private static final int RATIO_TWO = 2;
+    /** Ratio numerator for seven-tenth fallback. */
+    private static final int RATIO_SEVEN = 7;
+    /** Ratio denominator for seven-tenth fallback. */
+    private static final int RATIO_TEN = 10;
+
     /**
      * Returns a recommended maximum amount of fields to clear for the schema.
      *
@@ -24,28 +48,28 @@ public enum Difficulty {
     public int getMaxNumbersToClear(final GameSchema schema) {
         int width = schema.getWidth();
         switch (width) {
-            case 4:
+            case WIDTH_4:
                 return configuredValue(
                         Creator.RIDDLE_4X4_EMPTY_FIELDS_VERY_EASY,
                         Creator.RIDDLE_4X4_EMPTY_FIELDS_EASY,
                         Creator.RIDDLE_4X4_EMPTY_FIELDS_MEDIUM,
                         Creator.RIDDLE_4X4_EMPTY_FIELDS_HARD,
                         Creator.RIDDLE_4X4_EMPTY_FIELDS_VERY_HARD);
-            case 9:
+            case WIDTH_9:
                 return configuredValue(
                         Creator.RIDDLE_9X9_EMPTY_FIELDS_VERY_EASY,
                         Creator.RIDDLE_9X9_EMPTY_FIELDS_EASY,
                         Creator.RIDDLE_9X9_EMPTY_FIELDS_MEDIUM,
                         Creator.RIDDLE_9X9_EMPTY_FIELDS_HARD,
                         Creator.RIDDLE_9X9_EMPTY_FIELDS_VERY_HARD);
-            case 16:
+            case WIDTH_16:
                 return configuredValue(
                         Creator.RIDDLE_16X16_EMPTY_FIELDS_VERY_EASY,
                         Creator.RIDDLE_16X16_EMPTY_FIELDS_EASY,
                         Creator.RIDDLE_16X16_EMPTY_FIELDS_MEDIUM,
                         Creator.RIDDLE_16X16_EMPTY_FIELDS_HARD,
                         Creator.RIDDLE_16X16_EMPTY_FIELDS_VERY_HARD);
-            case 25:
+            case WIDTH_25:
                 return configuredValue(
                         Creator.RIDDLE_25X25_EMPTY_FIELDS_VERY_EASY,
                         Creator.RIDDLE_25X25_EMPTY_FIELDS_EASY,
@@ -81,16 +105,16 @@ public enum Difficulty {
         int totalFields = width * width;
         switch (this) {
             case VERY_EASY:
-                return totalFields / 3;
+                return totalFields / RATIO_THIRD;
             case EASY:
-                return totalFields / 2;
+                return totalFields / RATIO_HALF;
             case MEDIUM:
-                return (totalFields * 3) / 5;
+                return (totalFields * RATIO_THREE) / RATIO_FIVE;
             case HARD:
-                return (totalFields * 2) / 3;
+                return (totalFields * RATIO_TWO) / RATIO_THIRD;
             case VERY_HARD:
             default:
-                return (totalFields * 7) / 10;
+                return (totalFields * RATIO_SEVEN) / RATIO_TEN;
         }
     }
 }

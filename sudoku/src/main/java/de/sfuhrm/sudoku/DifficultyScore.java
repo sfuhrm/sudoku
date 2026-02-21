@@ -29,14 +29,26 @@ public final class DifficultyScore {
         this.maximumStepPoints = max;
     }
 
+    /**
+     * Sum of points over the whole path.
+     * @return total points.
+     */
     public int getPoints() {
         return points;
     }
 
+    /**
+     * Number of recorded solve steps.
+     * @return step count.
+     */
     public int getStepCount() {
         return stepCount;
     }
 
+    /**
+     * Highest points value of one step.
+     * @return maximum single-step points.
+     */
     public int getMaximumStepPoints() {
         return maximumStepPoints;
     }

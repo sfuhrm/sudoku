@@ -30,14 +30,26 @@ public final class RiddleAnalysis {
                 "difficulty is null");
     }
 
+    /**
+     * Path of logged solving steps.
+     * @return immutable solve path.
+     */
     public List<SolveStep> getPath() {
         return path;
     }
 
+    /**
+     * Aggregated score over the solve path.
+     * @return score details.
+     */
     public DifficultyScore getScore() {
         return score;
     }
 
+    /**
+     * Difficulty class derived from the score.
+     * @return classified difficulty.
+     */
     public Difficulty getClassifiedDifficulty() {
         return classifiedDifficulty;
     }

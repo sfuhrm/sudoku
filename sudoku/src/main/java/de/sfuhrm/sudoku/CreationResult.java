@@ -25,18 +25,34 @@ public final class CreationResult {
                 "riddleAnalysis is null");
     }
 
+    /**
+     * Generated riddle.
+     * @return generated riddle.
+     */
     public Riddle getRiddle() {
         return riddle;
     }
 
+    /**
+     * Aggregated difficulty score.
+     * @return score details.
+     */
     public DifficultyScore getScore() {
         return analysis.getScore();
     }
 
+    /**
+     * Recorded solving steps.
+     * @return immutable solving path.
+     */
     public List<SolveStep> getPath() {
         return analysis.getPath();
     }
 
+    /**
+     * Difficulty class measured from the path score.
+     * @return classified difficulty.
+     */
     public Difficulty getClassifiedDifficulty() {
         return analysis.getClassifiedDifficulty();
     }
