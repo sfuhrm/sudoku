@@ -63,6 +63,33 @@ Riddle riddle = Creator.createRiddle(matrix);
 
 ---------------------------------------
 
+You can also request a target difficulty directly:
+
+---------------------------------------
+
+```java
+GameMatrix matrix = Creator.createFull(GameSchemas.SCHEMA_9X9);
+Riddle easy = Creator.createRiddle(matrix, Difficulty.EASY);
+```
+
+---------------------------------------
+
+You can also request difficulty creation with scoring metadata:
+
+---------------------------------------
+
+```java
+GameMatrix matrix = Creator.createFull(GameSchemas.SCHEMA_9X9);
+CreationResult result = Creator.createRiddleResult(matrix, Difficulty.MEDIUM);
+int points = result.getScore().getPoints();
+Difficulty measured = result.getClassifiedDifficulty();
+```
+
+---------------------------------------
+
+A proposal for scoring-based difficulty classification is available in
+[`docs/difficulty-proposal.md`](docs/difficulty-proposal.md).
+
 A solvable riddle looks like this:
 
 ---------------------------------------

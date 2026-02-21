@@ -500,6 +500,59 @@ public final class Creator {
      * @see #createFull()
      * @see #createVariant(de.sfuhrm.sudoku.GameMatrix)
      */
+
+    /**
+     * Creates a riddle setup sudoku with selectable difficulty.
+     *
+     * @param fullMatrix a fully set up (solved) and valid sudoku.
+     * @param difficulty requested difficulty level.
+     * @return a sudoku where the number of empty fields is derived from the
+     * difficulty and schema.
+     */
+    public static Riddle createRiddle(
+            final GameMatrix fullMatrix,
+            final Difficulty difficulty
+    ) {
+        return createRiddleResult(fullMatrix, difficulty).getRiddle();
+    }
+
+    /**
+     * Creates a riddle setup sudoku with selectable difficulty and
+     * analysis details.
+     *
+     * @param fullMatrix a fully set up (solved) and valid sudoku.
+     * @param difficulty requested difficulty level.
+     * @return creation result containing riddle, solve path and score.
+     */
+    public static CreationResult createRiddleResult(
+            final GameMatrix fullMatrix,
+            final Difficulty difficulty
+    ) {
+        if (difficulty == null) {
+            throw new IllegalArgumentException("difficulty must not be null");
+        }
+
+        final int totalFields = fullMatrix.getSchema().getTotalFields();
+        final int target = difficulty.getMaxNumbersToClear(fullMatrix.getSchema());
+        final int[] adjustments = new int[] {0, -2, 2, -4, 4, -6, 6, -8, 8};
+
+        CreationResult fallback = null;
+        for (int adjustment : adjustments) {
+            int clearCount = Math.max(0, Math.min(totalFields - 1,
+                    target + adjustment));
+            Riddle riddle = createRiddle(fullMatrix, clearCount);
+            RiddleAnalysis analysis = RiddleAnalyzer.analyze(riddle);
+            CreationResult candidate = new CreationResult(riddle, analysis);
+            if (fallback == null) {
+                fallback = candidate;
+            }
+            if (analysis.getClassifiedDifficulty() == difficulty) {
+                return candidate;
+            }
+        }
+        return fallback;
+    }
+
     public static Riddle createRiddle(
             final GameMatrix fullMatrix,
             final int maxNumbersToClear
