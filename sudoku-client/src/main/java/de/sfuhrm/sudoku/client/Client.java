@@ -20,6 +20,7 @@ Boston, MA  02110-1301, USA.
 package de.sfuhrm.sudoku.client;
 
 import de.sfuhrm.sudoku.Creator;
+import de.sfuhrm.sudoku.Difficulty;
 import de.sfuhrm.sudoku.GameMatrix;
 import de.sfuhrm.sudoku.GameMatrixFactory;
 import de.sfuhrm.sudoku.GameSchema;
@@ -139,6 +140,13 @@ public class Client {
             usage = "Amount of Numbers to clear.")
     private int maxNumbersToClear = -1;
 
+    /** Difficulty level to target for generated riddles. */
+    @Option(name = "-d",
+            aliases = {"-difficulty"},
+            usage = "Requested difficulty (VERY_EASY|EASY|MEDIUM|HARD|"
+                    + "VERY_HARD).")
+    private Difficulty difficulty;
+
     /** Game schema.
      * @see de.sfuhrm.sudoku.GameSchemas
      * */
@@ -245,7 +253,9 @@ public class Client {
                         break;
                     case Riddle:
                         matrix = Creator.createFull(getSchema());
-                        if (maxNumbersToClear > 0) {
+                        if (difficulty != null) {
+                            riddle = Creator.createRiddle(matrix, difficulty);
+                        } else if (maxNumbersToClear > 0) {
                             riddle = Creator
                                     .createRiddle(matrix, maxNumbersToClear);
                         } else {
@@ -257,7 +267,9 @@ public class Client {
                         break;
                     case Both:
                         matrix = Creator.createFull(getSchema());
-                        if (maxNumbersToClear > 0) {
+                        if (difficulty != null) {
+                            riddle = Creator.createRiddle(matrix, difficulty);
+                        } else if (maxNumbersToClear > 0) {
                             riddle = Creator
                                     .createRiddle(matrix, maxNumbersToClear);
                         } else {
