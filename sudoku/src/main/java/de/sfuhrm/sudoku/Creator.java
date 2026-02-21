@@ -430,7 +430,7 @@ public final class Creator {
      * @param difficulty requested difficulty level.
      * @return creation result containing riddle, solve path and score.
      */
-    public static CreationResult createRiddleResult(
+    static CreationResult createRiddleResult(
             final GameMatrix fullMatrix,
             final Difficulty difficulty
     ) {

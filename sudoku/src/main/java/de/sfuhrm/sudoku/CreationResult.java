@@ -6,7 +6,7 @@ import java.util.Objects;
 /**
  * Result for creation with difficulty analysis details.
  */
-public final class CreationResult {
+final class CreationResult {
     /** Created riddle. */
     private final Riddle riddle;
     /** Difficulty analysis data. */

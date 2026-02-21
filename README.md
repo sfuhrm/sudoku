@@ -74,15 +74,13 @@ Riddle easy = Creator.createRiddle(matrix, Difficulty.EASY);
 
 ---------------------------------------
 
-You can also request difficulty creation with scoring metadata:
+You can also request a target difficulty directly:
 
 ---------------------------------------
 
 ```java
 GameMatrix matrix = Creator.createFull(GameSchemas.SCHEMA_9X9);
-CreationResult result = Creator.createRiddleResult(matrix, Difficulty.MEDIUM);
-int points = result.getScore().getPoints();
-Difficulty measured = result.getClassifiedDifficulty();
+Riddle medium = Creator.createRiddle(matrix, Difficulty.MEDIUM);
 ```
 
 ---------------------------------------

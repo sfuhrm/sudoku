@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Analyzes riddles and creates a technique-based difficulty score.
  */
-public final class RiddleAnalyzer {
+final class RiddleAnalyzer {
     /** Marker for unresolved unique candidate coordinates. */
     private static final int NONE = -1;
     /** Marker for duplicate candidates. */

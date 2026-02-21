@@ -3,7 +3,7 @@ package de.sfuhrm.sudoku;
 /**
  * Solving techniques used for difficulty scoring.
  */
-public enum SolveTechnique {
+enum SolveTechnique {
     /** A single candidate in one cell. */
     NAKED_SINGLE(1),
     /** A candidate that appears only once in a row/column/block. */

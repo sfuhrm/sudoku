@@ -8,7 +8,7 @@ import java.util.Objects;
 /**
  * Result of analyzing a riddle's difficulty.
  */
-public final class RiddleAnalysis {
+final class RiddleAnalysis {
     /** Recorded solving path. */
     private final List<SolveStep> path;
     /** Aggregated score. */

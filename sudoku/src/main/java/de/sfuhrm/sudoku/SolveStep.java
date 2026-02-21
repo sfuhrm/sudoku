@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * A single solving step with technique and position.
  */
-public final class SolveStep {
+final class SolveStep {
     /** Technique used for the step. */
     private final SolveTechnique technique;
     /** Row of the affected cell or -1 when not cell-specific. */

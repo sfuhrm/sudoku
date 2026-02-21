@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Aggregate score of a solving path.
  */
-public final class DifficultyScore {
+final class DifficultyScore {
     /** Sum of all step points. */
     private final int points;
     /** Number of steps. */
