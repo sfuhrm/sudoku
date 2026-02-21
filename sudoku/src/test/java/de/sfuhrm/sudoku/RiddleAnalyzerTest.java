@@ -3,8 +3,10 @@ package de.sfuhrm.sudoku;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.Duration;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
@@ -55,4 +57,5 @@ public class RiddleAnalyzerTest {
         assertTrue(result.getScore().getPoints() > 0);
         assertEquals(difficulty, result.getClassifiedDifficulty());
     }
+
 }
