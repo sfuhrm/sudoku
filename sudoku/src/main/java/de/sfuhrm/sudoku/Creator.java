@@ -389,6 +389,18 @@ public final class Creator {
         return result;
     }
 
+
+    /**
+     * Creates a maximally cleared riddle setup sudoku.
+     *
+     * @param fullMatrix a fully set up (solved) and valid sudoku.
+     * @return a maximally cleared sudoku.
+     */
+    public static Riddle createRiddle(final GameMatrix fullMatrix) {
+        return createRiddle(fullMatrix,
+                fullMatrix.getSchema().getTotalFields());
+    }
+
     /**
      * Creates a riddle setup sudoku with selectable difficulty.
      *
