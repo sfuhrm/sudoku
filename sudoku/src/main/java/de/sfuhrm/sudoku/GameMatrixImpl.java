@@ -397,16 +397,15 @@ class GameMatrixImpl implements Cloneable, GameMatrix {
     }
 
     /** Find the cell with the lest number of possible candidates.
-     * @param rowColumnResult a two-element int array receiving the
-     * row and column of the result. First element will be the row index,
-     * the second the column index.
+     * @param rowColumnResult an object receiving the
+     * row and column of the result.
      * @return {@linkplain FreeCellResult#FOUND} if a free cell was found,
      * {@linkplain FreeCellResult#NONE_FREE} if all cells are occupied,
      * {@linkplain FreeCellResult#CONTRADICTION} if cells were free but
      * could not be occupied.
      */
     FreeCellResult findLeastFreeCell(final CellIndex rowColumnResult) {
-        int minimumBits = -1;
+        int minimumBits = Integer.MAX_VALUE;
         int minimumRow = -1;
         int minimumColumn = -1;
 
@@ -429,9 +428,9 @@ class GameMatrixImpl implements Cloneable, GameMatrix {
                 }
                 int bits = Integer.bitCount(free);
 
-                assert bits <= width;
+                assert bits > 0 && bits <= width;
 
-                if (bits != 0 && (minimumBits == -1 || bits < minimumBits)) {
+                if (bits < minimumBits) {
                     minimumColumn = column;
                     minimumRow = row;
                     minimumBits = bits;
@@ -445,7 +444,7 @@ class GameMatrixImpl implements Cloneable, GameMatrix {
         }
         rowColumnResult.row = minimumRow;
         rowColumnResult.column = minimumColumn;
-        return minimumBits != -1
+        return minimumBits != Integer.MAX_VALUE
                 ? FreeCellResult.FOUND
                 : FreeCellResult.NONE_FREE;
     }
