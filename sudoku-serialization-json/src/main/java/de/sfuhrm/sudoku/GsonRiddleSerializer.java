@@ -34,6 +34,10 @@ public final class GsonRiddleSerializer implements
     /** The two-dimensional array of cell writability JSON attribute name. */
     private static final String ROOT_WRITEABLE = "writeable";
 
+    /** Creates a new instance. */
+    public GsonRiddleSerializer() {
+    }
+
     @Override
     public JsonElement serialize(final Riddle src,
                                  final Type typeOfSrc,
