@@ -31,7 +31,7 @@ class RiddleImpl extends GameMatrixImpl implements Riddle {
      * Whether the cell is writable. Pre-defined cells are only readable, use
      * settable cells are writable.
      */
-    private boolean[][] writeable;
+    private final boolean[][] writeable;
 
     /**
      * Creates an empty full-writable riddle.
@@ -47,6 +47,15 @@ class RiddleImpl extends GameMatrixImpl implements Riddle {
                 setWritable(i, j, true);
             }
         }
+    }
+
+    /**
+     * Clone constructor.
+     * @param source source data to init with.
+     */
+    RiddleImpl(final RiddleImpl source) {
+        super(source);
+        writeable = QuadraticArrays.cloneArray(source.writeable);
     }
 
     /**
@@ -75,9 +84,6 @@ class RiddleImpl extends GameMatrixImpl implements Riddle {
 
     @Override
     public final RiddleImpl clone() {
-        RiddleImpl clone;
-        clone = (RiddleImpl) super.clone();
-        clone.writeable = QuadraticArrays.cloneArray(writeable);
-        return clone;
+        return new RiddleImpl(this);
     }
 }

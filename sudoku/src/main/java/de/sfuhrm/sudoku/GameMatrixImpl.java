@@ -39,7 +39,7 @@ class GameMatrixImpl implements Cloneable, GameMatrix {
      * The values 1-9 mean the corresponding cell
      * value.
      */
-    private byte[][] data;
+    private final byte[][] data;
 
     /**
      * Creates an empty riddle.
@@ -50,6 +50,16 @@ class GameMatrixImpl implements Cloneable, GameMatrix {
     GameMatrixImpl(final GameSchema inGameSchema) {
         this.gameSchema = inGameSchema;
         data = new byte[inGameSchema.getWidth()][inGameSchema.getWidth()];
+    }
+
+    /**
+     * Clone constructor.
+     * @param source source matrix to init with.
+     * @see #setAll(byte[][])
+     */
+    GameMatrixImpl(final GameMatrixImpl source) {
+        this.gameSchema = source.gameSchema;
+        data = QuadraticArrays.cloneArray(source.data);
     }
 
     /** Sets all cells to the given values.
@@ -208,15 +218,7 @@ class GameMatrixImpl implements Cloneable, GameMatrix {
 
     @Override
     public GameMatrixImpl clone() {
-        GameMatrixImpl clone;
-        try {
-            clone = (GameMatrixImpl) super.clone();
-            clone.data = QuadraticArrays.cloneArray(data);
-        } catch (CloneNotSupportedException ex) {
-            throw new IllegalStateException(ex);
-        }
-
-        return clone;
+        return new GameMatrixImpl(this);
     }
 
     /** Finds the duplicate bits.

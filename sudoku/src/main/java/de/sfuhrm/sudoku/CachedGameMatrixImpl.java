@@ -35,17 +35,17 @@ class CachedGameMatrixImpl extends GameMatrixImpl {
      * A set 2-bit means that the digit 2 is free for use.
      * And so on.
      */
-    private int[] rowFree;
+    private final int[] rowFree;
 
     /** Buffered free masks per column.
      * @see #rowFree
      */
-    private int[] columnFree;
+    private final int[] columnFree;
 
     /** Buffered free masks per block.
      * @see #rowFree
      */
-    private int[][] blockFree;
+    private final int[][] blockFree;
 
     /** The count of non-{@link GameSchema#getUnsetValue() unset} cells.
      * @see #getSetCount()
@@ -75,6 +75,18 @@ class CachedGameMatrixImpl extends GameMatrixImpl {
                 blockFree[i][j] = schema.getBitMask();
             }
         }
+    }
+
+    /**
+     * Clone constructor.
+     * @param source the source to initialize with.
+     */
+    CachedGameMatrixImpl(final CachedGameMatrixImpl source) {
+        super(source);
+
+        blockFree = QuadraticArrays.cloneArray(source.blockFree);
+        columnFree = Arrays.copyOf(source.columnFree, source.columnFree.length);
+        rowFree = Arrays.copyOf(source.rowFree, source.rowFree.length);
     }
 
     @Override
@@ -149,11 +161,6 @@ class CachedGameMatrixImpl extends GameMatrixImpl {
 
     @Override
     public CachedGameMatrixImpl clone() {
-        CachedGameMatrixImpl clone;
-        clone = (CachedGameMatrixImpl) super.clone();
-        clone.blockFree = QuadraticArrays.cloneArray(blockFree);
-        clone.columnFree = Arrays.copyOf(columnFree, columnFree.length);
-        clone.rowFree = Arrays.copyOf(rowFree, rowFree.length);
-        return clone;
+        return new CachedGameMatrixImpl(this);
     }
 }
