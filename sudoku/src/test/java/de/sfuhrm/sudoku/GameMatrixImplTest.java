@@ -965,4 +965,42 @@ public class GameMatrixImplTest {
         assertEquals(2, min.row);
         assertEquals(2, min.column);
      }
+
+    @Test
+    public void testFindLeastFreeCellWithNoPossibleValue() {
+        // (0,0) is empty
+        // Row 0 has 1, 2, 3, 4, 5, 6, 7, 8
+        // Col 0 has 9
+        // Block 0 has 1, 2, 9
+        // (0,0) sees 1, 2, 3, 4, 5, 6, 7, 8, 9 -> 0 possibilities
+        byte[][] data =
+                QuadraticArrays.parse(
+                        "012345678",
+                        "900000000",
+                        "000000000",
+                        "000000000",
+                        "000000000",
+                        "000000000",
+                        "000000000",
+                        "000000000",
+                        "000000000"
+                );
+
+        GameMatrixImpl matrix = new GameMatrixImpl(schema);
+        matrix.setAll(data);
+
+        CellIndex min = new CellIndex();
+        GameMatrixImpl.FreeCellResult result = matrix.findLeastFreeCell(min);
+        assertEquals(GameMatrixImpl.FreeCellResult.CONTRADICTION, result);
+    }
+
+    @Test
+    public void testFindLeastFreeCellWithEmptyMatrix() {
+        GameMatrixImpl matrix = new GameMatrixImpl(schema);
+        CellIndex min = new CellIndex();
+        GameMatrixImpl.FreeCellResult result = matrix.findLeastFreeCell(min);
+        assertEquals(GameMatrixImpl.FreeCellResult.FOUND, result);
+        assertEquals(0, min.row);
+        assertEquals(0, min.column);
+    }
 }
