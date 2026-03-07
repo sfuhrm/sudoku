@@ -220,5 +220,6 @@
     <module>sudoku</module>
     <module>sudoku-output</module>
     <module>sudoku-client</module>
+    <module>sudoku-serialization-json</module>
   </modules>
 </project>
