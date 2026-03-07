@@ -17,4 +17,4 @@ jobs:
       jacoco_csv_path: >
         ./sudoku/target/site/jacoco/jacoco.csv
         ./sudoku-output/target/site/jacoco/jacoco.csv
-    
+        ./sudoku-serialization-json/target/site/jacoco/jacoco.csv
