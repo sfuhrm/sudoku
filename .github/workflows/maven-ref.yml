@@ -12,12 +12,12 @@ jobs:
   maven_version:
     uses: sfuhrm/github_workflows/.github/workflows/maven-expression.yml@main
     with:
-      java_version: 21
+      java_version: 25
       expression: project.version
   call-workflow-passing-data:
     needs: maven_version
     uses: sfuhrm/github_workflows/.github/workflows/maven.yml@main
     with:
-      java_version: "[\"8\", \"11\", \"17\", \"21\"]"
+      java_version: "[\"8\", \"11\", \"17\", \"21\", \"25\"]"
       artifact_name: build
       artifact_path: sudoku/target//sudoku-${{ needs.maven_version.outputs.expression_value }}.jar
