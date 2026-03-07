@@ -10,4 +10,6 @@
               lines="100-530"/>
      <suppress checks="VisibilityModifier"
                files="CellIndex"/>
+     <suppress checks="JavadocPackage"
+               files="GsonRiddleSerializer"/>
 </suppressions>
