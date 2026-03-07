@@ -19,13 +19,17 @@ Boston, MA  02110-1301, USA.
 */
 package de.sfuhrm.sudoku;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.List;
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -138,5 +142,29 @@ public class GameSchemaImplTest {
     @MethodSource("allGameSchemas")
     public void testValidValueWithTooBig(GameSchema schema) {
         assertFalse(schema.validValue((byte)(schema.getMaximumValue() + 1)));
+    }
+
+    @ParameterizedTest
+    @MethodSource("allGameSchemas")
+    public void testEqualsAndHashCode(GameSchema schema) {
+        GameSchemaImpl copy = new GameSchemaImpl(
+                schema.getUnsetValue(),
+                schema.getMinimumValue(),
+                schema.getMaximumValue(),
+                schema.getWidth(),
+                schema.getBlockWidth());
+
+        assertEquals(schema, copy);
+        assertEquals(schema.hashCode(), copy.hashCode());
+        assertNotEquals(schema, null);
+        assertNotEquals(schema, new Object());
+    }
+
+    @Test
+    public void testEqualsWithDifferentSchemas() {
+        List<GameSchema> schemas = GameSchemas.getSupportedGameSchemas();
+        if (schemas.size() >= 2) {
+            assertNotEquals(schemas.get(0), schemas.get(1));
+        }
     }
 }
