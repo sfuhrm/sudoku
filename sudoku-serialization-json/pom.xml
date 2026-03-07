@@ -7,8 +7,8 @@
     <version>5.2.3-SNAPSHOT</version>
   </parent>
   <artifactId>sudoku-serialization-json</artifactId>
-  <name>Sudoku Riddle</name>
-  <description>Sudoku Riddle Serialization</description>
+  <name>Sudoku Serialization JSON</name>
+  <description>Sudoku Riddle Serialization using GSON</description>
   <dependencies>
     <dependency>
       <groupId>de.sfuhrm</groupId>
