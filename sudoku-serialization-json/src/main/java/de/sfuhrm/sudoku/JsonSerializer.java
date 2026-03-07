@@ -3,7 +3,11 @@ package de.sfuhrm.sudoku;
 /**
  * Serialization of a {@linkplain Riddle} to and from a String.
  */
-public class JsonSerializer {
+public final class JsonSerializer {
+
+    /** Gson instance with the {@linkplain GsonRiddleSerializer}
+     * registered.
+     * */
     private final com.google.gson.Gson gson;
 
     /**
@@ -11,7 +15,9 @@ public class JsonSerializer {
      */
     public JsonSerializer() {
         this.gson = new com.google.gson.GsonBuilder()
-                .registerTypeHierarchyAdapter(Riddle.class, new GsonRiddleSerializer())
+                .registerTypeHierarchyAdapter(
+                        Riddle.class,
+                        new GsonRiddleSerializer())
                 .create();
     }
 
@@ -20,7 +26,7 @@ public class JsonSerializer {
      * @param riddle the riddle to serialize.
      * @return the JSON representation of the riddle.
      */
-    public String serialize(Riddle riddle) {
+    public String serialize(final Riddle riddle) {
         return gson.toJson(riddle);
     }
 
@@ -29,7 +35,7 @@ public class JsonSerializer {
      * @param json the JSON string to deserialize.
      * @return the deserialized riddle instance.
      */
-    public Riddle deserialize(String json) {
+    public Riddle deserialize(final String json) {
         return gson.fromJson(json, Riddle.class);
     }
 

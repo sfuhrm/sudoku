@@ -17,20 +17,27 @@ import java.util.List;
  * for direct Gson serialization.
  * Can be registered to Gson using:
  * <code>
- *             Gson gson = new GsonBuilder()
- *                 .registerTypeHierarchyAdapter(Riddle.class, new GsonRiddleSerializer())
- *                 .create();
+ *   Gson gson = new GsonBuilder()
+ *     .registerTypeHierarchyAdapter(Riddle.class, new GsonRiddleSerializer())
+ *     .create();
  * </code>
  */
-public class GsonRiddleSerializer implements JsonSerializer<Riddle>, JsonDeserializer<Riddle> {
+public final class GsonRiddleSerializer implements
+        JsonSerializer<Riddle>, JsonDeserializer<Riddle> {
 
+    /** The riddle width JSON attribute name. */
     private static final String GAMESCHEMA_WIDTH = "width";
+    /** The block width JSON attribute name. */
     private static final String GAMESCHEMA_BLOCK_WIDTH = "blockWidth";
+    /** The two-dimensional array of cell values JSON attribute name. */
     private static final String ROOT_CELL_DATA = "data";
+    /** The two-dimensional array of cell writability JSON attribute name. */
     private static final String ROOT_WRITEABLE = "writeable";
 
     @Override
-    public JsonElement serialize(Riddle src, Type typeOfSrc, JsonSerializationContext context) {
+    public JsonElement serialize(final Riddle src,
+                                 final Type typeOfSrc,
+                                 final JsonSerializationContext context) {
         JsonObject jsonObject = new JsonObject();
         GameSchema schema = src.getSchema();
         jsonObject.addProperty(GAMESCHEMA_WIDTH, schema.getWidth());
@@ -61,18 +68,24 @@ public class GsonRiddleSerializer implements JsonSerializer<Riddle>, JsonDeseria
     }
 
     @Override
-    public Riddle deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public Riddle deserialize(final JsonElement json,
+                              final Type typeOfT,
+                              final JsonDeserializationContext context)
+            throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
         int width = jsonObject.get(GAMESCHEMA_WIDTH).getAsInt();
         int blockWidth = jsonObject.get(GAMESCHEMA_BLOCK_WIDTH).getAsInt();
 
         GameSchema schema = findSchema(width, blockWidth);
         if (schema == null) {
-            throw new JsonParseException("Unsupported schema: " + width + "x" + width + " with block width " + blockWidth);
+            throw new JsonParseException("Unsupported schema: "
+                    + width + "x"
+                    + width + " with block width "
+                    + blockWidth);
         }
 
         Riddle riddle = new RiddleImpl(schema);
-        
+
         JsonArray dataArray = jsonObject.getAsJsonArray(ROOT_CELL_DATA);
         for (int i = 0; i < width; i++) {
             JsonArray rowArray = dataArray.get(i).getAsJsonArray();
@@ -92,10 +105,11 @@ public class GsonRiddleSerializer implements JsonSerializer<Riddle>, JsonDeseria
         return riddle;
     }
 
-    private GameSchema findSchema(int width, int blockWidth) {
+    private GameSchema findSchema(final int width, final int blockWidth) {
         List<GameSchema> schemas = GameSchemas.getSupportedGameSchemas();
         for (GameSchema schema : schemas) {
-            if (schema.getWidth() == width && schema.getBlockWidth() == blockWidth) {
+            if (schema.getWidth() == width
+                    && schema.getBlockWidth() == blockWidth) {
                 return schema;
             }
         }
