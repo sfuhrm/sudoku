@@ -28,286 +28,13 @@ import org.junit.jupiter.api.Test;
  * Test for {@link GameMatrixImpl}.
  * @author Stephan Fuhrmann
  */
-public class GameMatrixImplTest {
+public class GameMatrixImplTest extends CommonGameMatrixImplTest {
 
     private final GameSchema schema = GameSchemas.SCHEMA_9X9;
 
-    @Test
-    public void testNew() {
-        GameMatrixImpl m = new GameMatrixImpl(schema);
-        assertEquals(0, m.getSetCount());
-    }
-
-    @Test
-    public void testGet() {
-        GameMatrixImpl matrix = new GameMatrixImpl(schema);
-        GameSchema schema = matrix.getSchema();
-        byte value = matrix.get(0, 0);
-        assertEquals(schema.getUnsetValue(), value);
-        value = matrix.get(8, 8);
-        assertEquals(schema.getUnsetValue(), value);
-    }
-
-    @Test
-    public void testGetSetCount() {
-        GameMatrixImpl matrix = new GameMatrixImpl(schema);
-        assertEquals(0, matrix.getSetCount());
-        matrix.set(0, 0, (byte)1);
-        assertEquals(1, matrix.getSetCount());
-        matrix.set(0, 0, (byte)2);
-        assertEquals(1, matrix.getSetCount());
-        matrix.set(0, 1, (byte)2);
-        assertEquals(2, matrix.getSetCount());
-    }
-
-    @Test
-    public void testGetArray() {
-        byte[][] data =
-                QuadraticArrays.parse(
-                        //   x
-                        "100000000",
-                        "020100000",
-                        "000320100",
-                        "010000456",
-                        //           y
-                        "000010000",
-                        "000000010",
-                        "001000000",
-                        "000001000",
-                        "000000001"
-                );
-        GameMatrixImpl first = new GameMatrixImpl(schema);
-        first.setAll(data);
-
-        byte[][] a = first.getArray();
-        byte[][] b = first.getArray();
-
-        assertNotSame(a, b);
-        assertTrue(Arrays.deepEquals(data, a));
-        assertTrue(Arrays.deepEquals(data, b));
-    }
-
-    @Test
-    public void testSet() {
-        GameMatrixImpl matrix = new GameMatrixImpl(schema);
-        GameSchema schema = matrix.getSchema();
-        byte value = matrix.get(0, 0);
-        assertEquals(schema.getUnsetValue(), value);
-        matrix.set(0,0,(byte)4);
-        value = matrix.get(0, 0);
-        assertEquals(4, value);
-    }
-
-    @Test
-    public void testParse() {
-        byte[][] data =
-                QuadraticArrays.parse(
-                        "000000000",
-                        "111111111",
-                        "222222222",
-                        "333333333",
-                        "444444444",
-                        "555555555",
-                        "666666666",
-                        "777777777",
-                        "888888888"
-                );
-
-        assertEquals(9, data[0].length);
-        assertEquals(9, data[1].length);
-        assertEquals(9, data[2].length);
-        assertEquals(9, data[3].length);
-        assertEquals(9, data[4].length);
-        assertEquals(9, data[5].length);
-        assertEquals(9, data[6].length);
-        assertEquals(9, data[7].length);
-        assertEquals(9, data[8].length);
-
-        assertEquals(0, data[0][0]);
-        assertEquals(0, data[0][1]);
-        assertEquals(1, data[1][0]);
-        assertEquals(1, data[1][1]);
-        assertEquals(2, data[2][0]);
-        assertEquals(2, data[2][1]);
-        assertEquals(3, data[3][0]);
-        assertEquals(3, data[3][1]);
-        assertEquals(4, data[4][0]);
-        assertEquals(4, data[4][1]);
-        assertEquals(5, data[5][0]);
-        assertEquals(5, data[5][1]);
-        assertEquals(6, data[6][0]);
-        assertEquals(6, data[6][1]);
-        assertEquals(7, data[7][0]);
-        assertEquals(7, data[7][1]);
-        assertEquals(8, data[8][0]);
-        assertEquals(8, data[8][1]);
-    }
-
-    @Test
-    public void testParseWithWrongOuterLength() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            byte[][] data =
-                    QuadraticArrays.parse(
-                            "000000000"
-                    );
-        });
-    }
-
-    @Test
-    public void testParseWithWrongInnerLength() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            byte[][] data =
-                    QuadraticArrays.parse(
-                            "000000000",
-                            "000000000",
-                            "000000000",
-                            "000000000",
-                            "000000000",
-                            "000000000",
-                            "000000000",
-                            "000000000",
-                            "00000000"
-                    );
-        });
-    }
-
-    @Test
-    public void testEqualsWithSame() {
-        GameMatrixImpl instance = new GameMatrixImpl(schema);
-        assertEquals(instance, instance);
-    }
-
-    @Test
-    public void testEqualsWithNull() {
-        GameMatrixImpl instance = new GameMatrixImpl(schema);
-        assertNotEquals(null, instance);
-    }
-
-    @Test
-    public void testEqualsWithOtherClass() {
-        GameMatrixImpl instance = new GameMatrixImpl(schema);
-        assertNotEquals("foobar", instance);
-    }
-
-    @Test
-    public void testEqualsWithEqualMatrix() {
-        byte[][] matrix =
-        QuadraticArrays.parse(
-                "000000000",
-                "000000000",
-                "000000000",
-                "000000000",
-                "000000000",
-                "000000000",
-                "000000000",
-                "000000000",
-                "000000000"
-                );
-        GameMatrixImpl instance1 = new GameMatrixImpl(schema);
-        instance1.setAll(matrix);
-
-        GameMatrixImpl instance2 = new GameMatrixImpl(schema);
-        instance1.setAll(matrix);
-
-        assertEquals(instance1, instance2);
-    }
-
-    @Test
-    public void testEqualsWithUnequalMatrix() {
-        byte[][] matrix1 =
-        QuadraticArrays.parse(
-                "000000000",
-                "000000000",
-                "000000000",
-                "000000000",
-                "000000000",
-                "000000000",
-                "000000000",
-                "000000000",
-                "000000000"
-                );
-        GameMatrixImpl instance1 = new GameMatrixImpl(schema);
-        instance1.setAll(matrix1);
-
-        byte[][] matrix2 =
-        QuadraticArrays.parse(
-                "123000000",
-                "000000000",
-                "000000000",
-                "000000000",
-                "000000000",
-                "000000000",
-                "000000000",
-                "000000000",
-                "000000000"
-                );
-        GameMatrixImpl instance2 = new GameMatrixImpl(schema);
-        instance2.setAll(matrix2);
-
-        assertNotEquals(instance1, instance2);
-    }
-
-    @Test
-    public void testHashCode() {
-        GameMatrixImpl instance = new GameMatrixImpl(schema);
-        instance.hashCode();
-    }
-
-    @Test
-    public void testParseWithWrongChars() {
-        byte[][] expected =
-                QuadraticArrays.parse(
-                        "000000000",
-                        "000000000",
-                        "000000000",
-                        "000000000",
-                        "000000000",
-                        "000000000",
-                        "000000000",
-                        "000000000",
-                        "000000000"
-                );
-
-        byte[][] actual =
-                QuadraticArrays.parse(
-                        "?00000000",
-                        "000000000",
-                        "000000000",
-                        "000000000",
-                        "000000000",
-                        "000000000",
-                        "000000000",
-                        "000000000",
-                        "000000000"
-                );
-
-        assertArrayEquals(expected, actual);
-    }
-
-
-    @Test
-    public void testSetAll() {
-        byte[][] data =
-                QuadraticArrays.parse(
-                        "000000000",
-                        "111111111",
-                        "222222222",
-                        "333333333",
-                        "444444444",
-                        "555555555",
-                        "666666666",
-                        "777777777",
-                        "888888888"
-                );
-
-        GameMatrixImpl matrix = new GameMatrixImpl(schema);
-        matrix.setAll(data);
-
-        for (int i=0; i < schema.getWidth(); i++) {
-           for (int j=0; j < schema.getWidth(); j++) {
-                assertEquals(i, matrix.get(i, j));
-           }
-        }
+    protected GameMatrixImpl newInstance(GameSchema gameSchema) {
+        GameMatrixImpl matrix = new GameMatrixImpl(gameSchema);
+        return matrix;
     }
 
     @Test
@@ -325,7 +52,7 @@ public class GameMatrixImplTest {
                         "888888888"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl(schema);
+        GameMatrixImpl matrix = newInstance(schema);
         matrix.setAll(data);
 
         byte[] target = new byte[9];
@@ -354,7 +81,7 @@ public class GameMatrixImplTest {
                         "888888888"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl(schema);
+        GameMatrixImpl matrix = newInstance(schema);
         matrix.setAll(data);
 
         byte[] target = new byte[9];
@@ -383,7 +110,7 @@ public class GameMatrixImplTest {
                         "888888888"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl(schema);
+        GameMatrixImpl matrix = newInstance(schema);
         matrix.setAll(data);
 
         byte[] target = new byte[9];
@@ -416,7 +143,7 @@ public class GameMatrixImplTest {
                         "888888888"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl(schema);
+        GameMatrixImpl matrix = newInstance(schema);
         matrix.setAll(data);
 
         String out = matrix.toString();
@@ -447,7 +174,7 @@ public class GameMatrixImplTest {
                         "888888888"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl(schema);
+        GameMatrixImpl matrix = newInstance(schema);
         matrix.setAll(data);
         matrix.clear();
         String out = matrix.toString();
@@ -458,6 +185,44 @@ public class GameMatrixImplTest {
         assertEquals(empty
                 , out);
      }
+
+    @Test
+    public final void testSetAll() {
+        byte[][] data =
+                QuadraticArrays.parse(
+                        "000000000",
+                        "111111111",
+                        "222222222",
+                        "333333333",
+                        "444444444",
+                        "555555555",
+                        "666666666",
+                        "777777777",
+                        "888888888"
+                );
+
+        GameMatrixImpl matrix = newInstance(schema);
+        matrix.setAll(data);
+
+        for (int i=0; i < schema.getWidth(); i++) {
+            for (int j=0; j < schema.getWidth(); j++) {
+                assertEquals(i, matrix.get(i, j));
+            }
+        }
+    }
+
+    @Test
+    public final void testGetSetCount() {
+        GameMatrixImpl matrix = newInstance(schema);
+        assertEquals(0, matrix.getSetCount());
+        matrix.set(0, 0, (byte)1);
+        assertEquals(1, matrix.getSetCount());
+        matrix.set(0, 0, (byte)2);
+        assertEquals(1, matrix.getSetCount());
+        matrix.set(0, 1, (byte)2);
+        assertEquals(2, matrix.getSetCount());
+    }
+
 
     @Test
     public void testClone() {
@@ -474,7 +239,7 @@ public class GameMatrixImplTest {
                         "888888888"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl(schema);
+        GameMatrixImpl matrix = newInstance(schema);
         matrix.setAll(data);
         GameMatrixImpl clone = matrix.clone();
 
@@ -491,51 +256,6 @@ public class GameMatrixImplTest {
                 , out);
      }
 
-
-    @Test
-    public void testFindDuplicateBits() {
-        int mask;
-        byte[] array;
-
-        array = new byte[] {1,2,3,4,5};
-        mask = GameMatrixImpl.findDuplicateBits(schema, array);
-        assertEquals(0, mask);
-
-        array = new byte[] {1,1,3,4,5};
-        mask = GameMatrixImpl.findDuplicateBits(schema, array);
-        assertEquals(2, mask);
-
-        array = new byte[] {1,1,1,4,5};
-        mask = GameMatrixImpl.findDuplicateBits(schema, array);
-        assertEquals(2, mask);
-
-        array = new byte[] {0,0,0,4,5};
-        mask = GameMatrixImpl.findDuplicateBits(schema, array);
-        assertEquals(0, mask);
-    }
-
-    @Test
-    public void testGetNumberMask() {
-        int mask;
-        byte[] array;
-
-        array = new byte[] {1,2,3,4,5};
-        mask = GameMatrixImpl.getNumberMask(schema, array);
-        assertEquals(2+4+8+16+32, mask);
-
-        array = new byte[] {1,1,3,4,5};
-        mask = GameMatrixImpl.getNumberMask(schema, array);
-        assertEquals(2+8+16+32, mask);
-
-        array = new byte[] {1,1,1,4,5};
-        mask = GameMatrixImpl.getNumberMask(schema, array);
-        assertEquals(2+16+32, mask);
-
-        array = new byte[] {0,0,0,4,5};
-        mask = GameMatrixImpl.getNumberMask(schema, array);
-        assertEquals(16+32, mask);
-    }
-
     @Test
     public void testIsValidWithInvalid() {
         byte[][] data =
@@ -551,49 +271,9 @@ public class GameMatrixImplTest {
                         "888888888"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl(schema);
+        GameMatrixImpl matrix = newInstance(schema);
         matrix.setAll(data);
         assertFalse(matrix.isValid());
-     }
-
-    @Test
-    public void testIsValidWithEmptyValid() {
-        byte[][] data =
-                QuadraticArrays.parse(
-                        "000000000",
-                        "000000000",
-                        "000000000",
-                        "000000000",
-                        "000000000",
-                        "000000000",
-                        "000000000",
-                        "000000000",
-                        "000000000"
-                );
-
-        GameMatrixImpl matrix = new GameMatrixImpl(schema);
-        matrix.setAll(data);
-        assertTrue(matrix.isValid());
-     }
-
-    @Test
-    public void testIsValidWithPartlyFullValid() {
-        byte[][] data =
-                QuadraticArrays.parse(
-                        "100000000",
-                        "000100000",
-                        "000000100",
-                        "010000000",
-                        "000010000",
-                        "000000010",
-                        "001000000",
-                        "000001000",
-                        "000000001"
-                );
-
-        GameMatrixImpl matrix = new GameMatrixImpl(schema);
-        matrix.setAll(data);
-        assertTrue(matrix.isValid());
      }
 
     @Test
@@ -611,7 +291,7 @@ public class GameMatrixImplTest {
                         "000000000"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl(schema);
+        GameMatrixImpl matrix = newInstance(schema);
         matrix.setAll(data);
         assertFalse(matrix.isValid());
     }
@@ -631,7 +311,7 @@ public class GameMatrixImplTest {
                         "000000000"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl(schema);
+        GameMatrixImpl matrix = newInstance(schema);
         matrix.setAll(data);
         assertFalse(matrix.isValid());
     }
@@ -651,7 +331,7 @@ public class GameMatrixImplTest {
                         "000000005"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl(schema);
+        GameMatrixImpl matrix = newInstance(schema);
         matrix.setAll(data);
         assertFalse(matrix.isValid());
     }
@@ -671,7 +351,7 @@ public class GameMatrixImplTest {
                         "800000000"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl(schema);
+        GameMatrixImpl matrix = newInstance(schema);
         matrix.setAll(data);
         assertFalse(matrix.isValid());
     }
@@ -691,7 +371,7 @@ public class GameMatrixImplTest {
                         "000000000"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl(schema);
+        GameMatrixImpl matrix = newInstance(schema);
         matrix.setAll(data);
         assertFalse(matrix.isValid());
     }
@@ -711,7 +391,7 @@ public class GameMatrixImplTest {
                         "000000000"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl(schema);
+        GameMatrixImpl matrix = newInstance(schema);
         matrix.setAll(data);
         assertFalse(matrix.isValid());
     }
@@ -731,276 +411,8 @@ public class GameMatrixImplTest {
                         "000000000"
                 );
 
-        GameMatrixImpl matrix = new GameMatrixImpl(schema);
+        GameMatrixImpl matrix = newInstance(schema);
         matrix.setAll(data);
         assertFalse(matrix.isValid());
-    }
-
-    @Test
-    public void testGetRowFreeMask() {
-        byte[][] data =
-                QuadraticArrays.parse(
-                        "100000000",
-                        "020100000",
-                        "000320100",
-                        "010000456",
-                        "000010000",
-                        "000000010",
-                        "001000000",
-                        "000001000",
-                        "000000001"
-                );
-
-        GameMatrixImpl matrix = new GameMatrixImpl(schema);
-        matrix.setAll(data);
-        int mask = matrix.getRowFreeMask(0);
-        assertEquals(schema.getBitMask() & (~(1<<1)), mask);
-        mask = matrix.getRowFreeMask(1);
-        assertEquals(schema.getBitMask() & (~((1<<1) | (1<<2))), mask);
-        mask = matrix.getRowFreeMask(2);
-        assertEquals(schema.getBitMask() & (~((1<<1) | (1<<2) | (1<<3))), mask);
-        mask = matrix.getRowFreeMask(3);
-        assertEquals(schema.getBitMask() & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
-     }
-
-    @Test
-    public void testGetColumnFreeMask() {
-        byte[][] data =
-                QuadraticArrays.parse(
-                        "100000000",
-                        "020100000",
-                        "000320100",
-                        "010000456",
-                        "000010000",
-                        "000000010",
-                        "001000000",
-                        "000001000",
-                        "000000001"
-                );
-
-        GameMatrixImpl matrix = new GameMatrixImpl(schema);
-        matrix.setAll(data);
-        int mask = matrix.getColumnFreeMask(0);
-        assertEquals(schema.getBitMask() & (~(1<<1)), mask);
-        mask = matrix.getColumnFreeMask(1);
-        assertEquals(schema.getBitMask() & (~((1<<1) | (1<<2))), mask);
-        mask = matrix.getColumnFreeMask(2);
-        assertEquals(schema.getBitMask() & (~((1<<1))), mask);
-        mask = matrix.getColumnFreeMask(3);
-        assertEquals(schema.getBitMask() & (~((1<<1) | (1<<3))), mask);
-     }
-
-    @Test
-    public void testGetBlockFreeMask() {
-        byte[][] data =
-                QuadraticArrays.parse(
-                        "100000000",
-                        "020100000",
-                        "000320100",
-                        "010000456",
-                        "000010000",
-                        "000000010",
-                        "001000000",
-                        "000001000",
-                        "000000001"
-                );
-
-        GameSchema schema = GameSchemas.SCHEMA_9X9;
-        GameMatrixImpl matrix = new GameMatrixImpl(schema);
-        matrix.setAll(data);
-        int mask = matrix.getBlockFreeMask(0,0);
-        assertEquals(schema.getBitMask() & (~((1<<1) | (1<<2))), mask);
-        mask = matrix.getBlockFreeMask(0,3);
-        assertEquals(schema.getBitMask() & (~((1<<1) | (1<<2) | (1<<3))), mask);
-        mask = matrix.getBlockFreeMask(0,6);
-        assertEquals(schema.getBitMask() & (~((1<<1))), mask);
-        mask = matrix.getBlockFreeMask(3,6);
-        assertEquals(schema.getBitMask() & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
-     }
-
-    @Test
-    public void testGetFreeMask() {
-        byte[][] data =
-                QuadraticArrays.parse(
-                        "100000000",
-                        "020100000",
-                        "000320100",
-                        "010000456",
-                        "000010000",
-                        "000000010",
-                        "001000000",
-                        "000001000",
-                        "000000001"
-                );
-
-        GameMatrixImpl matrix = new GameMatrixImpl(schema);
-        matrix.setAll(data);
-        int mask = matrix.getFreeMask(0,0);
-        assertEquals(schema.getBitMask() & (~((1<<1) | (1<<2))), mask);
-        mask = matrix.getFreeMask(0,3);
-        assertEquals(schema.getBitMask() & (~((1<<1) | (1<<2) | (1<<3))), mask);
-        mask = matrix.getFreeMask(0,6);
-        assertEquals(schema.getBitMask() & (~((1<<1) | (1<<4))), mask);
-        mask = matrix.getFreeMask(3,6);
-        assertEquals(schema.getBitMask() & (~((1<<1) | (1<<4) | (1<<5) | (1<<6))), mask);
-     }
-
-    @Test
-    public void testCanSet() {
-        byte[][] data =
-                QuadraticArrays.parse(
-                        //   x
-                        "100000000",
-                        "020100000",
-                        "000320100",
-                        "010000456",
-                        //           y
-                        "000010000",
-                        "000000010",
-                        "001000000",
-                        "000001000",
-                        "000000001"
-                );
-
-        GameMatrixImpl matrix = new GameMatrixImpl(schema);
-        matrix.setAll(data);
-
-        // the "x" cell marked above
-        assertTrue(matrix.canSet(0, 0, (byte) 0)); // always works
-        assertFalse(matrix.canSet(0, 0, (byte) 2)); // in block
-        assertTrue(matrix.canSet(0, 0, (byte) 3)); // not in block
-
-        // the "y" cell marked above
-        assertTrue(matrix.canSet(4, 8, (byte) 0)); // always works
-        assertTrue(matrix.canSet(4, 8, (byte) 2)); // in block
-        assertTrue(matrix.canSet(4, 8, (byte) 3)); // not in block
-     }
-
-    @Test
-    public void testRoundToBlock() {
-        GameMatrixImpl nineMatrix = new GameMatrixImpl(schema);
-        assertEquals(0, nineMatrix.roundToBlock( 0));
-        assertEquals(0, nineMatrix.roundToBlock( 1));
-        assertEquals(0, nineMatrix.roundToBlock( 2));
-        assertEquals(3, nineMatrix.roundToBlock( 3));
-        assertEquals(3, nineMatrix.roundToBlock( 4));
-        assertEquals(3, nineMatrix.roundToBlock( 5));
-        assertEquals(6, nineMatrix.roundToBlock( 6));
-        assertEquals(6, nineMatrix.roundToBlock( 7));
-        assertEquals(6, nineMatrix.roundToBlock( 8));
-    }
-
-    @Test
-    public void testFindLeastFreeCellWithAllFull() {
-        // full matrix
-        byte[][] data =
-                QuadraticArrays.parse(
-                        "367915482",
-                        "149268357",
-                        "582473619",
-                        "436187925",
-                        "975624831",
-                        "218359764",
-                        "624731598",
-                        "753892146",
-                        "891546273"
-                );
-
-        GameMatrixImpl matrix = new GameMatrixImpl(schema);
-        matrix.setAll(data);
-
-        CellIndex min = new CellIndex();
-        GameMatrixImpl.FreeCellResult result = matrix.findLeastFreeCell(min);
-        assertEquals(GameMatrixImpl.FreeCellResult.NONE_FREE, result);
-     }
-
-    @Test
-    public void testFindLeastFreeCellWithAlmostFull() {
-        // 0,0 free matrix
-        byte[][] data =
-                QuadraticArrays.parse(
-                        "067915482",
-                        "149268357",
-                        "582473619",
-                        "436187925",
-                        "975624831",
-                        "218359764",
-                        "624731598",
-                        "753892146",
-                        "891546273"
-                );
-
-        GameMatrixImpl matrix = new GameMatrixImpl(schema);
-        matrix.setAll(data);
-
-        CellIndex min = new CellIndex();
-        GameMatrixImpl.FreeCellResult result = matrix.findLeastFreeCell(min);
-        assertEquals(GameMatrixImpl.FreeCellResult.FOUND, result);
-        assertEquals(0, min.column);
-        assertEquals(0, min.row);
-     }
-
-    @Test
-    public void testFindLeastFreeCell() {
-        // a possible "full house" in the upper left block
-        byte[][] data =
-                QuadraticArrays.parse(
-                        "123000000",
-                        "456000000",
-                        "780000000",
-                        "000000000",
-                        "000000000",
-                        "000000000",
-                        "000000000",
-                        "000000000",
-                        "000000000"
-                );
-
-        GameMatrixImpl matrix = new GameMatrixImpl(schema);
-        matrix.setAll(data);
-
-        CellIndex min = new CellIndex();
-        GameMatrixImpl.FreeCellResult result = matrix.findLeastFreeCell(min);
-        assertEquals(GameMatrixImpl.FreeCellResult.FOUND, result);
-        assertEquals(2, min.row);
-        assertEquals(2, min.column);
-     }
-
-    @Test
-    public void testFindLeastFreeCellWithNoPossibleValue() {
-        // (0,0) is empty
-        // Row 0 has 1, 2, 3, 4, 5, 6, 7, 8
-        // Col 0 has 9
-        // Block 0 has 1, 2, 9
-        // (0,0) sees 1, 2, 3, 4, 5, 6, 7, 8, 9 -> 0 possibilities
-        byte[][] data =
-                QuadraticArrays.parse(
-                        "012345678",
-                        "900000000",
-                        "000000000",
-                        "000000000",
-                        "000000000",
-                        "000000000",
-                        "000000000",
-                        "000000000",
-                        "000000000"
-                );
-
-        GameMatrixImpl matrix = new GameMatrixImpl(schema);
-        matrix.setAll(data);
-
-        CellIndex min = new CellIndex();
-        GameMatrixImpl.FreeCellResult result = matrix.findLeastFreeCell(min);
-        assertEquals(GameMatrixImpl.FreeCellResult.CONTRADICTION, result);
-    }
-
-    @Test
-    public void testFindLeastFreeCellWithEmptyMatrix() {
-        GameMatrixImpl matrix = new GameMatrixImpl(schema);
-        CellIndex min = new CellIndex();
-        GameMatrixImpl.FreeCellResult result = matrix.findLeastFreeCell(min);
-        assertEquals(GameMatrixImpl.FreeCellResult.FOUND, result);
-        assertEquals(0, min.row);
-        assertEquals(0, min.column);
     }
 }
