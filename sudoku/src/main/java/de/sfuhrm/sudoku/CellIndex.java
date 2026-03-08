@@ -19,6 +19,8 @@ Boston, MA  02110-1301, USA.
 */
 package de.sfuhrm.sudoku;
 
+import java.util.Objects;
+
 /** A mutable coordinate pair of row and column. */
 class CellIndex {
     /** The row index. */
@@ -26,11 +28,38 @@ class CellIndex {
     /** The column index. */
     int column;
 
+    /** New instance with row and column zero. */
+    CellIndex() {
+    }
+
+    /** New instance with given row and column.
+     * @param inRow initial row value.
+     * @param inColumn initial column value.
+     * */
+    CellIndex(final int inRow, final int inColumn) {
+        this.row = inRow;
+        this.column = inColumn;
+    }
+
     @Override
     public String toString() {
         return "CellIndex{"
                 + "row=" + row
                 + ", column=" + column
                 + '}';
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (!(o instanceof CellIndex)) {
+            return false;
+        }
+        CellIndex cellIndex = (CellIndex) o;
+        return row == cellIndex.row && column == cellIndex.column;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(row, column);
     }
 }
