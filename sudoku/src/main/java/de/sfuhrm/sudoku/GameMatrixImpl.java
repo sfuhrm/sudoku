@@ -411,8 +411,8 @@ class GameMatrixImpl implements Cloneable, GameMatrix {
         int minimumRow = -1;
         int minimumColumn = -1;
 
-        final int width = getSchema().getWidth();
-        final byte unset = getSchema().getUnsetValue();
+        final int width = gameSchema.getWidth();
+        final byte unset = gameSchema.getUnsetValue();
         search:
         for (int row = 0; row < width; row++) {
             int rowMask = getRowFreeMask(row);
