@@ -52,6 +52,20 @@ class CachedGameMatrixImpl extends GameMatrixImpl {
      */
     private int setCount;
 
+    /** Row index for each currently unset cell. */
+    private final int[] freeCellRows;
+
+    /** Column index for each currently unset cell. */
+    private final int[] freeCellColumns;
+
+    /** Position lookup of a cell in {@link #freeCellRows} / freeCellColumns.
+     * A value of -1 means the cell is currently set.
+     */
+    private final int[][] freeCellIndex;
+
+    /** Number of entries used in freeCellRows/freeCellColumns. */
+    private int freeCellCount;
+
     /**
      * Creates an empty full-writable riddle.
      * @param schema the game schema that defines the dimensions.
@@ -60,10 +74,14 @@ class CachedGameMatrixImpl extends GameMatrixImpl {
         super(schema);
         final int blockCount = schema.getBlockCount();
         final int width = schema.getWidth();
+        final int totalFields = schema.getTotalFields();
 
         blockFree = new int[blockCount][blockCount];
         rowFree = new int[width];
         columnFree = new int[width];
+        freeCellRows = new int[totalFields];
+        freeCellColumns = new int[totalFields];
+        freeCellIndex = new int[width][width];
 
         for (int i = 0; i < width; i++) {
             rowFree[i] = schema.getBitMask();
@@ -75,6 +93,17 @@ class CachedGameMatrixImpl extends GameMatrixImpl {
                 blockFree[i][j] = schema.getBitMask();
             }
         }
+
+        int freeIndex = 0;
+        for (int row = 0; row < width; row++) {
+            for (int column = 0; column < width; column++) {
+                freeCellRows[freeIndex] = row;
+                freeCellColumns[freeIndex] = column;
+                freeCellIndex[row][column] = freeIndex;
+                freeIndex++;
+            }
+        }
+        freeCellCount = freeIndex;
     }
 
     /**
@@ -87,6 +116,88 @@ class CachedGameMatrixImpl extends GameMatrixImpl {
         blockFree = QuadraticArrays.cloneArray(source.blockFree);
         columnFree = Arrays.copyOf(source.columnFree, source.columnFree.length);
         rowFree = Arrays.copyOf(source.rowFree, source.rowFree.length);
+        freeCellRows = Arrays.copyOf(source.freeCellRows,
+                source.freeCellRows.length);
+        freeCellColumns = Arrays.copyOf(source.freeCellColumns,
+                source.freeCellColumns.length);
+        freeCellIndex = QuadraticArrays.cloneArray(source.freeCellIndex);
+        setCount = source.setCount;
+        freeCellCount = source.freeCellCount;
+    }
+
+    @Override
+    FreeCellResult findLeastFreeCell(final CellIndex rowColumnResult) {
+        if (freeCellCount == 0) {
+            return FreeCellResult.NONE_FREE;
+        }
+
+        int minimumBits = Integer.MAX_VALUE;
+        int minimumRow = -1;
+        int minimumColumn = -1;
+        final int width = getSchema().getWidth();
+        final int blockWidth = getSchema().getBlockWidth();
+
+        for (int i = 0; i < freeCellCount; i++) {
+            int row = freeCellRows[i];
+            int column = freeCellColumns[i];
+            int free = rowFree[row]
+                    & columnFree[column]
+                    & blockFree[row / blockWidth][column / blockWidth];
+            if (free == 0) {
+                return FreeCellResult.CONTRADICTION;
+            }
+
+            int bits = Integer.bitCount(free);
+            assert bits > 0 && bits <= width;
+
+            if (bits < minimumBits) {
+                minimumBits = bits;
+                minimumRow = row;
+                minimumColumn = column;
+                if (minimumBits == 1) {
+                    break;
+                }
+            }
+        }
+
+        rowColumnResult.row = minimumRow;
+        rowColumnResult.column = minimumColumn;
+        return FreeCellResult.FOUND;
+    }
+
+    /** Remove an unset cell from the compact free-cell list.
+     * @param row the row of the cell.
+     * @param column the column of the cell.
+    */
+    private void removeFreeCell(final int row, final int column) {
+        int index = freeCellIndex[row][column];
+        assert index >= 0 && index < freeCellCount;
+
+        int lastIndex = freeCellCount - 1;
+        if (index != lastIndex) {
+            int movedRow = freeCellRows[lastIndex];
+            int movedColumn = freeCellColumns[lastIndex];
+            freeCellRows[index] = movedRow;
+            freeCellColumns[index] = movedColumn;
+            freeCellIndex[movedRow][movedColumn] = index;
+        }
+
+        freeCellIndex[row][column] = -1;
+        freeCellCount--;
+    }
+
+    /** Add a newly unset cell to the compact free-cell list.
+     * @param row the row of the cell.
+     * @param column the column of the cell.
+     *
+    */
+    private void addFreeCell(final int row, final int column) {
+        assert freeCellIndex[row][column] == -1;
+
+        freeCellRows[freeCellCount] = row;
+        freeCellColumns[freeCellCount] = column;
+        freeCellIndex[row][column] = freeCellCount;
+        freeCellCount++;
     }
 
     @Override
@@ -143,6 +254,14 @@ class CachedGameMatrixImpl extends GameMatrixImpl {
             setCount++;
             assert setCount <= getSchema().getTotalFields();
         }
+
+        if (oldValue == unset && value != unset) {
+            removeFreeCell(row, column);
+        } else if (oldValue != unset && value == unset) {
+            addFreeCell(row, column);
+        }
+        assert freeCellCount == getSchema().getTotalFields() - setCount;
+
         assert getSchema().validBitMask(rowFree[row]) // NOSONAR
                 : "Row free mask is invalid: " + rowFree[row];
         assert getSchema().validBitMask(columnFree[column]) // NOSONAR
