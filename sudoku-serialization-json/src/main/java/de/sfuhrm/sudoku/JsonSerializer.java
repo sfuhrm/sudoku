@@ -3,7 +3,6 @@ package de.sfuhrm.sudoku;
 /**
  * Serialization of a {@linkplain Riddle} to and from a String.
  */
-@SuppressWarnings("checkstyle:javadocpackage")
 public final class JsonSerializer {
 
     /** Gson instance with the {@linkplain GsonRiddleSerializer}

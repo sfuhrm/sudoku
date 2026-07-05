@@ -22,7 +22,6 @@ import java.util.List;
  *     .create();
  * </code>
  */
-@SuppressWarnings("checkstyle:javadocpackage")
 public final class GsonRiddleSerializer implements
         JsonSerializer<Riddle>, JsonDeserializer<Riddle> {
 

@@ -12,4 +12,6 @@
                files="CellIndex"/>
      <suppress checks="JavadocPackage"
                files="GsonRiddleSerializer"/>
+    <suppress checks="JavadocPackage"
+              files="JsonSerializer"/>
 </suppressions>
